@@ -528,11 +528,14 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
                 slide_rgba.paste(logo_redimensionado, (x_pos, y_pos), logo_redimensionado)
                 slide = slide_rgba.convert("RGB")
                 draw = ImageDraw.Draw(slide)
+                logo_aplicado = True  # Definido True logo após colar o logo para evitar duplicidade caso a escrita do número do slide falhe
 
                 # Número do slide abaixo do logo
-                y_num_slide = y_pos + altura_desejada + 40
-                draw_text_with_shadow(draw, (W/2, y_num_slide), f"{idx+1} / {len(frases)}", font_body, fill=CORES["texto_secundario"], anchor="ms")
-                logo_aplicado = True
+                try:
+                    y_num_slide = y_pos + altura_desejada + 40
+                    draw_text_with_shadow(draw, (W/2, y_num_slide), f"{idx+1} / {len(frases)}", font_body, fill=CORES["texto_secundario"], anchor="ms")
+                except Exception as e_num:
+                    print(f"⚠️ Erro ao desenhar número do slide no rodapé ({e_num})")
             except Exception as e:
                 print(f"⚠️ Erro ao aplicar marca d'água no rodapé ({e}). Usando fallback de texto.")
 
