@@ -620,6 +620,11 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                 outro_clip.close()
             except Exception:
                 pass
+        if 'audio_narracao_clip' in locals() and audio_narracao_clip is not None:
+            try:
+                audio_narracao_clip.close()
+            except Exception:
+                pass
 
         # Limpa arquivos temporários de imagem de slides criados durante a geração
         if caminhos_imagens:

@@ -629,13 +629,34 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         if slides:
             logger.info("✍️ Adicionando textos via Pillow (sem ImageMagick)...")
             total_slides = len(slides)
-            duracao_gancho = 5.0
-            if total_slides > 1:
-                tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
-            else:
-                tempo_slide_normal = duracao
-                
             idx_cta = total_slides - 1  # Última cena = CTA
+
+            # --- Sincronização por Voz Neural em pexels_story_noite ---
+            caminho_narracao_story = None
+            slide_start_times = []
+            if is_noite:
+                try:
+                    from core.audio.tts import gerar_audio_narracao_sincronizada
+                    logger.info("🎙️ [19h pexels_story_noite] Gerando narração por voz neural sincronizada slide a slide...")
+                    caminho_narracao_story, duracoes_sincronizadas = gerar_audio_narracao_sincronizada(slides)
+                    if duracoes_sincronizadas and len(duracoes_sincronizadas) == total_slides:
+                        curr = 0.0
+                        for d in duracoes_sincronizadas:
+                            slide_start_times.append(curr)
+                            curr += d
+                        slide_start_times.append(curr)  # Fim do último slide
+                        # Ajusta a duração total do vídeo para bater exatamente com a voz
+                        duracao = curr
+                        logger.success(f"⏱️ Duração do vídeo ajustada para {duracao:.2f}s (bando 1:1 com a voz).")
+                except Exception as e_sync:
+                    logger.warning(f"⚠️ Falha ao sincronizar áudio por slide no pexels_story: {e_sync}")
+
+            if not slide_start_times:
+                duracao_gancho = 5.0
+                if total_slides > 1:
+                    tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
+                else:
+                    tempo_slide_normal = duracao
 
             # O Reels Leads e o Story Noturno sempre usam o filtro de cores quentes (warm_amber)
             if is_reels_leads or is_noite:
@@ -736,7 +757,17 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 return np.array(img.convert("RGB"))
 
             def make_frame(t):
-                if total_slides > 1:
+                if slide_start_times:
+                    # Busca dinamicamente qual slide corresponde ao tempo t exato da voz
+                    idx = 0
+                    for i in range(len(slide_start_times) - 1):
+                        if slide_start_times[i] <= t < slide_start_times[i + 1]:
+                            idx = i
+                            break
+                    else:
+                        idx = total_slides - 1
+                    t_slide = t - slide_start_times[idx]
+                elif total_slides > 1:
                     if t < duracao_gancho:
                         idx = 0
                         t_slide = t
@@ -832,13 +863,15 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
                 # --- Narração por Voz Neural para pexels_story_noite (19h) ---
                 audio_narracao_clip = None
-                if is_storytelling:
+                if is_noite:
                     try:
-                        from core.audio.tts import gerar_audio_narracao_sincronizada
-                        logger.info("🎙️ [19h pexels_story_noite] Solicitando narração por voz neural...")
-                        caminho_narracao, _ = gerar_audio_narracao_sincronizada(slides)
-                        if caminho_narracao and os.path.exists(caminho_narracao):
-                            audio_narracao_clip = AudioFileClip(caminho_narracao)
+                        if caminho_narracao_story and os.path.exists(caminho_narracao_story):
+                            audio_narracao_clip = AudioFileClip(caminho_narracao_story)
+                        else:
+                            from core.audio.tts import gerar_audio_narracao_sincronizada
+                            caminho_n, _ = gerar_audio_narracao_sincronizada(slides)
+                            if caminho_n and os.path.exists(caminho_n):
+                                audio_narracao_clip = AudioFileClip(caminho_n)
                     except Exception as e_tts:
                         logger.warning(f"⚠️ Erro ao gerar narração no pexels_story_noite: {e_tts}")
 
@@ -905,6 +938,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         try:
             if outro_clip:
                 outro_clip.close()
+        except:
+            pass
+        try:
+            if 'audio_narracao_clip' in locals() and audio_narracao_clip:
+                audio_narracao_clip.close()
         except:
             pass
         # Fecha todos os sub-clipes individuais
