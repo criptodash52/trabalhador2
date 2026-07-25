@@ -829,8 +829,32 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     bg_audio = afx.audio_loop(bg_audio, duration=duracao_total_video)
                     
                 bg_audio = bg_audio.subclip(0, duracao_total_video)
-                final_clip = final_clip.set_audio(bg_audio)
-                logger.info("🎵 Áudio de fundo adicionado!")
+
+                # --- NOVO: Narração por Voz Neural para pexels_story_noite (19h) ---
+                audio_narracao_clip = None
+                if is_storytelling:
+                    try:
+                        from core.audio.tts import gerar_audio_narracao
+                        logger.info("🎙️ [19h pexels_story_noite] Solicitando narração por voz neural...")
+                        caminho_narracao = gerar_audio_narracao(slides)
+                        if caminho_narracao and os.path.exists(caminho_narracao):
+                            audio_narracao_clip = AudioFileClip(caminho_narracao)
+                    except Exception as e_tts:
+                        logger.warning(f"⚠️ Erro ao gerar narração no pexels_story_noite: {e_tts}")
+
+                if audio_narracao_clip is not None:
+                    try:
+                        from moviepy.editor import CompositeAudioClip
+                        bg_suave = bg_audio.volumex(0.18) if hasattr(bg_audio, 'volumex') else bg_audio
+                        audio_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(duracao_total_video)])
+                        final_clip = final_clip.set_audio(audio_composto)
+                        logger.success("🎙️ Narração por voz + Música suave adicionadas ao pexels_story_noite!")
+                    except Exception as e_mix:
+                        logger.warning(f"⚠️ Erro ao mixar áudios em pexels_story_noite: {e_mix}")
+                        final_clip = final_clip.set_audio(bg_audio)
+                else:
+                    final_clip = final_clip.set_audio(bg_audio)
+                    logger.info("🎵 Áudio de fundo adicionado!")
         except Exception as e:
             logger.warning(f"⚠️ Erro ao adicionar áudio de fundo: {e}")
 

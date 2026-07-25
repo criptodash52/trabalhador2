@@ -539,11 +539,47 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             except Exception as e_outro:
                 logger.warning(f"⚠️ Erro ao acoplar o vídeo final: {e_outro}")
 
-        # Aplica a música sobre o vídeo completo (slides + vídeo final)
-        try:
-            video_clip = video_clip.with_audio(audio_clip)
-        except AttributeError:
-            video_clip = video_clip.set_audio(audio_clip)
+        # --- Narração por Voz Neural para reels_noite (18h) ---
+        audio_narracao_clip = None
+        caminho_narracao = None
+        if tipo == "reels_noite":
+            try:
+                from core.audio.tts import gerar_audio_narracao
+                logger.info("🎙️ [18h reels_noite] Solicitando narração por voz neural...")
+                caminho_narracao = gerar_audio_narracao(textos)
+                if caminho_narracao and os.path.exists(caminho_narracao):
+                    try:
+                        audio_narracao_clip = AudioFileClip(caminho_narracao)
+                    except Exception:
+                        pass
+            except Exception as e_tts:
+
+                logger.warning(f"⚠️ Não foi possível gerar narração para reels_noite: {e_tts}")
+
+        # Se houver áudio de narração, suaviza a música de fundo e combina os dois
+        if audio_narracao_clip is not None:
+            try:
+                from moviepy.editor import CompositeAudioClip
+                # Suaviza a música de fundo para 18% do volume
+                bg_suave = audio_clip.volumex(0.18) if hasattr(audio_clip, 'volumex') else audio_clip
+                audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(video_clip.duration)])
+                try:
+                    video_clip = video_clip.with_audio(audio_final_composto)
+                except AttributeError:
+                    video_clip = video_clip.set_audio(audio_final_composto)
+                logger.success("🎙️ Narração por voz + Música suave aplicadas no reels_noite!")
+            except Exception as e_mix:
+                logger.warning(f"⚠️ Erro ao mixar áudio de narração no vídeo: {e_mix}. Usando apenas música.")
+                try:
+                    video_clip = video_clip.with_audio(audio_clip)
+                except AttributeError:
+                    video_clip = video_clip.set_audio(audio_clip)
+        else:
+            # Aplica a música sobre o vídeo completo (slides + vídeo final)
+            try:
+                video_clip = video_clip.with_audio(audio_clip)
+            except AttributeError:
+                video_clip = video_clip.set_audio(audio_clip)
 
         logger.info(f"⚙️ Renderizando slideshow de {len(caminhos_imagens)} slides + vídeo final...")
 
