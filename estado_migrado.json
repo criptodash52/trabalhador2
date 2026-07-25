@@ -1,6 +1,27 @@
 {
-    "indice_gancho_conquistador": 12,
+    "sentimento_do_dia": "luxuria",
+    "indice_arquitetura": 3,
     "historico_midia": [
+        "7033740",
+        "34214293",
+        "6153873",
+        "6549273",
+        "19231459",
+        "9568966",
+        "30946898",
+        "8865526",
+        "35772454",
+        "35965151",
+        "36622181",
+        "13324111",
+        "30946904",
+        "6334472",
+        "7033414",
+        "6632889",
+        "27220617",
+        "6963724",
+        "5709383",
+        "30946901",
         "29708516",
         "7687812",
         "29019380",
@@ -311,15 +332,13 @@
         "unsplash_LtXz48EJX90",
         "unsplash_UBVY_cVwsHE"
     ],
-    "sentimento_do_dia": "luxuria",
-    "indice_arquitetura": 3,
-    "index_conquistador": 4,
-    "data_tema_do_dia": "2026-07-25",
-    "ultimo_carousel": 3,
     "index_animacao_conquistador": 0,
-    "index_plataforma_conquistador": 0,
+    "ultimo_carousel": 3,
+    "index_conquistador": 4,
+    "fila_musicas_musicas-youtube": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
+    ],
     "historico_angulos": [
-        "A carência te faz enxergar qualidades inexistentes em quem apenas te entrega o básico do básico.",
         "A coragem de ter conversas difíceis em vez de acumular ressentimento sob o tapete da conveniência.",
         "A diferença entre conexões profundas baseadas em valores e alianças de conveniência baseadas no ego.",
         "Cobrar do parceiro a maturidade que você mesmo se recusa a praticar no dia a dia.",
@@ -343,16 +362,13 @@
         "Não controlamos os eventos externos, apenas a nossa interpretação sobre cada um deles.",
         "Propósito não é algo que você encontra na estrada; é algo que você constrói nas escolhas difíceis do dia a dia.",
         "O cérebro não distingue ameaça física de ameaça social: por isso o julgamento alheio dói como um soco.",
-        "O custo invisível e silencioso de nunca arriscar montar o seu negócio pelo medo paralisante de perder a 'segurança'."
+        "O custo invisível e silencioso de nunca arriscar montar o seu negócio pelo medo paralisante de perder a 'segurança'.",
+        "Não seja apenas uma estatística de consumo: crie, ensine, construa e deixe o mundo melhor do que encontrou."
     ],
+    "data_tema_do_dia": "2026-07-25",
+    "index_palette_conquistador": 2,
     "ultimos_temas": [],
-    "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/13 Cocktails - Dan Bodan.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
-    ],
-    "data_sentimento_do_dia": "2026-07-25",
     "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/freemusiclab-charming-phonk-i-free-background-music-i-free-music-lab-release-513626.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Radioactive.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-vocal-background-music-562024 (1).mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/kontraa-no-sleep-hiphop-music-473847.mp3",
@@ -392,9 +408,10 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/mirostar-baseball-rugby-cricket-hockey-golf-music-560306.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/46851258-cordes-de-piano-cinema-337464.mp3"
     ],
-    "index_palette_conquistador": 2,
+    "indice_gancho": 58,
+    "indice_gancho_conquistador": 12,
+    "index_plataforma_conquistador": 0,
     "historico_estilos": [
-        "Tom motivacional intenso: seja o treinador gritando no ouvido antes da guerra, inflamando a coragem (ex: 'Você nasceu para coisas maiores. Não aceite menos que...')",
         "Tom professoral e didático: ensine com autoridade e clareza, dividindo a verdade em passos lógicos (ex: 'Existem três regras imutáveis que você precisa entender.')",
         "Tom de revelação científica ou histórica: comece citando um estudo, estatística ou fato histórico desconhecido (ex: 'Estudaram X por 11 anos e concluíram que...')",
         "Tom agressivo e direto: acorde o leitor com uma verdade inconveniente, sem rodeios ou carinho (ex: 'Pare de mentir para você mesmo...')",
@@ -418,10 +435,11 @@
         "Tom científico e analítico: explique as coisas como um neurologista ou psicólogo, usando fatos para destruir ilusões (ex: 'A dopamina que você busca no celular é a mesma que...')",
         "Tom de storytelling puro: narre uma cena real e específica com personagem, ambiente e tensão. Não entregue a moral explicitamente — deixe o leitor tirar sua própria conclusão (ex: 'Às 22h ele olhou para o celular, para a janela, para o teto. Escolheu o celular.')",
         "Tom de admiração e descoberta: compartilhe algo genuinamente fascinante com entusiasmo real. Não ataque ninguém. Apenas mostre algo incrível (ex: 'Descobri algo que mudou completamente a minha forma de ver...')",
+        "Tom de humor e autoironia: ria com leveza de um padrão humano ridículo que afeta a todos, incluindo você mesmo. Sem apontar o dedo para ninguém (ex: 'A gente faz isso, fica frustrado, jura que não vai repetir, e repete amanhã mesmo.')",
         "Tom de humor e autoironia: ria com leveza de um padrão humano ridículo que afeta a todos, incluindo você mesmo. Sem apontar o dedo para ninguém (ex: 'A gente faz isso, fica frustrado, jura que não vai repetir, e repete amanhã mesmo.')"
     ],
     "index_tema_diario": 0,
+    "data_sentimento_do_dia": "2026-07-25",
     "tema_do_dia": "proposito",
-    "indice_gancho": 57,
     "indice_cta": 48
 }
