@@ -3,6 +3,7 @@ import requests
 import textwrap
 import random
 import uuid
+import urllib.parse
 from io import BytesIO
 from PIL import Image, ImageDraw
 
@@ -128,7 +129,6 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         img_id_valido = None
         
         for query_atual in queries_a_tentar:
-            import urllib.parse
             page = random.randint(1, 10)
             query_encoded = urllib.parse.quote(query_atual)
             url_pexels = f"https://api.pexels.com/v1/search?query={query_encoded}&orientation={pex_orientation}&per_page=30&page={page}"
@@ -187,7 +187,6 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         img_id_valido = None
         
         for query_atual in queries_a_tentar:
-            import urllib.parse
             query_encoded = urllib.parse.quote(query_atual)
             url_pixabay = f"https://pixabay.com/api/?key={PIXABAY_API_KEY}&q={query_encoded}&image_type=photo&orientation={pixa_orientation}&per_page=15"
             try:
@@ -237,7 +236,6 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
 
         print(f"🧠 [NÍVEL 4] Tentando gerar imagem exclusiva via IA (Pollinations) em último caso online: '{ai_prompt}'")
         seed_aleatorio = random.randint(1, 999999)
-        import urllib.parse
         ai_prompt_encoded = urllib.parse.quote(ai_prompt)
         url_pollinations = f"https://image.pollinations.ai/prompt/{ai_prompt_encoded}?width={W}&height={H}&nologo=true&seed={seed_aleatorio}&model=flux-realism&enhance=false"
         

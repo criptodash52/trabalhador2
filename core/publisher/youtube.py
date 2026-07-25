@@ -4,6 +4,7 @@ import json
 from loguru import logger
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.errors import HttpError
 
@@ -14,7 +15,11 @@ SCOPES = [
 ]
 
 def obter_servico_youtube():
-    """Carrega as credenciais e retorna o serviço da API do YouTube."""
+    """Carrega as credenciais e retorna o serviço da API do YouTube.
+    
+    Se o token de acesso estiver expirado, tenta renová-lo automaticamente
+    usando o refresh_token e salva as novas credenciais no arquivo.
+    """
     # Garante o caminho absoluto a partir da raiz do projeto
     root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     token_path = os.path.join(root_dir, "token_youtube.json")
@@ -25,6 +30,20 @@ def obter_servico_youtube():
         
     try:
         credentials = Credentials.from_authorized_user_file(token_path, SCOPES)
+        
+        # Se o token estiver expirado, tenta renová-lo automaticamente
+        if not credentials.valid or credentials.expired:
+            if credentials.refresh_token:
+                logger.info("🔄 Token do YouTube expirado. Renovando automaticamente...")
+                credentials.refresh(Request())
+                # Salva as credenciais renovadas no arquivo para a próxima vez
+                with open(token_path, "w") as f:
+                    f.write(credentials.to_json())
+                logger.success("✅ Token do YouTube renovado e salvo com sucesso.")
+            else:
+                logger.error("❌ Token inválido e sem refresh_token para renovar. Rode autenticar_youtube.py novamente.")
+                return None
+        
         # O build cria o serviço da API
         youtube = build("youtube", "v3", credentials=credentials)
         return youtube
