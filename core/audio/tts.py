@@ -186,6 +186,13 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
         return gerar_audio_narracao(slides, voice_id=voice_id), []
 
     clips_audio = []
+    pausa_segundos = 1.0  # 1.0s extra de permanência do slide na tela (pausa respiratória natural)
+
+    try:
+        from moviepy.editor import AudioClip
+    except ImportError:
+        AudioClip = None
+
     for idx, slide_texto in enumerate(slides):
         texto_limpo = str(slide_texto).replace("\n", " ").strip()
         if not texto_limpo:
@@ -199,16 +206,21 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
             try:
                 aclip = AudioFileClip(audio_slide)
                 dur = aclip.duration
-                # Adiciona uma pequena pausa natural de 0.25s após a leitura do slide
-                dur_com_pausa = round(dur + 0.25, 2)
-                duracoes_slides.append(dur_com_pausa)
                 clips_audio.append(aclip)
+
+                # Insere silêncio real no áudio para a troca de slide
+                if AudioClip is not None:
+                    silencio = AudioClip(make_frame=lambda t: [0, 0], duration=pausa_segundos)
+                    clips_audio.append(silencio)
+
+                dur_total_slide = round(dur + pausa_segundos, 2)
+                duracoes_slides.append(dur_total_slide)
                 caminhos_audios_slides.append(audio_slide)
             except Exception as e_clip:
                 logger.warning(f"⚠️ Erro ao medir áudio do slide {idx}: {e_clip}")
-                duracoes_slides.append(3.0)
+                duracoes_slides.append(3.5)
         else:
-            duracoes_slides.append(3.0)
+            duracoes_slides.append(3.5)
 
     if clips_audio:
         try:
