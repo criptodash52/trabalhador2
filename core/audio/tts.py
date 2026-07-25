@@ -159,5 +159,77 @@ def gerar_audio_narracao(texto, voice_id: str | None = None, caminho_saida: str 
         logger.success("✅ Narração gerada via Edge-TTS (fallback gratuito).")
         return resultado
 
-    logger.error("❌ Todos os 3 níveis de narração falharam. Vídeo ficará sem narração.")
-    return None
+def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
+    """
+    Gera narração slide a slide, mede a duração exata do áudio de cada slide
+    e retorna o áudio final concatenado + a lista com a duração exata de cada slide.
+    
+    Retorna: (caminho_audio_completo, lista_duracoes_slides)
+    """
+    if not slides:
+        return None, []
+
+    # Garante que slides é uma lista de strings
+    if isinstance(slides, str):
+        slides = [slides]
+
+    os.makedirs("midia_temp", exist_ok=True)
+    uid = uuid.uuid4().hex[:8]
+    
+    caminhos_audios_slides = []
+    duracoes_slides = []
+
+    try:
+        from moviepy.editor import AudioFileClip, concatenate_audioclips
+    except ImportError:
+        logger.error("❌ Moviepy não disponível para sincronizar áudio por slide.")
+        return gerar_audio_narracao(slides, voice_id=voice_id), []
+
+    clips_audio = []
+    for idx, slide_texto in enumerate(slides):
+        texto_limpo = str(slide_texto).replace("\n", " ").strip()
+        if not texto_limpo:
+            duracoes_slides.append(2.5)
+            continue
+
+        caminho_slide_mp3 = f"midia_temp/slide_{uid}_{idx}.mp3"
+        audio_slide = gerar_audio_narracao(texto_limpo, voice_id=voice_id, caminho_saida=caminho_slide_mp3)
+
+        if audio_slide and os.path.exists(audio_slide):
+            try:
+                aclip = AudioFileClip(audio_slide)
+                dur = aclip.duration
+                # Adiciona uma pequena pausa natural de 0.25s após a leitura do slide
+                dur_com_pausa = round(dur + 0.25, 2)
+                duracoes_slides.append(dur_com_pausa)
+                clips_audio.append(aclip)
+                caminhos_audios_slides.append(audio_slide)
+            except Exception as e_clip:
+                logger.warning(f"⚠️ Erro ao medir áudio do slide {idx}: {e_clip}")
+                duracoes_slides.append(3.0)
+        else:
+            duracoes_slides.append(3.0)
+
+    if clips_audio:
+        try:
+            audio_final = concatenate_audioclips(clips_audio)
+            caminho_final = f"midia_temp/narracao_sincronizada_{uid}.mp3"
+            audio_final.write_audiofile(caminho_final, logger=None)
+            
+            # Fecha clips temporários
+            for c in clips_audio:
+                try: c.close()
+                except: pass
+
+            # Limpa MP3s intermediários de slides
+            for c_mp3 in caminhos_audios_slides:
+                try: os.remove(c_mp3)
+                except: pass
+
+            logger.success(f"🎙️ Narração sincronizada gerada! {len(duracoes_slides)} slides mapeados com precisão 1:1.")
+            return caminho_final, duracoes_slides
+        except Exception as e_concat:
+            logger.error(f"❌ Erro ao concatenar áudios dos slides: {e_concat}")
+
+    return None, duracoes_slides
+

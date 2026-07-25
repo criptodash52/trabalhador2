@@ -487,6 +487,23 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
 
             return frames
 
+        # --- Narração por Voz Neural para reels_noite (18h) com Sincronização 1:1 ---
+        audio_narracao_clip = None
+        caminho_narracao = None
+        duracoes_sincronizadas = []
+        if tipo == "reels_noite":
+            try:
+                from core.audio.tts import gerar_audio_narracao_sincronizada
+                logger.info("🎙️ [18h reels_noite] Gerando narração por voz neural sincronizada slide a slide...")
+                caminho_narracao, duracoes_sincronizadas = gerar_audio_narracao_sincronizada(textos)
+                if caminho_narracao and os.path.exists(caminho_narracao):
+                    try:
+                        audio_narracao_clip = AudioFileClip(caminho_narracao)
+                    except Exception:
+                        pass
+            except Exception as e_tts:
+                logger.warning(f"⚠️ Não foi possível gerar narração sincronizada para reels_noite: {e_tts}")
+
         # --- Gera os clipes ---
         clips = []
         for idx, caminho in enumerate(caminhos_imagens):
@@ -497,8 +514,11 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             else:
                 texto_slide = str(_raw_texto).strip()
             eh_ultimo = (idx == n_slides - 1)
-            # Duração adaptável com base no formato e posição do slide
-            if eh_ultimo:
+
+            # Duração adaptável: se houver narração sincronizada, usa a duração exata da voz daquele slide!
+            if duracoes_sincronizadas and idx < len(duracoes_sincronizadas):
+                dur_slide = duracoes_sincronizadas[idx]
+            elif eh_ultimo:
                 dur_slide = DURACAO_ULTIMO_SLIDE
             elif idx == 0 and is_reels_comum:
                 dur_slide = DURACAO_GANCHO_COMUM
@@ -538,23 +558,6 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                 logger.success("✅ Vídeo final (mudo) acoplado. Música continuará por cima.")
             except Exception as e_outro:
                 logger.warning(f"⚠️ Erro ao acoplar o vídeo final: {e_outro}")
-
-        # --- Narração por Voz Neural para reels_noite (18h) ---
-        audio_narracao_clip = None
-        caminho_narracao = None
-        if tipo == "reels_noite":
-            try:
-                from core.audio.tts import gerar_audio_narracao
-                logger.info("🎙️ [18h reels_noite] Solicitando narração por voz neural...")
-                caminho_narracao = gerar_audio_narracao(textos)
-                if caminho_narracao and os.path.exists(caminho_narracao):
-                    try:
-                        audio_narracao_clip = AudioFileClip(caminho_narracao)
-                    except Exception:
-                        pass
-            except Exception as e_tts:
-
-                logger.warning(f"⚠️ Não foi possível gerar narração para reels_noite: {e_tts}")
 
         # Se houver áudio de narração, suaviza a música de fundo para o mínimo (10%) e combina os dois
         if audio_narracao_clip is not None:

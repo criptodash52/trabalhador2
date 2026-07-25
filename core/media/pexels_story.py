@@ -830,13 +830,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     
                 bg_audio = bg_audio.subclip(0, duracao_total_video)
 
-                # --- NOVO: Narração por Voz Neural para pexels_story_noite (19h) ---
+                # --- Narração por Voz Neural para pexels_story_noite (19h) ---
                 audio_narracao_clip = None
                 if is_storytelling:
                     try:
-                        from core.audio.tts import gerar_audio_narracao
+                        from core.audio.tts import gerar_audio_narracao_sincronizada
                         logger.info("🎙️ [19h pexels_story_noite] Solicitando narração por voz neural...")
-                        caminho_narracao = gerar_audio_narracao(slides)
+                        caminho_narracao, _ = gerar_audio_narracao_sincronizada(slides)
                         if caminho_narracao and os.path.exists(caminho_narracao):
                             audio_narracao_clip = AudioFileClip(caminho_narracao)
                     except Exception as e_tts:
