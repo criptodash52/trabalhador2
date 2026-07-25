@@ -556,12 +556,12 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
 
                 logger.warning(f"⚠️ Não foi possível gerar narração para reels_noite: {e_tts}")
 
-        # Se houver áudio de narração, suaviza a música de fundo e combina os dois
+        # Se houver áudio de narração, suaviza a música de fundo para o mínimo (10%) e combina os dois
         if audio_narracao_clip is not None:
             try:
                 from moviepy.editor import CompositeAudioClip
-                # Suaviza a música de fundo para 18% do volume
-                bg_suave = audio_clip.volumex(0.18) if hasattr(audio_clip, 'volumex') else audio_clip
+                # Suaviza a música de fundo para 10% do volume (nível mínimo de fundo)
+                bg_suave = audio_clip.volumex(0.10) if hasattr(audio_clip, 'volumex') else audio_clip
                 audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(video_clip.duration)])
                 try:
                     video_clip = video_clip.with_audio(audio_final_composto)

@@ -199,7 +199,8 @@ def main():
                         textos=frases_reels,
                         fonte_path=fonte_path,
                         fonte_size=fonte_size,
-                        incluir_video_final=(args.type != "story_manha")  # Story da manhã não inclui vídeo final
+                        incluir_video_final=(args.type != "story_manha"),
+                        tipo=args.type
                     )
                 except Exception as e:
                     print(f"⚠️ [DRY-RUN] Pulando geração real de vídeo do Reels: {e}")
@@ -212,7 +213,8 @@ def main():
                     textos=frases_reels,
                     fonte_path=fonte_path,
                     fonte_size=fonte_size,
-                    incluir_video_final=(args.type != "story_manha")  # Story da manhã não inclui vídeo final
+                    incluir_video_final=(args.type != "story_manha"),
+                    tipo=args.type
                 )
                 
         # Passo 3.5: Se for Story (estático), converte obrigatoriamente JPGs para MP4s com música
