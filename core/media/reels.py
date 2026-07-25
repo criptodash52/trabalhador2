@@ -559,12 +559,12 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             except Exception as e_outro:
                 logger.warning(f"⚠️ Erro ao acoplar o vídeo final: {e_outro}")
 
-        # Se houver áudio de narração, suaviza a música de fundo para o mínimo (10%) e combina os dois
+        # Se houver áudio de narração, suaviza a música de fundo para o mínimo (5%) e combina os dois
         if audio_narracao_clip is not None:
             try:
                 from moviepy.editor import CompositeAudioClip
-                # Suaviza a música de fundo para 10% do volume (nível mínimo de fundo)
-                bg_suave = audio_clip.volumex(0.10) if hasattr(audio_clip, 'volumex') else audio_clip
+                # Suaviza a música de fundo para 5% do volume (fundo sutil e ambiente)
+                bg_suave = audio_clip.volumex(0.05) if hasattr(audio_clip, 'volumex') else audio_clip
                 audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(video_clip.duration)])
                 try:
                     video_clip = video_clip.with_audio(audio_final_composto)
