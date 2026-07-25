@@ -94,13 +94,23 @@ def registrar_postagem(tipo, tema, post_id, estilo, frase_visual="", legenda="",
 
 def main():
     parser = argparse.ArgumentParser(description="Bot de Instagram Automático 2.0")
-    parser.add_argument("--type", type=str, required=True, 
+    parser.add_argument("--type", type=str, required=False, default=None,
                         choices=["story", "story_manha", "story_tarde", "carousel", "reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads", "test"],
                         help="Tipo de postagem a gerar")
     parser.add_argument("--dry-run", action="store_true", help="Executa todo o processo sem postar no Instagram")
+    parser.add_argument("--reseed-db", action="store_true", help="Repovoa e reconstitui todas as coleções zeradas do Firebase Firestore")
     
     args = parser.parse_args()
     
+    if args.reseed_db:
+        from reseed_db import repovoar_banco_firebase
+        repovoar_banco_firebase()
+        return
+
+    if not args.type:
+        parser.error("O parâmetro --type é obrigatório quando não estiver usando --reseed-db.")
+        return
+
     print(f"🌅 --- Iniciando Bot de Postagem Automática ({args.type.upper()}) ---")
     
     if args.dry_run:

@@ -582,6 +582,15 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             except Exception:
                 pass
 
+        # Limpa arquivos temporários de imagem de slides criados durante a geração
+        if caminhos_imagens:
+            for c_img in caminhos_imagens:
+                if c_img and os.path.exists(c_img) and "reels_slide_" in os.path.basename(c_img):
+                    try:
+                        os.remove(c_img)
+                    except Exception:
+                        pass
+
 
 def gerar_video_story_individual(caminho_imagem, caminho_audio, caminho_saida="story_pronto.mp4", tempo_inicio=0.0):
     logger.info(f"🎬 Convertendo Story {caminho_imagem} em vídeo com música (inicio: {tempo_inicio}s)...")
