@@ -634,39 +634,46 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "reels_noite":
         prompt = f"""
-        Você é um contador de histórias que entende que o final do dia é o momento mais emocional da jornada humana.
-        O seu Reels é o último do dia. A pessoa está voltando para casa ou já está deitada na cama.
+        Você é um especialista em psicologia de encerramento de dia e provocar reflexões viscerais de transição.
+        O seu Reels vai ao ar às 18:00 — o exato momento em que as pessoas estão encerrando o expediente, voltando para casa ou descarregando o peso do dia.
         Estilo obrigatório para este Reels: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA SEQUÊNCIA NARRATIVA DINÂMICA DE 5 A 8 SLIDES que funcione como o CAPÍTULO FINAL de uma história que começou de manhã.
-        A mensagem deve colocar quem assiste dentro da história: identifique a dor, gere empatia real e ofereça a solução.
+        ===== MISSÃO: PROVOCAÇÃO VISCERAL DE FINAL DE DIA (18:00) =====
+        NÃO fale de "deitar na cama" ou "dormir" (ainda é 18h). Foque na transição entre o dever diário e a vida real.
 
-        - Slide 1: A Dor e Empatia da Noite — Comece espelhando uma dor silenciosa ou solidão que bate forte ao deitar.
-        - Slides 2 a 3: Diagnóstico íntimo do que acontece na mente da pessoa à noite.
-        - Slides 4 a 6: A virada de perspectiva e a solução prática que quebra o ciclo de autossabotagem.
-        - Slide penúltimo (se houver): Xeque-mate reflexivo — frase que o leitor vai guardar.
-        - ÚLTIMO SLIDE (obrigatório): CTA — frase curta e profunda que encerre a história e convide elegantemente o leitor a acompanhar a página (ex: "O caminho é longo. Siga o perfil para não caminhar sozinho.").
+        ESTRUTURA EM SLIDES (5 A 8 SLIDES):
+        - Slide 1 (GANCHO VISCERAL - 18h): Pergunta afiada ou afirmação cortante sobre o que o leitor fez do próprio tempo hoje.
+          Adapte obrigatoriamente o gancho de referência: '{gancho}' ao contexto de reflexão de vida/trabalho.
+          Exemplos de tom (crie uma variação inédita):
+          * "Você trabalhou 9 horas hoje. O que você fez que é realmente seu?"
+          * "O dia acabou. Você avançou ou só sobreviveu?"
+          * "Mais 24 horas entregues à rotina dos outros."
+          Máximo 10 palavras. Segunda pessoa ("você"). Choque direto sem rodeios.
+
+        - Slides 2 a 3: O espelho do cotidiano. O contraste entre o que a pessoa sonha e o que ela executa na rotina.
+        - Slides 4 a 6: A virada de mentalidade e a lição prática dos livros sobre prioridades e postura madura.
+        - Slide penúltimo (se houver): Xeque-mate reflexivo — frase cirúrgica que o leitor guarda.
+        - ÚLTIMO SLIDE (obrigatório): CTA — convite elegante para seguir o perfil.
 
         REGRAS DE RITMO VISUAL:
-        * Misture frases curtas e diretas (4-8 palavras) com frases íntimas (até 25 palavras).
-        * LIMITE MÁXIMO ESTRITO: Nenhuma frase pode passar de 25 palavras.
+        * Misture frases curtas (4-8 palavras) com frases de profundidade (até 15 palavras).
         * NÃO use pontos de exclamação.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom íntimo, persuasivo e introspectivo.
+        - Máximo 3 linhas. Tom direto, maduro e provocativo.
         - CTA OBRIGATÓRIO: A legenda DEVE obrigatoriamente terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (DEVE ter de 5 a 8 slides, sendo o ÚLTIMO sempre o CTA):
+        Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 (Dor da noite — fisgada emocional)",
-            "Slide 2 (Diagnóstico íntimo)",
-            "Slide 3 (Conflito mental)",
-            "Slide 4 (Virada / solução prática)",
-            "Slide 5 (Elogio ao leitor)",
+            "Slide 1 (Gancho visceral das 18h)",
+            "Slide 2 (Espelho da rotina)",
+            "Slide 3 (Diagnóstico do tempo)",
+            "Slide 4 (Virada prática / insight)",
+            "Slide 5 (Xeque-mate)",
             "Slide 6 (CTA — convite sutil para seguir)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
@@ -674,71 +681,6 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-        Você é um contador de histórias noturno, um roteirista que transforma experiências humanas comuns em micro-fábulas visuais que conectam profundamente antes de dormir.
-        O público está deitado, com o celular na mão, em modo emocional aberto. Essa é a janela mais receptiva do dia.
-        Estilo obrigatório: {estilo_escolhido}
-
-        {instrucoes_copy}{instrucoes_livros}
-
-        ===== MISSÃO: CRIAR UMA HISTÓRIA NOTURNA EM FORMATO STORYTELLING =====
-        NÃO escreva reflexões filosóficas soltas. NÃO dê conselhos diretos.
-        ESCREVA UMA HISTÓRIA CURTA — com personagem, cenário, conflito e resolução.
-        O espectador DEVE se ver dentro da história. A lição surge naturalmente do desfecho, não é declarada.
-
-        ESTRUTURA NARRATIVA OBRIGATÓRIA (10 a 12 frases curtas):
-
-        ATO 1 — O PERSONAGEM E A CENA (frases 1-3):
-        - Frase 1 (GANCHO - OBRIGATÓRIO): Apresente o personagem em uma situação noturna concreta e específica que o espectador reconhece.
-          Não um conselho. Uma imagem cinematic: onde ele está, o que ele está fazendo ou sentindo à noite.
-          Exemplo de tom: "Ela desligou o notebook às 23h. Mais um dia que não era o dia certo."
-          Máximo 12 palavras. Cena real, específica, visceral.
-        - Frase 2: Aprofunde o estado interno do personagem. O que ele sente, o que ele pensa antes de dormir.
-        - Frase 3: O ambiente ao redor reflete o estado emocional dele (a luz fraca, o silêncio, o peso do travesseiro).
-
-        ATO 2 — O CONFLITO / PONTO DE RUPTURA (frases 4-6):
-        - Frase 4: O pensamento que invade a mente e não sai. A dor que o acompanha toda noite.
-        - Frase 5: O momento em que o personagem percebe que algo precisa mudar. Ainda não sabe o quê.
-        - Frase 6: A decisão errada que ele sempre toma nesse ponto (evitar, distrair, adiar). O leitor se reconhece aqui.
-
-        ATO 3 — A DESCOBERTA / VIRADA (frases 7-9):
-        - Frase 7: O personagem encontra (ou se lembra de) uma lição, um ensinamento ou uma mudança de perspectiva.
-          Essa lição DEVE vir diretamente dos livros ou do ângulo do tema do dia. Não invente. Use a sabedoria dos livros.
-        - Frase 8: O efeito dessa descoberta nele. Como a carga diminui. A respiração muda. A mente aquieta.
-        - Frase 9: A resolução interna. Não é a solução do problema externo, mas uma paz ou clareza que ele encontra dentro de si.
-
-        ATO 4 — O AMANHÃ E O CTA (frases 10-12):
-        - Frase 10: A promessa do amanhã. Como ele vai acordar diferente porque teve essa percepção agora.
-        - Frase 11 (Slide Final - CTA Charmoso): Crie uma chamada para ação (CTA) integrada ao tom da história, convidando a comentar ou seguir.
-
-        Exemplos de tom para o Slide Final (crie uma frase única conectada à história do post, não copie):
-        * "Se essa história te tocou, deixe nos comentários. Siga para a próxima."
-        * "Você já se viu nesse personagem? Comente abaixo. E acompanhe amanhã."
-        * "A jornada continua. Siga o perfil para não perder o próximo capítulo."
-
-        REGRAS ABSOLUTAS DE RITMO:
-        - Máximo de 12 palavras por frase. Frases curtas constroem tensão.
-        - Misture frases muito curtas (4 palavras) com frases médias (12 palavras) para criar ritmo cinematográfico.
-        - NÃO use ponto de exclamação.
-        - NÃO declare a moral da história. Deixe ela emergir do desfecho.
-        - NÃO use "você deve" ou "você precisa". Mostre através do personagem.
-
-        PEXELS QUERY: Escolha imagens que criem uma atmosfera de aconchego e introspecção noturna com tons quentes.
-        - Use buscas em inglês evocativas: warm candlelight bedroom, cozy night lamp reading, amber light window rain, golden hour sunset silhouette, fireplace warm glow night.
-
-        LEGENDA:
-        - Máximo 3 linhas. Tom de quem está te contando algo íntimo, como um amigo numa conversa de madrugada.
-        - CTA OBRIGATÓRIO: A legenda DEVE obrigatoriamente terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
-        - NÃO inclua hashtags.
-
-        UNIVERSO VISUAL OBRIGATÓRIO — PEXELS STORY NOITE:
-        As queries devem evocar aconchego, introspecção noturna, ambientes internos quentes: velas, lareira, chuva na janela, luzes âmbar, lâmpada vintage, city lights noturnos. NUNCA natureza aberta diurna.
-
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 10 a 12 frases):
-        {{
-          "slides": [
-            "Frase 1 aqui (Cena de abertura - o personagem)",
-            "Frase 2 aqui (Estado interno)",
-            "Frase 3 aqui (O ambiente)",
             "Frase 4 aqui (O conflito interno)",
             "Frase 5 aqui (A percepção de que algo precisa mudar)",
             "Frase 6 aqui (A decisão errada habitual)",
