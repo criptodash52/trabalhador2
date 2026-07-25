@@ -488,12 +488,12 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                         path_selo = "foto_perfil.png"
                     if os.path.exists(path_selo):
                         selo_img = PILImage.open(path_selo).convert("RGBA")
-                        larg_selo = 200
+                        larg_selo = 300
                         alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
                         selo_redim = selo_img.resize((larg_selo, alt_selo), PILImage.Resampling.LANCZOS)
                         img_frame.paste(selo_redim, (int((W - larg_selo)/2), 100), selo_redim)
 
-                    # 2. Marca d'água no rodapé
+                    # 2. Marca d'água no rodapé (ignora foto_perfil.png para não duplicar o emblema)
                     path_logo = ""
                     if os.path.exists(logo_dir):
                         for file_item in os.listdir(logo_dir):

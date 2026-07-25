@@ -37,18 +37,18 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         query_termo = TEMAS_MAPEADOS[tema_escolhido].get("query_unsplash", query_termo)
 
 
-    # Palavras-chave futuristas, ciberpunk e urbanas — alinhadas à foto de perfil Código da Sabedoria
+    # ── Direção de Arte Fixa 'Ecos da Consciência' (80% Noturna, Luz Dourada/Âmbar, 35mm Film, Pessoas/Afetividade) ──
     UNSPLASH_FALLBACKS = {
-        "espiritualidade": ["futuristic sacred temple night neon", "glowing neural brain gold light", "person meditating futuristic neon city", "starry night sky over cyber city"],
-        "filosofia":       ["futuristic library neon night", "thoughtful person cyberpunk city", "ancient pillar futuristic hologram", "dramatic gold light cyber city"],
-        "psicologia":      ["cyberpunk portrait neon lights", "person walking neon street night", "futuristic neural network glow", "mind concept dark gold lights"],
-        "financas":        ["futuristic cyberpunk skyscraper night", "golden neon city skyline", "cyber financial growth hologram", "futuristic executive gold light"],
-        "liberdade":       ["cyberpunk highway night motion", "person looking at futuristic neon city", "futuristic bridge night lights", "cyberpunk skyline dark gold"],
-        "conexoes":        ["people walking neon city night", "futuristic crowd motion lights", "cyberpunk street connection night", "warm gold neon crowd"],
-        "superacao":       ["person running neon city rain", "futuristic runner dark gold light", "cyberpunk skyscraper peak night", "dark gold neon determination"],
-        "proposito":       ["futuristic path neon lights night", "glowing golden key cyber city", "person walking futuristic city night", "gold neural light cyber city"],
+        "espiritualidade": ["artistic portrait person thoughtful warm golden night light 35mm", "person looking night sky city lights warm amber glow cinematic bokeh", "contemplative person night ambient lighting 35mm film aesthetic"],
+        "filosofia":       ["moody artistic portrait person looking rainy window night city 35mm", "thoughtful philosopher night city golden light deep shadows cinematic", "person meditating thoughts night cityscape warm neon glow 35mm"],
+        "psicologia":      ["intimate artistic portrait couple talking night warm ambient shadows", "person deep thought night city lights moody portrait Kodak Portra", "artistic emotion human connection night warm golden lighting 35mm"],
+        "financas":        ["modern artistic person walking night city golden neon reflections 35mm", "stylish couple night city lights warm amber glow cinematic portrait", "determined person night cityscape golden bokeh atmospheric 35mm"],
+        "liberdade":       ["young artists celebrating freedom night city rooftop warm ambient glow", "person looking at night city skyline golden lights freedom mood 35mm", "free spirit person night city street lights cinematic atmospheric"],
+        "conexoes":        ["warm genuine affectionate hug couple night intimate lighting 35mm", "friends laughing talking night city street warm golden light bokeh", "intimate human connection night moody artistic portrait Kodak Portra"],
+        "superacao":       ["determined person walking night city lights rain intense cinematic 35mm", "strong resilient person night cityscape golden amber glow mood", "person overcoming adversity night city rain reflections 35mm film"],
+        "proposito":       ["artistic portrait person contemplating under warm golden night lights", "thoughtful mentor night city lights deep shadows cinematic 35mm", "purposeful person looking horizon night city lights golden glow"],
     }
-    QUERY_CORINGA = "cyberpunk city night neon futuristic moving crowd dark gold"
+    QUERY_CORINGA = "artistic cinematic portrait night city lights warm golden lighting deep shadows 35mm Kodak Portra"
     
     tema_key = tema_escolhido if tema_escolhido else "superacao"
     queries_fallback = UNSPLASH_FALLBACKS.get(tema_key, [QUERY_CORINGA])
@@ -75,8 +75,14 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         img_valida_url = None
         img_id_valido = None
         
+        TERMOS_PROIBIDOS_BUSCA = ["candle", "velas", "cross", "cruzes", "church", "religion", "skull", "occult"]
         for query_atual in queries_a_tentar:
-            url_unsplash = f"https://api.unsplash.com/photos/random?query={query_atual}&orientation={orientation}&client_id={UNSPLASH_ACCESS_KEY}"
+            # Garante que nenhum termo indesejado entre na busca
+            for t_proibido in TERMOS_PROIBIDOS_BUSCA:
+                if t_proibido in query_atual.lower():
+                    query_atual = query_atual.lower().replace(t_proibido, "").strip()
+
+            url_unsplash = f"https://api.unsplash.com/photos/random?query={urllib.parse.quote(query_atual)}&orientation={orientation}&client_id={UNSPLASH_ACCESS_KEY}"
             try:
                 response = requests.get(url_unsplash, timeout=15)
                 if response.status_code == 200:
@@ -339,7 +345,7 @@ def _gerar_carrossel(img, W_full, H, dados):
         if os.path.exists(path_selo):
             try:
                 selo_img = Image.open(path_selo).convert("RGBA")
-                larg_selo = 200
+                larg_selo = 300
                 alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
                 selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
                 slide_rgba = slide_img.convert("RGBA")
@@ -483,13 +489,30 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, W, H)
 
-        # Logo da marca no rodapé (sem texto de conteúdo)
-        logo_aplicado = False
+        # ── 1. EMBLEMA (foto_perfil.png) NO TOPO ──
         logo_dir = os.path.join("biblioteca_local", "logo")
+        path_selo = os.path.join(logo_dir, "foto_perfil.png")
+        if not os.path.exists(path_selo) and os.path.exists("foto_perfil.png"):
+            path_selo = "foto_perfil.png"
+        if os.path.exists(path_selo):
+            try:
+                selo_img = Image.open(path_selo).convert("RGBA")
+                larg_selo = 300
+                alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
+                selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
+                slide_rgba = slide.convert("RGBA")
+                slide_rgba.paste(selo_redim, (int((W - larg_selo) / 2), 100), selo_redim)
+                slide = slide_rgba.convert("RGB")
+                draw = ImageDraw.Draw(slide)
+            except Exception as e_selo:
+                print(f"⚠️ Erro ao desenhar emblema no topo (reels): {e_selo}")
+
+        # ── 2. MARCA D'ÁGUA NO RODAPÉ (ignora foto_perfil.png) ──
+        logo_aplicado = False
         path_logo = ""
         if os.path.exists(logo_dir):
             for f in os.listdir(logo_dir):
-                if f.lower().endswith(".png"):
+                if f.lower().endswith(".png") and f != "foto_perfil.png":
                     path_logo = os.path.join(logo_dir, f)
                     break
         if os.path.exists(path_logo):
@@ -513,7 +536,7 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
                 draw_text_with_shadow(draw, (W/2, y_num_slide), f"{idx+1} / {len(frases)}", font_body, fill=CORES["texto_secundario"], anchor="ms")
                 logo_aplicado = True
             except Exception as e:
-                print(f"⚠️ Erro ao aplicar imagem de logo ({e}). Usando fallback de texto.")
+                print(f"⚠️ Erro ao aplicar marca d'água no rodapé ({e}). Usando fallback de texto.")
 
         if not logo_aplicado:
             font_marca_serif, _, _ = carregar_fontes(86, 22, 24, estilo="Playfair")
@@ -558,14 +581,31 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, W, H)
         
-        # Assinatura / Logo no rodapé
+        # ── 1. EMBLEMA (foto_perfil.png) NO TOPO ──
+        logo_dir = os.path.join("biblioteca_local", "logo")
+        path_selo = os.path.join(logo_dir, "foto_perfil.png")
+        if not os.path.exists(path_selo) and os.path.exists("foto_perfil.png"):
+            path_selo = "foto_perfil.png"
+        if os.path.exists(path_selo):
+            try:
+                selo_img = Image.open(path_selo).convert("RGBA")
+                larg_selo = 300
+                alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
+                selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
+                slide_rgba = slide.convert("RGBA")
+                slide_rgba.paste(selo_redim, (int((W - larg_selo) / 2), 100), selo_redim)
+                slide = slide_rgba.convert("RGB")
+                draw = ImageDraw.Draw(slide)
+            except Exception as e_selo:
+                print(f"⚠️ Erro ao desenhar emblema no topo (estático): {e_selo}")
+
+        # ── 2. MARCA D'ÁGUA NO RODAPÉ (ignora foto_perfil.png) ──
         y_watermark = H - 150 if tipo in ["story", "story_manha", "story_tarde", "test"] else H - 80
         logo_aplicado = False
-        logo_dir = os.path.join("biblioteca_local", "logo")
         path_logo = ""
         if os.path.exists(logo_dir):
             for f in os.listdir(logo_dir):
-                if f.lower().endswith(".png"):
+                if f.lower().endswith(".png") and f != "foto_perfil.png":
                     path_logo = os.path.join(logo_dir, f)
                     break
         if os.path.exists(path_logo):
@@ -585,30 +625,63 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
                 draw = ImageDraw.Draw(slide)
                 logo_aplicado = True
             except Exception as e:
-                print(f"⚠️ Erro ao aplicar logo no post estático/story: {e}")
+                print(f"⚠️ Erro ao aplicar marca d'água no rodapé (estático): {e}")
 
         if not logo_aplicado:
             font_marca_serif, _, _ = carregar_fontes(48, 24, 24, estilo="Playfair")
             desenhar_marca_dagua_ouro(draw, (W/2, y_watermark), "GUSTAVO_8K_", font_marca_serif)
         
-        linhas = textwrap.wrap(frase, width=24)
-        
+        # ── Proteção de layout: limpa quebras e limita linhas ──
+        # Remove \n que a IA pode gerar erroneamente (concatena num bloco único)
+        frase_limpa = frase.replace("\n", " ").replace("\r", " ").strip()
+        # Limita a 6 linhas máx por imagem para não vazar sobre o emblema/marca d'água
+        MAX_LINHAS = 6
+        linhas_raw = textwrap.wrap(frase_limpa, width=24)
+        if len(linhas_raw) > MAX_LINHAS:
+            linhas = linhas_raw[:MAX_LINHAS]
+            # Adiciona reticências na última linha para indicar truncamento
+            ultima = linhas[-1]
+            if len(ultima) > 20:
+                linhas[-1] = ultima[:20] + "..."
+            else:
+                linhas[-1] = ultima + "..."
+            print(f"⚠️ [Layout] Texto truncado de {len(linhas_raw)} para {MAX_LINHAS} linhas.")
+        else:
+            linhas = linhas_raw
+
+        # Margens seguras: emblema ocupa topo (y=100 a ~320), marca d'água ocupa rodapé
+        Y_MIN_TEXTO = 450       # abaixo do emblema (300px) + folga
+        Y_MAX_TEXTO = H - 280   # acima da marca d'água + folga
+
         if layout_style == "bottom":
             font_display_bot, _, _ = carregar_fontes(42, 24, 24, estilo=estilo_fonte)
-            y_inicial = H - (len(linhas) * 55) - 250
+            espacamento = 55
+            bloco_h = len(linhas) * espacamento
+            y_inicial = H - bloco_h - 250
+            # Garante que não sobe acima do emblema
+            y_inicial = max(y_inicial, Y_MIN_TEXTO)
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * 55), linha, font_display_bot, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display_bot, fill=CORES["texto_principal"], anchor="ms")
                 
         elif layout_style == "quote":
-            y_inicial = (H - (len(linhas) * 60)) / 2 - 100
+            espacamento = 60
+            bloco_h = len(linhas) * espacamento
+            y_inicial = (H - bloco_h) / 2 - 100
+            y_inicial = max(y_inicial, Y_MIN_TEXTO)
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (100, y_inicial + i * 60), linha, font_display, fill=CORES["texto_principal"], anchor="ls")
-            draw.line([(70, y_inicial - 50), (70, y_inicial + len(linhas)*60)], fill=CORES["destaque"], width=8)
+                draw_text_with_shadow(draw, (100, y_inicial + i * espacamento), linha, font_display, fill=CORES["texto_principal"], anchor="ls")
+            draw.line([(70, y_inicial - 50), (70, y_inicial + bloco_h)], fill=CORES["destaque"], width=8)
             
         else:
-            y_inicial = (H - (len(linhas) * 60)) / 2
+            espacamento = 60
+            bloco_h = len(linhas) * espacamento
+            y_inicial = (H - bloco_h) / 2
+            y_inicial = max(y_inicial, Y_MIN_TEXTO)
+            # Garante que o bloco não desce até a marca d'água
+            if y_inicial + bloco_h > Y_MAX_TEXTO:
+                y_inicial = Y_MAX_TEXTO - bloco_h
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * 60), linha, font_display, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display, fill=CORES["texto_principal"], anchor="ms")
             
         _uid = uuid.uuid4().hex
         caminho_imagem = f"story_pronto_{_uid}_{idx}.jpg" if tipo in ["story", "story_manha", "story_tarde", "test"] else f"post_pronto_{_uid}_{idx}.jpg"

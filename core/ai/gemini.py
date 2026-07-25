@@ -98,6 +98,35 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
     dados["_duracao_video"]    = duracao_video
     dados["_subtema"]          = subtema
     dados["_tom_emocional"]    = tom_emocional
+
+    # ── Truncador de segurança para imagens estáticas ──
+    # A IA às vezes gera frases muito longas ignorando o limite pedido no prompt.
+    # Para posts de imagem única (story e story_tarde), limitamos a 20 palavras
+    # para garantir que o texto caiba no layout sem sobrepor o emblema ou a marca d'água.
+    if tipo in ["story", "story_tarde"] and "frase" in dados:
+        frase_val = dados["frase"]
+        if isinstance(frase_val, str):
+            # Remove quebras de linha que a IA pode gerar
+            frase_limpa = frase_val.replace("\n", " ").replace("\r", " ").strip()
+            palavras = frase_limpa.split()
+            if len(palavras) > 20:
+                logger.warning(f"⚠️ [IA] Frase do {tipo} com {len(palavras)} palavras. Truncando para 20.")
+                dados["frase"] = " ".join(palavras[:20]) + "..."
+            else:
+                dados["frase"] = frase_limpa
+        elif isinstance(frase_val, list):
+            # Para listas (story_tarde com 2 frases), limita cada item
+            frases_limpas = []
+            for f in frase_val:
+                f_limpa = str(f).replace("\n", " ").replace("\r", " ").strip()
+                palavras = f_limpa.split()
+                if len(palavras) > 20:
+                    logger.warning(f"⚠️ [IA] Frase do {tipo} (lista) com {len(palavras)} palavras. Truncando para 20.")
+                    frases_limpas.append(" ".join(palavras[:20]) + "...")
+                else:
+                    frases_limpas.append(f_limpa)
+            dados["frase"] = frases_limpas
+
     return dados
 
 def gerar_conteudo_gemini(tipo):

@@ -113,7 +113,7 @@ schedule.every().day.at("09:00").do(run_post, "carousel")
 schedule.every().day.at("12:00").do(run_post, "reels")
 schedule.every().day.at("17:00").do(run_post, "story_tarde")
 schedule.every().day.at("18:00").do(run_post, "reels")
-schedule.every().day.at("19:00").do(run_post, "pexels_story") # B-roll sem narração no horário da noite
+schedule.every().day.at("19:00").do(run_post, "pexels_story_noite") # Storytelling cinematográfico noturno com B-roll
 schedule.every().day.at("22:00").do(run_post, "reels_conquistador") # Conquistador de Público (VSL)
 
 # ==========================================

@@ -16,6 +16,12 @@ ESTILOS_COPY = [
     "Tom motivacional intenso: seja o treinador gritando no ouvido antes da guerra, inflamando a coragem (ex: 'Você nasceu para coisas maiores. Não aceite menos que...')",
     "Tom de revelação científica ou histórica: comece citando um estudo, estatística ou fato histórico desconhecido (ex: 'Estudaram X por 11 anos e concluíram que...')",
     "Tom de polarização direta: divida o público entre quem sabe algo e a massa ignorante (ex: 'A diferença entre quem joga o jogo real e quem fica na ilusão é...')",
+    # ── Novos estilos: cobrem o lado positivo/leve da narrativa ──────────────
+    "Tom de admiração e descoberta: compartilhe algo genuinamente fascinante com entusiasmo real. Não ataque ninguém. Apenas mostre algo incrível (ex: 'Descobri algo que mudou completamente a minha forma de ver...')",
+    "Tom de humor e autoironia: ria com leveza de um padrão humano ridículo que afeta a todos, incluindo você mesmo. Sem apontar o dedo para ninguém (ex: 'A gente faz isso, fica frustrado, jura que não vai repetir, e repete amanhã mesmo.')",
+    "Tom de storytelling puro: narre uma cena real e específica com personagem, ambiente e tensão. Não entregue a moral explicitamente — deixe o leitor tirar sua própria conclusão (ex: 'Às 22h ele olhou para o celular, para a janela, para o teto. Escolheu o celular.')",
+    "Tom de celebração e gratidão: reconheça uma vitória silenciosa do cotidiano como algo extraordinário. Eleve o que parece pequeno (ex: 'Hoje você se levantou, mesmo sem vontade. Isso é mais raro do que parece.')",
+    "Tom de entrega pura de valor: ensine algo concreto e aplicável sem fazer o leitor se sentir errado. Fale como um mentor generoso que quer apenas ajudar (ex: 'Aqui está o que realmente funciona para isso. Sem enrolação.')",
 ]
 
 # ==========================================
@@ -148,6 +154,39 @@ GANCHOS_POR_CATEGORIA = {
         "A diferença entre essas duas pessoas parece pequena, mas muda tudo.",
         "O mesmo problema pode ter duas respostas completamente diferentes.",
         "O que mudou não foi minha vida, foi minha forma de pensar.",
+    ],
+
+    # ── Novos ganchos: sem provocação/dor — quebram o padrão repetitivo ──
+
+    "fato_fascinante": [
+        "Em 1955, um psicólogo descobriu algo que muda tudo sobre isso.",
+        "O animal mais letal do planeta não é o que você imagina.",
+        "Cientistas passaram 30 anos estudando isso. A conclusão é inesperada.",
+        "Existe um padrão histórico que se repete há séculos. Ninguém conta.",
+        "A decisão mais importante de 1 segundo que molda uma vida inteira.",
+        "Um estudo com 10.000 pessoas revelou algo surpreendente sobre felicidade.",
+        "A empresa mais rentável do século XX não fazia o que você imagina.",
+        "Existe um detalhe no seu dia a dia que a neurociência nunca explicou.",
+    ],
+    "historia_sem_moral": [
+        "Às 3h da manhã, ele tomou a decisão que ninguém esperava.",
+        "Ela passou 7 anos acreditando numa mentira que ela mesma criou.",
+        "A cena aconteceu num metrô em 1989. E mudou tudo.",
+        "Ele abriu o notebook, olhou por 40 minutos, não digitou nada. Fechou.",
+        "Era a última vez que ele ia tentar. E ele sabia disso.",
+        "Eles se viram pela última vez numa tarde comum de terça-feira.",
+        "A mensagem ficou três dias em rascunho. Nunca foi enviada.",
+        "Na fila do supermercado, ela percebeu algo que levou anos pra acontecer.",
+    ],
+    "desafio_pratico": [
+        "Faça isso por 7 dias e me conta o que mudou.",
+        "Tente não fazer isso por 48 horas. Mais difícil do que parece.",
+        "Uma pergunta antes de dormir que vai te tirar do automático.",
+        "Escreva isso agora. Duas palavras. E guarde para amanhã.",
+        "Teste: você consegue responder isso honestamente?",
+        "Antes de abrir o próximo aplicativo, responda isso.",
+        "Se você conseguir segurar isso por 72 horas, tudo muda.",
+        "Uma atitude. Hoje. Só uma. O que seria?",
     ],
 }
 
@@ -440,81 +479,81 @@ SENTIMENTOS_CONFIG = {
     # ── Família 1: Desejo & Aspiração (Ideal para inspirar e gerar conexão de alta qualidade)
     "poder": {
         "tom": "Transmita autoridade incansável e domínio das emoções. Use frases firmes e seguras. Fale de auto-maestria.",
-        "busca_imagem": ["mountain climber peak sunrise", "ancient stone castle storm", "eagle flying high mountain", "epic sunset silhouette cliff"],
+        "busca_imagem": ["determined male leader portrait night city golden lights 35mm", "strong artistic portrait person night cityscape deep shadows", "powerful stance person night city golden bokeh cinematic", "intense portrait night city lights Kodak Portra 800"],
         "pasta_audio": "desejo_poder"
     },
     "luxuria": {
         "tom": "Desperte o desejo pelo extraordinário e pelo conhecimento restrito aos 1%. Fale sobre segredos ocultos e exclusividade.",
-        "busca_imagem": ["luxury dark study warm light", "city lights night top view skyscrapers", "glowing gold key velvet", "rich texture shadows gold"],
+        "busca_imagem": ["artistic couple night city lights warm amber glow 35mm", "stylish person night city reflections golden neon mood", "glamour artistic portrait night warm shadows cinematic", "intimate couple night city lighting Kodak Portra 800"],
         "pasta_audio": "desejo_poder"
     },
     "sensualidade": {
         "tom": "Trabalhe com o magnetismo do mistério e o poder do silêncio atraente. Fale com classe, sem vulgaridade.",
-        "busca_imagem": ["warm sunset silhouette shadow", "candle light bedroom dark room", "coffee cup steam soft morning light", "aesthetic smoke mystery"],
+        "busca_imagem": ["artistic portrait person night warm shadow amber light 35mm", "intimate atmosphere couple night city warm lighting", "moody silhouette portrait night golden glow cinematic", "artistic romance night city street lighting 35mm"],
         "pasta_audio": "desejo_poder"
     },
     "prazer": {
         "tom": "Conecte com a satisfação genuína de colher frutos do esforço e viver sob seus próprios termos. Sensação de conquista.",
-        "busca_imagem": ["person walking beach sunset ocean", "relaxing cozy fire cabin rain", "peaceful walk forest sunlight", "person smiling sun rays face"],
+        "busca_imagem": ["joyful person night city rooftop celebrating warm golden light 35mm", "artistic portrait person smiling night city lights warm glow", "happy couple laughing night city street bokeh cinematic", "peaceful contentment person night warm lighting 35mm"],
         "pasta_audio": "desejo_poder"
     },
     "plenitude": {
         "tom": "Foque no alívio de se sentir completo e em paz consigo mesmo. Acabe com a sensação de estar correndo em vão.",
-        "busca_imagem": ["calm ocean surface horizon morning", "zen garden bonsai peaceful", "vast empty desert warm sky", "sunbeams through clouds sky"],
+        "busca_imagem": ["tranquil person contemplating night city skyline golden glow 35mm", "peaceful artistic portrait person night warm ambient light", "serene person looking at night city lights deep shadows", "calm moment person night cityscape Kodak Portra 800"],
         "pasta_audio": "conexao_lealdade"
     },
 
     # ── Família 2: Tensão & Ação (Excelente para engajamento frio, ganchos rápidos de 2s e comentários)
     "escassez": {
         "tom": "Gere senso de urgência e perda de tempo. Chame a atenção para a velocidade com que os anos passam enquanto o leitor hesita.",
-        "busca_imagem": ["hourglass flowing sand macro", "vintage pocket watch shadow", "ticking clock wall shadows", "dark autumn leaves falling"],
+        "busca_imagem": ["person walking alone night city rain golden neon reflections 35mm", "moody portrait person looking at time night cityscape shadows", "thoughtful person night city street rain reflections cinematic", "dramatic portrait night city lights deep shadows 35mm"],
         "pasta_audio": "tensao_acao"
     },
     "raiva": {
         "tom": "Manifeste indignação fria contra a mediocridade, a distração fácil e a hipocrisia social do mundo atual.",
-        "busca_imagem": ["stormy dark sea big waves", "heavy storm lightning clouds", "fire sparks black background", "person screaming silhouette shadow"],
+        "busca_imagem": ["intense determined portrait person night city rain 35mm", "dramatic lighting person night city street deep shadows", "strong emotional portrait person night neon reflections", "intense glare person night cityscape Kodak Portra 800"],
         "pasta_audio": "tensao_acao"
     },
     "medo": {
         "tom": "Toque na dor inconsciente e no perigo de continuar na mesma situação de estagnação por covardia de mudar.",
-        "busca_imagem": ["foggy dark forest path mystery", "shadowy corridor lone light", "rainy window night city light blurred", "empty bench mist park"],
+        "busca_imagem": ["moody portrait person looking back night city street rain 35mm", "vulnerable artistic portrait person night city shadows glow", "person walking alone night city street fog golden light", "dramatic atmosphere person night city bokeh 35mm"],
         "pasta_audio": "tensao_acao"
     },
     "duvida": {
         "tom": "Faça perguntas perturbadoras. Desafie as verdades que o leitor julga inabaláveis. Crie incerteza intelectual.",
-        "busca_imagem": ["misty mountain lake reflection", "foggy street lamp night silhouette", "dusty library bookshelves darkness", "open door light dark room"],
+        "busca_imagem": ["thoughtful person looking at rainy window night city lights 35mm", "contemplative portrait person night city golden shadows", "puzzled artistic portrait person night ambient lighting", "person questioning thoughts night city reflection Kodak Portra"],
         "pasta_audio": "tensao_acao"
     },
     "curiosidade": {
         "tom": "Abra loops mentais com promessas de revelação sobre o comportamento humano. O leitor precisa virar a tela.",
-        "busca_imagem": ["ancient leather book dust", "magnifying glass text map", "brass compass glowing light", "microscope laboratory slide science"],
+        "busca_imagem": ["artistic portrait person reading book under warm night lamp 35mm", "curious person looking at night city lights golden glow", "thoughtful person discovering something night warm lighting", "intimate artistic reading moment night cityscape bokeh"],
         "pasta_audio": "tensao_acao"
     },
 
     # ── Família 3: Conexão & Lealdade (Ideal para Stories e aquecimento de base de seguidores)
     "amor": {
         "tom": "Aborde com altruísmo puro, empatia real e proteção aos valores familiares. O valor do sacrifício por quem se ama.",
-        "busca_imagem": ["warm hands holding together family", "heart shape light shadow", "parents child walking park sunset", "single red rose winter snow"],
+        "busca_imagem": ["warm genuine affectionate hug couple night city lights 35mm", "tender moment couple night golden ambient lighting cinematic", "artistic affection couple night city street Kodak Portra 800", "intimate embrace couple night warm golden bokeh"],
         "pasta_audio": "conexao_lealdade"
     },
     "carinho": {
         "tom": "Fale com tom de proximidade e cuidado de um verdadeiro mentor. Acolha e ofereça suporte prático com calma.",
-        "busca_imagem": ["sleeping puppy kitten warm blanket", "steaming tea mug cozy room", "gentle rain window plants inside", "soft fireplace light wood cabin"],
+        "busca_imagem": ["gentle caring moment couple night warm ambient light 35mm", "affectionate portrait person night city warm golden glow", "tender embrace couple night city lights soft bokeh", "caring mentor comforting person night warm lighting"],
         "pasta_audio": "conexao_lealdade"
     },
     "afeto": {
         "tom": "Mostre a importância das alianças verdadeiras e amizades de aço. Construa pontes emocionais seguras.",
-        "busca_imagem": ["two friends laughing talking street", "warm hug silhouette sunset", "people sitting around campfire", "handshake business partners warm"],
+        "busca_imagem": ["two genuine friends laughing together night city street 35mm", "warm friendship hug night city lights golden bokeh", "intimate human connection night city warm ambient light", "loyal friends talking night city street Kodak Portra"],
         "pasta_audio": "conexao_lealdade"
     },
     "alegria": {
         "tom": "Celebre vitórias reais, a beleza da natureza e a felicidade sincera de viver com propósito.",
-        "busca_imagem": ["sunflower field golden hour", "glorious waterfall sun rays", "person jumping freedom mountain peak", "bright green forest summer morning"],
+        "busca_imagem": ["joyful person laughing night city street golden lights 35mm", "happy group friends celebrating night city rooftop glow", "radiant smile person night city bokeh cinematic", "cheerful moment person night cityscape warm lighting"],
         "pasta_audio": "conexao_lealdade"
     },
     "esperanca": {
         "tom": "Mostre que mesmo na noite mais escura, a alvorada virá. Dê perspectivas positivas de crescimento real.",
-        "busca_imagem": ["sun rays breaking through storm clouds", "green plant growing crack concrete", "light at the end of tunnel", "starry sky clear night desert"],
+        "busca_imagem": ["hopeful person looking up night city golden lights 35mm", "inspiring portrait young person night city light reflection", "optimistic look person night cityscape warm amber glow", "bright hope person night city street Kodak Portra 800"],
         "pasta_audio": "conexao_lealdade"
     }
 }
