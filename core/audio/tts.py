@@ -1,126 +1,163 @@
 """
 Módulo de Geração de Voz Neural / Narração por IA (core/audio/tts.py)
 
-Mecanismo em Cascata Inteligente:
-1. Prioridade 1: ElevenLabs API (Voz Neural de Altíssima Fidelidade com ID configurado)
-2. Fallback 2: Microsoft Edge TTS (Voz Neural pt-BR-AntonioNeural 100% gratuita e sem limite)
+Mecanismo em Cascata Inteligente de 3 Níveis:
+  1. ElevenLabs Conta 1 (Primária)  — chave/voz ELEVENLABS_API_KEY / ELEVENLABS_VOICE_ID
+  2. ElevenLabs Conta 2 (Backup)    — chave/voz ELEVENLABS_API_KEY_2 / ELEVENLABS_VOICE_ID_2
+  3. Microsoft Edge TTS (Gratuito e Ilimitado) — pt-BR-AntonioNeural
 """
 
 import os
-import requests
 import uuid
 import asyncio
+import requests
 from loguru import logger
-from core.config.settings import ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID
 
-VOICE_ID_PADRAO = ELEVENLABS_VOICE_ID or "ulzsiMeCbfKyTPCNhCD5"
+from core.config.settings import (
+    ELEVENLABS_API_KEY,  ELEVENLABS_VOICE_ID,
+    ELEVENLABS_API_KEY_2, ELEVENLABS_VOICE_ID_2,
+)
 
-def gerar_narracao_elevenlabs(texto, voice_id=None, caminho_saida=None):
-    """
-    Gera narração via API oficial do ElevenLabs.
-    """
-    if not ELEVENLABS_API_KEY:
-        logger.warning("⚠️ ELEVENLABS_API_KEY não configurada. Alternando para fallback gratuito.")
-        return None
+# ---------------------------------------------------------------------------
+# Auxiliares internos
+# ---------------------------------------------------------------------------
 
-    vid = voice_id or VOICE_ID_PADRAO
-    if not caminho_saida:
-        os.makedirs("midia_temp", exist_ok=True)
-        caminho_saida = f"midia_temp/narracao_elevenlabs_{uuid.uuid4().hex[:8]}.mp3"
-
-    url = f"https://api.elevenlabs.io/v1/text-to-speech/{vid}"
+def _chamar_elevenlabs(api_key: str, voice_id: str, texto: str, caminho_saida: str) -> str | None:
+    """Faz a requisição HTTP ao ElevenLabs e salva o .mp3. Retorna o caminho ou None."""
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
     headers = {
         "Accept": "audio/mpeg",
         "Content-Type": "application/json",
-        "xi-api-key": ELEVENLABS_API_KEY
+        "xi-api-key": api_key,
     }
     payload = {
         "text": texto,
         "model_id": "eleven_multilingual_v2",
         "voice_settings": {
-            "stability": 0.5,
+            "stability": 0.50,
             "similarity_boost": 0.75,
-            "style": 0.3,
-            "use_speaker_boost": True
-        }
+            "style": 0.30,
+            "use_speaker_boost": True,
+        },
     }
-
     try:
-        logger.info(f"🎙️ [ElevenLabs] Gerando narração por voz (Voice ID: {vid})...")
-        response = requests.post(url, json=payload, headers=headers, timeout=30)
-        
+        response = requests.post(url, json=payload, headers=headers, timeout=35)
+
         if response.status_code == 200:
+            os.makedirs(os.path.dirname(caminho_saida) or ".", exist_ok=True)
             with open(caminho_saida, "wb") as f:
                 f.write(response.content)
-            logger.success(f"✅ Narração ElevenLabs salva em: {caminho_saida}")
-            return caminho_saida
-        else:
-            logger.warning(f"⚠️ Resposta da API ElevenLabs (Status {response.status_code}): {response.text}")
+            if os.path.getsize(caminho_saida) > 0:
+                return caminho_saida
+            logger.warning("⚠️ ElevenLabs retornou arquivo de áudio vazio.")
             return None
+
+        # Cota esgotada: código 429 ou mensagem de quota
+        if response.status_code in (429, 401) or "quota" in response.text.lower():
+            logger.warning(
+                f"⚠️ ElevenLabs cota/limite atingido (HTTP {response.status_code}). "
+                "Passando para o próximo nível..."
+            )
+        else:
+            logger.warning(
+                f"⚠️ ElevenLabs HTTP {response.status_code}: {response.text[:120]}"
+            )
+        return None
+
     except Exception as e:
-        logger.error(f"❌ Erro ao conectar à API ElevenLabs: {e}")
+        logger.error(f"❌ Exceção ao chamar ElevenLabs: {e}")
         return None
 
 
-async def _gerar_edge_tts_async(texto, caminho_saida, voz="pt-BR-AntonioNeural"):
-    """Função assíncrona auxiliar para o Edge TTS."""
+async def _edge_tts_async(texto: str, caminho: str, voz: str = "pt-BR-AntonioNeural"):
     import edge_tts
     communicate = edge_tts.Communicate(texto, voz)
-    await communicate.save(caminho_saida)
+    await communicate.save(caminho)
 
 
-def gerar_narracao_edge_tts(texto, caminho_saida=None, voz="pt-BR-AntonioNeural"):
-    """
-    Gera narração gratuita usando a biblioteca edge-tts (Microsoft Azure Neural Voices).
-    """
-    if not caminho_saida:
-        os.makedirs("midia_temp", exist_ok=True)
-        caminho_saida = f"midia_temp/narracao_edge_{uuid.uuid4().hex[:8]}.mp3"
-
+def _gerar_edge_tts(texto: str, caminho_saida: str, voz: str = "pt-BR-AntonioNeural") -> str | None:
+    """Gera narração usando Microsoft Edge TTS (gratuito e sem limite de uso)."""
     try:
-        logger.info(f"🎙️ [Edge-TTS] Gerando narração com voz neural ({voz})...")
         try:
-            asyncio.run(_gerar_edge_tts_async(texto, caminho_saida, voz=voz))
+            asyncio.run(_edge_tts_async(texto, caminho_saida, voz=voz))
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            loop.run_until_complete(_gerar_edge_tts_async(texto, caminho_saida, voz=voz))
+            loop.run_until_complete(_edge_tts_async(texto, caminho_saida, voz=voz))
 
         if os.path.exists(caminho_saida) and os.path.getsize(caminho_saida) > 0:
-            logger.success(f"✅ Narração Edge-TTS salva em: {caminho_saida}")
             return caminho_saida
     except Exception as e:
-        logger.warning(f"⚠️ Erro no Edge-TTS (verifique se a lib 'edge-tts' está instalada): {e}")
-    
+        logger.warning(
+            f"⚠️ Edge-TTS falhou (verifique se 'edge-tts' está instalado: pip install edge-tts): {e}"
+        )
     return None
 
 
-def gerar_audio_narracao(texto, voice_id=None, caminho_saida=None):
-    """
-    Função Principal de Áudio em Cascata:
-    1º Tenta ElevenLabs
-    2º Tenta Edge-TTS (Microsoft Neural Gratuito)
-    """
-    # Garante que o texto é limpo para áudio
-    if isinstance(texto, list):
-        texto_limpo = " ".join(str(x) for x in texto if x)
-    else:
-        texto_limpo = str(texto)
+# ---------------------------------------------------------------------------
+# Função pública principal
+# ---------------------------------------------------------------------------
 
-    texto_limpo = texto_limpo.replace("\n", " ").strip()
+def gerar_audio_narracao(texto, voice_id: str | None = None, caminho_saida: str | None = None) -> str | None:
+    """
+    Gera narração em cascata:
+      Nível 1 → ElevenLabs Conta 1
+      Nível 2 → ElevenLabs Conta 2
+      Nível 3 → Edge-TTS Microsoft (gratuito e ilimitado)
+
+    Parâmetros:
+      texto        : str ou list[str] com o texto a narrar.
+      voice_id     : sobrescreve o voice_id padrão da conta 1 (opcional).
+      caminho_saida: caminho do .mp3 de saída (opcional; gerado automaticamente).
+
+    Retorna o caminho do arquivo de áudio gerado, ou None se tudo falhar.
+    """
+    # Normaliza texto
+    if isinstance(texto, list):
+        texto_limpo = " ".join(str(x) for x in texto if x).strip()
+    else:
+        texto_limpo = str(texto).replace("\n", " ").strip()
+
     if not texto_limpo:
+        logger.warning("⚠️ Texto vazio para narração. Pulando.")
         return None
 
-    # Tenta 1: ElevenLabs
-    audio_path = gerar_narracao_elevenlabs(texto_limpo, voice_id=voice_id, caminho_saida=caminho_saida)
-    if audio_path and os.path.exists(audio_path):
-        return audio_path
+    os.makedirs("midia_temp", exist_ok=True)
+    uid = uuid.uuid4().hex[:8]
 
-    # Tenta 2: Edge-TTS (Fallback Gratuito)
-    logger.info("🔄 Ativando Fallback de voz neural gratuita (Edge-TTS)...")
-    audio_path_fallback = gerar_narracao_edge_tts(texto_limpo, caminho_saida=caminho_saida)
-    if audio_path_fallback and os.path.exists(audio_path_fallback):
-        return audio_path_fallback
+    # ── Nível 1: ElevenLabs Conta 1 ────────────────────────────────────────
+    if ELEVENLABS_API_KEY:
+        vid1 = voice_id or ELEVENLABS_VOICE_ID
+        saida1 = caminho_saida or f"midia_temp/narracao_el1_{uid}.mp3"
+        logger.info(f"🎙️ [Nível 1] ElevenLabs Conta 1 — Voice ID: {vid1}")
+        resultado = _chamar_elevenlabs(ELEVENLABS_API_KEY, vid1, texto_limpo, saida1)
+        if resultado:
+            logger.success("✅ Narração gerada com sucesso via ElevenLabs Conta 1.")
+            return resultado
+        logger.info("🔄 Conta 1 falhou. Ativando Conta 2...")
+    else:
+        logger.warning("⚠️ ELEVENLABS_API_KEY não configurada. Pulando Conta 1.")
 
-    logger.error("❌ Todas as tentativas de geração de narração falharam.")
+    # ── Nível 2: ElevenLabs Conta 2 ────────────────────────────────────────
+    if ELEVENLABS_API_KEY_2:
+        vid2 = ELEVENLABS_VOICE_ID_2
+        saida2 = f"midia_temp/narracao_el2_{uid}.mp3"
+        logger.info(f"🎙️ [Nível 2] ElevenLabs Conta 2 (Backup) — Voice ID: {vid2}")
+        resultado = _chamar_elevenlabs(ELEVENLABS_API_KEY_2, vid2, texto_limpo, saida2)
+        if resultado:
+            logger.success("✅ Narração gerada com sucesso via ElevenLabs Conta 2.")
+            return resultado
+        logger.info("🔄 Conta 2 também falhou. Ativando fallback gratuito (Edge-TTS)...")
+    else:
+        logger.warning("⚠️ ELEVENLABS_API_KEY_2 não configurada. Pulando Conta 2.")
+
+    # ── Nível 3: Microsoft Edge TTS (gratuito e ilimitado) ──────────────────
+    saida3 = f"midia_temp/narracao_edge_{uid}.mp3"
+    logger.info("🎙️ [Nível 3] Microsoft Edge TTS — pt-BR-AntonioNeural (gratuito)")
+    resultado = _gerar_edge_tts(texto_limpo, saida3)
+    if resultado:
+        logger.success("✅ Narração gerada via Edge-TTS (fallback gratuito).")
+        return resultado
+
+    logger.error("❌ Todos os 3 níveis de narração falharam. Vídeo ficará sem narração.")
     return None
