@@ -850,7 +850,7 @@ def gerar_conteudo_gemini(tipo):
            - ÚLTIMO SLIDE (Convite Único ao Perfil - 1 slide): Faça um ÚNICO convite elegante e autoral direcionando para o topo do perfil (ex: "O caminho completo te espera no link principal do meu perfil."). É PROIBIDO repetir a palavra 'link' ou 'bio' mais de uma única vez no vídeo inteiro.
 
 
-        PEXELS QUERY: Escolha buscas em inglês que criem uma atmosfera cinematográfica de acordo com o sentimento do dia "{sentimento_escolhido}". Ex: 'cinematic mysterious city', 'dark elegant texture', 'warm candlelight'.
+        PEXELS QUERY: Escolha buscas em inglês que criem uma atmosfera cinematográfica de disciplina noturna, foco e superação de acordo com o sentimento do dia "{sentimento_escolhido}". Ex: 'focused person studying late night warm lamp', 'athlete training night intense focus', 'determined person working late night city lights'.
         
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
@@ -858,7 +858,7 @@ def gerar_conteudo_gemini(tipo):
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
-        As queries devem evocar aprendizado, foco, profissionalismo e crescimento pessoal: pessoa lendo, escrevendo, estudando, café na mesa, livros, cadernos, janela com luz natural, escritório clean. NUNCA natureza épica ou ambiente noturno.
+        As queries devem evocar DISCIPLINA NOTURNA, FOCO ABSOLUTO E SUPERAÇÃO: pessoa estudando/escrevendo até tarde sob luz de luminária quente, treino noturno intenso, corrida noturna na cidade sob luzes néon/âmbar, foco compenetrado na madrugada, superação e esforço no silêncio da noite. NUNCA vídeos alegres de praia, natureza genérica de dia ou café da manhã casual.
 
         Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 25 a 35 frases curtas):
         {{
@@ -869,9 +869,9 @@ def gerar_conteudo_gemini(tipo):
             "..."
           ],
           "pexels_queries": [
-            "person writing notebook focused desk",
-            "open books library warm light study",
-            "professional coffee window morning calm"
+            "focused person studying late night warm lamp light",
+            "athlete training night intense focus amber glow",
+            "determined person writing notebook night silence"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}

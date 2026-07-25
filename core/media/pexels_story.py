@@ -672,13 +672,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 if os.path.exists(path_selo):
                     try:
                         selo_img = Image.open(path_selo).convert("RGBA")
-                        largura_selo = 300
+                        largura_selo = int(w * (300 / 1080))
                         aspect = selo_img.height / selo_img.width
                         altura_selo = int(largura_selo * aspect)
                         selo_redim = selo_img.resize((largura_selo, altura_selo), Image.Resampling.LANCZOS)
 
                         x_selo = int((w - largura_selo) / 2)
-                        y_selo = int(100 * fator_escala)
+                        y_selo = int(h * (100 / 1920))
 
                         img.paste(selo_redim, (x_selo, y_selo), selo_redim)
                     except Exception as e_selo:
