@@ -780,81 +780,72 @@ def gerar_conteudo_gemini(tipo):
                 logger.warning(f"Erro ao obter titulo e solucao do PDF: {e}")
 
         prompt = f"""
-        Você é um mentor de desenvolvimento pessoal e contador de histórias focado em gerar conexão profunda, confiança e atração de leads.
-        Sua missão é criar um vídeo longo (2:30 a 3:00) focado em capturar leads através da entrega de um material prático em PDF 100% gratuito.
-        O roteiro usará a Técnica Psicológica do Usopp (10 fases), mas com uma pegada sinestésica e emocional guiada pelas variáveis do dia.
+        Você é um especialista em captação de leads por vídeo curto no Instagram.
+        Sua missão é criar um TRAILER MAGNÉTICO de 3 a 5 slides que funcione como uma isca irresistível para o PDF gratuito.
+        O objetivo é simples: fazer quem assiste querer o PDF e clicar no link da bio.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
         {evitar_repeticao_leads}
 
-        ==== CONTEÚDO BASE PARA O VÍDEO (EXTRAÍDO DO ÚLTIMO PDF GERADO) ====
+        ==== CONTEÚDO BASE (EXTRAÍDO DO ÚLTIMO PDF GERADO) ====
         {resumo_pdf}
-        ======================================================================
-        
-        INSTRUÇÃO CRUCIAL:
-        1. O vídeo inteiro funciona estritamente como um "trailer cinematográfico e magnético" para o PDF gerado. O título do PDF é "{titulo_pdf_limpo}" e a solução principal é "{solucao_pdf_limpo}".
-        2. O gancho inicial (Fase 1) DEVE atacar de forma visceral a dor/problema citada no resumo, usando a estrutura do gancho sorteado para hoje.
-        3. FASE 9 (Desejo) e FASE 10 (Convite e CTA) DEVEM se conectar de forma cirúrgica com a transformação e a promessa do PDF, de forma leve, focando em ajuda real, sem parecer anúncio de vendas.
-        4. O CTA deve deixar claro que preparamos um material exclusivo e gratuito para ajudar no passo a passo completo discutido no vídeo, direcionando o usuário de forma elegante para o link na bio.
+        ======================================================
 
+        ESTRUTURA OBRIGATÓRIA — TRAILER DE ALTA CONVERSÃO (3 A 5 SLIDES):
 
-        CRIE UM ROTEIRO LONGO COM 25 A 35 SLIDES seguindo OBRIGATORIAMENTE este funil de 10 Fases:
+        SLIDE 1 — GANCHO VISCERAL (obrigatório):
+        - Ataque a dor principal do PDF de forma direta e cirúrgica.
+        - Use a estrutura do gancho de referência de hoje: "{gancho}" (formato: {descricao_categoria}).
+        - Máximo 12 palavras. Frase que para o scroll imediatamente.
+        - NÃO mencione PDF, link, bio ou material aqui.
 
-        FASE 1 — INTERRUPÇÃO DO PADRÃO (Pattern Interrupt) - Slides 1 a 3:
-        Abra o Slide 1 e 2 usando a ESTRUTURA DO GANCHO DE REFERÊNCIA de hoje: "{gancho}" (formato: {descricao_categoria}).
-        Adapte a estrutura do gancho ao assunto do PDF de hoje de forma impactante, natural e provocativa para parar o scroll. Não ofereça nada ainda.
+        SLIDE 2 — APROFUNDAMENTO DA DOR (obrigatório):
+        - Aprofunde a dor do Slide 1. Crie o loop de curiosidade.
+        - Deixe o espectador pensando: "como eu resolvo isso?" sem dar a resposta ainda.
+        - Máximo 15 palavras. Tom íntimo e empático.
 
-        FASE 2 — CURIOSIDADE (Curiosity Gap) - Slides 4 a 6:
-        Crie tensão e deixe perguntas sem resposta. Aumente o mistério. O leitor precisa querer ver os próximos slides.
+        SLIDE 3 — A SOLUÇÃO EXISTE (obrigatório):
+        - Revele que existe uma solução simples e prática.
+        - Conecte com a promessa do PDF: "{titulo_pdf_limpo}" — a transformação que ele traz.
+        - Máximo 15 palavras. Tom esperançoso e direto.
 
-        FASE 3 — AUMENTO DA TENSÃO - Slides 7 a 9:
-        Não entregue a resposta cedo. Aumente a expectativa. A dor começa a se formar.
+        SLIDE 4 — QUEBRA DE OBJEÇÃO (opcional, use se quiser 4 ou 5 slides):
+        - Destrua a principal desculpa ou dúvida de quem ainda hesita.
+        - Exemplo de tom: "Não precisa de experiência. Só de disposição."
+        - Máximo 12 palavras.
 
-        FASE 4 — CRIAÇÃO DO PROBLEMA - Slides 10 a 12:
-        Mostre a dor oculta e profunda da audiência. Eles não sabiam que precisavam de algo, agora precisam.
-        INTRUÇÃO EMOCIONAL: Construa essa dor baseando-se fortemente no SENTIMENTO DO DIA sorteado: "{sentimento_escolhido}". Descreva a angústia ou o erro habitual sob a ótica desse sentimento.
+        ÚLTIMO SLIDE — CTA ELEGANTE (obrigatório, sempre o slide final):
+        - Convite único, suave e autoral para acessar o material gratuito.
+        - PROIBIDO usar as palavras "baixe", "clique", "anúncio", "compre".
+        - Conecte o convite à transformação do PDF de forma natural.
+        - Exemplo de tom: "Estruturei o caminho completo para você. O acesso gratuito está no link do meu perfil."
+        - Máximo 15 palavras.
 
-        FASE 5 — SOLUÇÃO - Slides 13 a 15:
-        Apresente a ideia da solução no momento de maior tensão. O alívio imediato.
-
-        FASE 6 — DEMONSTRAÇÃO - Slides 16 a 18:
-        Demonstre visualmente (em palavras) como essa solução age na vida prática. Elimine objeções.
-
-        FASE 7 — AUTORIDADE - Slides 19 a 21:
-        Explique o porquê de funcionar. Só explique depois de demonstrar. Seja o especialista/mentor.
-
-        FASE 8 — PROVA SOCIAL - Slides 22 a 24:
-        Mostre que pessoas normais estão alcançando resultados. Reduza o risco e o medo da mudança.
-
-        FASE 9 — DESEJO - Slides 25 a 27:
-        Foque na transformação de vida. A pessoa não quer um arquivo PDF, ela quer a paz ou o resultado prático que ele traz.
-
-        FASE 10 — CONVITE E CTA - EXATAMENTE NOS 2 ÚLTIMOS SLIDES DO ARRAY (Slides N-1 e N):
-        REGRAS RIGOROSAS E INVIOLÁVEIS DO CONVITE:
-        1. PROIBIÇÃO ABSOLUTA DE REPETIÇÃO: Nos slides de 1 até o antepenúltimo, é ESTRITAMENTE PROIBIDO mencionar palavras como 'link', 'bio', 'material', 'acessar', 'PDF', 'guia' ou fazer qualquer convite antecipado. Todo o miolo do vídeo deve ser 100% conteúdo e história.
-        2. A FASE 10 DEVE TER EXATAMENTE 2 SLIDES NO FINAL:
-           - PENÚLTIMO SLIDE (Entrega de Valor - 1 slide): Fale como um palestrante generoso entregando uma ferramenta prática (ex: "Estruturei um plano de ação simples para você aplicar isso na sua rotina."). NUNCA use termos comerciais como "baixe o PDF", "manual", "pegue seu arquivo".
-           - ÚLTIMO SLIDE (Convite Único ao Perfil - 1 slide): Faça um ÚNICO convite elegante e autoral direcionando para o topo do perfil (ex: "O caminho completo te espera no link principal do meu perfil."). É PROIBIDO repetir a palavra 'link' ou 'bio' mais de uma única vez no vídeo inteiro.
-
+        REGRAS ABSOLUTAS:
+        * Máximo de 15 palavras por slide.
+        * PROIBIDO mencionar PDF, link ou bio antes do último slide.
+        * NÃO use ponto de exclamação.
+        * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
 
         PEXELS QUERY: Escolha buscas em inglês que criem uma atmosfera cinematográfica de disciplina noturna, foco e superação de acordo com o sentimento do dia "{sentimento_escolhido}". Ex: 'focused person studying late night warm lamp', 'athlete training night intense focus', 'determined person working late night city lights'.
         
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
-        - CTA OBRIGATÓRIO NA LEGENDA: Crie uma frase sutil convidando para acessar o Link na Bio de forma amigável (ex: "Se você quer dar o próximo passo, o link para acessar o material completo está na bio. Fique à vontade para ler.").
+        - CTA OBRIGATÓRIO NA LEGENDA: Crie uma frase sutil convidando para acessar o Link na Bio de forma amigável (ex: "Se você quer dar o próximo passo, o material completo está na bio. Fique à vontade para acessar.").
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
         As queries devem evocar DISCIPLINA NOTURNA, FOCO ABSOLUTO E SUPERAÇÃO: pessoa estudando/escrevendo até tarde sob luz de luminária quente, treino noturno intenso, corrida noturna na cidade sob luzes néon/âmbar, foco compenetrado na madrugada, superação e esforço no silêncio da noite. NUNCA vídeos alegres de praia, natureza genérica de dia ou café da manhã casual.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 25 a 35 frases curtas):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases curtas, sendo o ÚLTIMO sempre o CTA):
         {{
           "slides": [
-            "Texto da Cena 1 (Gancho adaptado)",
-            "Texto da Cena 2",
-            "Texto da Cena 3",
-            "..."
+            "Slide 1 (Gancho visceral — a dor em 1 frase)",
+            "Slide 2 (Aprofundamento da dor / loop de curiosidade)",
+            "Slide 3 (A solução existe — promessa de transformação)",
+            "Slide 4 (Quebra de objeção — opcional)",
+            "Slide 5 (CTA elegante — link do perfil)"
           ],
           "pexels_queries": [
             "focused person studying late night warm lamp light",
