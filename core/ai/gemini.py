@@ -568,24 +568,43 @@ def gerar_conteudo_gemini(tipo):
 
     elif tipo == "pexels_story":
         prompt = f"""
-        Você é um roteirista autoral de storytelling cinematográfico de altíssimo nível para o Instagram.
-        Sua missão é criar uma história em vídeo B-roll cativante, elegante e profundamente humana, que desperte admiração e prendam a atenção imediatamente.
+        Você é um roteirista de storytelling de alta conversão para o Instagram.
+        Sua missão é criar uma narrativa em slides que PRENDA a atenção desde a primeira frase e conduza o espectador por uma jornada emocional completa.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        PROIBIÇÕES E REGRAS DE ANTI-CLICHÊ:
-        - É ESTRITAMENTE PROIBIDO usar frases genéricas batidas como "A maioria das pessoas erra", "Você faz isso sem perceber" ou "Trabalhar mais não é a resposta".
-        - Crie uma abertura autêntica, poética, instigante ou baseada em uma observação rica da vida real.
+        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 SLIDES) =====
 
-        ESTRUTURA DA NARRATIVA (3 A 4 SLIDES FLUÍDOS E ELEGANTES):
-        - Slide 1 (GANCHO VISCERAL E CINEMATOGRÁFICO): Abra com uma frase impactante, elegante e provocativa que interrompa a rolagem do feed. Não use clichês de autoajuda.
-        - Slides Intermediários (1 a 2 slides): Aprofunde a narrativa trazendo uma metáfora marcante, um insight dos livros ou um ponto de virada sobre maturidade e paz interior.
-        - Slide Final (OBRIGATÓRIO - CTA ELEGANTE): Conclua com um convite natural e magnético para acompanhar a jornada ou compartilhar sua percepção nos comentários.
+        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO VISCERAL (OBRIGATÓRIO):
+        Esta frase PARA o feed imediatamente. Ela precisa fazer o leitor sentir: "É exatamente eu."
+        Use UMA destas fórmulas (não copie, crie uma versão inédita conectada ao tema do dia):
+        - Confissão de identidade: "Eu era aquela pessoa que..." / "Durante anos eu acreditei que..."
+        - Ruptura de crença: "Sempre pensei que trabalhando mais, chegaria lá. Até entender que estava errado."
+        - Provocação de reconhecimento: "Você acorda todo dia pra fazer tudo de novo... e onde isso está te levando?"
+        - Eco de tentativa: "Eu sei que você já tentou. A questão é: funcionou?"
+        REGRA: Máximo 12 palavras. Primeira pessoa ou segunda pessoa direta. Sem jargões de coach.
 
-        RITMO DA NARRAÇÃO:
-        - Cada slide deve ter de 10 a 20 palavras bem construídas, com excelente ritmo para narração por voz.
-        - Evite frases robóticas ou curtas demais que soem vazias.
+        SLIDE 2 — EMPATIA COM O PROBLEMA (OBRIGATÓRIO):
+        Agora você CONECTA com a dor do dia a dia. Mostre que entende COMO É viver aquela luta.
+        - "Eu sei como é acordar cansado de uma rotina que parece não levar a lugar nenhum."
+        - "A sensação de estar sempre correndo, mas nunca chegando onde queria estar."
+        - Descreva o problema de forma específica, cotidiana e reconhecível. Nada genérico.
+        - Finalize com uma virada sutil: "Mas tem uma coisa que mudou tudo pra mim."
+        REGRA: 15 a 25 palavras. Tom íntimo, humano e empático.
+
+        SLIDE 3 — A SOLUÇÃO (OBRIGATÓRIO):
+        Aqui você entrega a virada de mentalidade, o insight prático ou a lição dos livros.
+        - Apresente a solução de forma simples, clara e aplicável.
+        - Use a sabedoria do tema para mostrar o caminho concreto.
+        - Deve soar como uma descoberta genuína, não como conselho vazio.
+        REGRA: 15 a 25 palavras. Tom de revelação e clareza.
+
+        SLIDE 4 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
+        Convite natural e fluido para seguir o perfil ou comentar. Conectado ao que foi dito.
+        - Não use jargões de vendas ou pressão.
+        - Exemplos de tom: "Se isso fez sentido pra você, me segue. Tem muito mais por aqui."
+        REGRA: Máximo 15 palavras. Tom pessoal, não comercial.
 
         PEXELS QUERY:
         - Escolha buscas em inglês para vídeos B-roll evocativos, naturais e cinematográficos (luz matinal, natureza, parques, água, trilhas, luz solar).
@@ -598,10 +617,10 @@ def gerar_conteudo_gemini(tipo):
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Frase do Slide 1 (Gancho cinematográfico instigante)",
-            "Frase do Slide 2 (Virada de perspectiva / sabedoria prática)",
-            "Frase do Slide 3 (Insight / Reflexão visceral)",
-            "Frase do Slide 4 (CTA elegante de convite ao perfil)"
+            "Slide 1 — Gancho de identificação visceral (máx 12 palavras)",
+            "Slide 2 — Empatia com o problema + virada sutil",
+            "Slide 3 — A solução / insight prático",
+            "Slide 4 — CTA elegante e pessoal"
           ],
           "pexels_queries": [
             "golden sunrise meadow mist peaceful",
@@ -613,24 +632,37 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "reels_noite":
         prompt = f"""
-        Você é um mestre da psicologia de encerramento de dia, criando reflexões noturnas de transição e desaceleração mental.
-        O seu Reels vai ao ar às 18:00 — o momento em que as pessoas encerram o expediente e começam a refletir sobre o peso do dia.
+        Você é um roteirista de storytelling para o Instagram especializado no horário das 18h — quando as pessoas estão saindo do trabalho, exaustas, e ainda sem uma resposta pra o dia.
+        Sua missão é criar uma narrativa em slides que PRENDA do primeiro ao último segundo.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        PROIBIÇÕES ANTI-REPETIÇÃO:
-        - NUNCA use clichês engessados como "Você trabalhou 9 horas hoje", "O dia acabou, você sobreviveu?" ou perguntas agressivas vazias.
-        - Adapte o gancho de referência: '{gancho}' de forma totalmente inédita e autoral.
+        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 A 5 SLIDES) =====
 
-        ESTRUTURA DA NARRATIVA (3 A 5 SLIDES CINEMATOGRÁFICOS):
-        - Slide 1 (ABERTURA INTENSA DAS 18H): Uma reflexão madura, calma e profunda sobre o ritmo acelerado da vida, a busca por paz ou a necessidade de desacelerar.
-        - Slides Intermediários (1 a 3 slides): O contraste entre a correria externa e a serenidade interna, revelando a sabedoria dos livros de forma elegante e prática.
-        - Slide Final (OBRIGATÓRIO - CTA SUTIL): Chamada elegante e nobre para fazer parte da comunidade do perfil.
+        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO NOTURNA (OBRIGATÓRIO):
+        Uma frase curta e impactante que o leitor sente como "isso sou eu".
+        Use o gancho de referência: '{gancho}' apenas como energia. Crie algo 100% original.
+        Fórmulas de impacto (não copie, recrie com o tema):
+        - "Você está exausto de novo. E amanhã vai ser igual."
+        - "Eu ficava chegando em casa sem saber por que ainda estava lutando."
+        - "Mais um dia entregue. O que ficou pra você?"
+        REGRA: Máximo 10 palavras. Precisa parar o scroll instantaneamente.
 
-        RITMO E DICÇÃO:
-        - Cada frase deve ter ritmo de leitura fluido, entre 10 e 20 palavras por slide.
-        - Frases ricas, profundas e satisfatórias de escutar em formato de áudio.
+        SLIDE 2 — EMPATIA COM O PROBLEMA DO DIA A DIA (OBRIGATÓRIO):
+        Conecte com a luta real: a sensação de trabalhar muito e não ver resultado, de estar presente sem estar, de dar pra todo mundo e não sobrar nada pra si.
+        Mostre que ENTENDE como é. Seja específico e humano.
+        Finalize com a abertura para a solução: "Mas existe uma saída."
+        REGRA: 15 a 25 palavras. Tom de quem já passou por isso.
+
+        SLIDE 3 — A SOLUÇÃO / VIRADA DE MENTALIDADE (OBRIGATÓRIO):
+        Entregue o insight real, a lição prática dos livros, o caminho concreto.
+        Mostre a solução de forma clara, simples e aplicável à vida real.
+        REGRA: 15 a 25 palavras. Tom de revelação genuína.
+
+        SLIDE 4/5 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
+        Convite sutil e fluido para seguir o perfil. Conectado com o que foi dito.
+        REGRA: Máximo 15 palavras. Tom pessoal e caloroso.
 
         LEGENDA:
         - Máximo 3 linhas. Tom maduro, sereno e reflexivo.
@@ -640,30 +672,46 @@ def gerar_conteudo_gemini(tipo):
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 (Gancho reflexivo das 18h)",
-            "Slide 2 (Aprofundamento da sabedoria / contraste humano)",
-            "Slide 3 (Lição de vida visceral)",
-            "Slide 4 (CTA elegante)"
+            "Slide 1 — Gancho de identificação noturna (máx 10 palavras)",
+            "Slide 2 — Empatia com o problema + abertura da solução",
+            "Slide 3 — A solução / virada de mentalidade",
+            "Slide 4 — CTA elegante e pessoal"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-        Você é um autor de storytelling noturno cinematográfico focado em paz mental, acalento e sabedoria de vida.
-        Sua missão é criar uma narrativa magnética em slides para o final da noite (19h/21h), convidando o leitor ao silêncio produtivo.
+        Você é um roteirista de storytelling noturno para o Instagram. Horário: 19h-21h.
+        Sua missão é criar uma narrativa em slides que conecte emocionalmente com quem está encerrando o dia e buscando sentido no silêncio da noite.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        PROIBIÇÕES E QUALIDADE NARRATIVA:
-        - Evite narrativas clichês ou superficiais. Use metáforas marcantes e imagens mentais reconfortantes.
-        - Adapte o gancho de referência: '{gancho}' com sensibilidade e elegância autoral.
+        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 A 5 SLIDES) =====
 
-        ESTRUTURA DA NARRATIVA (3 A 5 SLIDES CONECTADOS):
-        - Slide 1 (ACOLHIMENTO E SILÊNCIO): Descreva o momento da noite, o silêncio que revela o que estava escondido pelo barulho do dia.
-        - Slides Intermediários (1 a 3 slides): A iluminação trazida pela sabedoria, o alívio de deixar ir o que não podemos controlar e o valor da lealdade e paz.
-        - Slide Final (OBRIGATÓRIO - CTA NOTURNO): Encerramento acolhedor convidando o leitor a acompanhar o perfil para cultivar a mente em paz.
+        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO NOTURNA (OBRIGATÓRIO):
+        Uma frase curta que toca a ferida do fim do dia — cansaço, rotina, busca por mais.
+        Adapte o gancho de referência: '{gancho}' com sensibilidade e autenticidade.
+        Fórmulas de impacto (crie uma versão original):
+        - "Você deita e ainda não sabe se está indo pro lugar certo."
+        - "Eu passei anos achando que o cansaço era o preço normal da vida."
+        - "Tem noites em que a cabeça não para. E você sabe bem o motivo."
+        REGRA: Máximo 12 palavras. Tom íntimo, de quem entende.
+
+        SLIDE 2 — EMPATIA COM O PROBLEMA (OBRIGATÓRIO):
+        Conecte com a luta cotidiana real: a sensação de estar no automático, de sacrificar a vida esperando um futuro que não chega.
+        Mostre que ENTENDE e que existe um ponto de mudança.
+        REGRA: 15 a 25 palavras. Tom acolhedor e empático.
+
+        SLIDE 3 — A SOLUÇÃO / INSIGHT DE MUDANÇA (OBRIGATÓRIO):
+        O insight prático, a sabedoria real, a virada de mentalidade que muda tudo.
+        Entregue de forma simples, clara e reconfortante.
+        REGRA: 15 a 25 palavras. Tom de revelação e alívio.
+
+        SLIDE 4/5 — CTA ACOLHEDOR (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
+        Convite caloroso e natural para seguir o perfil. Deve fluir como continuação da história.
+        REGRA: Máximo 15 palavras. Tom íntimo, não comercial.
 
         PEXELS QUERY:
         - Termos em inglês noturnos e quentes: warm amber room cozy, rain window amber glow, coffee steam night, silent city lights.
@@ -676,10 +724,10 @@ def gerar_conteudo_gemini(tipo):
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Frase do Slide 1 (Conflito/Silêncio da noite)",
-            "Frase do Slide 2 (Luz da sabedoria / Lição)",
-            "Frase do Slide 3 (Paz interior e resolução)",
-            "Frase do Slide 4 (CTA Acolhedor de encerramento)"
+            "Slide 1 — Gancho de identificação noturna (máx 12 palavras)",
+            "Slide 2 — Empatia com o problema do dia a dia",
+            "Slide 3 — O insight / solução que muda o jogo",
+            "Slide 4 — CTA acolhedor de encerramento"
           ],
           "pexels_queries": [
             "warm ambient bedroom cozy night",
