@@ -774,7 +774,8 @@ def gerar_conteudo_gemini(tipo):
         
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
-        - CTA OBRIGATÓRIO NA LEGENDA: Crie uma frase sutil convidando para acessar o Link na Bio de forma amigável (ex: "Se você quer dar o próximo passo, o material completo está na bio. Fique à vontade para acessar.").
+        - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave única em CAIXA ALTA relacionada ao tema do post (ex: "FOCO", "DISCIPLINA", "LIBERDADE", "CLAREZA", "CORAGEM").
+        - A legenda DEVE terminar com o convite para comentar essa palavra para acessar o link na bio (ex: "Comente FOCO 👇 e acesse o material gratuito no link do perfil.").
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
@@ -782,6 +783,7 @@ def gerar_conteudo_gemini(tipo):
 
         Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases curtas, sendo o ÚLTIMO sempre o CTA):
         {{
+          "cta_keyword": "FOCO",
           "slides": [
             "Slide 1 (Gancho visceral — a dor em 1 frase)",
             "Slide 2 (Aprofundamento da dor / loop de curiosidade)",
@@ -794,7 +796,7 @@ def gerar_conteudo_gemini(tipo):
             "athlete training night intense focus amber glow",
             "determined person writing notebook night silence"
           ],
-          "legenda": "Sua legenda aqui sem hashtags"
+          "legenda": "Sua legenda aqui com convite para comentar a palavra-chave sem hashtags"
         }}
         """
     else:
