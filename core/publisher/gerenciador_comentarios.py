@@ -78,13 +78,13 @@ def obter_posts_recentes(limit: int = 5) -> list[dict]:
 
 
 def buscar_comentarios_do_post(media_id: str) -> list[dict]:
-    """Busca os comentários de um post específico."""
+    """Busca os comentários de um post específico incluindo respostas já existentes."""
     if not IG_ACCESS_TOKEN:
         return []
 
     url = f"https://graph.facebook.com/v19.0/{media_id}/comments"
     params = {
-        "fields": "id,text,username,timestamp,from",
+        "fields": "id,text,username,timestamp,from,replies{id,username}",
         "access_token": IG_ACCESS_TOKEN,
     }
     try:
@@ -123,7 +123,7 @@ def responder_comentario_publico(comment_id: str, mensagem: str = MENSAGEM_RESPO
 def monitorar_e_responder_comentarios(palavras_chave: list[str] | None = None, limite_posts: int = 5) -> dict:
     """
     Monitora posts recentes e responde automaticamente a comentários que contenham a palavra-chave.
-    Evita responder duas vezes o mesmo comentário.
+    Evita responder duas vezes o mesmo comentário checando o histórico local e a API da Meta.
     """
     palavras = [p.upper() for p in (palavras_chave or PALAVRAS_CHAVE_PADRAO)]
     logger.info(f"🔎 Iniciando monitoramento de comentários com palavras-chave: {palavras}")
@@ -143,7 +143,13 @@ def monitorar_e_responder_comentarios(palavras_chave: list[str] | None = None, l
         for c in comentarios:
             comment_id = c.get("id")
             if not comment_id or comment_id in historico_respondidos:
-                continue  # Já foi respondido
+                continue  # Já respondido localmente
+
+            # Verifica se o comentário já possui respostas publicadas na API do Instagram
+            replies = c.get("replies", {}).get("data", [])
+            if replies:
+                historico_respondidos.add(comment_id)
+                continue  # Já foi respondido na própria plataforma
 
             texto_c = c.get("text", "").upper()
             user_info = c.get("from", {})
