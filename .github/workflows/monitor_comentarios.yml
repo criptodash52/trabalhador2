@@ -1,0 +1,32 @@
+name: Monitor de Comentários Instagram
+
+on:
+  schedule:
+    # Executa automaticamente a cada 15 minutos (frequência ideal do GitHub Actions)
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  monitorar-comentarios:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar Dependências Leves
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests loguru firebase-admin
+
+      - name: Executar Resposta Automática de Comentários
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_ACCOUNT_ID: ${{ secrets.IG_ACCOUNT_ID }}
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          python core/publisher/gerenciador_comentarios.py

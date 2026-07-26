@@ -18,6 +18,7 @@ on:
           - pexels_story_noite
           - reels_conquistador
           - reels_leads
+          - comentarios
           - gerador_pdf
           - analytics
           - weekly_report

@@ -77,15 +77,20 @@ def rodar_agora():
 
     elif hora == 22:
         print("🚀 Executando: Reels Conquistador (Atração de Público)")
-        subprocess.run(["python", "main.py", "--type", "reels_conquistador"])
-
-    else:
-        print(f"💤 Nenhuma tarefa agendada para as {hora}:00 BRT.")
+    # Sempre executa o monitor de comentários ao final de qualquer ciclo agendado
+    try:
+        print("💬 Executando verificação e resposta automática de comentários...")
+        subprocess.run(["python", "core/publisher/gerenciador_comentarios.py"])
+    except Exception as e_comm:
+        print(f"⚠️ Aviso no monitor de comentários: {e_comm}")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--manual":
         tipo = sys.argv[2] if len(sys.argv) > 2 else None
-        if tipo == "analytics":
+        if tipo == "comentarios":
+            print("🚀 Executando manualmente: Monitor de Comentários")
+            subprocess.run(["python", "core/publisher/gerenciador_comentarios.py"])
+        elif tipo == "analytics":
             print("🚀 Executando manualmente: Analytics Diário")
             subprocess.run(["python", "core/analytics/rodar_analytics.py"])
         elif tipo == "weekly_report":
