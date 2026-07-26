@@ -651,6 +651,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 except Exception as e_sync:
                     logger.warning(f"⚠️ Falha ao sincronizar áudio por slide no pexels_story: {e_sync}")
 
+            tempo_slide_normal = 0.0
             if not slide_start_times:
                 duracao_gancho = 5.0
                 if total_slides > 1:
@@ -747,17 +748,21 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     else:
                         idx = total_slides - 1
                     t_slide = t - slide_start_times[idx]
+                    duracao_do_slide = slide_start_times[idx + 1] - slide_start_times[idx]
                 elif total_slides > 1:
                     if t < duracao_gancho:
                         idx = 0
                         t_slide = t
+                        duracao_do_slide = duracao_gancho
                     else:
                         t_restante = t - duracao_gancho
                         idx = min(1 + int(t_restante / tempo_slide_normal), total_slides - 1)
                         t_slide = t_restante - ((idx - 1) * tempo_slide_normal)
+                        duracao_do_slide = tempo_slide_normal
                 else:
                     idx = 0
                     t_slide = t
+                    duracao_do_slide = duracao
                     
                 texto_completo = slides[idx]
                 
@@ -775,7 +780,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     # Executa a lógica de cada animação
                     if animacao == "typewriter":
                         # Termina a digitação 1.5 segundos antes do fim do slide para tempo de leitura
-                        tempo_ativo = max(1.0, tempo_slide_normal - 1.5)
+                        tempo_ativo = max(1.0, duracao_do_slide - 1.5)
                         progresso = min(t_slide / tempo_ativo, 1.0)
                         chars_to_show = int(progresso * len(texto_completo))
                     elif animacao == "fade":
