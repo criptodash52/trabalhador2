@@ -94,11 +94,17 @@ jobs:
           IG_ACCOUNT_ID: ${{ secrets.IG_ACCOUNT_ID }}
           IG_ACCESS_TOKEN_2: ${{ secrets.IG_ACCESS_TOKEN_2 }}
           IG_ACCOUNT_ID_2: ${{ secrets.IG_ACCOUNT_ID_2 }}
+          IG_ACCESS_TOKEN_9: ${{ secrets.IG_ACCESS_TOKEN_9 }}
+          IG_ACCOUNT_ID_9: ${{ secrets.IG_ACCOUNT_ID_9 }}
           SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_API_KEY_2: ${{ secrets.ELEVENLABS_API_KEY_2 }}
+          ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+          ELEVENLABS_VOICE_ID_2: ${{ secrets.ELEVENLABS_VOICE_ID_2 }}
         run: python rodar_via_cron.py
 
       - name: Executar Bot (Manual)
@@ -120,11 +126,17 @@ jobs:
           IG_ACCOUNT_ID: ${{ secrets.IG_ACCOUNT_ID }}
           IG_ACCESS_TOKEN_2: ${{ secrets.IG_ACCESS_TOKEN_2 }}
           IG_ACCOUNT_ID_2: ${{ secrets.IG_ACCOUNT_ID_2 }}
+          IG_ACCESS_TOKEN_9: ${{ secrets.IG_ACCESS_TOKEN_9 }}
+          IG_ACCOUNT_ID_9: ${{ secrets.IG_ACCOUNT_ID_9 }}
           SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_API_KEY_2: ${{ secrets.ELEVENLABS_API_KEY_2 }}
+          ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+          ELEVENLABS_VOICE_ID_2: ${{ secrets.ELEVENLABS_VOICE_ID_2 }}
         run: python rodar_via_cron.py --manual ${{ github.event.inputs.tipo_post }}
 
       - name: Salvar Estado do Bot
