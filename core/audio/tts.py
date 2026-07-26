@@ -34,7 +34,7 @@ def _chamar_elevenlabs(api_key: str, voice_id: str, texto: str, caminho_saida: s
         "text": texto,
         "model_id": "eleven_multilingual_v2",
         "voice_settings": {
-            "stability": 0.50,
+            "stability": 0.65,
             "similarity_boost": 0.75,
             "style": 0.30,
             "use_speaker_boost": True,
@@ -71,7 +71,7 @@ def _chamar_elevenlabs(api_key: str, voice_id: str, texto: str, caminho_saida: s
 
 async def _edge_tts_async(texto: str, caminho: str, voz: str = "pt-BR-AntonioNeural"):
     import edge_tts
-    communicate = edge_tts.Communicate(texto, voz)
+    communicate = edge_tts.Communicate(texto, voz, rate="-10%")
     await communicate.save(caminho)
 
 
@@ -186,12 +186,14 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
         return gerar_audio_narracao(slides, voice_id=voice_id), []
 
     clips_audio = []
-    pausa_segundos = 0.0  # Sem pausa: velocidade máxima dos slides, troca no instante em que a voz termina
+    pausa_segundos = 0.5  # Pausa em segundos entre os slides para evitar transições abruptas ("travadinhas")
+    tempo_acumulado = 0.0
 
     for idx, slide_texto in enumerate(slides):
         texto_limpo = str(slide_texto).replace("\n", " ").strip()
         if not texto_limpo:
-            duracoes_slides.append(2.0)
+            duracoes_slides.append(2.0 + pausa_segundos)
+            tempo_acumulado += 2.0 + pausa_segundos
             continue
 
         caminho_slide_mp3 = f"midia_temp/slide_{uid}_{idx}.mp3"
@@ -201,20 +203,26 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
             try:
                 aclip = AudioFileClip(audio_slide)
                 dur = aclip.duration
+                # Posiciona o áudio no tempo acumulado
+                aclip = aclip.set_start(tempo_acumulado)
                 clips_audio.append(aclip)
 
-                dur_total_slide = round(dur, 2)
+                dur_total_slide = round(dur + pausa_segundos, 2)
                 duracoes_slides.append(dur_total_slide)
+                tempo_acumulado += dur_total_slide
                 caminhos_audios_slides.append(audio_slide)
             except Exception as e_clip:
                 logger.warning(f"⚠️ Erro ao medir áudio do slide {idx}: {e_clip}")
                 duracoes_slides.append(2.5)
+                tempo_acumulado += 2.5
         else:
             duracoes_slides.append(2.5)
+            tempo_acumulado += 2.5
 
     if clips_audio:
         try:
-            audio_final = concatenate_audioclips(clips_audio)
+            from moviepy.editor import CompositeAudioClip
+            audio_final = CompositeAudioClip(clips_audio)
             caminho_final = f"midia_temp/narracao_sincronizada_{uid}.mp3"
             audio_final.write_audiofile(caminho_final, logger=None)
             
