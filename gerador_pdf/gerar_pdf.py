@@ -174,18 +174,36 @@ def draw_card_decorations(canvas, card_type, x, y, width, height):
     canvas.restoreState()
 
 def draw_chapter_header(canvas, subtitle, title, subtitle_color="#bfdbfe"):
-    """Desenha o cabeçalho padronizado e refinado dos capítulos."""
+    """Desenha o cabeçalho padronizado e refinado dos capítulos com quebra automática de linha."""
     canvas.saveState()
     # Subtítulo (ex: CAPÍTULO 1)
     canvas.setFont(font_map["sans-bold"], 10)
     canvas.setFillColor(get_color(subtitle_color))
-    # Espaçamento de caracteres emulado via desenho
     canvas.drawCentredString(297.63, 785, subtitle.upper())
     
-    # Título Principal do Capítulo
-    canvas.setFont(font_map["display-bold"], 26)
-    canvas.setFillColor(get_color("#ffffff"))
-    canvas.drawCentredString(297.63, 750, title)
+    # Título Principal do Capítulo (com suporte a quebra automática de linha)
+    font_size = 22
+    if len(title) > 35:
+        font_size = 18
+    if len(title) > 50:
+        font_size = 16
+
+    cap_title_style = ParagraphStyle(
+        name=f"chap_title_{hash(title)}",
+        fontName=font_map["display-bold"],
+        fontSize=font_size,
+        leading=font_size + 4,
+        textColor=get_color("#ffffff"),
+        alignment=TA_CENTER
+    )
+    
+    p_title = Paragraph(title, cap_title_style)
+    margin_h = 40
+    text_w = 595.27 - 2 * margin_h
+    tw, th = p_title.wrap(text_w, 100)
+    
+    # Desenha o parágrafo centralizado horizontal e alinhado no topo
+    p_title.drawOn(canvas, margin_h, 765 - th)
     canvas.restoreState()
 
 def draw_page_number(canvas, page_num, total_paginas=7):
@@ -343,14 +361,17 @@ def draw_page_1_content(canvas, doc):
     subtitulo = "Um Resgate Familiar."
     cards = []
     
+    page_width = 595.27
+    page_height = 841.89
+
     if conteudo:
         titulo = conteudo.get("titulo_pdf", titulo)
         subtitulo = conteudo.get("subtitulo_pdf", subtitulo)
         cards = conteudo.get("capa_cards", [])
         
+
     # 1. Título e subtítulo com Paragraph para suportar quebra de linha automática
     canvas.saveState()
-    page_width = 595.27
     margin_h = 40
     text_width = page_width - 2 * margin_h
     
@@ -385,7 +406,7 @@ def draw_page_1_content(canvas, doc):
     subtitulo_p = Paragraph(subtitulo, subtitulo_style)
     sw, sh = subtitulo_p.wrap(text_width, 100)
     
-    # Posiciona o bloco título+subtítulo no TOPO da página, com margem de 54pt
+    # Posiciona o bloco título+subtítulo no TOPO da página
     top_margin = 54
     page_height = 841.89
     # O topo do título começa em (page_height - top_margin), o drawOn recebe o y do canto inferior
@@ -464,6 +485,80 @@ def draw_page_1_content(canvas, doc):
 
 # --- Callback Master de Planos de Fundo (Gradients Exatos da Web) ---
 
+def draw_cover_image_page(canvas, doc):
+    """Renderiza a Página 1 exclusiva com moldura luxuosa tipo quadro, logo e subtítulo/título dinâmico."""
+    page_width = 595.27
+    page_height = 841.89
+    conteudo = getattr(doc, "conteudo", None) or {}
+
+    # Caminho absoluto baseado na localização deste arquivo
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    logo_path = os.path.join(base_dir, "biblioteca_local", "logo", "foto_perfil.png")
+
+    # 1. Fundo preto absoluto elegante para a capa
+    canvas.saveState()
+    canvas.setFillColorRGB(0.04, 0.04, 0.05)
+    canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+
+    # 2. Desenha Moldura Dupla Dourada (Estilo Quadro de Luxo)
+    m_out = 24
+    canvas.setStrokeColor(get_color("#d97706"))
+    canvas.setLineWidth(1.5)
+    canvas.rect(m_out, m_out, page_width - 2 * m_out, page_height - 2 * m_out)
+
+    m_in = 30
+    canvas.setStrokeColor(get_color("#fbbf24"))
+    canvas.setLineWidth(0.6)
+    canvas.rect(m_in, m_in, page_width - 2 * m_in, page_height - 2 * m_in)
+
+    # Cantos ornamentados nos 4 vértices
+    c_len = 12
+    for x, y, dx, dy in [
+        (m_in, m_in, 1, 1),
+        (page_width - m_in, m_in, -1, 1),
+        (m_in, page_height - m_in, 1, -1),
+        (page_width - m_in, page_height - m_in, -1, -1)
+    ]:
+        canvas.setLineWidth(1.2)
+        canvas.line(x, y, x + dx * c_len, y)
+        canvas.line(x, y, x, y + dy * c_len)
+
+    canvas.restoreState()
+
+    # 3. Emblema da Marca (foto_perfil.png) centralizado harmonicamente
+    if os.path.exists(logo_path):
+        try:
+            canvas.saveState()
+            logo_size = 350
+            logo_x = (page_width - logo_size) / 2
+            logo_y = (page_height - logo_size) / 2 + 25
+            canvas.drawImage(logo_path, logo_x, logo_y, width=logo_size, height=logo_size, mask='auto', preserveAspectRatio=True)
+            canvas.restoreState()
+        except Exception as e_capa:
+            print(f"⚠️ Aviso: Não foi possível renderizar a capa com foto_perfil.png: {e_capa}")
+    else:
+        print(f"⚠️ Aviso: foto_perfil.png não encontrada em: {logo_path}")
+
+    # 4. Selo da Marca abaixo do Emblema (sem duplicar o título do PDF que já fica na Página 2)
+    canvas.saveState()
+    margin_h = 50
+    text_width = page_width - 2 * margin_h
+
+    tagline_style = ParagraphStyle(
+        name="cover_tagline",
+        fontName=font_map["sans-bold"],
+        fontSize=11,
+        leading=14,
+        textColor=get_color("#d97706"),
+        alignment=TA_CENTER
+    )
+
+    p_tagline = Paragraph("CÓDIGO DA SABEDORIA &nbsp;•&nbsp; EDIÇÃO SEMANAL", tagline_style)
+    gw, gh = p_tagline.wrap(text_width, 40)
+    p_tagline.drawOn(canvas, margin_h, 110)
+
+    canvas.restoreState()
+
 def draw_all_page_backgrounds(canvas, doc):
     """Executado dinamicamente para renderizar os fundos, cabeçalhos e rodapés de cada página."""
     page_num = canvas.getPageNumber()
@@ -471,17 +566,21 @@ def draw_all_page_backgrounds(canvas, doc):
     capitulos = conteudo.get("capitulos", []) if conteudo else []
     num_capitulos = len(capitulos) if len(capitulos) > 0 else 5
     
-    total_paginas = num_capitulos + 3  # Capa (1) + Capítulos (N) + Citação/Fechamento (1) + Plano (1)
+    total_paginas = num_capitulos + 4  # Capa-Imagem (1) + Capa-Conteúdo (1) + Capítulos (N) + Citação/Fechamento (1) + Plano (1)
     
     if page_num == 1:
-        # Página 1: Cyan-Blue Gradient (#22d3ee -> #3b82f6)
+        # Página 1: Capa exclusiva com a foto_perfil.png
+        draw_cover_image_page(canvas, doc)
+
+    elif page_num == 2:
+        # Página 2: Bento Grid (antiga Página 1)
         draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
         draw_page_1_content(canvas, doc)
-        draw_page_number(canvas, 1, total_paginas)
-        
-    elif 2 <= page_num <= num_capitulos + 1:
+        draw_page_number(canvas, 2, total_paginas)
+
+    elif 3 <= page_num <= num_capitulos + 2:
         # Páginas de Capítulos
-        idx_cap = page_num - 2
+        idx_cap = page_num - 3
         
         # Mapeia as cores de gradiente de capítulos
         grad_cores = [
@@ -513,15 +612,15 @@ def draw_all_page_backgrounds(canvas, doc):
         draw_page_gradient(canvas, cor1, cor2)
         draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color=sub_color)
         draw_page_number(canvas, page_num, total_paginas)
-        
-    elif page_num == num_capitulos + 2:
+
+    elif page_num == num_capitulos + 3:
         # Página de citação / fechamento
         draw_page_gradient(canvas, "#0f172a", "#172554")
         titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável") if conteudo else "A Verdade Inabalável"
         draw_chapter_header(canvas, titulo_citacao, "", subtitle_color="#bfdbfe")
         draw_page_number(canvas, page_num, total_paginas)
-        
-    elif page_num == num_capitulos + 3:
+
+    elif page_num == num_capitulos + 4:
         # Página do Plano de Ação
         draw_page_gradient(canvas, "#6366f1", "#2563eb")
         # Sem cabeçalho
@@ -603,8 +702,13 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
     )
     
     story = []
-    
-    # ==================== PÁGINA 1 ====================
+
+    # ==================== PÁGINA 1: CAPA COM IMAGEM ====================
+    # Renderizada de forma estática no canvas via draw_cover_image_page.
+    story.append(Spacer(1, 10))
+    story.append(PageBreak())
+
+    # ==================== PÁGINA 2: BENTO GRID (antiga Página 1) ====================
     # Desenhada de forma estática no canvas. Apenas avançamos o fluxo.
     story.append(Spacer(1, 10))
     story.append(PageBreak())
@@ -654,10 +758,13 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         citacao_texto = conteudo.get("citacao_destaque", "A restauração genuína começa no coração.")
         titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável")
         
+        verso_base = conteudo.get("verso_base", "Se o Senhor não edificar a casa, em vão trabalham os que a edificam.")
+        ref_verso = conteudo.get("referencia_verso", "Salmos 127:1")
+        
         card_content = [
             [Paragraph(titulo_citacao, quote_title_style)],
             [Paragraph(f'"{citacao_texto}"', quote_text_style)],
-            [Paragraph('"Se o Senhor não edificar a casa, em vão trabalham os que a edificam."<br/><font color="#ffffff" size="9"><b>— Salmos 127:1</b></font>', bible_verse_style)]
+            [Paragraph(f'"{verso_base}"<br/><font color="#ffffff" size="9"><b>— {ref_verso}</b></font>', bible_verse_style)]
         ]
         
         reflection_table = Table(card_content, colWidths=[460])

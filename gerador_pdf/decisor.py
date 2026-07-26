@@ -77,12 +77,13 @@ LIVROS_POR_TEMA = {
     }
 }
 
-def decidir_tema_da_semana():
+def decidir_tema_da_semana(temas_recentes=None):
     """
     Lê o recomendacoes.json e retorna o tema com melhor performance.
-    Combina dados de analytics com um fator aleatório menor para variedade.
+    Aplica rotação rígida para garantir que os 8 temas circulem e nunca repitam o tema recente.
     """
-    print("🧠 [Decisor] Lendo dados de performance do Analytics...")
+    print("🧠 [Decisor] Lendo dados de performance do Analytics para os 8 temas...")
+    temas_recentes = temas_recentes or []
 
     try:
         with open(RECOMENDACOES_PATH, "r", encoding="utf-8") as f:
@@ -90,70 +91,60 @@ def decidir_tema_da_semana():
 
         distribuicao_temas = recomendacoes.get("peso_final_temas", {})
 
-        if not distribuicao_temas:
-            print("⚠️ Sem dados suficientes no analytics. Escolhendo tema aleatório.")
-            return _tema_aleatorio()
+        # Todos os 8 temas disponíveis no projeto
+        todos_temas = list(LIVROS_POR_TEMA.keys())
 
-        # Roleta Viciada: temas com maior peso têm mais chance de ser escolhidos
-        temas = list(distribuicao_temas.keys())
-        pesos = list(distribuicao_temas.values())
+        # Filtra temas não usados recentemente para manter inovação semanal
+        temas_disponiveis = [t for t in todos_temas if t not in temas_recentes]
+        if not temas_disponiveis:
+            temas_disponiveis = todos_temas
 
-        # Filtra apenas os temas que temos mapeados com livros
-        temas_validos = [(t, p) for t, p in zip(temas, pesos) if t in LIVROS_POR_TEMA]
+        pesos = []
+        for t in temas_disponiveis:
+            peso = distribuicao_temas.get(t, 0.125) # Peso equilibrado padrão
+            pesos.append(max(peso, 0.05))
 
-        if not temas_validos:
-            print("⚠️ Temas do analytics não coincidem com a biblioteca. Usando fallback.")
-            return _tema_aleatorio()
+        tema_escolhido = random.choices(temas_disponiveis, weights=pesos, k=1)[0]
+        print(f"✅ [Decisor] Tema inovador escolhido: {tema_escolhido} (entre 8 temas possíveis)")
 
-        temas_filtrados, pesos_filtrados = zip(*temas_validos)
-        tema_escolhido = random.choices(temas_filtrados, weights=pesos_filtrados, k=1)[0]
-
-        print(f"✅ [Decisor] Tema escolhido pelos dados: {tema_escolhido} "
-              f"(peso: {distribuicao_temas.get(tema_escolhido, 0)*100:.1f}%)")
-
-    except FileNotFoundError:
-        print("⚠️ recomendacoes.json não encontrado. Usando tema aleatório.")
-        tema_escolhido = _tema_aleatorio()
     except Exception as e:
-        print(f"⚠️ Erro ao ler analytics: {e}. Usando tema aleatório.")
-        tema_escolhido = _tema_aleatorio()
+        print(f"⚠️ Erro ao ler analytics: {e}. Usando rotação dos 8 temas.")
+        todos_temas = list(LIVROS_POR_TEMA.keys())
+        temas_disponiveis = [t for t in todos_temas if t not in temas_recentes] or todos_temas
+        tema_escolhido = random.choice(temas_disponiveis)
 
     return tema_escolhido
-
-
-def _tema_aleatorio():
-    return random.choice(list(LIVROS_POR_TEMA.keys()))
 
 
 def montar_briefing_completo():
     """
     Monta o briefing completo para o gerador de conteúdo:
-    - Tema vencedor do Analytics
-    - Livro escolhido dentro do tema
-    - Contexto de tendências da semana (Olhos da Rede)
+    - Tema inovador (rotação entre os 8 temas sem repetição recente)
+    - Livro base escolhido com anti-repetição
+    - Contexto de tendências em tempo real (Olhos da Rede)
     """
-    historico = buscar_historico_pdfs_recentes(limite=3)
+    historico = buscar_historico_pdfs_recentes(limite=4)
+    temas_recentes = [h.get("tema_chave") for h in historico if h.get("tema_chave")]
     livros_recentes = [h.get("livro_base") for h in historico if h.get("livro_base")]
 
-    tema = decidir_tema_da_semana()
+    tema = decidir_tema_da_semana(temas_recentes=temas_recentes)
     dados_tema = LIVROS_POR_TEMA[tema]
     
     # Filtra os livros que não foram usados recentemente
     livros_disponiveis = [l for l in dados_tema["livros"] if l not in livros_recentes]
     if not livros_disponiveis:
-        # Se todos já foram usados, reseta a lista
         livros_disponiveis = dados_tema["livros"]
 
     livro_escolhido = random.choice(livros_disponiveis)
 
     print(f"📚 [Decisor] Livro base escolhido (anti-repetição aplicada): '{livro_escolhido}'")
 
-    # Tenta buscar contexto de tendências
+    # Busca contexto de tendências nos Olhos da Rede
     contexto_mundo = ""
     try:
         from core.ai.olhos_da_rede import gerar_contexto_mundo_real
         contexto_mundo = gerar_contexto_mundo_real(dias=7, tema_especifico=dados_tema["nome_display"])
-        print("🌍 [Decisor] Contexto da semana capturado com sucesso.")
+        print("🌍 [Decisor] Contexto da semana capturado com sucesso nos Olhos da Rede.")
     except Exception as e:
         print(f"⚠️ Não foi possível buscar tendências: {e}")
         contexto_mundo = "Sem contexto externo disponível nesta semana."

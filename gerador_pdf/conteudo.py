@@ -22,105 +22,112 @@ load_dotenv(os.path.join(BOT_PATH, ".env"))
 
 
 PROMPT_TEMPLATE = """
-Você é um escritor especialista em conteúdo transformador que combina narrativa emocional com ensinamentos práticos.
+Você é um estrategista de conteúdo e escritor especialista em masterclasses transformadoras, combinando narrativa profunda, autoridade prática e a lógica persuasiva de conversão em 7 Etapas.
 
 BRIEFING DA SEMANA:
 - Tema central: {nome_display}
 - Livro base de inspiração: "{livro_base}"
 - Dor central da audiência: "{dor_central}"
 
-CONTEXTO DO MUNDO REAL NESTA SEMANA:
+CONTEXTO DO MUNDO REAL NESTA SEMANA (TENDÊNCIAS / OLHOS DA REDE):
 {contexto_semana}
 
 SUA MISSÃO:
-Escreva o conteúdo completo de um PDF de 8 páginas seguindo EXATAMENTE a estrutura abaixo.
-O conteúdo deve ser 100% original, inspirado nos princípios do livro "{livro_base}".
-NUNCA cite o livro pelo nome no texto final. Use o conhecimento como se fosse seu.
-Conecte o tema com o que está acontecendo no mundo real nesta semana.
+Escreva uma AULA PRÁTICA SEMANAL INÉDITA e 100% original em formato de e-book/PDF de alta conversão.
+NENHUM TÍTULO OU TEXTO PODE SER REPETIDO OU ESTÁTICO. Todos os títulos de cartões, capítulos, versículos e seções devem ser formulados por você especificamente para o assunto desta semana, criando a aparência de uma aula totalmente nova.
+
+DIRETRIZES DA ESTRUTURA PERSUASIVA EM 7 ETAPAS:
+1. Dor / Problema: Mostre exatamente o que a pessoa está perdendo ou sofrendo. Faça ela se identificar visceralmente.
+2. Solução: Apresente o método/solução direta e aplicável sem rodeios.
+3. Benefício / Resultado: Mostre com clareza o ganho de vida, paz e resultados.
+4. Prova / Autoridade: Traga conceitos sólidos, inteligência de dados, psicologia e autoridade.
+5. Ação / CTA: Convide a pessoa com clareza para agendar mentoria ou aplicar a metodologia imediatamente.
+6. Clareza e Objetividade: Sem jargões confusos ou frases vazias.
+7. Adaptabilidade: Aplique perfeitamente a essência do tema "{nome_display}".
 
 IMPORTANTE - NOME DO PDF:
-Crie um título magnético que remete ao PROBLEMA + SOLUÇÃO (nunca use "Manual" ou "Guia").
-Ex: "O Código da Consistência", "A Virada do Hábito", "Quando a Mente Para de Lutar".
+Crie um título magnético sobre PROBLEMA + SOLUÇÃO (Ex: "A Virada do Hábito", "O Código do Foco", "Quando a Mente Para de Lutar").
 
 REGRAS DE FORMATAÇÃO DE TEXTO E JSON:
 - Use apenas texto simples, pontos e vírgulas.
-- É PROIBIDO usar emojis, caracteres especiais (como ◎, 🎯, ✨), aspas redondas (smart quotes) ou travessões longos. Use apenas aspas duplas retas (") e hífens simples (-).
-- NÃO crie formatações complexas, mantenha o texto o mais limpo e legível possível.
-- CRÍTICO: NUNCA use quebras de linha literais (Enter) dentro dos textos do JSON. Se o texto for longo, escreva tudo na mesma linha contínua, sem pular linha dentro da string. Pular linha dentro do valor do JSON vai corromper o sistema.
+- É PROIBIDO usar emojis, caracteres especiais, aspas redondas ou travessões longos. Use apenas aspas duplas retas (") e hífens simples (-).
+- CRÍTICO: NUNCA use quebras de linha literais (Enter) dentro dos textos do JSON. Escreva tudo na mesma linha contínua.
 
-ESTRUTURA OBRIGATÓRIA (retorne em formato JSON):
+ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
 
 {{
-  "titulo_pdf": "Título magnético aqui",
-  "subtitulo_pdf": "Uma frase curta de impacto aqui",
+  "titulo_pdf": "Título magnético inédito aqui",
+  "subtitulo_pdf": "Subtítulo claro de valor e transformação",
   "capa_cards": [
-    {{"titulo": "A Névoa", "texto": "Escreva uma explicacao poderosa e emocional de POR QUE a voz interna sabota toda tentativa de mudanca. Explique o mecanismo psicologico: o loop mental do 'amanha comeco', o medo disfarçado de preguica, a autossabotagem que surge exatamente quando voce esta prestes a mudar. Seja impactante e profundo. Minimo 35 palavras, maximo 45, sem pular linha, sem aspas.", "pergunta_destaque": "Uma pergunta curta de impacto emocional para o leitor (maximo 12 palavras, sem aspas) sobre a dor central do tema da semana."}},
-    {{"titulo": "A Solucao", "texto": "Escreva uma descricao envolvente e que gera desejo da solucao: o metodo preciso que vai silenciar essa voz interna e transformar a inercia em habitos solidos. Mostre a transformacao de forma visceral. Minimo 35 palavras, maximo 45, sem pular linha, sem aspas."}},
-    {{"titulo": "O Proposito", "texto": "Uma frase direta e inspiradora sobre o que a pessoa vai conquistar ao seguir esse metodo. Maximo 18 palavras, sem aspas."}},
-    {{"titulo": "A Verdade", "texto": "Uma provocacao curta e cirurgica sobre a realidade da situacao. Maximo 14 palavras, sem aspas.", "citacao_destaque": "Uma citacao curta, profunda e impactante em formato de frase reflexiva (maximo 14 palavras, sem aspas) sobre o tema da semana."}}
+    {{"titulo": "Crie um título curto dinâmico sobre a dor", "texto": "1. Dor / Problema: Explicação poderosa de POR QUE a pessoa está travada e o que ela perde diariamente. Mínimo 35 palavras, máximo 45, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica sobre a dor (máximo 12 palavras)."}},
+    {{"titulo": "Crie um título curto dinâmico sobre a solução", "texto": "2. Solução: Apresente a solução prática e aplicável imediatamente para resolver essa dor. Mínimo 35 palavras, máximo 45, na mesma linha."}},
+    {{"titulo": "Crie um título curto dinâmico sobre o resultado", "texto": "3. Benefício / Resultado: O ganho real e concreto que o leitor terá ao aplicar essa aula. Máximo 18 palavras."}},
+    {{"titulo": "Crie um título curto dinâmico sobre o princípio", "texto": "4. Prova / Autoridade: Uma verdade fundamentada em dados, mente e comportamento. Máximo 14 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 14 palavras)."}}
   ],
   "capitulos": [
     {{
       "numero": 1,
-      "titulo": "A Névoa do Cotidiano",
+      "titulo": "Crie um título inédito e instigante para o Capítulo 1",
       "paragrafos": [
-        "Parágrafo 1 — Apresenta a cena do personagem ({nome_personagem}) no momento de maior dor. Seja altamente cinematográfico e detalhado. Mínimo 80 palavras e sem pular linha.",
-        "Parágrafo 2 — Aprofunda a dor. Uma reflexão profunda em itálico que é o pensamento interno do personagem. Mínimo 60 palavras e sem pular linha.",
-        "Parágrafo 3 — Contextualiza e amplia: essa não é só a dor dele, é a dor de milhões. Mostre o peso da realidade. Mínimo 80 palavras e sem pular linha."
+        "Parágrafo 1 — Cena detalhada do personagem ({nome_personagem}) vivenciando o problema e a ineficiência. Mínimo 80 palavras.",
+        "Parágrafo 2 — O custo emocional e prático de continuar nessa dor. Mínimo 60 palavras.",
+        "Parágrafo 3 — A percepção de que a dor é fruto de um padrão que precisa ser quebrado. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 2,
-      "titulo": "O Espelho Partido",
+      "titulo": "Crie um título inédito e instigante para o Capítulo 2",
       "paragrafos": [
-        "Parágrafo 1 — Um evento catalisador ou uma conversa dura que o faz perceber a urgência de mudar. Mínimo 80 palavras e sem pular linha.",
-        "Parágrafo 2 — O conflito interno entre querer desistir e a necessidade de continuar. Mínimo 60 palavras e sem pular linha.",
-        "Parágrafo 3 — A decisão. O exato momento em que ele recusa a inércia. Mínimo 80 palavras e sem pular linha."
+        "Parágrafo 1 — O momento de decisão e a rejeição das velhas justificativas. Mínimo 80 palavras.",
+        "Parágrafo 2 — Conflito interno e a escolha pela clareza e ação. Mínimo 60 palavras.",
+        "Parágrafo 3 — O primeiro alinhamento com a nova metodologia. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 3,
-      "titulo": "A Arma Secreta",
+      "titulo": "Crie um título inédito e instigante para o Capítulo 3",
       "paragrafos": [
-        "Parágrafo 1 — O personagem encontra um insight, um livro velho, uma estratégia. Mínimo 80 palavras e sem pular linha.",
-        "Parágrafo 2 — O conceito principal do livro explicado de forma rica, densa e original. Mínimo 60 palavras e sem pular linha.",
-        "Parágrafo 3 — A metáfora poderosa: como isso se aplica à vida real de forma implacável. Mínimo 80 palavras e sem pular linha."
+        "Parágrafo 1 — Apresentação da solução e do conceito chave inspirado em {livro_base}. Mínimo 80 palavras.",
+        "Parágrafo 2 — Por que este método funciona e a autoridade por trás dele. Mínimo 60 palavras.",
+        "Parágrafo 3 — Aplicação da técnica para obter o resultado desejado. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 4,
-      "titulo": "O Campo de Batalha",
+      "titulo": "Crie um título inédito e instigante para o Capítulo 4",
       "paragrafos": [
-        "Parágrafo 1 — O personagem começa a aplicar na prática. As primeiras dificuldades e o peso do início. Mínimo 80 palavras e sem pular linha.",
-        "Parágrafo 2 — O atrito. A força da velha rotina tentando puxá-lo de volta, e a disciplina forjada na dor. Mínimo 60 palavras e sem pular linha.",
-        "Parágrafo 3 — A virada. A pequena vitória que mostra que o método funciona. Mínimo 80 palavras e sem pular linha."
+        "Parágrafo 1 — Como implementar o aprendizado no dia a dia no campo de batalha real. Mínimo 80 palavras.",
+        "Parágrafo 2 — Vencendo o atrito inicial e mantendo a consistência. Mínimo 60 palavras.",
+        "Parágrafo 3 — O primeiro fruto perceptível da transformação. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 5,
-      "titulo": "A Nova Ordem",
+      "titulo": "Crie um título inédito e instigante para o Capítulo 5",
       "paragrafos": [
-        "Parágrafo 1 — A progressão ao longo do tempo. O hábito se instala e vira parte da identidade. Mínimo 80 palavras e sem pular linha.",
-        "Parágrafo 2 — A paz após a guerra. O contraste entre quem ele era no início e quem é agora. Mínimo 60 palavras e sem pular linha.",
-        "Parágrafo 3 — A moral da história. A mensagem final e inspiradora para quem lê e vive a mesma situação. Mínimo 80 palavras e sem pular linha."
+        "Parágrafo 1 — A consolidação do aprendizado e os resultados acumulados. Mínimo 80 palavras.",
+        "Parágrafo 2 — A sensação de clareza, alívio e controle reconquistado. Mínimo 60 palavras.",
+        "Parágrafo 3 — A nova postura perante o futuro e a vida. Mínimo 80 palavras."
       ]
     }}
   ],
-  "citacao_destaque": "Uma citação poderosa e original (não do livro) que resume a transformação. 2-3 linhas.",
-  "titulo_citacao": "Um título curto e impactante para a página de citação (ex: A Verdade Inabalável). Máximo 4 palavras.",
+  "citacao_destaque": "Citação marcante que resume a transformação e autoridade do aprendizado.",
+  "titulo_citacao": "Título curto e inédito para a página de citação (máximo 4 palavras)",
+  "verso_base": "Um versículo ou citação filosófica/bíblica relevante para a aula da semana",
+  "referencia_verso": "Referência do texto (ex: Provérbios 16:3 ou Aforismo II)",
   "plano_acao": {{
-    "titulo_secao": "Plano de Ação Diário",
-    "subtitulo": "Comece pequeno. Construa grande.",
+    "titulo_secao": "Título dinâmico do Plano de Ação",
+    "subtitulo": "Subtítulo prático e dinâmico para os passos.",
     "passos": [
-      {{"numero": 1, "titulo": "Nome do Passo 1", "descricao": "O que fazer, como fazer, por que funciona. 3-4 linhas."}},
-      {{"numero": 2, "titulo": "Nome do Passo 2", "descricao": "O que fazer, como fazer, por que funciona. 3-4 linhas."}},
-      {{"numero": 3, "titulo": "Nome do Passo 3", "descricao": "O que fazer, como fazer, por que funciona. 3-4 linhas."}},
-      {{"numero": 4, "titulo": "Nome do Passo 4", "descricao": "O que fazer, como fazer, por que funciona. 3-4 linhas."}}
+      {{"numero": 1, "titulo": "Título inédito do Passo 1", "descricao": "Descrição prática da ação."}},
+      {{"numero": 2, "titulo": "Título inédito do Passo 2", "descricao": "Descrição prática da ação."}},
+      {{"numero": 3, "titulo": "Título inédito do Passo 3", "descricao": "Descrição prática da ação."}},
+      {{"numero": 4, "titulo": "Título inédito do Passo 4", "descricao": "Descrição prática da ação."}}
     ]
   }},
-  "fechamento": "O parágrafo final inspiracional. A hora é agora. Deixe sua luz brilhar. 4-5 linhas.",
-  "titulo_fechamento": "Um título curto e altamente inspirador para a página final de fechamento (ex: Agora é a sua vez). Máximo 5 palavras.",
-  "rodape": "Produzido com zelo, fé e propósito."
+  "fechamento": "Parágrafo final de fechamento e convite com CTA.",
+  "titulo_fechamento": "Título curto do Fechamento (ex: Próximo Passo)",
+  "rodape": "Produzido com clareza, inteligência e propósito."
 }}
 
 Retorne APENAS o JSON, sem texto antes ou depois.
