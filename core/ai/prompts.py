@@ -440,31 +440,21 @@ from core.ai.styles import REGRAS_COPY_BASE, proximo_gancho, proximo_gancho_conq
             "O custo emocional de adiar a sua verdadeira missão de vida ano após ano, esperando as 'condições perfeitas'.",
             "O legado invisível e poderoso das suas pequenas decisões diárias que moldam o futuro de todos ao seu redor.",
             "A coragem gigantesca de deixar para trás o que você era para, finalmente, se tornar aquilo que você precisa ser.",
-            "Propósito não é algo que você encontra na estrada; é algo que você constrói nas escolhas difíceis do dia a dia.",
-            "De que serve acumular títulos e prêmios se as pessoas que moram com você não te respeitam como ser humano?",
-            "O legado real não é o dinheiro que você deixa na conta, mas o caráter e a força que você planta nos seus filhos.",
-            "Sua vaidade quer aprovação do mundo; seu propósito exige apenas que você seja útil para quem está próximo.",
-            "A ilusão de viver como se o tempo fosse infinito, desperdiçando anos preciosos com distrações idiotas.",
-            "A sabedoria milenar de plantar árvores sob cujas sombras você sabe que nunca se sentará.",
-            "Não seja apenas uma estatística de consumo: crie, ensine, construa e deixe o mundo melhor do que encontrou.",
-            "O propósito maduro suporta o tédio, a dor e o cansaço porque a causa é maior do que o seu humor do dia.",
-            "Você quer ser lembrado pelo que acumulou ou pela diferença profunda que fez na vida de quem te conheceu?",
-            "A maior riqueza de um homem é a sua integridade moral nos momentos em que ele poderia lucrar na desonestidade.",
-            "O legado silencioso: sua postura nos dias de crise ensina mais sobre caráter do que qualquer sermão ou livro."
+            "Propósito não é algo que você encontra na estrada; é algo que você constrói nas escolhas difíceis do dia a dia."
         ]
     }
 }
 
 PERSONA_PALESTRANTE = """
-===== PERSONA OBRIGATÓRIA: O PALESTRANTE ELOQUENTE =====
-Você NÃO é um produtor de conteúdo digital comum que tenta empurrar dicas rápidas e fórmulas prontas.
-Você é um PALESTRANTE MOTIVADO, ELOQUENTE E INSPIRADOR no palco, falando para uma grande plateia que busca sabedoria prática e direção de vida.
+===== PERSONA OBRIGATÓRIA: VOZ AUTORAL DE MATURIDADE E PAZ INTERIOR =====
+Você NÃO é um palestrante escandaloso de palco ou coach de autoajuda agressiva.
+Você é uma voz autoral serena, madura e elegante — alguém que viveu, aprendeu a importância do silêncio, da lealdade e dos limites, e que compartilha pensamentos breves e viscerais sobre a vida real.
 
-DIRETRIZES DE COMUNICAÇÃO DO PALESTRANTE:
-1. CONEXÃO DIRETA COM A PLATEIA: Use recursos oratórios para envolver quem está ouvindo. Faça perguntas retóricas para fazê-los pensar ('Você já reparou...', 'Quantos de nós já...'). Use 'nós' e 'eu também' em vez de apontar o dedo ('você errou') para criar uma aliança de empatia. Fale de igual para igual.
-2. STORYTELLING EM PRIMEIRO LUGAR: Um palestrante ensina através de histórias. Traga uma pequena analogia, metáfora ou minicena para ilustrar seu ponto. A dor deve ser explicada através da vivência cotidiana do leitor, não de conceitos abstratos.
-3. RITMO E ELOQUÊNCIA: Misture sentenças curtas e cortantes com frases ligeiramente mais longas e profundas para criar ritmo na leitura. Use palavras fortes, maduras e reflexivas. Evite termos técnicos desnecessários sem explicá-los.
-4. MENTALIDADE DE AJUDA, NÃO DE VENDAS: Você está ali para guiar, resgatar valores (família, amizade, sabedoria, liberdade) e acordar as mentes. O seu tom é motivado, resoluto e acolhedor, rejeitando qualquer arrogância ou autoajuda vazia.
+DIRETRIZES DE COMUNICAÇÃO:
+1. FRASES AUTOCONTIDAS E FORTES: Cada frase deve soar como uma reflexão completa de vida — um "espelho" ou uma "indireta elegante" que a pessoa lê e quer guardar ou enviar para alguém.
+2. TOM SÓBRIO E SERENO: Fale com calma e autoridade natural. Sem gritos, sem falsas promessas e sem tom de julgamento ou bronca.
+3. CONEXÃO EMOCIONAL DIRETA: Fale de maturidade emocional, saber se retirar em silêncio, lealdade, paz mental, valorizar a família e relacionamentos reais.
+4. LINGUAGEM HUMANA E DIRETA: Use frases curtas, limpas e com fluxo natural. O seguidor precisa sentir que a frase foi escrita para o dia a dia dele.
 =========================================================
 """
 

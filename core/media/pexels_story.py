@@ -678,32 +678,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 logger.info(f"🎬 Animação de texto selecionada: {animacao.upper()}")
 
             def _desenhar_elementos_marca(frame_array, fator_escala=1.0, is_cta=False, t_slide=0.0):
-                """Desenha o Selo da foto_perfil.png no topo, o logo PNG no rodapé e aplica o brilho pulsante no CTA."""
+                """Desenha o logo PNG no rodapé e aplica o brilho pulsante no CTA. [EMBLEMA REMOVIDO DO TOPO]"""
                 img = Image.fromarray(frame_array).convert("RGBA")
                 w, h = img.size
                 logo_dir = os.path.join("biblioteca_local", "logo")
 
-                # --- 1. SELO DA FOTO DE PERFIL NO TOPO ---
-                path_selo = os.path.join(logo_dir, "foto_perfil.png")
-                if not os.path.exists(path_selo):
-                    # Tenta fallback se estiver na raiz do projeto
-                    if os.path.exists("foto_perfil.png"):
-                        path_selo = "foto_perfil.png"
-
-                if os.path.exists(path_selo):
-                    try:
-                        selo_img = Image.open(path_selo).convert("RGBA")
-                        largura_selo = int(w * (300 / 1080))
-                        aspect = selo_img.height / selo_img.width
-                        altura_selo = int(largura_selo * aspect)
-                        selo_redim = selo_img.resize((largura_selo, altura_selo), Image.Resampling.LANCZOS)
-
-                        x_selo = int((w - largura_selo) / 2)
-                        y_selo = int(h * (100 / 1920))
-
-                        img.paste(selo_redim, (x_selo, y_selo), selo_redim)
-                    except Exception as e_selo:
-                        logger.warning(f"⚠️ Erro ao aplicar selo no topo: {e_selo}")
+                # --- 1. [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida ---
 
                 # --- 2. MARCA D'ÁGUA NO RODAPÉ ---
                 path_logo_rodape = ""

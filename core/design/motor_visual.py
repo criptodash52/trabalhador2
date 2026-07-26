@@ -336,22 +336,7 @@ def _gerar_carrossel(img, W_full, H, dados):
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, slide_W, slide_H)
         
-        # 1. Selo foto_perfil.png no Topo
-        path_selo = os.path.join(logo_dir, "foto_perfil.png")
-        if not os.path.exists(path_selo) and os.path.exists("foto_perfil.png"):
-            path_selo = "foto_perfil.png"
-        if os.path.exists(path_selo):
-            try:
-                selo_img = Image.open(path_selo).convert("RGBA")
-                larg_selo = 300
-                alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
-                selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
-                slide_rgba = slide_img.convert("RGBA")
-                slide_rgba.paste(selo_redim, (int((slide_W - larg_selo)/2), 100), selo_redim)
-                slide_img = slide_rgba.convert("RGB")
-                draw = ImageDraw.Draw(slide_img)
-            except Exception as e_selo:
-                print(f"⚠️ Erro ao desenhar selo no topo: {e_selo}")
+        # [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida
 
         # 2. Marca d'água / Logo no rodapé
         logo_aplicado = False
@@ -487,23 +472,8 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, W, H)
 
-        # ── 1. EMBLEMA (foto_perfil.png) NO TOPO ──
+        # ── 1. [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida ──
         logo_dir = os.path.join("biblioteca_local", "logo")
-        path_selo = os.path.join(logo_dir, "foto_perfil.png")
-        if not os.path.exists(path_selo) and os.path.exists("foto_perfil.png"):
-            path_selo = "foto_perfil.png"
-        if os.path.exists(path_selo):
-            try:
-                selo_img = Image.open(path_selo).convert("RGBA")
-                larg_selo = 300
-                alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
-                selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
-                slide_rgba = slide.convert("RGBA")
-                slide_rgba.paste(selo_redim, (int((W - larg_selo) / 2), 100), selo_redim)
-                slide = slide_rgba.convert("RGB")
-                draw = ImageDraw.Draw(slide)
-            except Exception as e_selo:
-                print(f"⚠️ Erro ao desenhar emblema no topo (reels): {e_selo}")
 
         # ── 2. MARCA D'ÁGUA NO RODAPÉ (ignora foto_perfil.png) ──
         logo_aplicado = False
@@ -582,23 +552,8 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, W, H)
         
-        # ── 1. EMBLEMA (foto_perfil.png) NO TOPO ──
+        # ── 1. [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida ──
         logo_dir = os.path.join("biblioteca_local", "logo")
-        path_selo = os.path.join(logo_dir, "foto_perfil.png")
-        if not os.path.exists(path_selo) and os.path.exists("foto_perfil.png"):
-            path_selo = "foto_perfil.png"
-        if os.path.exists(path_selo):
-            try:
-                selo_img = Image.open(path_selo).convert("RGBA")
-                larg_selo = 300
-                alt_selo = int(larg_selo * (selo_img.height / selo_img.width))
-                selo_redim = selo_img.resize((larg_selo, alt_selo), Image.Resampling.LANCZOS)
-                slide_rgba = slide.convert("RGBA")
-                slide_rgba.paste(selo_redim, (int((W - larg_selo) / 2), 100), selo_redim)
-                slide = slide_rgba.convert("RGB")
-                draw = ImageDraw.Draw(slide)
-            except Exception as e_selo:
-                print(f"⚠️ Erro ao desenhar emblema no topo (estático): {e_selo}")
 
         # ── 2. MARCA D'ÁGUA NO RODAPÉ (ignora foto_perfil.png) ──
         y_watermark = H - 150 if tipo in ["story", "story_manha", "story_tarde", "test"] else H - 80
@@ -650,8 +605,8 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
         else:
             linhas = linhas_raw
 
-        # Margens seguras: emblema ocupa topo (y=100 a ~320), marca d'água ocupa rodapé
-        Y_MIN_TEXTO = 450       # abaixo do emblema (300px) + folga
+        # Margens seguras: topo livre (emblema removido), marca d'água ocupa rodapé
+        Y_MIN_TEXTO = 150       # topo livre — texto pode subir mais
         Y_MAX_TEXTO = H - 280   # acima da marca d'água + folga
 
         if layout_style == "bottom":

@@ -130,6 +130,10 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
     return dados
 
 def gerar_conteudo_gemini(tipo):
+    # Calcula número de slides para stories de forma alternada a cada dia (3 em um dia, 4 no outro)
+    dia_ano = datetime.now(timezone.utc).timetuple().tm_yday
+    num_slides_story = 3 if dia_ano % 2 == 0 else 4
+
     if tipo == "test":
         logger.info("Gerando conteudo de teste estatico...")
         prompt_visual = "A serene sunset reflecting on a calm lake, warm golden hour, realistic photograph"
@@ -353,7 +357,7 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA SEQUÊNCIA ENTRE 3 A 5 FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
+        CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
         - Cada frase representará um slide da sua conversa contínua.
         - Não use ganchos frios de atração. Comece o primeiro slide compartilhando uma dúvida, uma confissão ou um pensamento maduro diretamente.
         - Use os slides internos para aprofundar a lição ou o insight sugerido pelo sub-ângulo: "{sub_angulo}".
@@ -361,12 +365,12 @@ def gerar_conteudo_gemini(tipo):
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não no story (true ou false) de acordo com o tom da conversa.
         
-        Responda APENAS em formato JSON válido assim (DEVE ter de 3 a 5 frases, nunca mais):
+        Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
           "frase": [
-            "Frase do slide 1 (Início da conversa/Confissão)",
-            "Frase do slide 2 (Aprofundamento)",
-            "Frase do slide 3 (Conclusão direcional)"
+            "Frase do slide 1",
+            "Frase do slide 2",
+            "Frase do slide {num_slides_story}"
           ],
           "usar_musica": true
         }}
@@ -379,17 +383,20 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA SEQUÊNCIA DE EXACTAMENTE 2 FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
-        - Slide 1: Uma reflexão íntima sobre o andamento do dia ou cansaço da rotina.
-        - Slide 2: O insight prático ou a perspectiva do sub-ângulo: "{sub_angulo}" para trazer alívio e clareza.
+        CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
+        - Cada frase representará um slide da sua conversa contínua.
+        - Comece compartilhando uma reflexão íntima sobre o andamento do dia ou cansaço da rotina.
+        - Use os slides intermediários para aprofundar a lição ou o insight sugerido pelo sub-ângulo: "{sub_angulo}".
+        - Termine a sequência com um insight prático para trazer alívio, clareza e direção antes do dia acabar.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não (true ou false).
         
-        Responda APENAS em formato JSON válido assim:
+        Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
           "frase": [
-            "Frase do slide 1 (Conexão e rotina)",
-            "Frase do slide 2 (Reflexão/Alívio)"
+            "Frase do slide 1",
+            "Frase do slide 2",
+            "Frase do slide {num_slides_story}"
           ],
           "usar_musica": false
         }}
@@ -469,12 +476,10 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA SEQUÊNCIA NARRATIVA DINÂMICA DE 5 A 8 SLIDES (o número exato deve flutuar livremente entre 5 e 8 a cada execução) seguindo esta estrutura fluida:
+        CRIE UMA SEQUÊNCIA NARRATIVA DINÂMICA DE 3 A 5 SLIDES (o número exato deve flutuar livremente entre 3 e 5 a cada execução) seguindo esta estrutura fluida:
 
         - Slide 1: O Gancho/Quebra de Padrão (Pattern Interrupt) — Frase super provocativa e inesperada para parar o scroll.
-        - Slides 2 a 3: Abertura de loop, mistério e detalhamento da dor (o problema no cotidiano do leitor).
-        - Slides 4 a 6: A entrega de valor prática e o insight revelado. Choque de realidade e elogio a quem chegou até aqui.
-        - Slide 7 (se houver): Xeque-mate reflexivo — frase que o leitor vai guardar mentalmente.
+        - Slides intermediários (1 a 3 slides): Aprofundamento do tema, mistério ou dor do cotidiano, seguido da entrega de valor ou insight prático.
         - ÚLTIMO SLIDE (obrigatório): CTA — Fusão de impacto com convite sutil e elegante para seguir o perfil (ex: "Se você busca respostas que a maioria ignora, acompanhe o perfil.").
 
         REGRAS DE ESCUTA E RITMO VISUAL:
@@ -488,15 +493,12 @@ def gerar_conteudo_gemini(tipo):
         - NUNCA termine com uma frase bonita e fechada. Sempre com uma pergunta em aberto.
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (DEVE ter de 5 a 8 slides, sendo o último SEMPRE o CTA):
+        Responda APENAS em formato JSON válido assim (DEVE ter de 3 a 5 slides, sendo o último SEMPRE o CTA):
         {{
           "slides": [
             "Slide 1 (Gancho rápido)",
-            "Slide 2 (Abertura de loop)",
-            "Slide 3 (Dor e realidade)",
-            "Slide 4 (Entrega de valor / insight)",
-            "Slide 5 (Elogio ao leitor / xeque-mate)",
-            "Slide 6 (CTA — convite sutil para seguir)"
+            "Slide 2 (Aprofundamento / Insight)",
+            "Slide 3 (CTA — convite sutil para seguir)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
@@ -572,7 +574,7 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA NARRATIVA MAGNÉTICA em 5 a 8 frases curtas seguindo esta arquitetura OBRIGATÓRIA:
+        CRIE UMA NARRATIVA MAGNÉTICA em 2 a 4 frases curtas seguindo esta arquitetura OBRIGATÓRIA:
 
         FRASE 1 — GANCHO DE PARADA DE FEED (OBRIGATÓRIA):
         Esta é a frase mais importante de todo o vídeo. É ela que aparece NA TELA assim que o vídeo começa.
@@ -583,17 +585,9 @@ def gerar_conteudo_gemini(tipo):
           * Contradição inesperada: "Trabalhar mais não é a resposta. E você já sabia disso."
         - Máximo 10 palavras. CURTA, DIRETA, SEM RODEIOS. O choque primeiro, a explicação depois.
 
-        FRASE 2 — APROFUNDAMENTO (sustenta o gancho):
-        - Aprofunde a provocação da frase 1. Cria o loop de curiosidade — a pessoa precisa continuar assistindo.
+        FRASE INTERMEDIÁRIA (se houver de 3 a 4 slides):
+        - Aprofunde o gancho ou traga um insight / realidade visceral do cotidiano do leitor.
         - Máximo 10 palavras.
-
-        FRASES 3-5 — ABERTURA DE POSSIBILIDADES, CHOQUE E VALIDAÇÃO:
-        - Expanda o universo. Mostre que existe um caminho, uma verdade oculta.
-        - Bata na ferida com uma verdade difícil. Depois ELEVE: elogie a inteligência de quem chegou até aqui.
-        - Dica prática REAL que o espectador pode aplicar hoje.
-
-        FRASE PENÚLTIMA (se houver mais slides) — XEQUE-MATE:
-        - Feche com uma frase que o espectador vai querer guardar mentalmente. Uma ideia inacabada, uma pergunta que ele vai continuar pensando.
 
         ÚLTIMO SLIDE (OBRIGATÓRIO) — CTA PREMIUM:
         - Crie uma chamada para ação (CTA) altamente sedutora e sutil de acordo com o tema, convidando o espectador a comentar ou seguir de forma elegante.
@@ -615,14 +609,12 @@ def gerar_conteudo_gemini(tipo):
         UNIVERSO VISUAL OBRIGATÓRIO — PEXELS STORY MANHÃ:
         As queries devem evocar luz natural, espaços abertos, natureza ao amanhecer, calma e esperança: parques, rios, campos, trilhas, flores, luz solar. NUNCA ambientes noturnos ou interiores fechados.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 5 a 8 frases, sendo o ÚLTIMO sempre o CTA):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 2 a 4 frases, sendo o ÚLTIMO sempre o CTA):
         {{
           "slides": [
             "Frase 1 (Gancho)",
-            "Frase 2 (Aprofundamento)",
-            "Frase 3 (Abertura de possibilidades)",
-            "Frase 4 (Choque / validação)",
-            "Frase 5 (CTA Charmosa — convite para comentar ou seguir)"
+            "Frase 2 (Aprofundamento / Insight - Opcional)",
+            "Frase 3 (CTA Charmosa — convite para comentar ou seguir)"
           ],
           "pexels_queries": [
             "golden sunrise meadow mist peaceful",
@@ -640,10 +632,7 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== MISSÃO: PROVOCAÇÃO VISCERAL DE FINAL DE DIA (18:00) =====
-        NÃO fale de "deitar na cama" ou "dormir" (ainda é 18h). Foque na transição entre o dever diário e a vida real.
-
-        ESTRUTURA EM SLIDES (5 A 8 SLIDES):
+        ESTRUTURA EM SLIDES (3 A 5 SLIDES):
         - Slide 1 (GANCHO VISCERAL - 18h): Pergunta afiada ou afirmação cortante sobre o que o leitor fez do próprio tempo hoje.
           Adapte obrigatoriamente o gancho de referência: '{gancho}' ao contexto de reflexão de vida/trabalho.
           Exemplos de tom (crie uma variação inédita):
@@ -652,10 +641,8 @@ def gerar_conteudo_gemini(tipo):
           * "Mais 24 horas entregues à rotina dos outros."
           Máximo 10 palavras. Segunda pessoa ("você"). Choque direto sem rodeios.
 
-        - Slides 2 a 3: O espelho do cotidiano. O contraste entre o que a pessoa sonha e o que ela executa na rotina.
-        - Slides 4 a 6: A virada de mentalidade e a lição prática dos livros sobre prioridades e postura madura.
-        - Slide penúltimo (se houver): Xeque-mate reflexivo — frase cirúrgica que o leitor guarda.
-        - ÚLTIMO SLIDE (obrigatório): CTA — convite elegante para seguir o perfil.
+        - Slides intermediários (1 a 3 slides): Aprofundamento do choque ou contraste entre o que a pessoa sonha e o que ela executa na rotina, terminando com a lição prática dos livros (virada de mentalidade).
+        - ÚLTIMO SLIDE (obrigatório): CTA — convite sutil e elegante para seguir o perfil.
 
         REGRAS DE RITMO VISUAL:
         * Misture frases curtas (4-8 palavras) com frases de profundidade (até 15 palavras).
@@ -670,25 +657,46 @@ def gerar_conteudo_gemini(tipo):
         {{
           "slides": [
             "Slide 1 (Gancho visceral das 18h)",
-            "Slide 2 (Espelho da rotina)",
-            "Slide 3 (Diagnóstico do tempo)",
-            "Slide 4 (Virada prática / insight)",
-            "Slide 5 (Xeque-mate)",
-            "Slide 6 (CTA — convite sutil para seguir)"
+            "Slide 2 (Espelho da rotina / Virada prática)",
+            "Slide 3 (CTA — convite sutil para seguir)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-            "Frase 4 aqui (O conflito interno)",
-            "Frase 5 aqui (A percepção de que algo precisa mudar)",
-            "Frase 6 aqui (A decisão errada habitual)",
-            "Frase 7 aqui (A descoberta / lição dos livros)",
-            "Frase 8 aqui (O efeito da descoberta)",
-            "Frase 9 aqui (A resolução interna / paz)",
-            "Frase 10 aqui (A promessa do amanhã)",
-            "Frase 11 aqui (CTA Charmoso integrado à história)"
+        Você é um escritor de storytelling cinematográfico profundo e envolvente.
+        Sua missão é criar uma história curta em slides para o final da noite voltada para reflexão e acalento mental.
+        Estilo obrigatório para esta narrativa: {estilo_escolhido}
+
+        {instrucoes_copy}{instrucoes_livros}
+
+        ===== MISSÃO: NARRATIVA ENVOLVENTE DE FECHAMENTO (STORYTELLING NOTURNO) =====
+        Crie uma narrativa magnética em 3 a 5 frases conectadas. A história deve conduzir o leitor por um arco dramático simples:
+        - Frase 1 (O Gancho Noturno): Comece descrevendo uma sensação íntima de cansaço ou conflito interno que ocorre no silêncio da noite.
+          Adapte o gancho de referência: '{gancho}'.
+        - Frases intermediárias (1 a 3 frases): A busca por respostas na sabedoria, a revelação ou lição dos livros. O alívio mental que a compreensão traz.
+        - Último slide (obrigatório): CTA sutil integrado de forma bonita e natural ao desfecho do texto.
+
+        REGRAS DE RITMO VISUAL:
+        * Cada slide deve ter no máximo 15 palavras. Frases fluidas e calmas.
+        * NÃO use pontos de exclamação.
+
+        PEXELS QUERY: Clima noturno intimista, aconchegante e reflexivo.
+        - Use termos em inglês como: warm candlelight room cozy, rain window amber glow, determined reader night desk, coffee steam night.
+
+        LEGENDA:
+        - Máximo 3 linhas. Tom pessoal e reconfortante.
+        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada.
+        - NÃO inclua hashtags.
+
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases):
+        {{
+          "slides": [
+            "Frase do slide 1 (O gancho / Conflito no silêncio)",
+            "Frase do slide 2 (A reflexão / Lição do livro)",
+            "Frase do slide 3 (A resolução / Paz)",
+            "Frase do slide 4 (CTA Charmoso de encerramento)"
           ],
           "pexels_queries": [
             "warm candlelight bedroom cozy night",
