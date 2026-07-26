@@ -865,6 +865,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         from moviepy.editor import CompositeAudioClip
                         bg_suave = bg_audio.volumex(0.05) if hasattr(bg_audio, 'volumex') else bg_audio
                         audio_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(duracao_total_video)])
+                        audio_composto.fps = 44100  # Necessário no MoviePy 1.x
                         final_clip = final_clip.set_audio(audio_composto)
                         logger.success("🎙️ Narração por voz + Música suave adicionadas ao pexels_story_noite!")
                     except Exception as e_mix:

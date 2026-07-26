@@ -223,8 +223,10 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
         try:
             from moviepy.editor import CompositeAudioClip
             audio_final = CompositeAudioClip(clips_audio)
+            # Necessário no MoviePy 1.x: CompositeAudioClip não define fps automaticamente
+            audio_final.fps = 44100
             caminho_final = f"midia_temp/narracao_sincronizada_{uid}.mp3"
-            audio_final.write_audiofile(caminho_final, logger=None)
+            audio_final.write_audiofile(caminho_final, logger=None, fps=44100)
             
             # Fecha clips temporários
             for c in clips_audio:

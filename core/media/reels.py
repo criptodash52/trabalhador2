@@ -563,9 +563,12 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
         if audio_narracao_clip is not None:
             try:
                 from moviepy.editor import CompositeAudioClip
-                # Suaviza a música de fundo para 5% do volume (fundo sutil e ambiente)
+                duracao_real_video = video_clip.duration
+                # Suaviza a música de fundo para 5% do volume e ajusta para a duração REAL do vídeo (slides + logo)
                 bg_suave = audio_clip.volumex(0.05) if hasattr(audio_clip, 'volumex') else audio_clip
-                audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(video_clip.duration)])
+                bg_suave = bg_suave.set_duration(duracao_real_video)
+                audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave])
+                audio_final_composto.fps = 44100  # Necessário no MoviePy 1.x
                 try:
                     video_clip = video_clip.with_audio(audio_final_composto)
                 except AttributeError:
