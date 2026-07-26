@@ -765,15 +765,16 @@ def gerar_conteudo_gemini(tipo):
         - Exemplo de tom: "Não precisa de experiência. Só de disposição."
         - Máximo 12 palavras.
 
-        ÚLTIMO SLIDE — CTA ELEGANTE (obrigatório, sempre o slide final):
-        - Convite único, suave e autoral para acessar o material gratuito.
+        ÚLTIMO SLIDE — CTA DUPLO E ELEGANTE (obrigatório, sempre o slide final):
+        - DEVE seguir ESTRITAMENTE esta estrutura: "Comente [PALAVRA-CHAVE] que eu te envio [mensagem/caminho], ou acesse o link na bio."
+        - Exemplo 1: "Comente FOCO que eu te envio o caminho completo, ou acesse o link na bio."
+        - Exemplo 2: "Comente SABEDORIA que eu te envio o método prático, ou acesse o link na bio."
+        - Exemplo 3: "Comente CLAREZA que eu te envio os passos desta aula, ou acesse o link na bio."
         - PROIBIDO usar as palavras "baixe", "clique", "anúncio", "compre".
-        - Conecte o convite à transformação do PDF de forma natural.
-        - Exemplo de tom: "Estruturei o caminho completo para você. O acesso gratuito está no link do meu perfil."
-        - Máximo 15 palavras.
+        - Máximo 20 palavras.
 
         REGRAS ABSOLUTAS:
-        * Máximo de 15 palavras por slide.
+        * Máximo de 20 palavras por slide.
         * PROIBIDO mencionar PDF, link ou bio antes do último slide.
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
@@ -783,7 +784,7 @@ def gerar_conteudo_gemini(tipo):
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
         - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave única em CAIXA ALTA relacionada ao tema do post (ex: "FOCO", "DISCIPLINA", "LIBERDADE", "CLAREZA", "CORAGEM").
-        - A legenda DEVE terminar com o convite para comentar essa palavra para acessar o link na bio (ex: "Comente FOCO 👇 e acesse o material gratuito no link do perfil.").
+        - A legenda DEVE obrigatoriamente terminar no mesmo padrão: "Comente [PALAVRA-CHAVE] 👇 que eu te envio o caminho completo, ou acesse o link na bio."
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
