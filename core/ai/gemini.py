@@ -568,53 +568,40 @@ def gerar_conteudo_gemini(tipo):
 
     elif tipo == "pexels_story":
         prompt = f"""
-        Você é um mestre de storytelling cinematográfico aplicado ao Instagram.
-        Sua missão é criar uma história em formato de vídeo B-roll que prenda o espectador do primeiro ao último segundo.
+        Você é um roteirista autoral de storytelling cinematográfico de altíssimo nível para o Instagram.
+        Sua missão é criar uma história em vídeo B-roll cativante, elegante e profundamente humana, que desperte admiração e prendam a atenção imediatamente.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA NARRATIVA MAGNÉTICA em 2 a 4 frases curtas seguindo esta arquitetura OBRIGATÓRIA:
+        PROIBIÇÕES E REGRAS DE ANTI-CLICHÊ:
+        - É ESTRITAMENTE PROIBIDO usar frases genéricas batidas como "A maioria das pessoas erra", "Você faz isso sem perceber" ou "Trabalhar mais não é a resposta".
+        - Crie uma abertura autêntica, poética, instigante ou baseada em uma observação rica da vida real.
 
-        FRASE 1 — GANCHO DE PARADA DE FEED (OBRIGATÓRIA):
-        Esta é a frase mais importante de todo o vídeo. É ela que aparece NA TELA assim que o vídeo começa.
-        - REGRA DE OURO: O espectador PRECISA parar de rolar o feed. Use UMA das fórmulas abaixo:
-          * Afirmação polêmica: "A maioria das pessoas faz isso completamente errado."
-          * Identificação visceral: "Você acorda todo dia repetindo o mesmo erro sem perceber."
-          * Pergunta perturbadora: "Sabe qual é a coisa que mais sabota o que você quer?"
-          * Contradição inesperada: "Trabalhar mais não é a resposta. E você já sabia disso."
-        - Máximo 10 palavras. CURTA, DIRETA, SEM RODEIOS. O choque primeiro, a explicação depois.
+        ESTRUTURA DA NARRATIVA (3 A 4 SLIDES FLUÍDOS E ELEGANTES):
+        - Slide 1 (GANCHO VISCERAL E CINEMATOGRÁFICO): Abra com uma frase impactante, elegante e provocativa que interrompa a rolagem do feed. Não use clichês de autoajuda.
+        - Slides Intermediários (1 a 2 slides): Aprofunde a narrativa trazendo uma metáfora marcante, um insight dos livros ou um ponto de virada sobre maturidade e paz interior.
+        - Slide Final (OBRIGATÓRIO - CTA ELEGANTE): Conclua com um convite natural e magnético para acompanhar a jornada ou compartilhar sua percepção nos comentários.
 
-        FRASE INTERMEDIÁRIA (se houver de 3 a 4 slides):
-        - Aprofunde o gancho ou traga um insight / realidade visceral do cotidiano do leitor.
-        - Máximo 10 palavras.
+        RITMO DA NARRAÇÃO:
+        - Cada slide deve ter de 10 a 20 palavras bem construídas, com excelente ritmo para narração por voz.
+        - Evite frases robóticas ou curtas demais que soem vazias.
 
-        ÚLTIMO SLIDE (OBRIGATÓRIO) — CTA PREMIUM:
-        - Crie uma chamada para ação (CTA) altamente sedutora e sutil de acordo com o tema, convidando o espectador a comentar ou seguir de forma elegante.
-        
-        Exemplos de tom para o CTA (use como inspiração, crie uma frase única conectada ao post):
-        * "Deixe sua percepção nos comentários. E se você busca respostas reais, siga a página."
-        * "Se você leu até aqui, comente o que pensa e acompanhe nossa jornada."
-        * "A discussão continua nos comentários. Siga para evoluir junto conosco."
+        PEXELS QUERY:
+        - Escolha buscas em inglês para vídeos B-roll evocativos, naturais e cinematográficos (luz matinal, natureza, parques, água, trilhas, luz solar).
 
-        PEXELS QUERY: Escolha um clima visual que CASE com a emoção da história.
-        - Use buscas em inglês evocativas: dark moody reading, lonely city rain, candlelight silence, foggy mountain path.
-        
         LEGENDA:
-        - Máximo 3 linhas. Tom próximo e pessoal, como uma mensagem de voz transcrita.
-        - CTA OBRIGATÓRIO: A legenda DEVE obrigatoriamente terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
-        - NUNCA termine com uma mensagem positiva e fechada. Sempre com uma pergunta que exija resposta.
+        - Máximo 3 linhas. Tom próximo, maduro e reflexivo.
+        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA) adaptada conforme a diretriz recebida.
         - NÃO inclua hashtags.
 
-        UNIVERSO VISUAL OBRIGATÓRIO — PEXELS STORY MANHÃ:
-        As queries devem evocar luz natural, espaços abertos, natureza ao amanhecer, calma e esperança: parques, rios, campos, trilhas, flores, luz solar. NUNCA ambientes noturnos ou interiores fechados.
-
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 2 a 4 frases, sendo o ÚLTIMO sempre o CTA):
+        Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Frase 1 (Gancho)",
-            "Frase 2 (Aprofundamento / Insight - Opcional)",
-            "Frase 3 (CTA Charmosa — convite para comentar ou seguir)"
+            "Frase do Slide 1 (Gancho cinematográfico instigante)",
+            "Frase do Slide 2 (Virada de perspectiva / sabedoria prática)",
+            "Frase do Slide 3 (Insight / Reflexão visceral)",
+            "Frase do Slide 4 (CTA elegante de convite ao perfil)"
           ],
           "pexels_queries": [
             "golden sunrise meadow mist peaceful",
@@ -626,80 +613,76 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "reels_noite":
         prompt = f"""
-        Você é um especialista em psicologia de encerramento de dia e provocar reflexões viscerais de transição.
-        O seu Reels vai ao ar às 18:00 — o exato momento em que as pessoas estão encerrando o expediente, voltando para casa ou descarregando o peso do dia.
-        Estilo obrigatório para este Reels: {estilo_escolhido}
+        Você é um mestre da psicologia de encerramento de dia, criando reflexões noturnas de transição e desaceleração mental.
+        O seu Reels vai ao ar às 18:00 — o momento em que as pessoas encerram o expediente e começam a refletir sobre o peso do dia.
+        Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ESTRUTURA EM SLIDES (3 A 5 SLIDES):
-        - Slide 1 (GANCHO VISCERAL - 18h): Pergunta afiada ou afirmação cortante sobre o que o leitor fez do próprio tempo hoje.
-          Adapte obrigatoriamente o gancho de referência: '{gancho}' ao contexto de reflexão de vida/trabalho.
-          Exemplos de tom (crie uma variação inédita):
-          * "Você trabalhou 9 horas hoje. O que você fez que é realmente seu?"
-          * "O dia acabou. Você avançou ou só sobreviveu?"
-          * "Mais 24 horas entregues à rotina dos outros."
-          Máximo 10 palavras. Segunda pessoa ("você"). Choque direto sem rodeios.
+        PROIBIÇÕES ANTI-REPETIÇÃO:
+        - NUNCA use clichês engessados como "Você trabalhou 9 horas hoje", "O dia acabou, você sobreviveu?" ou perguntas agressivas vazias.
+        - Adapte o gancho de referência: '{gancho}' de forma totalmente inédita e autoral.
 
-        - Slides intermediários (1 a 3 slides): Aprofundamento do choque ou contraste entre o que a pessoa sonha e o que ela executa na rotina, terminando com a lição prática dos livros (virada de mentalidade).
-        - ÚLTIMO SLIDE (obrigatório): CTA — convite sutil e elegante para seguir o perfil.
+        ESTRUTURA DA NARRATIVA (3 A 5 SLIDES CINEMATOGRÁFICOS):
+        - Slide 1 (ABERTURA INTENSA DAS 18H): Uma reflexão madura, calma e profunda sobre o ritmo acelerado da vida, a busca por paz ou a necessidade de desacelerar.
+        - Slides Intermediários (1 a 3 slides): O contraste entre a correria externa e a serenidade interna, revelando a sabedoria dos livros de forma elegante e prática.
+        - Slide Final (OBRIGATÓRIO - CTA SUTIL): Chamada elegante e nobre para fazer parte da comunidade do perfil.
 
-        REGRAS DE RITMO VISUAL:
-        * Misture frases curtas (4-8 palavras) com frases de profundidade (até 15 palavras).
-        * NÃO use pontos de exclamação.
+        RITMO E DICÇÃO:
+        - Cada frase deve ter ritmo de leitura fluido, entre 10 e 20 palavras por slide.
+        - Frases ricas, profundas e satisfatórias de escutar em formato de áudio.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom direto, maduro e provocativo.
-        - CTA OBRIGATÓRIO: A legenda DEVE obrigatoriamente terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
+        - Máximo 3 linhas. Tom maduro, sereno e reflexivo.
+        - CTA OBRIGATÓRIO: A legenda DEVE terminar com o CTA de engajamento adaptado.
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 (Gancho visceral das 18h)",
-            "Slide 2 (Espelho da rotina / Virada prática)",
-            "Slide 3 (CTA — convite sutil para seguir)"
+            "Slide 1 (Gancho reflexivo das 18h)",
+            "Slide 2 (Aprofundamento da sabedoria / contraste humano)",
+            "Slide 3 (Lição de vida visceral)",
+            "Slide 4 (CTA elegante)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-        Você é um escritor de storytelling cinematográfico profundo e envolvente.
-        Sua missão é criar uma história curta em slides para o final da noite voltada para reflexão e acalento mental.
-        Estilo obrigatório para esta narrativa: {estilo_escolhido}
+        Você é um autor de storytelling noturno cinematográfico focado em paz mental, acalento e sabedoria de vida.
+        Sua missão é criar uma narrativa magnética em slides para o final da noite (19h/21h), convidando o leitor ao silêncio produtivo.
+        Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== MISSÃO: NARRATIVA ENVOLVENTE DE FECHAMENTO (STORYTELLING NOTURNO) =====
-        Crie uma narrativa magnética em 3 a 5 frases conectadas. A história deve conduzir o leitor por um arco dramático simples:
-        - Frase 1 (O Gancho Noturno): Comece descrevendo uma sensação íntima de cansaço ou conflito interno que ocorre no silêncio da noite.
-          Adapte o gancho de referência: '{gancho}'.
-        - Frases intermediárias (1 a 3 frases): A busca por respostas na sabedoria, a revelação ou lição dos livros. O alívio mental que a compreensão traz.
-        - Último slide (obrigatório): CTA sutil integrado de forma bonita e natural ao desfecho do texto.
+        PROIBIÇÕES E QUALIDADE NARRATIVA:
+        - Evite narrativas clichês ou superficiais. Use metáforas marcantes e imagens mentais reconfortantes.
+        - Adapte o gancho de referência: '{gancho}' com sensibilidade e elegância autoral.
 
-        REGRAS DE RITMO VISUAL:
-        * Cada slide deve ter no máximo 15 palavras. Frases fluidas e calmas.
-        * NÃO use pontos de exclamação.
+        ESTRUTURA DA NARRATIVA (3 A 5 SLIDES CONECTADOS):
+        - Slide 1 (ACOLHIMENTO E SILÊNCIO): Descreva o momento da noite, o silêncio que revela o que estava escondido pelo barulho do dia.
+        - Slides Intermediários (1 a 3 slides): A iluminação trazida pela sabedoria, o alívio de deixar ir o que não podemos controlar e o valor da lealdade e paz.
+        - Slide Final (OBRIGATÓRIO - CTA NOTURNO): Encerramento acolhedor convidando o leitor a acompanhar o perfil para cultivar a mente em paz.
 
-        PEXELS QUERY: Clima noturno intimista, aconchegante e reflexivo.
-        - Use termos em inglês como: warm candlelight room cozy, rain window amber glow, determined reader night desk, coffee steam night.
+        PEXELS QUERY:
+        - Termos em inglês noturnos e quentes: warm amber room cozy, rain window amber glow, coffee steam night, silent city lights.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom pessoal e reconfortante.
-        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada.
+        - Máximo 3 linhas. Tom caloroso, sereno e autoral.
+        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA).
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases):
+        Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Frase do slide 1 (O gancho / Conflito no silêncio)",
-            "Frase do slide 2 (A reflexão / Lição do livro)",
-            "Frase do slide 3 (A resolução / Paz)",
-            "Frase do slide 4 (CTA Charmoso de encerramento)"
+            "Frase do Slide 1 (Conflito/Silêncio da noite)",
+            "Frase do Slide 2 (Luz da sabedoria / Lição)",
+            "Frase do Slide 3 (Paz interior e resolução)",
+            "Frase do Slide 4 (CTA Acolhedor de encerramento)"
           ],
           "pexels_queries": [
-            "warm candlelight bedroom cozy night",
+            "warm ambient bedroom cozy night",
             "rain window city lights amber glow",
             "fireplace intimate evening interior warm"
           ],
@@ -779,8 +762,14 @@ def gerar_conteudo_gemini(tipo):
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
 
-        PEXELS QUERY: Escolha buscas em inglês que criem uma atmosfera cinematográfica de disciplina noturna, foco e superação de acordo com o sentimento do dia "{sentimento_escolhido}". Ex: 'focused person studying late night warm lamp', 'athlete training night intense focus', 'determined person working late night city lights'.
-        
+        PEXELS QUERY:
+        Escolha buscas em inglês altamente visuais e cinematográficas. Alterne obrigatoriamente entre estes 5 pilares de imagem de acordo com o sentimento "{sentimento_escolhido}":
+        1. Pessoas correndo à noite pela cidade com iluminação néon/âmbar (ex: 'person running night city street neon lights runner')
+        2. Pessoas em disputa e combate físico intenso (boxe, MMA, treino em ringue/saco de pancadas - ex: 'boxing fight training night intense fighter combat', 'MMA fighter training workout night')
+        3. Corridas de bike noturnas no néon urbano (ex: 'night cycling bicycle rider city neon lights')
+        4. Cidades futurísticas, modernas, arranha-céus noturnos com luzes douradas e néon (ex: 'futuristic city night skyline modern skyscrapers neon')
+        5. Pessoas estudando/trabalhando concentradas no silêncio da noite (ex: 'focused person studying late night warm lamp light')
+
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
         - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave única em CAIXA ALTA relacionada ao tema do post (ex: "FOCO", "DISCIPLINA", "LIBERDADE", "CLAREZA", "CORAGEM").
@@ -788,7 +777,13 @@ def gerar_conteudo_gemini(tipo):
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
-        As queries devem evocar DISCIPLINA NOTURNA, FOCO ABSOLUTO E SUPERAÇÃO: pessoa estudando/escrevendo até tarde sob luz de luminária quente, treino noturno intenso, corrida noturna na cidade sob luzes néon/âmbar, foco compenetrado na madrugada, superação e esforço no silêncio da noite. NUNCA vídeos alegres de praia, natureza genérica de dia ou café da manhã casual.
+        As queries devem variadamente evocar:
+        - Pessoas correndo à noite em ruas urbanas iluminadas por néon ou luzes quentes;
+        - Disputas esportivas intensas, lutas de boxe, treinos de MMA e ringues de combate noturnos;
+        - Corridas de bicicleta noturnas na cidade sob luzes néon;
+        - Cidades futurísticas e modernas, metrópoles cyberpunk e arranha-céus noturnos;
+        - Foco compenetrado e estudo sob luz de luminária noturna.
+        NUNCA vídeos alegres de praia, natureza genérica de dia ou café da manhã casual.
 
         Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases curtas, sendo o ÚLTIMO sempre o CTA):
         {{
@@ -801,9 +796,9 @@ def gerar_conteudo_gemini(tipo):
             "Slide 5 (CTA elegante — link do perfil)"
           ],
           "pexels_queries": [
-            "focused person studying late night warm lamp light",
-            "athlete training night intense focus amber glow",
-            "determined person writing notebook night silence"
+            "person running night city street neon lights runner",
+            "boxing fight training night intense fighter combat",
+            "futuristic city night skyline modern skyscrapers neon"
           ],
           "legenda": "Sua legenda aqui com convite para comentar a palavra-chave sem hashtags"
         }}

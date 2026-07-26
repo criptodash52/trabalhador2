@@ -186,14 +186,16 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
         return gerar_audio_narracao(slides, voice_id=voice_id), []
 
     clips_audio = []
-    pausa_segundos = 0.5  # Pausa em segundos entre os slides para evitar transições abruptas ("travadinhas")
+    pausa_inicial = 1.0  # 1s de silêncio antes da voz começar no slide
+    pausa_final = 1.0    # 1s de silêncio após a voz terminar no slide
     tempo_acumulado = 0.0
 
     for idx, slide_texto in enumerate(slides):
         texto_limpo = str(slide_texto).replace("\n", " ").strip()
         if not texto_limpo:
-            duracoes_slides.append(2.0 + pausa_segundos)
-            tempo_acumulado += 2.0 + pausa_segundos
+            dur_vazio = round(pausa_inicial + 2.0 + pausa_final, 2)
+            duracoes_slides.append(dur_vazio)
+            tempo_acumulado += dur_vazio
             continue
 
         caminho_slide_mp3 = f"midia_temp/slide_{uid}_{idx}.mp3"
@@ -203,21 +205,23 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
             try:
                 aclip = AudioFileClip(audio_slide)
                 dur = aclip.duration
-                # Posiciona o áudio no tempo acumulado
-                aclip = aclip.set_start(tempo_acumulado)
+                # Posiciona o áudio 1s após o início do slide (margem inicial)
+                aclip = aclip.set_start(tempo_acumulado + pausa_inicial)
                 clips_audio.append(aclip)
 
-                dur_total_slide = round(dur + pausa_segundos, 2)
+                dur_total_slide = round(pausa_inicial + dur + pausa_final, 2)
                 duracoes_slides.append(dur_total_slide)
                 tempo_acumulado += dur_total_slide
                 caminhos_audios_slides.append(audio_slide)
             except Exception as e_clip:
                 logger.warning(f"⚠️ Erro ao medir áudio do slide {idx}: {e_clip}")
-                duracoes_slides.append(2.5)
-                tempo_acumulado += 2.5
+                dur_fallback = round(pausa_inicial + 2.0 + pausa_final, 2)
+                duracoes_slides.append(dur_fallback)
+                tempo_acumulado += dur_fallback
         else:
-            duracoes_slides.append(2.5)
-            tempo_acumulado += 2.5
+            dur_fallback = round(pausa_inicial + 2.0 + pausa_final, 2)
+            duracoes_slides.append(dur_fallback)
+            tempo_acumulado += dur_fallback
 
     if clips_audio:
         try:

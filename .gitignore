@@ -10,6 +10,7 @@ __pycache__/
 *.pyc
 
 # Local generated media
+midia_temp/
 *.jpg
 *.mp4
 !biblioteca_local/**/*.mp4

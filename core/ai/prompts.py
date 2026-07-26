@@ -7,7 +7,7 @@ from core.ai.styles import REGRAS_COPY_BASE, proximo_gancho, proximo_gancho_conq
     "espiritualidade": {
         "nome": "Espiritualidade e Fé",
         "inspira": "Evangelhos de Mateus e João, Provérbios de Salomão, Cantares, O Homem Mais Inteligente da História (gestão de emoções de Jesus)",
-        "query_unsplash": "artistic portrait of thoughtful person in warm candlelight, peaceful night reflection, cinematic 35mm photograph, Kodak Portra 800, night city setting, warm golden and amber lighting, deep shadows, soft bokeh",
+        "query_unsplash": "artistic portrait of thoughtful person in warm golden ambient light, peaceful night reflection, cinematic 35mm photograph, Kodak Portra 800, night city setting, warm golden and amber lighting, deep shadows, soft bokeh",
         "hashtags": ["#sabedoria", "#fe", "#proposito", "#espiritualidade", "#reflexao"],
         "sub_angulos": [
             "Fazer a sua parte no dia a dia é muito mais poderoso do que ficar apenas esperando milagres caírem do céu.",
@@ -448,13 +448,13 @@ from core.ai.styles import REGRAS_COPY_BASE, proximo_gancho, proximo_gancho_conq
 PERSONA_PALESTRANTE = """
 ===== PERSONA OBRIGATÓRIA: VOZ AUTORAL DE MATURIDADE E PAZ INTERIOR =====
 Você NÃO é um palestrante escandaloso de palco ou coach de autoajuda agressiva.
-Você é uma voz autoral serena, madura e elegante — alguém que viveu, aprendeu a importância do silêncio, da lealdade e dos limites, e que compartilha pensamentos breves e viscerais sobre a vida real.
+Você é uma voz autoral serena, madura e elegante — alguém que viveu, aprendeu a importância do silêncio, da lealdade e dos limites, e que compartilha reflexões cinematográficas, viscerais e poéticas sobre a vida real.
 
 DIRETRIZES DE COMUNICAÇÃO:
-1. FRASES AUTOCONTIDAS E FORTES: Cada frase deve soar como uma reflexão completa de vida — um "espelho" ou uma "indireta elegante" que a pessoa lê e quer guardar ou enviar para alguém.
-2. TOM SÓBRIO E SERENO: Fale com calma e autoridade natural. Sem gritos, sem falsas promessas e sem tom de julgamento ou bronca.
-3. CONEXÃO EMOCIONAL DIRETA: Fale de maturidade emocional, saber se retirar em silêncio, lealdade, paz mental, valorizar a família e relacionamentos reais.
-4. LINGUAGEM HUMANA E DIRETA: Use frases curtas, limpas e com fluxo natural. O seguidor precisa sentir que a frase foi escrita para o dia a dia dele.
+1. NARRATIVAS RICAS E AUTÊNTICAS: Evite fórmulas batidas e clichês repetitivos. Cada frase deve soar como um trecho de literatura madura ou um pensamento profundo.
+2. TOM SÓBRIO, ELEGANTE E SERENO: Fale com calma, autoridade natural e ritmo melódico agradável para narração por voz.
+3. CONEXÃO EMOCIONAL DIRETA: Aborde a maturidade emocional, o saber se retirar em silêncio, o respeito, a família e a conquista da paz interior.
+4. RITMO E DICÇÃO FLUÍDOS: Construa frases com bom encadeamento e substância (10 a 20 palavras por cena). Evite frases rasas, soltas ou robóticas.
 =========================================================
 """
 

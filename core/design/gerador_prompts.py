@@ -27,7 +27,7 @@ ESTILOS = [
 TEMAS_SIMBOLOS = {
     "espiritualidade": {
         "personagens": ["thoughtful wanderer", "person meditating in neon city", "glowing neural AI brain reflection"],
-        "objetos": ["glowing golden brain circuit diagram", "ancient pillar with futuristic hologram", "glowing golden candle", "old brass lantern"],
+        "objetos": ["glowing golden brain circuit diagram", "ancient pillar with futuristic hologram", "glowing golden book", "old brass lantern"],
         "cenarios": ["futuristic sacred temple night neon", "secluded mountaintop monastery over cyber city", "dark glass tower overlooking neon city"]
     },
     "filosofia": {
@@ -52,7 +52,7 @@ TEMAS_SIMBOLOS = {
     },
     "conexoes": {
         "personagens": ["people walking together in neon city", "moving crowd in futuristic metropolis", "person looking at digital connections"],
-        "objetos": ["glowing golden neural thread", "classic wooden violin with gold light", "glowing wax candle"],
+        "objetos": ["glowing golden neural thread", "classic wooden violin with gold light", "glowing golden compass"],
         "cenarios": ["cyberpunk street with moving crowd at night", "cozy room overlooking neon city skyline", "futuristic urban plaza at night"]
     },
     "superacao": {
