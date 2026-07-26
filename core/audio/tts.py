@@ -204,6 +204,21 @@ def gerar_audio_narracao_sincronizada(slides, voice_id: str | None = None):
         if audio_slide and os.path.exists(audio_slide):
             try:
                 aclip = AudioFileClip(audio_slide)
+                dur_orig = aclip.duration
+                # Corta 0.10s da cauda para eliminar resíduo de suspiro/respiração do TTS
+                dur_limpa = max(0.1, dur_orig - 0.10) if dur_orig > 0.4 else dur_orig
+                aclip = aclip.subclip(0, dur_limpa)
+
+                # Aplica fade-out suave de 0.15s no final da fala
+                if hasattr(aclip, "audio_fadeout"):
+                    aclip = aclip.audio_fadeout(0.15)
+                else:
+                    try:
+                        import moviepy.audio.fx.all as afx
+                        aclip = afx.audio_fadeout(aclip, 0.15)
+                    except Exception:
+                        pass
+
                 dur = aclip.duration
                 # Posiciona o áudio 1s após o início do slide (margem inicial)
                 aclip = aclip.set_start(tempo_acumulado + pausa_inicial)
