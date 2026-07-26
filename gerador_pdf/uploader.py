@@ -53,7 +53,8 @@ def fazer_upload_pdf(caminho_local: str, titulo_pdf: str) -> str:
     Retorna a URL Raw do GitHub.
     """
     semana_str = datetime.now().strftime("%Y-W%W")
-    nome_no_git = f"pdf_semana_{semana_str}.pdf"
+    timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+    nome_no_git = f"pdf_{timestamp_str}_{semana_str}.pdf"
 
     print(f"☁️  [Uploader] Copiando '{os.path.basename(caminho_local)}' para a pasta repositorio_pdfs...")
     
