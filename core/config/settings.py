@@ -54,6 +54,10 @@ IG_ACCOUNT_ID = os.getenv("IG_ACCOUNT_ID")
 IG_ACCESS_TOKEN_2 = os.getenv("IG_ACCESS_TOKEN_2")
 IG_ACCOUNT_ID_2  = os.getenv("IG_ACCOUNT_ID_2")
 
+# Terceira variável — conta @codigo.da.sabedoria_ (token permanente)
+IG_ACCESS_TOKEN_9 = os.getenv("IG_ACCESS_TOKEN_9")
+IG_ACCOUNT_ID_9   = os.getenv("IG_ACCOUNT_ID_9")
+
 # ==========================================
 # CREDENCIAIS DE E-MAIL (SMTP)
 # ==========================================

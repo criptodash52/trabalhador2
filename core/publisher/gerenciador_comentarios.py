@@ -19,7 +19,7 @@ from loguru import logger
 # Adiciona a raiz do projeto ao sys.path para garantir execução direta no terminal
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from core.config.settings import IG_ACCESS_TOKEN, IG_ACCOUNT_ID, IG_ACCESS_TOKEN_2, IG_ACCOUNT_ID_2
+from core.config.settings import IG_ACCESS_TOKEN, IG_ACCOUNT_ID, IG_ACCESS_TOKEN_9, IG_ACCOUNT_ID_9
 
 # Palavras-chave gerais ativas para disparar a resposta
 PALAVRAS_CHAVE_PADRAO = [
@@ -219,7 +219,7 @@ def monitorar_e_responder_comentarios(palavras_chave: list[str] | None = None, l
     # Definição das contas a monitorar
     contas = [
         {"nome": "@gustavo_8k_",          "token": IG_ACCESS_TOKEN,   "id": IG_ACCOUNT_ID},
-        {"nome": "@codigo.da.sabedoria_", "token": IG_ACCESS_TOKEN_2, "id": IG_ACCOUNT_ID_2},
+        {"nome": "@codigo.da.sabedoria_", "token": IG_ACCESS_TOKEN_9, "id": IG_ACCOUNT_ID_9},
     ]
 
     stats_total = {"posts_analisados": 0, "comentarios_lidos": 0, "respostas_enviadas": 0}
