@@ -1,7 +1,5 @@
 {
-    "indice_gancho_conquistador": 14,
     "historico_estilos": [
-        "Tom de celebração e gratidão: reconheça uma vitória silenciosa do cotidiano como algo extraordinário. Eleve o que parece pequeno (ex: 'Hoje você se levantou, mesmo sem vontade. Isso é mais raro do que parece.')",
         "Tom de revelação científica ou histórica: comece citando um estudo, estatística ou fato histórico desconhecido (ex: 'Estudaram X por 11 anos e concluíram que...')",
         "Tom científico e analítico: explique as coisas como um neurologista ou psicólogo, usando fatos para destruir ilusões (ex: 'A dopamina que você busca no celular é a mesma que...')",
         "Tom de storytelling puro: narre uma cena real e específica com personagem, ambiente e tensão. Não entregue a moral explicitamente — deixe o leitor tirar sua própria conclusão (ex: 'Às 22h ele olhou para o celular, para a janela, para o teto. Escolheu o celular.')",
@@ -25,13 +23,33 @@
         "Tom de maturidade serena e autoral: fale com quietude e sabedoria, sem gritos ou palestras (ex: 'O dia que parei de explicar minha vida foi o dia que comecei a vivê-la.')",
         "Tom de ironia leve e verdade cotidiana: exponha contradições humanas com leveza e um toque de humor sutil (ex: 'Fofocam sobre mim, mas continuam assistindo cada passo. Engraçado como a inveja é silenciosa.')",
         "Tom de ironia leve e verdade cotidiana: exponha contradições humanas com leveza e um toque de humor sutil (ex: 'Fofocam sobre mim, mas continuam assistindo cada passo. Engraçado como a inveja é silenciosa.')",
-        "Tom de conselho sereno como ordem: instrução curta e inegociável para a vida (ex: 'Delete os contatos de quem só te procura quando precisa. Pousa esse peso.')"
+        "Tom de conselho sereno como ordem: instrução curta e inegociável para a vida (ex: 'Delete os contatos de quem só te procura quando precisa. Pousa esse peso.')",
+        "Tom de acolhimento e paz mental: reconheça a luta silenciosa do leitor sem vitimismo (ex: 'Teve dias em que sua única opção era aguentar. E você aguentou. Lembre-se disso.')"
     ],
-    "index_conquistador": 6,
+    "indice_gancho_conquistador": 14,
     "ultimos_temas": [],
-    "sentimento_do_dia": "medo",
-    "data_sentimento_do_dia": "2026-07-26",
+    "fila_musicas_musicas-youtube": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Town This Small - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Everything (feat. Rodina & Alfie Tito) - Rodina feat. Alfie Tito.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Halfway In - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Kiss For Amanda - DJ Williams.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Two Things - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Never Coming Down - The Soundlings.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/13 Cocktails - Dan Bodan.mp3"
+    ],
+    "indice_gancho": 25,
     "historico_midia": [
+        "8472756",
+        "34780622",
+        "5752499",
+        "35030835",
+        "38427321",
+        "7987350",
+        "34801443",
+        "203719",
         "37601277",
         "27100098",
         "18089052",
@@ -523,35 +541,19 @@
         "32259613",
         "8731581",
         "37744758",
-        "19797283",
-        "9305512",
-        "34828883",
-        "20697866",
-        "34987242",
-        "19076730",
-        "7260659",
-        "6615315",
-        "7261937"
+        "19797283"
     ],
+    "data_tema_do_dia": "2026-07-26",
+    "data_sentimento_do_dia": "2026-07-26",
+    "indice_cta": 29,
+    "index_conquistador": 6,
     "ultimo_carousel": 3,
-    "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Face in a Cloud - Nathan Moore.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Town This Small - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Everything (feat. Rodina & Alfie Tito) - Rodina feat. Alfie Tito.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Halfway In - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Kiss For Amanda - DJ Williams.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Two Things - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Never Coming Down - The Soundlings.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/13 Cocktails - Dan Bodan.mp3"
-    ],
+    "index_tema_diario": 1,
+    "index_animacao_conquistador": 2,
+    "indice_arquitetura": 0,
+    "sentimento_do_dia": "medo",
     "index_plataforma_conquistador": 0,
-    "index_palette_conquistador": 4,
-    "indice_gancho": 24,
     "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/tunetank-inspiring-cinematic-music-409347.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-background-no-copyright-562320.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Easy On Me - Adele.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/grand_project-wonders-of-the-earth-550792.mp3",
@@ -587,14 +589,7 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/guilhermebernardes-lone-wolf-10374.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3"
     ],
-    "index_animacao_conquistador": 2,
-    "data_tema_do_dia": "2026-07-26",
-    "index_tema_diario": 1,
-    "indice_arquitetura": 0,
-    "indice_cta": 29,
-    "tema_do_dia": "espiritualidade",
     "historico_angulos": [
-        "Propósito não é algo que você encontra na estrada; é algo que você constrói nas escolhas difíceis do dia a dia.",
         "O legado silencioso: sua postura nos dias de crise ensina mais sobre caráter do que qualquer sermão ou livro.",
         "O perigo de usar as redes sociais para comparar a sua rotina real com a capa de revista alheia.",
         "Sua fé real é o que você faz no escuro, quando absolutamente ninguém está te vigiando.",
@@ -618,6 +613,9 @@
         "A paciência na hora da ofensa diz mais sobre a sua força do que qualquer grito de raiva.",
         "A sabedoria bíblica ensina: quem muito fala, muito erra. O silêncio poupa a alma.",
         "De que adianta tentar impressionar os outros se o seu lar vive em guerra silenciosa.",
-        "O silêncio diante do julgamento injusto é a maior demonstração de poder que existe."
-    ]
+        "O silêncio diante do julgamento injusto é a maior demonstração de poder que existe.",
+        "Falar sobre amor na internet é fácil; difícil é tolerar quem testa sua paciência no cotidiano."
+    ],
+    "tema_do_dia": "espiritualidade",
+    "index_palette_conquistador": 4
 }
