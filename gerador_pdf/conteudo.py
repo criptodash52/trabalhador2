@@ -22,19 +22,26 @@ load_dotenv(os.path.join(BOT_PATH, ".env"))
 
 
 PROMPT_TEMPLATE = """
-Você é um estrategista de conteúdo e escritor especialista em masterclasses transformadoras, combinando narrativa profunda, autoridade prática e a lógica persuasiva de conversão em 7 Etapas.
+Você é um estrategista de conteúdo e escritor da marca "@codigo.da.sabedoria". Sua especialidade é escrever masterclasses em formato de e-book que combinam filosofia prática, psicologia comportamental aplicada e maestria pessoal para gerar clareza imediata e conversão.
 
 BRIEFING DA SEMANA:
 - Tema central: {nome_display}
 - Livro base de inspiração: "{livro_base}"
-- Dor central da audiência: "{dor_central}"
+- Dor de ancoragem: "{dor_central}"
+
+DADOS DE INTERAÇÃO DO PERFIL (O que mais chamou atenção da audiência recentemente):
+{dados_performance_perfil}
 
 CONTEXTO DO MUNDO REAL NESTA SEMANA (TENDÊNCIAS / OLHOS DA REDE):
 {contexto_semana}
 
 SUA MISSÃO:
 Escreva uma AULA PRÁTICA SEMANAL INÉDITA e 100% original em formato de e-book/PDF de alta conversão.
-NENHUM TÍTULO OU TEXTO PODE SER REPETIDO OU ESTÁTICO. Todos os títulos de cartões, capítulos, versículos e seções devem ser formulados por você especificamente para o assunto desta semana, criando a aparência de uma aula totalmente nova.
+FUSÃO DE DADOS OBRIGATÓRIA: Cruze o Contexto do Mundo Real (o que as pessoas estão buscando lá fora) com os Dados de Interação do Perfil (o tom e ganchos que nossa audiência mais reagiu). Formule esta aula no exato ponto de intersecção, entregando uma solução cirúrgica para a dor em voga.
+
+DIRETRIZES DO TOM E VALOR DO @CODIGO.DA.SABEDORIA:
+- NÃO use chavões de coach, listas superficiais ou linguagem espiritual genérica/religiosa. A autoridade deve nascer do raciocínio afiado, da psicologia profunda e de princípios pragmáticos de ação.
+- VALOR ÚTIL E SÓLIDO: Explique o mecanismo psicológico invisível por trás do comportamento. Mostre exatamente o que a pessoa está perdendo (tempo de vida, progresso, controle sobre a própria mente) se continuar no padrão antigo, e o benefício concreto e libertador que ela ganha ao quebrar esse ciclo.
 
 DIRETRIZES DA ESTRUTURA PERSUASIVA EM 7 ETAPAS:
 1. Dor / Problema: Mostre exatamente o que a pessoa está perdendo ou sofrendo. Faça ela se identificar visceralmente.
@@ -46,7 +53,7 @@ DIRETRIZES DA ESTRUTURA PERSUASIVA EM 7 ETAPAS:
 7. Adaptabilidade: Aplique perfeitamente a essência do tema "{nome_display}".
 
 IMPORTANTE - NOME DO PDF:
-Crie um título magnético sobre PROBLEMA + SOLUÇÃO (Ex: "A Virada do Hábito", "O Código do Foco", "Quando a Mente Para de Lutar").
+Crie um título magnético inédito sobre a intersecção de PROBLEMA + SOLUÇÃO (Ex: "A Anatomia da Inércia", "O Circuito da Autossabotagem", "O Protocolo da Decisão Inegociável").
 
 REGRAS DE FORMATAÇÃO DE TEXTO E JSON:
 - Use apenas texto simples, pontos e vírgulas.
@@ -59,75 +66,75 @@ ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
   "titulo_pdf": "Título magnético inédito aqui",
   "subtitulo_pdf": "Subtítulo claro de valor e transformação",
   "capa_cards": [
-    {{"titulo": "Crie um título curto dinâmico sobre a dor", "texto": "1. Dor / Problema: Explicação poderosa de POR QUE a pessoa está travada e o que ela perde diariamente. Mínimo 35 palavras, máximo 45, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica sobre a dor (máximo 12 palavras)."}},
+    {{"titulo": "Crie um título curto dinâmico sobre a dor", "texto": "1. Dor / Problema: Explicação poderosa do mecanismo mental que trava a pessoa e o custo invisível desse atraso. Mínimo 35 palavras, máximo 45, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica sobre a dor (máximo 12 palavras)."}},
     {{"titulo": "Crie um título curto dinâmico sobre a solução", "texto": "2. Solução: Apresente a solução prática e aplicável imediatamente para resolver essa dor. Mínimo 35 palavras, máximo 45, na mesma linha."}},
-    {{"titulo": "Crie um título curto dinâmico sobre o resultado", "texto": "3. Benefício / Resultado: O ganho real e concreto que o leitor terá ao aplicar essa aula. Máximo 18 palavras."}},
-    {{"titulo": "Crie um título curto dinâmico sobre o princípio", "texto": "4. Prova / Autoridade: Uma verdade fundamentada em dados, mente e comportamento. Máximo 14 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 14 palavras)."}}
+    {{"titulo": "Crie um título curto dinâmico sobre o resultado", "texto": "3. Benefício / Resultado: O ganho real de tempo, clareza ou liberdade ao agir. Máximo 18 palavras."}},
+    {{"titulo": "Crie um título curto dinâmico sobre o princípio", "texto": "4. Prova / Autoridade: Uma verdade fundamentada em dados, mente ou comportamento. Máximo 14 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 14 palavras)."}}
   ],
   "capitulos": [
     {{
       "numero": 1,
       "titulo": "Crie um título inédito e instigante para o Capítulo 1",
       "paragrafos": [
-        "Parágrafo 1 — Cena detalhada do personagem ({nome_personagem}) vivenciando o problema e a ineficiência. Mínimo 80 palavras.",
-        "Parágrafo 2 — O custo emocional e prático de continuar nessa dor. Mínimo 60 palavras.",
-        "Parágrafo 3 — A percepção de que a dor é fruto de um padrão que precisa ser quebrado. Mínimo 80 palavras."
+        "Parágrafo 1 — Cena detalhada do personagem ({nome_personagem}) vivenciando o padrão de comportamento sabotador e a inércia. Mínimo 80 palavras.",
+        "Parágrafo 2 — O custo real, prático e de tempo de continuar repetindo essa inércia. Mínimo 60 palavras.",
+        "Parágrafo 3 — A percepção de que a dor é fruto de um mecanismo psicológico específico que precisa ser exposto e rompido. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 2,
       "titulo": "Crie um título inédito e instigante para o Capítulo 2",
       "paragrafos": [
-        "Parágrafo 1 — O momento de decisão e a rejeição das velhas justificativas. Mínimo 80 palavras.",
-        "Parágrafo 2 — Conflito interno e a escolha pela clareza e ação. Mínimo 60 palavras.",
-        "Parágrafo 3 — O primeiro alinhamento com a nova metodologia. Mínimo 80 palavras."
+        "Parágrafo 1 — O momento de decisão, rejeitando as velhas desculpas do status quo. Mínimo 80 palavras.",
+        "Parágrafo 2 — Conflito interno e a escolha voluntária pela clareza de ação. Mínimo 60 palavras.",
+        "Parágrafo 3 — O alinhamento das primeiras escolhas com a nova postura estratégica. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 3,
       "titulo": "Crie um título inédito e instigante para o Capítulo 3",
       "paragrafos": [
-        "Parágrafo 1 — Apresentação da solução e do conceito chave inspirado em {livro_base}. Mínimo 80 palavras.",
-        "Parágrafo 2 — Por que este método funciona e a autoridade por trás dele. Mínimo 60 palavras.",
-        "Parágrafo 3 — Aplicação da técnica para obter o resultado desejado. Mínimo 80 palavras."
+        "Parágrafo 1 — Apresentação da solução e do conceito/mecanismo chave inspirado em {livro_base}. Mínimo 80 palavras.",
+        "Parágrafo 2 — Por que esse método funciona e a autoridade racional por trás dele. Mínimo 60 palavras.",
+        "Parágrafo 3 — Como decifrar o padrão antigo e aplicar a técnica prática. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 4,
       "titulo": "Crie um título inédito e instigante para o Capítulo 4",
       "paragrafos": [
-        "Parágrafo 1 — Como implementar o aprendizado no dia a dia no campo de batalha real. Mínimo 80 palavras.",
-        "Parágrafo 2 — Vencendo o atrito inicial e mantendo a consistência. Mínimo 60 palavras.",
-        "Parágrafo 3 — O primeiro fruto perceptível da transformação. Mínimo 80 palavras."
+        "Parágrafo 1 — Como implementar o protocolo no dia a dia no campo de batalha real. Mínimo 80 palavras.",
+        "Parágrafo 2 — Vencendo o atrito inicial do conforto e mantendo a consistência. Mínimo 60 palavras.",
+        "Parágrafo 3 — O primeiro fruto empírico da mudança de comportamento. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 5,
       "titulo": "Crie um título inédito e instigante para o Capítulo 5",
       "paragrafos": [
-        "Parágrafo 1 — A consolidação do aprendizado e os resultados acumulados. Mínimo 80 palavras.",
-        "Parágrafo 2 — A sensação de clareza, alívio e controle reconquistado. Mínimo 60 palavras.",
-        "Parágrafo 3 — A nova postura perante o futuro e a vida. Mínimo 80 palavras."
+        "Parágrafo 1 — A consolidação do novo hábito e os ganhos acumulados. Mínimo 80 palavras.",
+        "Parágrafo 2 — A clareza mental, alívio e controle reconquistado sobre as ações. Mínimo 60 palavras.",
+        "Parágrafo 3 — A postura madura, consciente e estratégica perante o futuro. Mínimo 80 palavras."
       ]
     }}
   ],
-  "citacao_destaque": "Citação marcante que resume a transformação e autoridade do aprendizado.",
-  "titulo_citacao": "Título curto e inédito para a página de citação (máximo 4 palavras)",
-  "verso_base": "Um versículo ou citação filosófica/bíblica relevante para a aula da semana",
-  "referencia_verso": "Referência do texto (ex: Provérbios 16:3 ou Aforismo II)",
+  "citacao_destaque": "Citação forte que resume a autoridade e utilidade prática da aula.",
+  "titulo_citacao": "Título curto para a página da citação (máximo 4 palavras)",
+  "verso_base": "Um provérbio, aforismo ou reflexão filosófica/bíblica sobre sabedoria prática",
+  "referencia_verso": "Referência do texto (ex: Provérbios 14:23 ou Sêneca)",
   "plano_acao": {{
     "titulo_secao": "Título dinâmico do Plano de Ação",
-    "subtitulo": "Subtítulo prático e dinâmico para os passos.",
+    "subtitulo": "Subtítulo prático e dinâmico para os passos de ação imediata.",
     "passos": [
-      {{"numero": 1, "titulo": "Título inédito do Passo 1", "descricao": "Descrição prática da ação."}},
-      {{"numero": 2, "titulo": "Título inédito do Passo 2", "descricao": "Descrição prática da ação."}},
-      {{"numero": 3, "titulo": "Título inédito do Passo 3", "descricao": "Descrição prática da ação."}},
-      {{"numero": 4, "titulo": "Título inédito do Passo 4", "descricao": "Descrição prática da ação."}}
+      {{"numero": 1, "titulo": "Título do Passo 1", "descricao": "Descrição prática da ação."}},
+      {{"numero": 2, "titulo": "Título do Passo 2", "descricao": "Descrição prática da ação."}},
+      {{"numero": 3, "titulo": "Título do Passo 3", "descricao": "Descrição prática da ação."}},
+      {{"numero": 4, "titulo": "Título do Passo 4", "descricao": "Descrição prática da ação."}}
     ]
   }},
-  "fechamento": "Parágrafo final de fechamento e convite com CTA.",
-  "titulo_fechamento": "Título curto do Fechamento (ex: Próximo Passo)",
-  "rodape": "Produzido com clareza, inteligência e propósito."
+  "fechamento": "Parágrafo final de fechamento, convite sutil e persuasivo para mentoria ou aprofundamento prático.",
+  "titulo_fechamento": "Título curto do Fechamento (ex: O Próximo Passo)",
+  "rodape": "Produzido com foco, método e propósito prático."
 }}
 
 Retorne APENAS o JSON, sem texto antes ou depois.
@@ -146,6 +153,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         nome_display=briefing["nome_display"],
         livro_base=briefing["livro_base"],
         dor_central=briefing["dor_central"],
+        dados_performance_perfil=briefing.get("dados_performance_perfil", "Sem dados recentes."),
         contexto_semana=briefing["contexto_semana"],
         nome_personagem=nome_sorteado
     )

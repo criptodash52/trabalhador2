@@ -3,7 +3,8 @@ from core.ai.styles import REGRAS_COPY_BASE, proximo_gancho, proximo_gancho_conq
 
 # ==========================================
 # TEMAS E SUB-ÂNGULOS APROFUNDADOS
-# ==========================================TEMAS_MAPEADOS = {
+# ==========================================
+TEMAS_MAPEADOS = {
     "espiritualidade": {
         "nome": "Espiritualidade e Fé",
         "inspira": "Evangelhos de Mateus e João, Provérbios de Salomão, Cantares, O Homem Mais Inteligente da História (gestão de emoções de Jesus)",
@@ -461,51 +462,46 @@ DIRETRIZES DE COMUNICAÇÃO:
 def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angulos=None, indice_gancho=0, indice_cta=0, indice_arquitetura=0, is_conquistador=False, sentimento_escolhido=None):
     """Monta o bloco de instrução de copy injetado em todos os prompts, evitando repetições."""
     if historico_angulos is None: historico_angulos = []
-    
+
     # Sorteia Ângulo (Roleta anti-repetição)
     opcoes_angulos = [a for a in detalhes_tema["sub_angulos"] if a not in historico_angulos]
     if not opcoes_angulos: # Reseta se todos já foram usados
-        # Remove os ângulos específicos deste tema do histórico do estado para reiniciar o ciclo
         for a in detalhes_tema["sub_angulos"]:
             if a in historico_angulos:
                 historico_angulos.remove(a)
         opcoes_angulos = detalhes_tema["sub_angulos"]
     sub_angulo = random.choice(opcoes_angulos)
     
-    # Avança o gancho na sequência linear (um por postagem, cicla ao chegar no último)
+    # Avança o gancho na sequência linear
     if is_conquistador:
         gancho, novo_indice = proximo_gancho_conquistador(indice_gancho)
-        categoria_gancho = "conflito"  # conquistador usa tom de desafio/conflito
+        categoria_gancho = "conflito"
     else:
         gancho, novo_indice, categoria_gancho = proximo_gancho(indice_gancho)
 
-    # Avança o CTA na sequência linear (intercalando categorias de engajamento)
+    # Avança o CTA na sequência linear
     categoria_cta, referencia_cta, novo_indice_cta = proximo_cta(indice_cta)
 
     # Avança a arquitetura narrativa na sequência linear
     arquitetura, novo_indice_arquitetura = proxima_arquitetura(indice_arquitetura)
 
-    # Descrições de cada categoria — orientam a IA sobre o FORMATO do Slide 1
+    # Descrições de cada mecanismo psicológico — orientam a IA sobre o GATILHO do Slide 1
     descricoes_categoria = {
-        "pergunta_que_agride":       "PERGUNTA QUE AGRIDE — Abra com uma pergunta direta e desconfortável que force o leitor a se encarar no espelho.",
-        "afirmacao_que_choca":       "AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada que quebre a crença mais comum do leitor.",
-        "declaracao_segunda_pessoa": "DECLARAÇÃO EM 2ª PESSOA — Abra com uma frase curtíssima falando diretamente para o 'Você', como se você já soubesse o segredo que ele esconde.",
-        "segredo_revelacao":         "SEGREDO/REVELAÇÃO — Abra gerando curiosidade máxima: o leitor sente que está prestes a receber uma informação que ninguém mais tem.",
-        "dado_estatistica":          "DADO/ESTATÍSTICA — Abra com um número, estudo ou fato científico chocante que mate as crenças do leitor com evidência.",
-        "desafio":                   "DESAFIO — Convide o leitor a participar ativamente, como se fosse um teste ou uma aposta. Provoque-o a provar algo a si mesmo.",
-        "curiosidade":               "CURIOSIDADE — Sugira que existe um detalhe oculto e valioso que poquíssimas pessoas conhecem. Crie uma lacuna de informação irresistível.",
-        "quebra_de_expectativa":     "QUEBRA DE EXPECTATIVA — Contrarie uma crença amplamente aceita. O leitor espera uma coisa e você entrega o oposto exato.",
-        "reflexao":                  "REFLEXÃO — Faça o leitor olhar para dentro de si e questionar suas próprias escolhas. A pergunta ou frase deve ser perturbadoramente pessoal.",
-        "paradoxo":                  "PARADOXO — Abra com uma contradição aparente que desafie a lógica. Quanto mais o leitor tenta resolver o paradoxo, mais fica preso no conteúdo.",
-        "identidade":                "IDENTIDADE — Divida o mundo em dois grupos. O leitor instintivamente se pergunta: 'Em qual grupo estou?' Isso gera engajamento profundo.",
-        "conflito":                  "CONFLITO — Tome uma posição polêmica ou discorde de uma ideia popular. Provoque reação emocional imediata — concordância ou indignação.",
-        "comparacao":                "COMPARAÇÃO — Mostre um contraste 'antes vs. depois' ou 'jeito antigo vs. jeito novo'. A transformação implícita atrai o leitor a descobrir o que mudou.",
-        # Novos ganchos positivos/não-provocativos
-        "fato_fascinante":           "FATO FASCINANTE — Abra com um dado, estudo ou fato histórico genuinamente surpreendente. Não ataque o leitor. Desperte admiração e curiosidade pura.",
-        "historia_sem_moral":        "HISTÓRIA SEM MORAL — Abra com uma cena cinemática concreta: personagem, lugar, momento. Não entregue a lição de imediato. Deixe a cena falar por si só.",
-        "desafio_pratico":           "DESAFIO PRÁTICO — Proponha uma ação simples, concreta e inesperada para o leitor fazer agora ou nas próximas horas. Inspire ação em vez de apontar falhas.",
+        "curiosidade":    "CURIOSIDADE — Crie uma lacuna irresistível de informação. O leitor deve sentir que está prestes a descobrir algo que pouca gente sabe.",
+        "medo":           "MEDO — Toque na dor inconsciente. O leitor precisa sentir o peso real de continuar como está.",
+        "identidade":     "IDENTIDADE — Force o leitor a se perguntar 'Em qual grupo estou?'. Divida o mundo em dois perfis e provoque auto-reconhecimento.",
+        "pertencimento":  "PERTENCIMENTO — Faça o leitor sentir que não está sozinho. A frase deve soar como alguém que entende exatamente o que ele vive.",
+        "contradicao":    "CONTRADIÇÃO — Apresente uma verdade que contraria o senso comum. O leitor espera uma coisa e recebe o oposto exato.",
+        "autoridade":     "AUTORIDADE — Abra com um dado, estudo ou fato que mata resistência com evidência. A fonte é a prova.",
+        "esperanca":      "ESPERANÇA — Fale com quem já tentou muito. A frase deve soar como uma mão estendida, não como mais uma cobrança.",
+        "escassez":       "ESCASSEZ — Gere urgência real. O leitor deve sentir que adiar tem um custo concreto e irreversível.",
+        "narrativa":      "NARRATIVA — Abra uma cena. Apresente um personagem, um momento ou uma confissão. A história começa mas não termina.",
+        "culpa":          "CULPA — Espelhe o comportamento do leitor sem atacar. Ele deve se reconhecer e sentir a necessidade de agir.",
+        # Fallbacks
+        "conflito":       "CONFLITO — Tome uma posição ousada. Provoque reacão emocional imediata.",
+        "afirmacao_que_choca": "AFIRMAÇÃO — Abra com uma verdade impopular que quebre a crença do leitor.",
     }
-    descricao_categoria = descricoes_categoria.get(categoria_gancho, "AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada.")
+    descricao_categoria = descricoes_categoria.get(categoria_gancho, "AFIRMAÇÃO — Abra com uma verdade impopular e ousada.")
 
     # Injeta a diretriz de sentimento do dia no copy base
     diretriz_sentimento = ""
@@ -515,7 +511,6 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
         if config_emocional:
             diretriz_sentimento = f"\n    DIRETRIZ DE SENTIMENTO DO DIA (Ativar Emoção: {sentimento_escolhido.upper()}):\n    - {config_emocional['tom']}\n    - Cada frase e palavra deve ser desenhada para evocar este exato sentimento no leitor.\n"
 
-    # ================================================================
     # MODO DE POST ROTATIVO (alterna a intenção emocional a cada post)
     # Evita que todo post siga o mesmo arco: ataca dor → entrega lição
     # DESAFIO (40%) → ENTREGA (35%) → CONEXÃO (25%)
@@ -525,12 +520,36 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
     indice_modo = novo_indice_arquitetura % len(CICLO_MODOS)  # reutiliza o contador de arquitetura
     modo_post = CICLO_MODOS[indice_modo]
 
+    # Instrução rígida de Slide 1 e Slide 2 (igual para todos os modos)
+    INSTRUCAO_CLIFFHANGER = f"""
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    SLIDE 1 — GANCHO CLIFFHANGER (OBRIGATÓRIO)
+    Mecanismo Psicológico desta postagem: [{categoria_gancho.upper()}] — {descricao_categoria}
+    Base de referência para o Slide 1:
+    » "{gancho}"
+
+    Regras absolutas para o Slide 1:
+    ✗ NÃO explique
+    ✗ NÃO conclua
+    ✗ NÃO entregue a solução
+    ✗ NÃO passe de 12 palavras
+    ✓ Pare exatamente no ponto de maior tensão (o “...” é onde ele para)
+    ✓ O leitor DEVE sentir necessidade física de abrir o Slide 2
+
+    SLIDE 2 — REVELAÇÃO (PAGA A PROMESSA)
+    Regras absolutas para o Slide 2:
+    ✓ A PRIMEIRA linha DEVE completar imediatamente a frase iniciada no Slide 1
+    ✓ A PRIMEIRA linha DEVE responder ao suspense criado — sem rodeios, sem prejuízo
+    ✗ É PROIBIDO manter o suspense no Slide 2 em vez de resolvê-lo
+    ✗ Nunca comece o Slide 2 com “Muitas pessoas não percebem...” ou qualquer frase que adie a resposta
+    Depois da primeira linha de revelação, desenvolva a ideia naturalmente pelos slides seguintes.
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
     INSTRUCOES_MODO = {
         "DESAFIO": f"""
     ===== MODO DO POST: DESAFIO (Provocação com Propósito) =====
     Este post tem a intenção de ACORDAR o leitor. Use o arco narrativo clássico:
-    ATO 1 — GANCHO: Interrompa o padrão. Formato: {descricao_categoria}
-    Gancho de referência (não copie, use como energia): "{gancho}"
+    {INSTRUCAO_CLIFFHANGER}
     ATO 2 — ABERTURA DE LOOP: Aprofunde sem entregar a resposta. Crie tensão e curiosidade.
     ATO 3 — DOR DO COTIDIANO: Identifique a ferida concreta e reconhecível. Seja específico, não genérico.
     ATO 4 — RECOMPENSA: Entregue o insight prático de alto valor. Trate quem chegou até aqui como alguém acima da média.
@@ -539,9 +558,7 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
         "ENTREGA": f"""
     ===== MODO DO POST: ENTREGA (Valor Sem Julgamento) =====
     Este post tem a intenção de ENSINAR e AJUDAR sem fazer o leitor se sentir errado.
-    NÃO comece atacando uma falha. Comece com curiosidade, fato fascinante ou uma pergunta gentil.
-    ATO 1 — ABERTURA POSITIVA: Gancho de curiosidade, fato histórico ou desafio prático. Formato: {descricao_categoria}
-    Gancho de referência (não copie, use como energia): "{gancho}"
+    {INSTRUCAO_CLIFFHANGER}
     ATO 2 — CONTEXTO E APROFUNDAMENTO: Explique o porquê isso é relevante para a vida real.
     ATO 3 — ENTREGA PRÁTICA: Mostre o caminho concreto e aplicável. Passo a passo se couber.
     ATO 4 — ELEVAÇÃO: Finalize elogiando a inteligência de quem chegou até aqui e convide para a ação.
@@ -550,33 +567,27 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
         "CONEXAO": f"""
     ===== MODO DO POST: CONEXÃO (História e Empatia) =====
     Este post tem a intenção de CONECTAR e EMOCIONAR. Não há lição explícita. A história é a mensagem.
-    ESTRUTURA OBRIGATÓRIA: Storytelling puro com 4 elementos:
-    1. CENA DE ABERTURA: Apresente um personagem sem nome em uma situação concreta e reconhecível.
-       Use o gancho de referência apenas como energia visual: "{gancho}"
-    2. CONFLITO INTERNO: O que ele sente, pensa ou evita. A dor é mostrada, não declarada.
-    3. VIRADA: Uma decisão, encontro, percepção ou momento que muda o rumo da cena.
-    4. DESFECHO ABERTO: NÃO declare a moral. Termine com uma imagem ou gesto que o leitor possa interpretar.
+    {INSTRUCAO_CLIFFHANGER}
+    ESTRUTURA DE STORYTELLING após o Slide 2:
+    1. CONFLITO INTERNO: O que o personagem sente, pensa ou evita. A dor é mostrada, não declarada.
+    2. VIRADA: Uma decisão, encontro, percepção ou momento que muda o rumo da cena.
+    3. DESFECHO ABERTO: NÃO declare a moral. Termine com uma imagem ou gesto que o leitor possa interpretar.
     O leitor deve se ver na história sem que você precise dizer 'isso é você'.
+    
+    ===== DIRETRIZ OBRIGATÓRIA DE CTA (LEGENDA E FECHAMENTO) =====
+    Objetivo do CTA desta postagem: {categoria_cta.upper()}
+    Frase de referência de tom (use APENAS como bussola de intenção e sentimento — NÃO copie esta frase no roteiro ou na legenda):
+    Referência: "{referencia_cta}"
+
+    REGRAS ABSOLUTAS DO CTA:
+    1. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como “Siga.”, “Comente.”, “Salve.” ou “Compartilhe.” no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
+    2. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou — deve sentir que a própria mensagem está o convidando.
+    3. Varie a estrutura a cada post: ora use uma pergunta que provoca reflexo, ora uma observação que justifica a ação, ora um desafio, ora um convite. Nunca repita a mesma estrutura de CTA em posts seguidos.
+    4. O CTA na legenda deve fluir em continuidade direta com o texto anterior — como se fosse o último parágrafo da mensagem, não um apêndice.
+    5. O CTA no slide final do vídeo/carrossel deve ser conciso (1 a 2 frases) e funcionar como uma conclusão provocadora, não como uma chamada para ação clássica de marketing.
+    ==============================================================
     =====================================================""",
     }
-
-    instrucoes_atos = INSTRUCOES_MODO[modo_post]
-
-    instrucoes = f"""
-    {{REGRAS_COPY_BASE}}
-    {PERSONA_PALESTRANTE}
-    {diretriz_sentimento}
-    
-    ARQUITETURA NARRATIVA DO POST (O Ritmo de Hoje):
-    Nome da Estrutura: {arquitetura['nome']}
-    Diretriz da Estrutura: {arquitetura['descricao']}
-    → Você DEVE estruturar a sequência e o fluxo dos slides/cenas do post inteiro baseando-se nesta estrutura hoje. Ela dita a forma como a história evolui e se desenvolve.
-
-    ESTRATÉGIA DE CONTEÚDO BASEADA EM LIVROS:
-    Você tem acesso ao conhecimento dos seguintes livros para este tema: {detalhes_tema['inspira']}
-    Sua missão é:
-    1. Buscar um princípio, método prático ou lição valiosa presente em algum destes livros.
-    2. Usar esse método exato para formular uma mensagem, roteiro ou história altamente persuasiva para resolver a dor do usuário.
     3. ENTREGUE COMO SE O CONHECIMENTO FOSSE SEU. É ESTRITAMENTE PROIBIDO citar o nome do livro, do autor ou dar créditos. Pegue a genialidade da obra e passe como conteúdo original do nosso perfil.
 
     DIRETRIZ DE CONTEÚDO (Ângulo de Inspiração):
@@ -586,13 +597,15 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
 
     ===== DIRETRIZ OBRIGATÓRIA DE CTA (LEGENDA E FECHAMENTO) =====
     Objetivo do CTA desta postagem: {categoria_cta.upper()}
-    Frase de referência para o tom do CTA (NÃO copie esta frase no roteiro ou na legenda, ela serve apenas como guia do objetivo e do sentimento que o CTA deve despertar):
-    Frase de referência: "{referencia_cta}"
-    
-    DIRETRIZES DE CTA DO PALESTRANTE:
-    - O CTA na legenda deve fluir de forma totalmente orgânica, nascendo de forma integrada a partir do conteúdo do texto que você acabou de escrever. 
-    - Não use fórmulas de venda baratas ou transições abruptas.
-    - O convite deve ser elegante, persuasivo e condizente com a voz do palestrante no palco.
+    Frase de referência de tom (use APENAS como bússola de intenção e sentimento — NÃO copie esta frase no roteiro ou na legenda):
+    Referência: "{referencia_cta}"
+
+    REGRAS ABSOLUTAS DO CTA:
+    1. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como 'Siga.', 'Comente.', 'Salve.' ou 'Compartilhe.' no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
+    2. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou — deve sentir que a própria mensagem está o convidando para a próxima ação.
+    3. Varie a estrutura a cada post: ora use uma pergunta que provoca reflexo, ora uma observação que justifica a ação, ora um desafio, ora um convite. Nunca repita a mesma estrutura de CTA em posts seguidos.
+    4. O CTA na legenda deve fluir em continuidade direta com o texto anterior — como se fosse o último parágrafo da mensagem, não um apêndice.
+    5. O CTA no slide final do vídeo/carrossel deve ser conciso (1 a 2 frases) e funcionar como uma conclusão provocadora, não como uma chamada para ação clássica de marketing.
     ==============================================================
 
     ESTRUTURA DE ESCRITA DE SUCESSO (Feedback do Analytics):
@@ -605,4 +618,4 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
     DADOS DE PERFORMANCE E CONTEXTO ATUAL:
     {contexto_analytics}
     """
-    return instrucoes, sub_angulo, gancho, descricao_categoria, novo_indice, categoria_cta, referencia_cta, novo_indice_cta, arquitetura, novo_indice_arquitetura
+    return instrucoes, sub_angulo, gancho, descricao_categoria, categoria_gancho, novo_indice, categoria_cta, referencia_cta, novo_indice_cta, arquitetura, novo_indice_arquitetura

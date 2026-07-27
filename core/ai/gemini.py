@@ -285,7 +285,7 @@ def gerar_conteudo_gemini(tipo):
     idx_atual = indice_gancho_conquistador if is_conquistador else indice_gancho
 
     # Monta instrucoes de copy (gancho sequencial + cta sequencial + arquitetura narrativa + ângulo anti-repetição)
-    instrucoes_copy, sub_angulo, gancho, descricao_categoria, novo_indice, categoria_cta, referencia_cta, novo_indice_cta, arquitetura, novo_indice_arquitetura = montar_instrucoes_copy(
+    instrucoes_copy, sub_angulo, gancho, descricao_categoria, categoria_gancho, novo_indice, categoria_cta, referencia_cta, novo_indice_cta, arquitetura, novo_indice_arquitetura = montar_instrucoes_copy(
         detalhes_tema, contexto_analytics, hist_angulos, idx_atual, indice_cta, indice_arquitetura=indice_arquitetura, is_conquistador=is_conquistador, sentimento_escolhido=sentimento_escolhido
     )
 
@@ -296,7 +296,7 @@ def gerar_conteudo_gemini(tipo):
     # Estilo de abordagem sorteado (com anti-repetição)
     estilo_escolhido = sortear_estilo(hist_estilos)
     logger.info(f"🎭 Estilo de abordagem sorteado: {estilo_escolhido.split(':')[0].upper()}")
-    logger.info(f"🎣 Gancho sequencial #{idx_atual}: [{gancho[:50]}...]")
+    logger.info(f"🎣 Mecanismo Psicológico: {categoria_gancho.upper()} | Slide 1: \"{gancho}\"")
     logger.info(f"📐 Arquitetura narrativa: {arquitetura['nome']}")
 
     # Atualiza histórico de ângulos e estilos (mantém os últimos 25)
@@ -338,10 +338,12 @@ def gerar_conteudo_gemini(tipo):
 
         {instrucoes_copy}{instrucoes_livros}
 
-        DIRETRIZ DE ESCRITA:
+        DIRETRIZ DE ESCRITA E PERCEPÇÃO DE VALOR:
         - Fale de igual para igual, como um mentor compartilhando uma percepção pessoal profunda do seu dia a dia.
-        - Não use ganchos artificiais ou fórmulas de interrupção de padrão frias. Comece o diálogo diretamente.
-        - Escreva uma única frase curta e com altíssimo impacto emocional (máximo de 15 palavras).
+        - O story deve parecer um pensamento que normalmente só surge depois de muita experiência observando pessoas e a própria vida.
+        - Escreva como alguém que fala pouco, mas quando fala muda a forma como o leitor enxerga uma situação.
+        - Evite frases prontas ou conselhos de autoajuda vazios. O objetivo deixa de ser "motivação" e passa a ser "lucidez".
+        - Escreva uma única frase curta e com altíssimo impacto emocional (máximo de 15 palavras) que gere uma pequena mudança de perspectiva.
         - NÃO use ponto de exclamação. Use ponto final ou interrogação.
         
         Responda APENAS em formato JSON válido assim:
@@ -359,11 +361,15 @@ def gerar_conteudo_gemini(tipo):
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
         - SLIDE 1 (GANCHO CURTO DE AUTORIDADE): Abra com uma frase curta, elegante e provocativa de liderança (máx 10 palavras). Deve despertar curiosidade e posicionar autoridade imediata.
-        - SLIDES INTERMEDIÁRIOS (ENTREGA DE VALOR PRÁTICO): Desenvolva uma pílula diária de sabedoria ou mentalidade baseada no ângulo: "{sub_angulo}". Seja direto, prático e motivador de forma madura.
-        - SLIDE FINAL (DIREÇÃO E AUTORIDADE): Feche com uma síntese poderosa que dê direção clara e posicionamento firme para o dia.
-        - PROIBIDO usar tom pesado, vitimista, cansado ou carrancudo.
+        - SLIDES INTERMEDIÁRIOS (ENTREGA DE VALOR PRÁTICO): Desenvolva uma pílula diária de sabedoria ou mentalidade baseada no ângulo: "{sub_angulo}". O conteúdo deve parecer um pensamento maduro e de alta lucidez, sem frases prontas.
+        - SLIDE FINAL (DIREÇÃO E AUTORIDADE): Feche com uma síntese de autoridade moral que dê direção clara, lucidez e posicionamento firme para o dia.
+        - PROIBIDO usar tom pesado, vitimista, cansado ou de autoajuda barata.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não no story (true ou false) de acordo com o tom da conversa.
+        
+        PERCEPÇÃO DE VALOR DO STORY:
+        - Cada slide deve ser formulado para entregar valor real para quem te segue (audiência quente).
+        - A autoridade do story deve vir exclusivamente da profundidade do raciocínio prático, gerando uma pequena mudança de perspectiva a quem consome.
         
         Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
@@ -385,11 +391,15 @@ def gerar_conteudo_gemini(tipo):
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
         - SLIDE 1 (GANCHO CURTO DE TRANSIÇÃO): Abra com uma frase instigante sobre foco, discernimento ou maestria diante dos ruídos do dia (máx 10 palavras).
-        - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria derivada do ângulo: "{sub_angulo}". Mostre o caminho com elegância e clareza.
-        - SLIDE FINAL (SÍNTESE DE AUTORIDADE): Encerre posicionando autoridade madura e inspirando o leitor a concluir o dia com maestria.
-        - PROIBIDO tom de reclamação, cansaço excessivo ou fardo.
+        - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria baseada no ângulo: "{sub_angulo}". Cada frase deve parecer um pensamento que normalmente só surge após muita experiência de vida, evitando frases clichê.
+        - SLIDE FINAL (SÍNTESE DE AUTORIDADE): Encerre posicionando autoridade moral e lucidez, inspirando o leitor a concluir o dia com maestria e foco em seus princípios.
+        - PROIBIDO tom de reclamação, cansaço excessivo, vitimismo ou conselhos óbvios.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não (true ou false).
+        
+        PERCEPÇÃO DE VALOR DO STORY:
+        - Cada slide deve ser formulado para entregar valor real para quem te segue (audiência quente).
+        - A autoridade do story deve vir exclusivamente da profundidade do raciocínio prático, gerando uma pequena mudança de perspectiva a quem consome.
         
         Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
@@ -445,6 +455,12 @@ def gerar_conteudo_gemini(tipo):
           SLIDE FINAL — XEQUE-MATE:
           Frase reflexiva e poderosa para o leitor guardar mentalmente.
           Deve criar o desejo de salvar ou compartilhar. Feche com impacto, sem conclusão bonita e embalada.
+
+        VALOR PERCEBIDO DO CARROSSEL (OBRIGATÓRIO):
+        - Cada slide deve aumentar a sensação de que o leitor está entendendo um mecanismo oculto.
+        - Não explique apenas "o que fazer".
+        - Explique primeiro: por que isso acontece, qual é o erro invisível, qual princípio resolve esse erro.
+        - O conhecimento deve parecer difícil de encontrar, mas fácil de entender depois da explicação.
 
         3. LEGENDA:
         - Reforce a provocação do carrossel em 3-4 linhas usando linguagem direta e madura.
@@ -516,6 +532,13 @@ def gerar_conteudo_gemini(tipo):
         - Sabedoria Sapiencial: Citações e essência das palavras de Salomão e Jesus.
         - "O Poder da Ação" (Paulo Vieira): Despertar para a coragem, consistência e execução real.
         - Espírito Aventureiro: A alegria de explorar a vida, aprender, amar e proteger quem amamos.
+
+        PERCEPÇÃO DE VALOR E AUTORIDADE MORAL (REELS CONQUISTADOR):
+        - Você fala como alguém que já pagou o preço das próprias escolhas.
+        - A autoridade não vem de dizer que sabe. Ela vem da clareza dos princípios que você defende.
+        - Cada argumento deve mostrar maturidade, responsabilidade e domínio emocional.
+        - O leitor deve sentir: "Esse cara enxerga algo que eu ainda não enxergava."
+        - Nunca se declare um especialista, mostre isso pela profundidade e clareza da sua lucidez.
 
         O QUE VOCÊ REPUDIA (NUNCA VALORIZE):
         - Pessoas arrogantes, soberbas e vaidosas.
@@ -760,10 +783,51 @@ def gerar_conteudo_gemini(tipo):
             except Exception as e:
                 logger.warning(f"Erro ao obter titulo e solucao do PDF: {e}")
 
+        # ── Rotação sequencial dos 5 pilares visuais ──────────────────────────
+        # Garante que cada Reels Leads use um universo visual diferente,
+        # evitando repetição e mantendo a estética cinematográfica do canal.
+        PILARES_VISUAIS_LEADS = [
+            {
+                "nome": "Corrida Urbana Noturna",
+                "exemplo_query": "athlete running dark urban street motion blur neon amber night",
+                "descricao": "pessoas correndo à noite em ruas urbanas com iluminação néon/âmbar",
+            },
+            {
+                "nome": "Combate e Esportes Intensos",
+                "exemplo_query": "MMA fighter training dark gym shadows dramatic light combat boxing",
+                "descricao": "lutas de boxe/MMA, treinos em ginásio escuro, ringues com iluminação dramática",
+            },
+            {
+                "nome": "Ciclismo Urbano Noturno",
+                "exemplo_query": "cyclist dark city road neon lights motion blur night amber speed",
+                "descricao": "corridas de bicicleta à noite em cidade iluminada por néon dourado",
+            },
+            {
+                "nome": "Metropole Futuristica Noturna",
+                "exemplo_query": "cyberpunk city rain neon lights dark night skyscraper reflections wet street",
+                "descricao": "metrópoles modernas à noite, néon urbano, arranha-céus, chuva com reflexos dourados",
+            },
+            {
+                "nome": "Silhueta Cinematografica",
+                "exemplo_query": "man silhouette dark room city window night dramatic cinematic shadow noir",
+                "descricao": "silhuetas dramáticas de pessoas diante de janelas com vista noturna, luz contrastada e cinematográfica",
+            },
+        ]
+        estado_leads = carregar_estado()
+        idx_pilar = estado_leads.get("index_pilar_reels_leads", 0) % len(PILARES_VISUAIS_LEADS)
+        pilar_atual = PILARES_VISUAIS_LEADS[idx_pilar]
+        estado_leads["index_pilar_reels_leads"] = (idx_pilar + 1) % len(PILARES_VISUAIS_LEADS)
+        salvar_estado(estado_leads)
+        pilar_nome = pilar_atual["nome"]
+        pilar_exemplo = pilar_atual["exemplo_query"]
+        pilar_descricao = pilar_atual["descricao"]
+        logger.info(f"🎨 [REELS_LEADS] Pilar visual #{idx_pilar+1} forçado: {pilar_nome.upper()}")
+        # ─────────────────────────────────────────────────────────────────────
+
         prompt = f"""
         Você é um especialista em captação de leads por vídeo curto no Instagram.
-        Sua missão é criar um TRAILER MAGNÉTICO de 3 a 5 slides que funcione como uma isca irresistível para o PDF gratuito.
-        O objetivo é simples: fazer quem assiste querer o PDF e clicar no link da bio.
+        Sua missão é criar um TRAILER MAGNÉTICO de 3 a 5 slides que funcione como uma isca de altíssimo valor percebido para o material estratégico exclusivo.
+        O objetivo é simples: fazer quem assiste querer acessar o material e ir para o link da bio.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
@@ -773,9 +837,11 @@ def gerar_conteudo_gemini(tipo):
         {resumo_pdf}
         ======================================================
 
-        VOCABULÁRIO DE ALTO VALOR PERCEBIDO (OBRIGATÓRIO USAR EM CADA POST):
-        Nunca use termos fracos como "baixar PDF" ou "arquivo". Alterne livremente entre estes termos de alto valor:
-        - Nomes do Material: Guia Definitivo, Playbook, Blueprint, Framework, Método, Dossiê, Compêndio, Arsenal de Conhecimento, Kit de Recursos, Leitura Estratégica, Material Exclusivo.
+        VALOR DO MATERIAL E NOMENCLATURAS (OBRIGATÓRIO USAR EM CADA POST):
+        Nunca apresente o material como um "PDF gratuito" ou "arquivo". Apresente-o como um sistema condensado e dezenas de horas de estudo organizadas em um plano de ação claro e acionável.
+        A percepção do leitor deve ser: "Isso economiza semanas ou meses de tentativa e erro."
+        Alterne livremente entre estes termos de alto valor:
+        - Nomes do Material: Playbook Estratégico, Dossiê de Execução, Manual Operacional, Framework Prático, Método Validado, Guia de Campo, Protocolo de Implementação.
         - Verbos de Ação: Liberar, Acessar, Obter, Explorar, Consultar, Destravar.
 
         ESTRUTURA OBRIGATÓRIA — TRAILER DE ALTA CONVERSÃO (3 A 5 SLIDES):
@@ -792,10 +858,10 @@ def gerar_conteudo_gemini(tipo):
         - Máximo 15 palavras. Tom íntimo e empático.
 
         SLIDE 3 — A REVELAÇÃO DA SOLUÇÃO (obrigatório):
-        - Revele que a solução prática foi mapeada e está estruturada no material.
+        - Revele que o sistema condensado está pronto e economiza semanas ou meses de tentativa e erro.
         - Conecte com a transformação exata do material: "{solucao_pdf_limpo}".
-        - Use um dos termos de alto valor (ex: "Estruturei o Playbook...", "Mapeei no Dossiê...").
-        - Máximo 15 palavras. Tom esperançoso e direto.
+        - Use um dos termos de alto valor (ex: "Estruturei o Playbook...", "Mapeei no Dossiê de Execução...").
+        - Máximo 15 palavras. Tom esperançoso, direto e de altíssimo valor prático.
 
         SLIDE 4 — QUEBRA DE OBJEÇÃO (opcional, use se quiser 4 ou 5 slides):
         - Destrua a principal desculpa ou dúvida de quem ainda hesita.
@@ -817,13 +883,17 @@ def gerar_conteudo_gemini(tipo):
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
 
-        PEXELS QUERY:
-        Escolha buscas em inglês altamente visuais e cinematográficas. Alterne obrigatoriamente entre estes 5 pilares de imagem de acordo com o sentimento "{sentimento_escolhido}":
-        1. Pessoas correndo à noite pela cidade com iluminação néon/âmbar (ex: 'person running night city street neon lights runner')
-        2. Pessoas em disputa e combate físico intenso (boxe, MMA, treino em ringue/saco de pancadas - ex: 'boxing fight training night intense fighter combat', 'MMA fighter training workout night')
-        3. Corridas de bike noturnas no néon urbano (ex: 'night cycling bicycle rider city neon lights')
-        4. Cidades futurísticas, modernas, arranha-céus noturnos com luzes douradas e néon (ex: 'futuristic city night skyline modern skyscrapers neon')
-        5. Pessoas estudando/trabalhando concentradas no silêncio da noite (ex: 'focused person studying late night warm lamp light')
+        PEXELS QUERY — PILAR OBRIGATÓRIO DESTA RODADA: "{pilar_nome}"
+        A PRIMEIRA query do array pexels_queries DEVE obrigatoriamente ser do estilo: {pilar_descricao}.
+        Use como base para a primeira query: '{pilar_exemplo}'
+        As demais queries devem complementar com outros pilares do universo visual abaixo.
+
+        OS 5 PILARES VISUAIS DO REELS LEADS (todos obrigatoriamente escuros, cinematográficos e noturnos):
+        1. Corrida Urbana Noturna — pessoas correndo à noite em ruas com néon/âmbar (ex: 'athlete running dark urban street neon amber night motion blur')
+        2. Combate e Esportes Intensos — boxe, MMA, treino em ginásio escuro com luz dramática (ex: 'MMA fighter training dark gym dramatic light shadows')
+        3. Ciclismo Urbano Noturno — ciclistas em cidades iluminadas por néon dourado (ex: 'cyclist dark city neon lights motion blur night amber speed')
+        4. Metrópole Futurística Noturna — skylines, néon, chuva com reflexos, cyberpunk (ex: 'cyberpunk city rain neon dark night skyscraper reflections')
+        5. Silhueta Cinematográfica — silhueta de pessoa diante de janela noturna, luz contrastada (ex: 'man silhouette dark room city window night dramatic cinematic noir')
 
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
@@ -832,13 +902,14 @@ def gerar_conteudo_gemini(tipo):
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
-        As queries devem variadamente evocar:
-        - Pessoas correndo à noite em ruas urbanas iluminadas por néon ou luzes quentes;
-        - Disputas esportivas intensas, lutas de boxe, treinos de MMA e ringues de combate noturnos;
-        - Corridas de bicicleta noturnas na cidade sob luzes néon;
-        - Cidades futurísticas e modernas, metrópoles cyberpunk e arranha-céus noturnos;
-        - Foco compenetrado e estudo sob luz de luminária noturna.
-        NUNCA vídeos alegres de praia, natureza genérica de dia ou café da manhã casual.
+        TODOS os vídeos devem ser escuros, cinematográficos e noturnos. As queries devem variadamente evocar:
+        - Pessoas correndo à noite em ruas urbanas com néon ou luz âmbar;
+        - Lutas de boxe/MMA, treinos em ginásio escuro com iluminação dramática;
+        - Ciclistas em velocidade em cidades iluminadas por néon;
+        - Metrópoles futurísticas, skylines noturnos, chuva com reflexos de néon;
+        - Silhuetas cinematográficas de pessoas diante de janelas com vista noturna.
+        PROIBIDO ABSOLUTAMENTE: vídeos com fundo claro, ambientes domésticos, pessoas estudando em mesa comum,
+        natureza diurna, praia, cafés, escritórios com luz natural ou qualquer cena casual e iluminada.
 
         Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases curtas, sendo o ÚLTIMO sempre o CTA):
         {{
@@ -851,9 +922,9 @@ def gerar_conteudo_gemini(tipo):
             "Slide 5 (CTA elegante — link do perfil)"
           ],
           "pexels_queries": [
-            "person running night city street neon lights runner",
-            "boxing fight training night intense fighter combat",
-            "futuristic city night skyline modern skyscrapers neon"
+            "{pilar_exemplo}",
+            "boxing fight training dark gym dramatic light combat",
+            "cyberpunk city rain neon dark night skyscraper reflections"
           ],
           "legenda": "Sua legenda aqui com convite para comentar a palavra-chave sem hashtags"
         }}

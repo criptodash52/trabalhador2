@@ -122,6 +122,7 @@ def montar_briefing_completo():
     - Tema inovador (rotação entre os 8 temas sem repetição recente)
     - Livro base escolhido com anti-repetição
     - Contexto de tendências em tempo real (Olhos da Rede)
+    - Dados de performance/interação do perfil (o que mais chamou atenção recentemente)
     """
     historico = buscar_historico_pdfs_recentes(limite=4)
     temas_recentes = [h.get("tema_chave") for h in historico if h.get("tema_chave")]
@@ -149,12 +150,37 @@ def montar_briefing_completo():
         print(f"⚠️ Não foi possível buscar tendências: {e}")
         contexto_mundo = "Sem contexto externo disponível nesta semana."
 
+    # Extrai o que mais chamou atenção no perfil recentemente
+    dados_performance_perfil = "Sem dados de performance recentes do perfil."
+    try:
+        if os.path.exists(RECOMENDACOES_PATH):
+            with open(RECOMENDACOES_PATH, "r", encoding="utf-8") as f:
+                recs = json.load(f)
+            
+            # Pega os ganchos com maior growth score
+            ganchos = recs.get("ganchos_growth_score", {})
+            ganchos_ordenados = sorted(ganchos.items(), key=lambda x: x[1], reverse=True)
+            ganchos_str = "\n".join([f"  - {g[0]} (Score: {g[1]})" for g in ganchos_ordenados[:2]])
+            
+            # Pega os estilos/tons com melhor performance de retenção
+            estilos = recs.get("peso_final_estilos", {})
+            estilos_ordenados = sorted(estilos.items(), key=lambda x: x[1], reverse=True)
+            estilos_str = "\n".join([f"  - {e[0][:120]}... (Peso: {e[1]})" for e in estilos_ordenados[:2]])
+            
+            dados_performance_perfil = (
+                f"ESTILOS DE MAIOR RETENÇÃO NO PERFIL:\n{estilos_str}\n\n"
+                f"GATILHOS DE MAIOR ENGAJAMENTO (GANCHOS):\n{ganchos_str}"
+            )
+    except Exception as e:
+        print(f"⚠️ Erro ao extrair dados de performance para briefing do PDF: {e}")
+
     briefing = {
         "tema_chave": tema,
         "nome_display": dados_tema["nome_display"],
         "livro_base": livro_escolhido,
         "dor_central": dados_tema["dor_central"],
-        "contexto_semana": contexto_mundo
+        "contexto_semana": contexto_mundo,
+        "dados_performance_perfil": dados_performance_perfil
     }
 
     print(f"\n📋 BRIEFING DA SEMANA:")

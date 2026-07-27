@@ -18,60 +18,122 @@ ESTILOS_COPY = [
 # ==========================================
 GANCHOS_POR_CATEGORIA = {
 
-    "postura_e_limites": [
-        "A temporada de 'não merece minha energia' está oficialmente inaugurada.",
-        "Não force rivalidade comigo. Eu nem estou pensando em você.",
-        "A pessoa que mais sabe do seu passado deveria ser a primeira a ficar longe do seu presente.",
-        "Quando você aprende a se retirar em silêncio, não precisa provar mais nada a ninguém.",
-        "Não dê a ninguém o poder de adoecer a sua vida. Lembre-se disso.",
-        "Sei exatamente quem esteve lá quando o mar estava agitado. Não me venha com abraço agora.",
-        "Ficar em silêncio não significa que não vi. Significa que não vale meu tempo.",
-        "A maturidade te ensina: você decepciona pessoas quando começa a impor limites.",
+    "curiosidade": [
+        "O medo que te paralisa não é o de perder, mas o de...",
+        "Eu descobri algo que mudou tudo. E não foi motivação. Foi...",
+        "Quando parei de buscar motivação e comecei a buscar...",
+        "A maioria treina habilidades. Os raros treinam...",
+        "Existe uma diferença entre quem constrói e quem aparenta. Ela é...",
+        "Estudaram décadas o comportamento humano e descobriram que o problema é...",
+        "Não é o que você não sabe que te paralisa. É...",
+        "E se o que você chama de preguiça for, na verdade,...",
+        "Há uma pergunta que você evita fazer a si mesmo. Ela é...",
     ],
-    "reflexao_de_maturidade": [
-        "Uma pessoa criada no amor e outra criada na sobrevivência nunca verão o mundo igual.",
-        "Saúde mental é escolher conviver com pessoas que não te deixam doente.",
-        "Normalizem ficar com uma pessoa só. Isso é higiene emocional e espiritual.",
-        "Eu virei um nadador tão bom que ninguém mais percebe quando tô me afogando.",
-        "O dia que parei de tentar agradar todo mundo foi o dia que recuperei minha paz.",
-        "Imagina quantas vezes eles se perdoaram em silêncio para chegar até aqui?",
-        "Valiosas são as pessoas que te dão coisas raras: tempo, lealdade e respeito.",
-        "Teve dias em que a sua única opção era ser forte. E você foi. Continue.",
+    "medo": [
+        "Você acha que está buscando sucesso, mas está fugindo do...",
+        "O que você mais evita pensar é exatamente o que...",
+        "Existe um custo que a maioria não percebe até ser tarde. Ele é...",
+        "Você não tem medo de falhar. Você tem medo de...",
+        "O silêncio que você foge toda noite está escondendo...",
+        "Tem exatamente 3 meses antes que o custo seja...",
+        "O que você chama de prudência, seu futuro chama de...",
+        "Você repete um erro sem perceber. Esse erro é...",
+        "A distancia entre você e seus sonhos tem um nome, e é...",
     ],
-    "verdades_curtas": [
-        "A inveja nem sempre é sobre querer o que você tem; é sobre não aguentar te ver tendo.",
-        "Preste muita atenção ao que as pessoas dizem com raiva — elas estavam doidas para dizer isso.",
-        "Por falta de postura, até a pessoa mais bonita deixa de ser atraente.",
-        "Quem te conhece de verdade sabe a dor que existiu por trás da sua calma de hoje.",
-        "Nunca se canse de pedir discernimento a Deus antes de abrir sua casa para qualquer um.",
-        "Você é a prova viva de que dá para passar pelo caos e continuar tendo o coração limpo.",
-        "Depois que você aprende o valor da sua paz, qualquer barulho desnecessário irrita.",
-        "Você não precisa de vingança. O próprio tempo se encarrega de colocar cada um no seu lugar.",
+    "identidade": [
+        "Você julga ter coragem? Então me mostre o que faz no...",
+        "Engraçado como a maioria se esforça para polir a vitrine, mas esquece que o...",
+        "Há dois tipos de pessoas ao deitar: as que reviram o dia e as que...",
+        "A prova real do seu caráter não é o que você faz quando aplaudem, mas...",
+        "O que você constrói quando ninguém está olhando define...",
+        "A diferença entre quem persiste e quem desiste está em um único hábito, que é...",
+        "Você odeia no outro o que mais te incomoda em si, especificamente...",
+        "Existe um tipo de pessoa que nunca precisa de motivação. Ela...",
+        "Sua família não vai lembrar do seu salário. Vai lembrar do que...",
     ],
-    "postura_urbana": [
-        "Delete da sua vida quem só lembra de você quando a fonte dos outros seca.",
-        "Não confunda minha paz com fraqueza. Eu só escolhi não me sujar.",
-        "Meu lado ruim é apenas me afastar sem dizer uma palavra após ver o que não me agrada.",
-        "Se eu não caí com tudo o que me aconteceu, não é agora que você vai me derrubar.",
-        "Estou na fase de sair de casa e nem tirar foto. Minha vida não é espetáculo.",
-        "Quer saber quem é de verdade? Repare em como a pessoa te trata quando você não tem nada a oferecer.",
-        "Menos desculpas e mais consideração. O resto é conversa fiada.",
-        "Tem coisas que a gente não conta nem pra quem mora com a gente. É sobre Deus e você.",
+    "pertencimento": [
+        "Você não está sozinho nisso. A maioria das pessoas que conheço também...",
+        "Se você já sentiu que trabalha muito mas avança pouco, então você entende...",
+        "Tem uma sensação que ninguém admite em voz alta. Quase todo mundo sente. Ela é...",
+        "Às vezes a gente deita e a mente acende. Se você conhece isso, então...",
+        "A resposta que você busca mora numa pergunta que você evita. No silêncio, ela...",
+        "Se você acordou hoje com mais perguntas do que respostas, isso significa...",
+        "Corremos atrás de sombras enquanto a luz essencial...",
+        "Existe uma guerra silenciosa que a maioria trava todos os dias. Ela é...",
+        "Você busca paz fora e ignora a guerra interna. Um erro que quase todos cometem porque...",
     ],
-    "amor_e_relacionamento": [
-        "Quando você encontrar a pessoa certa, você vai saber. Não será apenas sobre atração ou química.",
-        "Está no jeito como a presença dela parece um lar, trazendo paz ao seu caos e luz aos dias nublados.",
-        "O verdadeiro amor não está na busca pela perfeição, mas em abraçar as imperfeições juntos.",
-        "Conversas que fluem sem esforço e um silêncio compartilhado onde ninguém precisa fingir nada.",
-        "Alguém que te aceite por completo, não alguém que tente te transformar no que convém a ele.",
-        "Cuidar de quem cuida de você: a única regra de ouro que nunca falha num relacionamento.",
+    "contradicao": [
+        "Quanto mais você corre, mais parado se sente. O motivo disso é...",
+        "Sua ânsia por controle está te destruindo por dentro porque...",
+        "Existe uma mentira neural que te paralisa. Quanto mais você acredita, mais...",
+        "A maioria busca motivação. Os raros buscam o que ela esconde, que é...",
+        "O que parece força às vezes é apenas o medo de parecer fraco. Isso acontece quando...",
+        "Estudaram a vida de milhares por vinte anos e descobriram um abismo chamado...",
+        "Ao deitar, o dia se despede. Há dois tipos de pessoas, e a diferença é...",
+        "Muitos perdem o fio de si num labirinto de aparências e pressa porque...",
+        "A distracão rouba sua própria alma sem você notar, porque age através de...",
+    ],
+    "autoridade": [
+        "Estudaram o comportamento humano por 20 anos. A conclusão foi...",
+        "A neurociência já mapeou o que acontece no cérebro de quem desiste. É...",
+        "Filósofos estudaram a natureza humana por séculos e chegaram a uma conclusão. Ela é...",
+        "Depois de analisar centenas de histórias de reconstrução, um padrão ficou claro. Ele é...",
+        "A ciência do comportamento explica por que a maioria sabota os próprios sonhos. A causa é...",
+        "Existe uma mentira neural que a neurociência já provou, e ela é...",
+        "Há um princípio que os grandes líderes dominam e raramente ensinam. Ele é...",
+        "O que separa quem constrói de quem apenas planeja é um único princípio, que é...",
+        "Pesquisas sobre hábitos de alta performance revelaram algo incômodo, que é...",
+    ],
+    "esperanca": [
+        "Você é a prova viva de que dá para navegar no caos e ainda manter o...",
+        "Não importa quantas vezes você recomeçou. O que importa é que você ainda...",
+        "Existe um momento em que tudo muda. Para muitos, ele começa quando...",
+        "A mentira que sua mente conta sobre o que te assusta é que não dá. Mas...",
+        "O próximo nível não começa com mais esforço. Começa quando você entende que...",
+        "Para quem sente que travou: há uma saída. Ela começa por...",
+        "A transformação real não começa com motivação. Começa quando você...",
+        "Há uma diferença entre quem espera a vida melhorar e quem decide mudar porque...",
+        "O que a maioria chama de sorte, os que chegaram lá chamam de...",
+    ],
+    "escassez": [
+        "Tem exatamente 3 meses antes que o custo seja irreversível. Esse custo é...",
+        "Cada dia sem essa decisão acumula um preço que poucos percebem. Ele é...",
+        "Existe uma janela que fecha devagar. Quando fecha, o que fica é...",
+        "O que você não decide hoje, a vida decide por você amanhã. E geralmente é...",
+        "Enquanto você espera o momento certo, ele passa. O que sobra depois é...",
+        "Em 5 anos, você vai olhar para hoje como o dia que escolheu ou o dia que...",
+        "Existe um prazo silencioso que a maioria ignora. Quando vence, o custo é...",
+        "O hábito de adiar transforma oportunidade em...",
+        "A maioria só descobre que o tempo é o único recurso irrecuperável quando...",
+    ],
+    "narrativa": [
+        "Eu fazia isso assim quando descobri que o problema não era o esforço, mas...",
+        "Houve um momento em que percebi que estava correndo na direção errada. Esse momento foi...",
+        "Tinha uma crença que eu carregava há anos sem perceber. Quando a vi, entendi que...",
+        "Às 23h, ele olhou para as telas. Não era trabalho. Era fuga. O motivo era...",
+        "A primeira vez que decidi parar de me justificar, algo mudou. Esse algo foi...",
+        "Tinha uma conversa que eu evitava comigo mesmo. Quando finalmente a tive, descobri...",
+        "Ele trabalhou 12 horas por dia por 5 anos. No final, o que ele tinha era...",
+        "Por anos construí do jeito errado. Quando olhei para o que havia construído, vi...",
+        "Quando parei de buscar a resposta certa e comecei a fazer a pergunta certa, tudo mudou porque...",
+    ],
+    "culpa": [
+        "Você sabe o que deveria estar fazendo agora. E não está. Isso se chama...",
+        "A versão de você que prometeu mudar ainda está esperando porque...",
+        "Existe uma voz dentro de você que você cala toda vez. Essa voz diz...",
+        "O que você justifica hoje vai custar algo amanhã. Esse algo é...",
+        "Cada dia sem mudança, você vai aceitando uma versão menor de si mesmo porque...",
+        "Tem uma promessa que você fez a si mesmo e quebrou. Ela foi...",
+        "O que você evita fazer hoje é exatamente o que te mantém preso porque...",
+        "Você conhece a resposta. A questão não é o que fazer, mas por que você ainda não...",
+        "Ninguém vai te cobrar. Só você sabe o que está deixando para depois, e isso é...",
     ],
 }
 
 # ─────────────────────────────────────────────────────────────────────
-# LISTA SEQUENCIAL MESTRA — todos os ganchos na ordem de cadastro.
+# LISTA SEQUENCIAL MESTRA — todos os 90 ganchos na ordem de cadastro.
 # O bot cicla por esta lista: post 1 usa índice 0, post 2 usa índice 1,
-# e quando chega ao último, reinicia do zero.
+# e quando chega ao último (90), reinicia do zero.
 # ─────────────────────────────────────────────────────────────────────
 LISTA_GANCHOS_SEQUENCIAL = [
     gancho for categoria in GANCHOS_POR_CATEGORIA.values() for gancho in categoria
@@ -226,22 +288,31 @@ REGRAS ABSOLUTAS DE COPY (violá-las é inaceitável):
 - "Seja a melhor versão de si mesmo", "Saia da zona de conforto"
 - "O sucesso é para quem corre atrás", "A vida é uma jornada"
 - "Faça acontecer", "Você tem o poder", "Hoje é o dia"
-- NUNCA use tom professoral, arrogante ou com palavras difíceis. Fale de igual para igual.
+- NUNCA use tom professoral, arrogante ou palavras artificiais de auto-promoção (ex: "Poucos sabem disso..."). Fale de igual para igual.
 - Você tem total liberdade para citar livros, filósofos, teorias e autores para dar peso de autoridade à mensagem.
 
-✅ OBRIGATÓRIO — o tom agressivo e atraente:
-- O primeiro slide deve ser um gancho forte, curto e cortante. Ele DEVE quebrar o padrão e parar o scroll.
+✅ OBRIGATÓRIO — o tom cirúrgico e atraente:
+- O primeiro slide deve ser um gancho cliffhanger curto e cortante. Ele DEVE quebrar o padrão e parar o scroll.
 - Use linguagem direta, falada e visceral (coloquial do Brasil).
-- Crie contradição imediata: o leitor deve querer discordar nos primeiros 3 segundos, mas concordar ao ler a explicação.
 - Use sentenças curtas e parágrafos de uma linha. Textos longos matam a retenção.
-- Direcionamento prático: no final de posts de valor, mostre um passo prático curto para resolver a dor.
-- Tom: direto, instigante, misterioso e pragmático. Como alguém que enxerga o sistema por trás do comportamento.
 
-🧠 PROCESSOS DE PERSUASÃO:
-- INTERRUPÇÃO DE ESTADO: Mude o estado mental do usuário com um fato inesperado ou estudo chocante no início.
-- EFEITO ZEIGARNIK: Abra um ciclo de curiosidade no slide 1 e só feche no final.
-- DOPAMINA: Entregue um 'segredo' ou atalho prático que o leitor sinta que valeria dinheiro.
-- IDENTIDADE: Trate quem lê até o fim como alguém acima da média (ex: 'Quem chega até aqui já entendeu o que a massa ignora').
+🧠 PERCEPÇÃO DE VALOR (DO INÍCIO AO FIM DA MENSAGEM):
+Todo conteúdo deve fazer o leitor sentir que acabou de receber um insight difícil de encontrar.
+- Evite frases motivacionais genéricas, conselhos óbvios, listas superficiais e clichês.
+- Prefira: revelar o mecanismo psicológico por trás do comportamento, explicar o motivo invisível que gera o problema, apresentar uma mudança de perspectiva que aumente a clareza do leitor, entregar um princípio aplicável imediatamente.
+
+🛡️ AUTORIDADE MORAL:
+Nunca tente convencer o leitor de que você tem autoridade. Faça com que ele conclua isso sozinho pela qualidade da explicação:
+- Explique causas antes de soluções.
+- Revele mecanismos antes de recomendações.
+- Mostre princípios antes de técnicas.
+
+🎯 O CONCEITO CENTRAL (Filtro de Qualidade):
+Toda postagem gerada deve aumentar ativamente uma destas três percepções no leitor:
+1. "Nunca tinha pensado por esse ângulo."
+2. "Agora entendi por que isso acontece."
+3. "Isso vale muito mais do que o tempo que levei para consumir."
+Se nenhuma dessas sensações estiver presente do início ao fim, a postagem está superficial e deve ser reescrita.
 """
 
 
@@ -257,68 +328,70 @@ def sortear_estilo(historico_estilos=None):
 
 # ==========================================
 # CTAs ORGANIZADOS POR CATEGORIA (52 itens)
-# Fornecidos pelo usuário para alternar objetivos estrategicamente
+# Referências de tom e intenção — a IA adapta ao contexto de cada post.
+# Estruturas variadas: pergunta, observação, desafio, convite, consequência.
+# O CTA deve nascer como extensão natural do conteúdo — nunca como comando seco.
 # ==========================================
 CTAS_POR_CATEGORIA = {
     "seguir": [
-        "Se isso fez sentido para você, talvez este perfil seja para você.",
-        "Aqui a gente faz perguntas que quase ninguém faz.",
-        "Se você gosta de pensar diferente, acompanhe este perfil.",
-        "Se esse assunto te interessa, ainda tem muito conteúdo por aqui.",
-        "Se você procura respostas diferentes, fique por aqui.",
-        "Se você gosta de entender o comportamento humano, siga.",
-        "Se você acredita que sempre existe outra perspectiva, acompanhe.",
-        "Talvez essa seja apenas uma das perguntas que você precisava fazer.",
-        "Quem entende o valor do silêncio encontra espaço aqui. Siga.",
-        "Acompanhe nossa jornada se você busca profundidade diária.",
-        "Se você quer blindar sua mente contra o ruído moderno, siga o perfil.",
-        "A evolução pessoal exige constância. Una-se à nossa jornada diária.",
-        "Siga se você prefere a verdade que incomoda à mentira que conforta."
+        "Se você reconheceu esse padrão em você, cada post aqui vai aprofundar o que você acabou de entender.",
+        "O raciocínio continua — e o próximo post vai mais fundo. Quem acompanha desde o início vê os padrões se conectando.",
+        "Isso não é conteúdo isolado. É uma construção diária. Cada post aprofunda o anterior.",
+        "Aqui a gente vai mais fundo do que o óbvio — todos os dias. Fique por aqui se quer continuar nesse nível.",
+        "Você reconheceu esse padrão. O próximo vai te surpreender mais.",
+        "Poucos lugares na internet falam sobre isso com essa profundidade. Esse é um deles.",
+        "Se isso abriu uma pergunta que você não consegue parar de pensar, ela será respondida nos próximos posts.",
+        "O que você viu aqui é apenas a entrada. Acompanhe para não perder o que vem depois.",
+        "Mente que para de questionar para de crescer. Esse perfil é pra quem não para.",
+        "Cada post aqui é um tijolo numa construção maior. Quem acompanha desde o início enxerga a obra completa.",
+        "Se você quer entender o comportamento humano no nível que poucos chegam, está no lugar certo.",
+        "Esse tipo de conteúdo não aparece no feed de quem não procura. Fique por aqui — vale.",
+        "Esses padrões mudam a forma como você lê as situações. E isso não tem volta."
     ],
     "comentario": [
-        "Quero saber sua resposta.",
-        "O que você faria?",
-        "Concorda ou discorda?",
-        "Qual foi sua primeira reação?",
-        "Resuma sua opinião em uma palavra.",
-        "Você já viveu isso?",
-        "O que você pensa sobre isso?",
-        "Existe outra forma de enxergar isso?",
-        "Qual dessas verdades bateu mais forte em você?",
-        "Você já esteve do outro lado dessa situação?",
-        "Comente qual o seu maior obstáculo ao aplicar isso hoje.",
-        "Deixe sua percepção sincera aqui embaixo.",
-        "Se você pudesse mudar apenas uma atitude hoje, qual seria?"
+        "Agora a pergunta real: onde você já viveu exatamente isso?",
+        "Qual das duas escolhas você tomaria? Não tem resposta certa — mas a sua diz muita coisa.",
+        "Isso te gerou uma certeza ou abriu uma dúvida nova? Conta aqui embaixo.",
+        "Pensa numa situação concreta da sua vida onde esse padrão apareceu. Escreve ela aqui.",
+        "Se você pudesse resumir isso em uma palavra, qual seria?",
+        "É fácil reconhecer esse mecanismo nos outros. Difícil é ser honesto sobre quando você mesmo esteve nele.",
+        "Qual parte disso bateu mais forte em você — e por quê?",
+        "Às vezes um conteúdo resolve uma questão e abre três novas. Se foi assim, escreve aqui.",
+        "Você já tomou uma decisão diferente depois de entender um princípio parecido com esse?",
+        "O que você diria para alguém que está no início desse ciclo agora?",
+        "Se você tivesse entendido isso 5 anos atrás, o que teria mudado?",
+        "Qual é o maior obstáculo que te impede de aplicar isso hoje?",
+        "Você concorda que a maioria das pessoas nunca chega nesse nível de consciência sobre isso?"
     ],
     "compartilhamento": [
-        "Envie para alguém que precisa ouvir isso.",
-        "Compartilhe com quem pensa diferente.",
-        "Mostre isso para um amigo.",
-        "Essa conversa merece continuar.",
-        "Quem você conhece que responderia diferente?",
-        "Compartilhe e compare as respostas.",
-        "Quero saber o que outra pessoa responderia.",
-        "Vale a pena ouvir uma segunda opinião.",
-        "Envie isso para a pessoa que compartilha dos seus princípios.",
-        "Espalhe essa reflexão com quem valoriza a sabedoria prática.",
-        "Compartilhe silenciosamente com quem precisa acordar hoje.",
-        "Leve essa mensagem para quem faz parte do seu círculo de ferro.",
-        "Envie para alguém com quem você quer crescer junto."
+        "Você já pensou numa pessoa específica enquanto lia isso. Manda pra ela.",
+        "Tem alguém na sua vida que está no meio desse ciclo agora — e que precisa ver isso.",
+        "A mensagem certa no momento certo muda uma decisão. Envia para quem precisa dessa mudança.",
+        "Esse tipo de conversa precisa acontecer mais. Compartilha com alguém com quem você quer ter ela.",
+        "Conhecimento parado em você não multiplica. Espalha.",
+        "Quem você conhece que responderia diferente a essa pergunta? Manda pra ela e descobre.",
+        "Às vezes a pessoa que está do seu lado não sabe que está nesse padrão. Compartilha silenciosamente.",
+        "Se isso foi útil pra você, provavelmente vai ser útil pra alguém do seu círculo também.",
+        "Pensa no seu grupo de pessoas mais próximas — quantas precisavam ouvir exatamente isso hoje?",
+        "Tem conteúdo que é bom guardar pra si. Esse não é um deles — é melhor dividir.",
+        "A diferença entre quem cresce e quem estagna muitas vezes é o conteúdo que eles consomem. Compartilha.",
+        "Se você faz parte de um grupo, leva esse raciocínio pra ele. Vale uma conversa.",
+        "Você vai querer que a pessoa certa veja isso. Manda agora enquanto ainda está fresco."
     ],
     "salvamento": [
-        "Salve para refletir depois.",
-        "Guarde isso.",
-        "Você pode querer lembrar disso amanhã.",
-        "Vale a pena voltar aqui.",
-        "Salve antes de esquecer.",
-        "Essa reflexão merece ser revisitada.",
-        "Nem toda resposta aparece na primeira leitura.",
-        "Guarde essa ideia.",
-        "Salve este post para ler quando a mente estiver agitada.",
-        "Guarde este checklist mental para a sua próxima decisão difícil.",
-        "Salve para reler nos dias em que o foco parecer distante.",
-        "Guarde essa chave de sabedoria na sua coleção.",
-        "Salve para garantir que esse princípio se torne um hábito."
+        "Guarda isso. Você vai lembrar desse post num momento específico da sua vida.",
+        "Tem conteúdo que faz sentido na primeira leitura. Esse vai fazer mais sentido na segunda — quando você estiver no meio de uma decisão.",
+        "Essa ideia cresce com o tempo. Salva e volta aqui em 30 dias.",
+        "Você não vai querer buscar isso de novo quando precisar. Salva agora.",
+        "Na primeira vez você entende. Na segunda você aplica. Na terceira, você ensina alguém.",
+        "Esse princípio não é pra usar só hoje. Guarda para quando o momento chegar.",
+        "Salva antes de esquecer. O feed engole tudo — menos o que você decidiu manter.",
+        "Esse checklist mental vai ser útil na próxima vez que você enfrentar essa situação.",
+        "Quando a mente estiver agitada, você vai querer ter isso à mão. Salva.",
+        "Informação que não é revisitada vira ruído. Salva e revisa quando precisar.",
+        "Essa é uma daquelas reflexões que amadurecem. Salva para ler de novo depois.",
+        "O que parece óbvio hoje pode ser exatamente o que você precisa ouvir amanhã. Guarda.",
+        "Salva e compartilha depois — quando você tiver vivido isso e quiser mostrar que entendeu."
     ]
 }
 
