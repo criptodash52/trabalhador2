@@ -19,15 +19,15 @@
             "id": "hd2e548"
         },
         {
-            "amostra": 11,
+            "amostra": 12,
             "grupo_b": "compartilhamento",
             "criada_em": "2026-07-19",
-            "confianca": 0.0,
-            "atualizada_em": "2026-07-20",
+            "confianca": 0.479,
+            "atualizada_em": "2026-07-27",
             "metrica_alvo": "growth_score",
             "grupo_a": "salvamento",
-            "media_grupo_b": 0.0,
-            "media_grupo_a": 0.0,
+            "media_grupo_b": 0.03,
+            "media_grupo_a": 0.0177,
             "variaveis_testadas": [
                 "tipo_cta"
             ],
@@ -50,18 +50,49 @@
             "id": "hee5ecf"
         },
         {
-            "amostra": 12,
+            "amostra": 7,
             "grupo_b": "seguir",
             "criada_em": "2026-07-20",
             "grupo_a": "salvamento",
-            "confianca": 0.5,
+            "confianca": 0.498,
             "metrica_alvo": "growth_score",
             "variaveis_testadas": [
                 "tipo_cta"
             ],
             "hipotese": "CTA do tipo 'salvamento' gera mais conversão de seguidores do que 'seguir'.",
             "status": "em_observacao",
-            "id": "h5c83d1"
+            "id": "h5c83d1",
+            "media_grupo_a": 0.0177,
+            "media_grupo_b": 0.0192,
+            "atualizada_em": "2026-07-27"
+        },
+        {
+            "id": "h1f3ce9",
+            "hipotese": "Ganchos do tipo 'IDENTIDADE — Divida o mundo em dois grupos. O leitor instintivamente se pergunta: 'Em qual grupo estou?' Isso gera engajamento profundo.' convertem mais seguidores do que 'PARADOXO — Abra com uma contradição aparente que desafie a lógica. Quanto mais o leitor tenta resolver o paradoxo, mais fica preso no conteúdo.'.",
+            "variaveis_testadas": [
+                "gancho_categoria"
+            ],
+            "grupo_a": "IDENTIDADE — Divida o mundo em dois grupos. O leitor instintivamente se pergunta: 'Em qual grupo estou?' Isso gera engajamento profundo.",
+            "grupo_b": "PARADOXO — Abra com uma contradição aparente que desafie a lógica. Quanto mais o leitor tenta resolver o paradoxo, mais fica preso no conteúdo.",
+            "metrica_alvo": "growth_score",
+            "confianca": 0.5,
+            "amostra": 6,
+            "status": "em_observacao",
+            "criada_em": "2026-07-27"
+        },
+        {
+            "id": "h8cb243",
+            "hipotese": "CTA do tipo 'compartilhamento' gera mais conversão de seguidores do que 'salvamento'.",
+            "variaveis_testadas": [
+                "tipo_cta"
+            ],
+            "grupo_a": "compartilhamento",
+            "grupo_b": "salvamento",
+            "metrica_alvo": "growth_score",
+            "confianca": 0.5,
+            "amostra": 12,
+            "status": "em_observacao",
+            "criada_em": "2026-07-27"
         }
     ]
 }
