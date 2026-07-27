@@ -351,52 +351,52 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "story_manha":
         prompt = f"""
-        Você cria uma sequência de Stories de Instagram matinais para reflexão profunda com sua base de seguidores atuais.
-        Sua missão é gerar uma CONVERSA INTENCIONAL e íntima que prepare o seguidor para encarar as decisões do dia.
+        Você cria uma sequência de Stories de Instagram matinais de alta autoridade para sua audiência.
+        Sua missão é entregar uma PÍLULA DE SABEDORIA MATINAL em pequena dose: clara, elevada, inspiradora e sem nenhum tom carrancudo ou pesado.
         Estilo obrigatório para esta sequência: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
-        - Cada frase representará um slide da sua conversa contínua.
-        - Não use ganchos frios de atração. Comece o primeiro slide compartilhando uma dúvida, uma confissão ou um pensamento maduro diretamente.
-        - Use os slides internos para aprofundar a lição ou o insight sugerido pelo sub-ângulo: "{sub_angulo}".
-        - Termine a sequência (último slide) com uma frase de desfecho forte e reflexiva que dê um norte prático.
+        - SLIDE 1 (GANCHO CURTO DE AUTORIDADE): Abra com uma frase curta, elegante e provocativa de liderança (máx 10 palavras). Deve despertar curiosidade e posicionar autoridade imediata.
+        - SLIDES INTERMEDIÁRIOS (ENTREGA DE VALOR PRÁTICO): Desenvolva uma pílula diária de sabedoria ou mentalidade baseada no ângulo: "{sub_angulo}". Seja direto, prático e motivador de forma madura.
+        - SLIDE FINAL (DIREÇÃO E AUTORIDADE): Feche com uma síntese poderosa que dê direção clara e posicionamento firme para o dia.
+        - PROIBIDO usar tom pesado, vitimista, cansado ou carrancudo.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não no story (true ou false) de acordo com o tom da conversa.
         
         Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
           "frase": [
-            "Frase do slide 1",
-            "Frase do slide 2",
-            "Frase do slide {num_slides_story}"
+            "Slide 1 (Gancho curto de autoridade)",
+            "Slide 2 (Pílula de valor prático)",
+            "Slide {num_slides_story} (Síntese e direção de liderança)"
           ],
           "usar_musica": true
         }}
         """
     elif tipo == "story_tarde":
         prompt = f"""
-        Você cria uma sequência curta de Stories de Instagram para o fim de tarde com sua base de seguidores.
-        O objetivo é dialogar sobre o cansaço do dia e a importância da consistência intencional.
+        Você cria uma sequência de Stories de Instagram para o período da tarde focada em clareza, maestria e autoridade.
+        Sua missão é entregar uma dose diária de valor prático para ajustar a rota do dia, com tom sereno, firme e refinado (sem peso ou postura carrancuda).
         Estilo obrigatório para esta sequência: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
-        - Cada frase representará um slide da sua conversa contínua.
-        - Comece compartilhando uma reflexão íntima sobre o andamento do dia ou cansaço da rotina.
-        - Use os slides intermediários para aprofundar a lição ou o insight sugerido pelo sub-ângulo: "{sub_angulo}".
-        - Termine a sequência com um insight prático para trazer alívio, clareza e direção antes do dia acabar.
+        - SLIDE 1 (GANCHO CURTO DE TRANSIÇÃO): Abra com uma frase instigante sobre foco, discernimento ou maestria diante dos ruídos do dia (máx 10 palavras).
+        - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria derivada do ângulo: "{sub_angulo}". Mostre o caminho com elegância e clareza.
+        - SLIDE FINAL (SÍNTESE DE AUTORIDADE): Encerre posicionando autoridade madura e inspirando o leitor a concluir o dia com maestria.
+        - PROIBIDO tom de reclamação, cansaço excessivo ou fardo.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não (true ou false).
         
         Responda APENAS em formato JSON válido assim (o array 'frase' DEVE ter EXATAMENTE {num_slides_story} itens):
         {{
           "frase": [
-            "Frase do slide 1",
-            "Frase do slide 2",
-            "Frase do slide {num_slides_story}"
+            "Slide 1 (Gancho curto de maestria)",
+            "Slide 2 (Pílula de sabedoria prática)",
+            "Slide {num_slides_story} (Síntese de autoridade)"
           ],
           "usar_musica": false
         }}
