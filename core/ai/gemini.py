@@ -773,40 +773,47 @@ def gerar_conteudo_gemini(tipo):
         {resumo_pdf}
         ======================================================
 
+        VOCABULÁRIO DE ALTO VALOR PERCEBIDO (OBRIGATÓRIO USAR EM CADA POST):
+        Nunca use termos fracos como "baixar PDF" ou "arquivo". Alterne livremente entre estes termos de alto valor:
+        - Nomes do Material: Guia Definitivo, Playbook, Blueprint, Framework, Método, Dossiê, Compêndio, Arsenal de Conhecimento, Kit de Recursos, Leitura Estratégica, Material Exclusivo.
+        - Verbos de Ação: Liberar, Acessar, Obter, Explorar, Consultar, Destravar.
+
         ESTRUTURA OBRIGATÓRIA — TRAILER DE ALTA CONVERSÃO (3 A 5 SLIDES):
 
         SLIDE 1 — GANCHO VISCERAL (obrigatório):
-        - Ataque a dor principal do PDF de forma direta e cirúrgica.
+        - Ataque a dor principal do material de forma direta e cirúrgica.
         - Use a estrutura do gancho de referência de hoje: "{gancho}" (formato: {descricao_categoria}).
         - Máximo 12 palavras. Frase que para o scroll imediatamente.
-        - NÃO mencione PDF, link, bio ou material aqui.
+        - NÃO mencione link, bio ou material aqui.
 
         SLIDE 2 — APROFUNDAMENTO DA DOR (obrigatório):
         - Aprofunde a dor do Slide 1. Crie o loop de curiosidade.
-        - Deixe o espectador pensando: "como eu resolvo isso?" sem dar a resposta ainda.
+        - Deixe o espectador pensando: "como eu resolvo isso?" sem dar a resposta inteira ainda.
         - Máximo 15 palavras. Tom íntimo e empático.
 
-        SLIDE 3 — A SOLUÇÃO EXISTE (obrigatório):
-        - Revele que existe uma solução simples e prática.
-        - Conecte com a promessa do PDF: "{titulo_pdf_limpo}" — a transformação que ele traz.
+        SLIDE 3 — A REVELAÇÃO DA SOLUÇÃO (obrigatório):
+        - Revele que a solução prática foi mapeada e está estruturada no material.
+        - Conecte com a transformação exata do material: "{solucao_pdf_limpo}".
+        - Use um dos termos de alto valor (ex: "Estruturei o Playbook...", "Mapeei no Dossiê...").
         - Máximo 15 palavras. Tom esperançoso e direto.
 
         SLIDE 4 — QUEBRA DE OBJEÇÃO (opcional, use se quiser 4 ou 5 slides):
         - Destrua a principal desculpa ou dúvida de quem ainda hesita.
-        - Exemplo de tom: "Não precisa de experiência. Só de disposição."
+        - Exemplo de tom: "Não precisa de horas. São passos práticos aplicáveis hoje."
         - Máximo 12 palavras.
 
-        ÚLTIMO SLIDE — CTA DUPLO E ELEGANTE (obrigatório, sempre o slide final):
-        - DEVE seguir ESTRITAMENTE esta estrutura: "Comente [PALAVRA-CHAVE] que eu te envio [mensagem/caminho], ou acesse o link na bio."
-        - Exemplo 1: "Comente FOCO que eu te envio o caminho completo, ou acesse o link na bio."
-        - Exemplo 2: "Comente SABEDORIA que eu te envio o método prático, ou acesse o link na bio."
-        - Exemplo 3: "Comente CLAREZA que eu te envio os passos desta aula, ou acesse o link na bio."
-        - PROIBIDO usar as palavras "baixe", "clique", "anúncio", "compre".
+        ÚLTIMO SLIDE — CTA DE ALTA CONVERSÃO CONECTADO AO MATERIAL (obrigatório, sempre o slide final):
+        - Deve citar a promessa da obra da semana: "{titulo_pdf_limpo}".
+        - Alterne a frase do último slide usando uma destas estruturas de alto impacto:
+          * "Para acessar o Guia Definitivo '{titulo_pdf_limpo}', toque no link do meu perfil agora."
+          * "Libere o Playbook completo '{titulo_pdf_limpo}' no link do meu perfil."
+          * "Comente [PALAVRA-CHAVE] ou acesse o link no meu perfil para obter o Dossiê '{titulo_pdf_limpo}'."
+          * "O Blueprint '{titulo_pdf_limpo}' está disponível gratuitamente no link do perfil."
         - Máximo 20 palavras.
 
         REGRAS ABSOLUTAS:
         * Máximo de 20 palavras por slide.
-        * PROIBIDO mencionar PDF, link ou bio antes do último slide.
+        * PROIBIDO mencionar link ou bio antes do último slide.
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
 
@@ -820,8 +827,8 @@ def gerar_conteudo_gemini(tipo):
 
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
-        - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave única em CAIXA ALTA relacionada ao tema do post (ex: "FOCO", "DISCIPLINA", "LIBERDADE", "CLAREZA", "CORAGEM").
-        - A legenda DEVE obrigatoriamente terminar no mesmo padrão: "Comente [PALAVRA-CHAVE] 👇 que eu te envio o caminho completo, ou acesse o link na bio."
+        - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave em CAIXA ALTA relacionada ao tema (ex: "FOCO", "DISCIPLINA", "CLAREZA", "MÉTODO").
+        - A legenda DEVE terminar conectada ao material da semana: "Para acessar o Material Exclusivo '{titulo_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
