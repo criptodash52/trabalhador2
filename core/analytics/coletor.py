@@ -10,8 +10,13 @@ from core.config.state import carregar_estado
 
 load_dotenv()
 
-IG_ACCESS_TOKEN = os.getenv("IG_ACCESS_TOKEN")
-IG_ACCOUNT_ID = os.getenv("IG_ACCOUNT_ID")
+# Conta 1 (Instagram principal)
+IG_ACCESS_TOKEN_1 = os.getenv("IG_ACCESS_TOKEN")
+IG_ACCOUNT_ID_1 = os.getenv("IG_ACCOUNT_ID")
+
+# Conta 2 (@codigo.da.sabedoria_)
+IG_ACCESS_TOKEN_2 = os.getenv("IG_ACCESS_TOKEN_9") or os.getenv("IG_ACCESS_TOKEN_2")
+IG_ACCOUNT_ID_2 = os.getenv("IG_ACCOUNT_ID_9") or os.getenv("IG_ACCOUNT_ID_2")
 METRICAS_FILE = "analytics/dados/metricas.json"  # mantido como fallback local
 
 def carregar_metricas_local():
@@ -80,26 +85,31 @@ def salvar_metricas_firebase(post_id, info_post, metricas):
 
 def buscar_metricas_api(post_id, tipo_post="feed"):
     """
-    Coleta métricas da API do Instagram de forma inteligente por tipo de post.
-    
-    Tipos de post e métricas exclusivas:
-    - Feed/Carrossel: impressions, reach, saved, likes, comments, shares, profile_visits, follows
-    - Reels:          plays, ig_reels_avg_watch_time, ig_reels_video_view_total_time, reach, saved, shares
-    - Stories:        impressions, reach, taps_forward, taps_back, exits, replies, follows
+    Coleta métricas da API do Instagram de forma inteligente por tipo de post,
+    tentando os tokens de ambas as contas até obter sucesso.
     """
-    if not IG_ACCESS_TOKEN or post_id.startswith("DRY_RUN") or post_id == "ID_TESTE_LOCAL":
+    if post_id.startswith("DRY_RUN") or post_id == "ID_TESTE_LOCAL":
         return None
 
-    metricas = {}
-    try:
-        # --- Passo 1: Dados básicos da mídia (likes, comentários, tipo) ---
-        url_media = (
-            f"https://graph.facebook.com/v19.0/{post_id}"
-            f"?fields=like_count,comments_count,media_type,caption,permalink,media_url"
-            f"&access_token={IG_ACCESS_TOKEN}"
-        )
-        res_media = requests.get(url_media, timeout=15)
-        if res_media.status_code == 200:
+    tokens_to_try = [t for t in [IG_ACCESS_TOKEN_1, IG_ACCESS_TOKEN_2] if t]
+    if not tokens_to_try:
+        logger.warning("Faltam credenciais (tokens) configuradas para buscar métricas de posts.")
+        return None
+
+    for idx, token in enumerate(tokens_to_try):
+        metricas = {}
+        try:
+            # --- Passo 1: Dados básicos da mídia (likes, comentários, tipo) ---
+            url_media = (
+                f"https://graph.facebook.com/v19.0/{post_id}"
+                f"?fields=like_count,comments_count,media_type,caption,permalink,media_url"
+                f"&access_token={token}"
+            )
+            res_media = requests.get(url_media, timeout=15)
+            if res_media.status_code != 200:
+                # Tenta o próximo token caso dê erro de permissão (ex: o post é da conta 2 e usamos o token da 1)
+                continue
+                
             data = res_media.json()
             metricas["likes"]      = data.get("like_count", 0)
             metricas["comments"]   = data.get("comments_count", 0)
@@ -107,175 +117,137 @@ def buscar_metricas_api(post_id, tipo_post="feed"):
             metricas["caption"]    = data.get("caption", "")
             metricas["permalink"]  = data.get("permalink", "")
             metricas["media_url"]  = data.get("media_url", "")
-        else:
-            try:
-                err_json = res_media.json()
-                err_msg = err_json.get("error", {}).get("message", "")
-                if "does not exist" in err_msg or "Unsupported get request" in err_msg:
-                    logger.warning(f"Mídia {post_id} não acessível (pode ter expirado). Pulando...")
-                    return None
-            except:
-                pass
-            logger.error(f"Erro ao buscar mídia {post_id}: {res_media.text}")
-            return None
 
-        # --- Passo 2: Insights expandidos por tipo de post ---
-        tipo_lower = tipo_post.lower()
-        
-        if "reel" in tipo_lower or "pexels" in tipo_lower:
-            # Reels: métricas de retenção, tempo assistido, engajamento e conversão de perfil
-            metrics_query = "views,ig_reels_avg_watch_time,ig_reels_video_view_total_time,reach,saved,shares,profile_visits,follows"
-            logger.info(f"🎬 Coletando métricas de REELS para {post_id}")
-        elif "story" in tipo_lower:
-            # Stories: métricas de navegação, retenção e conversão
-            metrics_query = "impressions,reach,navigation,replies,profile_visits,follows"
-            logger.info(f"📱 Coletando métricas de STORY para {post_id}")
-        else:
-            # Feed e Carrossel: métricas de engajamento, descoberta e conversão de perfil
-            metrics_query = "reach,saved,shares,impressions,profile_visits,follows"
-            logger.info(f"🖼️ Coletando métricas de FEED para {post_id}")
+            # --- Passo 2: Insights expandidos por tipo de post ---
+            tipo_lower = tipo_post.lower()
+            
+            if "reel" in tipo_lower or "pexels" in tipo_lower:
+                metrics_query = "views,ig_reels_avg_watch_time,ig_reels_video_view_total_time,reach,saved,shares,profile_visits,follows"
+                logger.info(f"🎬 Coletando métricas de REELS para {post_id} usando token #{idx+1}")
+            elif "story" in tipo_lower:
+                metrics_query = "impressions,reach,navigation,replies,profile_visits,follows"
+                logger.info(f"📱 Coletando métricas de STORY para {post_id} usando token #{idx+1}")
+            else:
+                metrics_query = "reach,saved,shares,impressions,profile_visits,follows"
+                logger.info(f"🖼️ Coletando métricas de FEED para {post_id} usando token #{idx+1}")
 
-        url_insights = (
-            f"https://graph.facebook.com/v19.0/{post_id}/insights"
-            f"?metric={metrics_query}"
-            f"&access_token={IG_ACCESS_TOKEN}"
-        )
-        res_insights = requests.get(url_insights, timeout=15)
+            url_insights = (
+                f"https://graph.facebook.com/v19.0/{post_id}/insights"
+                f"?metric={metrics_query}"
+                f"&access_token={token}"
+            )
+            res_insights = requests.get(url_insights, timeout=15)
 
-        if res_insights.status_code == 200:
-            data = res_insights.json()
-            for insight in data.get("data", []):
-                name   = insight.get("name")
-                values = insight.get("values", [])
-                if values:
-                    metricas[name] = values[0].get("value", 0)
-                elif "value" in insight:
-                    # Alguns insights retornam valor direto (sem array)
-                    metricas[name] = insight.get("value", 0)
-        else:
-            err_text = res_insights.text
-            logger.warning(f"Não foi possível obter insights para {post_id}: {err_text}")
-            # Fallback: se a query completa falhou (métrica não disponível para o formato),
-            # tenta buscar profile_visits e follows separadamente
-            if "profile_visits" in err_text or "follows" in err_text or "OAuthException" in err_text:
-                try:
-                    metrics_fallback = "reach,saved,shares"
-                    if "reel" in tipo_lower or "pexels" in tipo_lower:
-                        metrics_fallback = "views,ig_reels_avg_watch_time,reach,saved,shares"
-                    url_fallback = (
-                        f"https://graph.facebook.com/v19.0/{post_id}/insights"
-                        f"?metric={metrics_fallback}"
-                        f"&access_token={IG_ACCESS_TOKEN}"
-                    )
-                    res_fb = requests.get(url_fallback, timeout=15)
-                    if res_fb.status_code == 200:
-                        for insight in res_fb.json().get("data", []):
-                            name   = insight.get("name")
-                            values = insight.get("values", [])
-                            if values:
-                                metricas[name] = values[0].get("value", 0)
-                            elif "value" in insight:
-                                metricas[name] = insight.get("value", 0)
-                        logger.info(f"✅ Fallback de métricas sem profile_visits/follows aplicado para {post_id}")
-                except Exception as ef:
-                    logger.warning(f"Fallback de métricas também falhou para {post_id}: {ef}")
+            if res_insights.status_code == 200:
+                data_insights = res_insights.json()
+                for insight in data_insights.get("data", []):
+                    name   = insight.get("name")
+                    values = insight.get("values", [])
+                    if values:
+                        metricas[name] = values[0].get("value", 0)
+                    elif "value" in insight:
+                        metricas[name] = insight.get("value", 0)
+            else:
+                err_text = res_insights.text
+                logger.warning(f"Não foi possível obter insights para {post_id} com token #{idx+1}: {err_text}")
+                # Fallback: tenta buscar métricas mais simples
+                if "profile_visits" in err_text or "follows" in err_text or "OAuthException" in err_text:
+                    try:
+                        metrics_fallback = "reach,saved,shares"
+                        if "reel" in tipo_lower or "pexels" in tipo_lower:
+                            metrics_fallback = "views,ig_reels_avg_watch_time,reach,saved,shares"
+                        url_fallback = (
+                            f"https://graph.facebook.com/v19.0/{post_id}/insights"
+                            f"?metric={metrics_fallback}"
+                            f"&access_token={token}"
+                        )
+                        res_fb = requests.get(url_fallback, timeout=15)
+                        if res_fb.status_code == 200:
+                            for insight in res_fb.json().get("data", []):
+                                name   = insight.get("name")
+                                values = insight.get("values", [])
+                                if values:
+                                    metricas[name] = values[0].get("value", 0)
+                                elif "value" in insight:
+                                    metricas[name] = insight.get("value", 0)
+                            logger.info(f"✅ Fallback de métricas aplicado para {post_id}")
+                    except Exception as ef:
+                        logger.warning(f"Fallback falhou para {post_id} com token #{idx+1}: {ef}")
 
-        logger.info(f"📊 Métricas coletadas para {post_id}: {list(metricas.keys())}")
-        return metricas
+            logger.info(f"📊 Métricas coletadas com sucesso para {post_id}: {list(metricas.keys())}")
+            return metricas
 
-    except Exception as e:
-        logger.error(f"Erro ao coletar métricas para o post {post_id}: {e}")
-        return None
+        except Exception as e:
+            logger.warning(f"Erro na tentativa com token #{idx+1} para o post {post_id}: {e}")
+            
+    logger.error(f"❌ Falha ao coletar métricas para o post {post_id} com todos os tokens disponíveis.")
+    return None
 
 def buscar_posts_recentes_api():
-    """Busca os posts mais recentes diretamente do perfil do Instagram."""
-    if not IG_ACCESS_TOKEN or not IG_ACCOUNT_ID:
-        logger.warning("Faltam credenciais (IG_ACCESS_TOKEN ou IG_ACCOUNT_ID) para buscar posts do perfil.")
-        return []
+    """Busca os posts mais recentes diretamente dos dois perfis do Instagram (Centralizado)."""
+    contas = [
+        {"token": IG_ACCESS_TOKEN_1, "id": IG_ACCOUNT_ID_1, "nome": "Conta 1"},
+        {"token": IG_ACCESS_TOKEN_2, "id": IG_ACCOUNT_ID_2, "nome": "Conta 2"}
+    ]
+    posts_descobertos = []
     
-    url = f"https://graph.facebook.com/v19.0/{IG_ACCOUNT_ID}/media?fields=id,media_type,timestamp,caption&access_token={IG_ACCESS_TOKEN}"
-    try:
-        res = requests.get(url, timeout=15)
-        if res.status_code == 200:
-            data = res.json().get("data", [])
-            posts_descobertos = []
-            for item in data:
-                try:
-                    dt_obj = datetime.strptime(item.get("timestamp"), "%Y-%m-%dT%H:%M:%S%z")
-                    data_str = dt_obj.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-                except:
-                    data_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    for c in contas:
+        token = c["token"]
+        acc_id = c["id"]
+        if not token or not acc_id:
+            continue
+            
+        logger.info(f"🔎 Buscando posts recentes no perfil {c['nome']} ({acc_id})...")
+        url = f"https://graph.facebook.com/v19.0/{acc_id}/media?fields=id,media_type,timestamp,caption&access_token={token}"
+        try:
+            res = requests.get(url, timeout=15)
+            if res.status_code == 200:
+                data = res.json().get("data", [])
+                logger.info(f"✅ Encontrados {len(data)} posts no perfil {c['nome']}.")
+                for item in data:
+                    try:
+                        dt_obj = datetime.strptime(item.get("timestamp"), "%Y-%m-%dT%H:%M:%S%z")
+                        data_str = dt_obj.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+                    except:
+                        data_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
-                media_type = item.get("media_type", "")
-                tipo = "feed"
-                if media_type == "VIDEO":
-                    tipo = "reels"
-                elif media_type == "CAROUSEL_ALBUM":
-                    tipo = "carousel"
-                
-                posts_descobertos.append({
-                    "post_id": item.get("id"),
-                    "data": data_str,
-                    "tipo": tipo,
-                    "tema": "Descoberto Automaticamente",
-                    "caption": item.get("caption", "")
-                })
-            logger.info(f"🔎 Encontrados {len(posts_descobertos)} posts no perfil.")
-            return posts_descobertos
-        else:
-            logger.error(f"Erro ao buscar posts do perfil: {res.text}")
-            return []
-    except Exception as e:
-        logger.error(f"Exceção ao buscar posts do perfil: {e}")
-        return []
+                    media_type = item.get("media_type", "")
+                    tipo = "feed"
+                    if media_type == "VIDEO":
+                        tipo = "reels"
+                    elif media_type == "CAROUSEL_ALBUM":
+                        tipo = "carousel"
+                    
+                    posts_descobertos.append({
+                        "post_id": item.get("id"),
+                        "data": data_str,
+                        "tipo": tipo,
+                        "tema": "Descoberto Automaticamente",
+                        "caption": item.get("caption", "")
+                    })
+            else:
+                logger.error(f"Erro ao buscar posts de {c['nome']}: {res.text}")
+        except Exception as e:
+            logger.error(f"Exceção ao buscar posts de {c['nome']}: {e}")
+            
+    logger.info(f"🔎 Total unificado: {len(posts_descobertos)} posts descobertos nas duas contas.")
+    return posts_descobertos
 
 def buscar_insights_conta_api():
     """
-    Busca insights consolidados da conta no Instagram (Reach e Impressions de 28 dias,
-    Profile Views e Follows diários acumulados).
+    Busca insights consolidados unificando os dados das duas contas do Instagram
+    (Reach e Impressions de 28 dias, Profile Views e Follows diários acumulados).
     """
-    if not IG_ACCESS_TOKEN or not IG_ACCOUNT_ID or IG_ACCOUNT_ID.startswith("DRY_RUN"):
-        logger.warning("Faltam credenciais para buscar insights da conta do Instagram (ou em modo DRY_RUN).")
-        return None
-
-    dados_conta = {
-        "reach_30d": 0,
-        "impressions_30d": 0,
-        "profile_views_30d": 0,
-        "follower_count_30d": 0,
-        "ultima_atualizacao": datetime.now(timezone.utc).isoformat()
-    }
-
-    # 1. Coleta Reach consolidado de 28 dias
-    url_28d = (
-        f"https://graph.facebook.com/v19.0/{IG_ACCOUNT_ID}/insights"
-        f"?metric=reach"
-        f"&period=days_28"
-        f"&access_token={IG_ACCESS_TOKEN}"
-    )
-    try:
-        res = requests.get(url_28d, timeout=15)
-        if res.status_code == 200:
-            data = res.json().get("data", [])
-            for insight in data:
-                name = insight.get("name")
-                values = insight.get("values", [])
-                if values:
-                    val = 0
-                    for item in reversed(values):
-                        v_val = item.get("value", 0)
-                        if v_val > 0:
-                            val = v_val
-                            break
-                    if val == 0:
-                        val = values[-1].get("value", 0)
-
-                    if name == "reach":
-                        dados_conta["reach_30d"] = val
-        else:
-            logger.warning(f"Não foi possível obter insights 28d da conta: {res.text}")
-    except Exception as e:
-        logger.error(f"Erro ao buscar insights 28d da conta: {e}")
+    contas = [
+        {"token": IG_ACCESS_TOKEN_1, "id": IG_ACCOUNT_ID_1},
+        {"token": IG_ACCESS_TOKEN_2, "id": IG_ACCOUNT_ID_2}
+    ]
+    
+    reach_total = 0
+    impressions_total = 0
+    views_total = 0
+    followers_total = 0
+    executou_pelo_menos_uma = False
 
     # Auxiliar para extrair o valor total do insight, seja de total_value ou da soma de values diários
     def extrair_total(ins):
@@ -286,60 +258,105 @@ def buscar_insights_conta_api():
             return sum(item.get("value", 0) for item in vals)
         return 0
 
-    # 2. Coleta Profile Views (Visitas ao perfil) e Follower Count (Novos seguidores) diários (últimos 30 dias)
-    agora = datetime.now(timezone.utc)
-    trinta_dias_atras = agora - timedelta(days=30)
-    since_ts = int(trinta_dias_atras.timestamp())
-    until_ts = int(agora.timestamp())
+    for c in contas:
+        token = c["token"]
+        acc_id = c["id"]
+        if not token or not acc_id or acc_id.startswith("DRY_RUN"):
+            continue
 
-    # 2a. Profile Views (exige period=day e metric_type=total_value juntos)
-    url_views = (
-        f"https://graph.facebook.com/v19.0/{IG_ACCOUNT_ID}/insights"
-        f"?metric=profile_views"
-        f"&period=day"
-        f"&metric_type=total_value"
-        f"&since={since_ts}"
-        f"&until={until_ts}"
-        f"&access_token={IG_ACCESS_TOKEN}"
-    )
-    try:
-        res = requests.get(url_views, timeout=15)
-        if res.status_code == 200:
-            data = res.json().get("data", [])
-            for insight in data:
-                name = insight.get("name")
-                total_val = extrair_total(insight)
-                if name == "profile_views":
-                    dados_conta["profile_views_30d"] = total_val
-        else:
-            logger.warning(f"Não foi possível obter insights de profile_views da conta: {res.text}")
-    except Exception as e:
-        logger.error(f"Erro ao buscar insights de profile_views da conta: {e}")
+        executou_pelo_menos_uma = True
+        logger.info(f"📥 Coletando insights globais para o perfil {acc_id}...")
 
-    # 2b. Follower Count (não suporta metric_type=total_value)
-    url_followers = (
-        f"https://graph.facebook.com/v19.0/{IG_ACCOUNT_ID}/insights"
-        f"?metric=follower_count"
-        f"&period=day"
-        f"&since={since_ts}"
-        f"&until={until_ts}"
-        f"&access_token={IG_ACCESS_TOKEN}"
-    )
-    try:
-        res = requests.get(url_followers, timeout=15)
-        if res.status_code == 200:
-            data = res.json().get("data", [])
-            for insight in data:
-                name = insight.get("name")
-                total_val = extrair_total(insight)
-                if name == "follower_count":
-                    dados_conta["follower_count_30d"] = total_val
-        else:
-            logger.warning(f"Não foi possível obter insights de follower_count da conta: {res.text}")
-    except Exception as e:
-        logger.error(f"Erro ao buscar insights de follower_count da conta: {e}")
+        # 1. Coleta Reach consolidado de 28 dias
+        url_28d = (
+            f"https://graph.facebook.com/v19.0/{acc_id}/insights"
+            f"?metric=reach"
+            f"&period=days_28"
+            f"&access_token={token}"
+        )
+        try:
+            res = requests.get(url_28d, timeout=15)
+            if res.status_code == 200:
+                data = res.json().get("data", [])
+                for insight in data:
+                    name = insight.get("name")
+                    values = insight.get("values", [])
+                    if values:
+                        val = 0
+                        for item in reversed(values):
+                            v_val = item.get("value", 0)
+                            if v_val > 0:
+                                val = v_val
+                                break
+                        if val == 0:
+                            val = values[-1].get("value", 0)
 
-    return dados_conta
+                        if name == "reach":
+                            reach_total += val
+            else:
+                logger.warning(f"Não foi possível obter insights 28d para {acc_id}: {res.text}")
+        except Exception as e:
+            logger.error(f"Erro ao buscar insights 28d para {acc_id}: {e}")
+
+        # 2. Coleta Profile Views (Visitas ao perfil) e Follower Count (Novos seguidores)
+        agora = datetime.now(timezone.utc)
+        trinta_dias_atras = agora - timedelta(days=30)
+        since_ts = int(trinta_dias_atras.timestamp())
+        until_ts = int(agora.timestamp())
+
+        # 2a. Profile Views
+        url_views = (
+            f"https://graph.facebook.com/v19.0/{acc_id}/insights"
+            f"?metric=profile_views"
+            f"&period=day"
+            f"&metric_type=total_value"
+            f"&since={since_ts}"
+            f"&until={until_ts}"
+            f"&access_token={token}"
+        )
+        try:
+            res = requests.get(url_views, timeout=15)
+            if res.status_code == 200:
+                data = res.json().get("data", [])
+                for insight in data:
+                    name = insight.get("name")
+                    total_val = extrair_total(insight)
+                    if name == "profile_views":
+                        views_total += total_val
+        except Exception as e:
+            logger.error(f"Erro ao buscar profile_views para {acc_id}: {e}")
+
+        # 2b. Follower Count
+        url_followers = (
+            f"https://graph.facebook.com/v19.0/{acc_id}/insights"
+            f"?metric=follower_count"
+            f"&period=day"
+            f"&since={since_ts}"
+            f"&until={until_ts}"
+            f"&access_token={token}"
+        )
+        try:
+            res = requests.get(url_followers, timeout=15)
+            if res.status_code == 200:
+                data = res.json().get("data", [])
+                for insight in data:
+                    name = insight.get("name")
+                    total_val = extrair_total(insight)
+                    if name == "follower_count":
+                        followers_total += total_val
+        except Exception as e:
+            logger.error(f"Erro ao buscar follower_count para {acc_id}: {e}")
+
+    if not executou_pelo_menos_uma:
+        return None
+
+    return {
+        "reach_30d": reach_total,
+        "impressions_30d": impressions_total,
+        "profile_views_30d": views_total,
+        "follower_count_30d": followers_total,
+        "ultima_atualizacao": datetime.now(timezone.utc).isoformat()
+    }
 
 def salvar_metricas_conta_firebase(dados_conta):
     """Salva os dados de insights da conta no Firebase Firestore."""
