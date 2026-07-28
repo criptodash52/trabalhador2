@@ -573,21 +573,22 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
     2. VIRADA: Uma decisão, encontro, percepção ou momento que muda o rumo da cena.
     3. DESFECHO ABERTO: NÃO declare a moral. Termine com uma imagem ou gesto que o leitor possa interpretar.
     O leitor deve se ver na história sem que você precise dizer 'isso é você'.
-    
-    ===== DIRETRIZ OBRIGATÓRIA DE CTA (LEGENDA E FECHAMENTO) =====
-    Objetivo do CTA desta postagem: {categoria_cta.upper()}
-    Frase de referência de tom (use APENAS como bussola de intenção e sentimento — NÃO copie esta frase no roteiro ou na legenda):
-    Referência: "{referencia_cta}"
-
-    REGRAS ABSOLUTAS DO CTA:
-    1. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como “Siga.”, “Comente.”, “Salve.” ou “Compartilhe.” no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
-    2. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou — deve sentir que a própria mensagem está o convidando.
-    3. Varie a estrutura a cada post: ora use uma pergunta que provoca reflexo, ora uma observação que justifica a ação, ora um desafio, ora um convite. Nunca repita a mesma estrutura de CTA em posts seguidos.
-    4. O CTA na legenda deve fluir em continuidade direta com o texto anterior — como se fosse o último parágrafo da mensagem, não um apêndice.
-    5. O CTA no slide final do vídeo/carrossel deve ser conciso (1 a 2 frases) e funcionar como uma conclusão provocadora, não como uma chamada para ação clássica de marketing.
-    ==============================================================
-    =====================================================""",
+    ===============================================================""",
     }
+
+    instrucoes_atos = INSTRUCOES_MODO[modo_post]
+
+    instrucoes = f"""
+    {diretriz_sentimento}
+
+    REGRAS GERAIS DE ESCRITA:
+    1. APLICAR A ARQUITETURA NARRATIVA DO POST:
+    Formato: {arquitetura['nome']}
+    Diretriz: {arquitetura['descricao']}
+
+    2. MANTER A PERSONA ESTABELECIDA:
+    {PERSONA_PALESTRANTE}
+
     3. ENTREGUE COMO SE O CONHECIMENTO FOSSE SEU. É ESTRITAMENTE PROIBIDO citar o nome do livro, do autor ou dar créditos. Pegue a genialidade da obra e passe como conteúdo original do nosso perfil.
 
     DIRETRIZ DE CONTEÚDO (Ângulo de Inspiração):
