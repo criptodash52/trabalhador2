@@ -346,7 +346,8 @@ def gerar_conteudo_gemini(tipo):
         - O story deve parecer um pensamento que normalmente só surge depois de muita experiência observando pessoas e a própria vida.
         - Escreva como alguém que fala pouco, mas quando fala muda a forma como o leitor enxerga uma situação.
         - Evite frases prontas ou conselhos de autoajuda vazios. O objetivo deixa de ser "motivação" e passa a ser "lucidez".
-        - Escreva uma única frase curta e com altíssimo impacto emocional (máximo de 15 palavras) que gere uma pequena mudança de perspectiva.
+        - Escreva uma única frase curta e com altíssimo impacto emocional (entre 5 e 8 palavras) que gere uma pequena mudança de perspectiva.
+        - NÃO use "..." de forma automática — use no máximo 1 vez por sequência, somente quando criar tensão real.
         - NÃO use ponto de exclamação. Use ponto final ou interrogação.
         - NÃO inclua CTA, convite para seguir ou qualquer chamada para ação.
         
@@ -400,7 +401,8 @@ def gerar_conteudo_gemini(tipo):
         - Ângulo de inspiração: "{sub_angulo}"
         - Tom emocional do dia: {sentimento_escolhido.upper() if sentimento_escolhido else 'REFLEXÃO'}
 
-        CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
+        CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (ENTRE 5 E 8 PALAVRAS POR FRASE):
+        PROIBIDO usar "..." de forma repetitiva — use no máximo 1 vez por sequência, somente quando criar tensão real.
         - SLIDE 1 (GANCHO CURTO DE TRANSIÇÃO): Abra com uma frase instigante sobre foco, discernimento ou maestria diante dos ruídos do dia (máx 10 palavras).
         - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria baseada no ângulo acima. Cada frase deve parecer um pensamento que normalmente só surge após muita experiência de vida, evitando frases clichê.
         - SLIDE FINAL (SÍNTESE DE AUTORIDADE): Encerre posicionando autoridade moral e lucidez, inspirando o leitor a concluir o dia com maestria e foco em seus princípios.
@@ -441,7 +443,8 @@ def gerar_conteudo_gemini(tipo):
         - PROIBIDO: títulos com "dicas", "aprenda a", "como fazer", "passos para", "top X".
 
         2. SLIDES DE CONTEÚDO (entre 5 e 8 slides — o número exato deve variar livremente conforme a necessidade da mensagem):
-        - Cada slide: frase curtíssima e cirúrgica de no MÁXIMO 12 palavras. Sem rodeios.
+        - Cada slide: frase curtíssima e cirúrgica de no MÁXIMO 8 palavras (ideal: entre 5 e 8). Sem rodeios.
+        - PROIBIDO usar "..." em todo slide — use no máximo 1 vez por carrossel, somente quando criar tensão real.
         - A sequência dos slides deve seguir esta arquitetura narrativa FLUIDA:
 
           SLIDE 1 — GANCHO (Pattern Interrupt):
@@ -511,9 +514,10 @@ def gerar_conteudo_gemini(tipo):
         - ÚLTIMO SLIDE (obrigatório): CTA — Fusão de impacto com convite sutil e elegante para seguir o perfil (ex: "Se você busca respostas que a maioria ignora, acompanhe o perfil.").
 
         REGRAS DE ESCUTA E RITMO VISUAL:
-        * Misture o comprimento das frases! Curtas e cortantes (4-8 palavras) para dinamismo. Algumas mais longas (até 25 palavras) para profundidade.
-        * LIMITE MÁXIMO ESTRITO: Nenhuma frase pode passar de 25 palavras.
+        * Todas as frases devem ser curtas e cortantes: entre 5 e 8 palavras por slide.
+        * LIMITE MÁXIMO ESTRITO: Nenhuma frase pode passar de 8 palavras.
         * NÃO use pontos de exclamação.
+        * PROIBIDO usar "..." em todo slide — use no máximo 1 vez por post, somente quando criar tensão real.
 
         LEGENDA:
         - Máximo 3 linhas. Tom de quem viveu aquilo, não de quem está ensinando.
@@ -618,31 +622,32 @@ def gerar_conteudo_gemini(tipo):
         - Ruptura de crença: "Sempre pensei que trabalhando mais, chegaria lá. Até entender que estava errado."
         - Provocação de reconhecimento: "Você acorda todo dia pra fazer tudo de novo... e onde isso está te levando?"
         - Eco de tentativa: "Eu sei que você já tentou. A questão é: funcionou?"
-        REGRA: Máximo 12 palavras. Primeira pessoa ou segunda pessoa direta. Sem jargões de coach.
+        REGRA: Entre 5 e 8 palavras. Frase curta e cortante. Primeira pessoa ou segunda pessoa direta.
+        PROIBIDO usar "..." de forma automática — use no máximo 1 vez por post, somente quando criar tensão real.
 
         SLIDE 2 — EMPATIA COM O PROBLEMA (OBRIGATÓRIO):
         Agora você CONECTA com a dor do dia a dia. Mostre que entende COMO É viver aquela luta.
-        - "Eu sei como é acordar cansado de uma rotina que parece não levar a lugar nenhum."
-        - "A sensação de estar sempre correndo, mas nunca chegando onde queria estar."
-        - Descreva o problema de forma específica, cotidiana e reconhecível. Nada genérico.
-        - Finalize com uma virada sutil: "Mas tem uma coisa que mudou tudo pra mim."
-        REGRA: 15 a 25 palavras. Tom íntimo, humano e empático.
+        - "Eu sei como é acordar cansado de uma rotina que não te leva a lugar nenhum."
+        - "A sensação de estar sempre correndo, mas nunca chegando."
+        - Descreva o problema de forma específica, cotidiana e reconhecível.
+        REGRA: Entre 5 e 8 palavras. Tom íntimo, humano e empático.
 
         SLIDE 3 — A SOLUÇÃO (OBRIGATÓRIO):
         Aqui você entrega a virada de mentalidade, o insight prático ou a lição dos livros.
         - Apresente a solução de forma simples, clara e aplicável.
-        - Use a sabedoria do tema para mostrar o caminho concreto.
         - Deve soar como uma descoberta genuína, não como conselho vazio.
-        REGRA: 15 a 25 palavras. Tom de revelação e clareza.
+        REGRA: Entre 5 e 8 palavras. Tom de revelação e clareza.
+
+        PEXELS QUERY (ESTRITAMENTE ESCURO E CINEMATOGRÁFICO):
+        - TODOS os vídeos DEVEM ser estritamente escuros, noturnos ou de iluminação dramática/âmbar, alinhados com o visual cinematográfico do perfil.
+        - PROIBIDO ABSOLUTAMENTE: vídeos de dia com luz solar, parques diurnos, ambientes domésticos claros, bibliotecas iluminadas ou pessoas estudando em mesas brancas.
+        - Busque em inglês por termos urbanos, noturnos e de atmosfera luxuosa (ex: dark night city street golden amber light 35mm, moody cinematic portrait night city lights, urban night rain neon reflection dark).
 
         SLIDE 4 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
         Convite natural e fluido para seguir o perfil ou comentar. Conectado ao que foi dito.
         - Não use jargões de vendas ou pressão.
         - Exemplos de tom: "Se isso fez sentido pra você, me segue. Tem muito mais por aqui."
-        REGRA: Máximo 15 palavras. Tom pessoal, não comercial.
-
-        PEXELS QUERY:
-        - Escolha buscas em inglês para vídeos B-roll evocativos, naturais e cinematográficos (luz matinal, natureza, parques, água, trilhas, luz solar).
+        REGRA: Entre 5 e 8 palavras. Tom pessoal, não comercial. Sem "...".
 
         LEGENDA:
         - Máximo 3 linhas. Tom próximo, maduro e reflexivo.
@@ -658,9 +663,9 @@ def gerar_conteudo_gemini(tipo):
             "Slide 4 — CTA elegante e pessoal"
           ],
           "pexels_queries": [
-            "golden sunrise meadow mist peaceful",
-            "person walking forest trail morning light",
-            "calm river reflection nature tranquil"
+            "dark night city street golden amber light 35mm",
+            "moody cinematic portrait night city lights",
+            "urban night rain neon reflection dark"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
@@ -682,22 +687,22 @@ def gerar_conteudo_gemini(tipo):
         - "Você está exausto de novo. E amanhã vai ser igual."
         - "Eu ficava chegando em casa sem saber por que ainda estava lutando."
         - "Mais um dia entregue. O que ficou pra você?"
-        REGRA: Máximo 10 palavras. Precisa parar o scroll instantaneamente.
+        REGRA: Entre 5 e 8 palavras. Precisa parar o scroll instantaneamente. Sem "..." automático.
 
         SLIDE 2 — EMPATIA COM O PROBLEMA DO DIA A DIA (OBRIGATÓRIO):
         Conecte com a luta real: a sensação de trabalhar muito e não ver resultado, de estar presente sem estar, de dar pra todo mundo e não sobrar nada pra si.
         Mostre que ENTENDE como é. Seja específico e humano.
         Finalize com a abertura para a solução: "Mas existe uma saída."
-        REGRA: 15 a 25 palavras. Tom de quem já passou por isso.
+        REGRA: Entre 5 e 8 palavras. Tom de quem já passou por isso.
 
         SLIDE 3 — A SOLUÇÃO / VIRADA DE MENTALIDADE (OBRIGATÓRIO):
         Entregue o insight real, a lição prática dos livros, o caminho concreto.
         Mostre a solução de forma clara, simples e aplicável à vida real.
-        REGRA: 15 a 25 palavras. Tom de revelação genuína.
+        REGRA: Entre 5 e 8 palavras. Tom de revelação genuína.
 
         SLIDE 4/5 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
         Convite sutil e fluido para seguir o perfil. Conectado com o que foi dito.
-        REGRA: Máximo 15 palavras. Tom pessoal e caloroso.
+        REGRA: Entre 5 e 8 palavras. Tom pessoal e caloroso.
 
         LEGENDA:
         - Máximo 3 linhas. Tom maduro, sereno e reflexivo.
@@ -717,52 +722,55 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-        Você é um roteirista de storytelling noturno para o Instagram. Horário: 19h-21h.
-        Sua missão é criar uma narrativa em slides que conecte emocionalmente com quem está encerrando o dia e buscando sentido no silêncio da noite.
+        Você é um mestre em storytelling noturno e sabedoria humana para o Instagram. Horário: 19h-21h.
+        Sua missão é criar uma história EMPOLGANTE, INSTIGANTE e CHEIA DE LÓGICA E SABEDORIA que desperte a mente de quem lê.
+        PROIBIDO tom enfadonho, cansado, triste ou melancólico. Traga ALEGRIA, INSPIRAÇÃO, ENTU SIASMO e PROVOCAÇÃO QUESTIONÁVEL.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 A 5 SLIDES) =====
+        ===== ESTRUTURA NARRATIVA DE SABEDORIA (LÓGICA EM 4 SLIDES) =====
 
-        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO NOTURNA (OBRIGATÓRIO):
-        Uma frase curta que toca a ferida do fim do dia — cansaço, rotina, busca por mais.
-        Adapte o gancho de referência: '{gancho}' com sensibilidade e autenticidade.
-        Fórmulas de impacto (crie uma versão original):
-        - "Você deita e ainda não sabe se está indo pro lugar certo."
-        - "Eu passei anos achando que o cansaço era o preço normal da vida."
-        - "Tem noites em que a cabeça não para. E você sabe bem o motivo."
-        REGRA: Máximo 12 palavras. Tom íntimo, de quem entende.
+        SLIDE 1 — GANCHO CURIOSO & QUESTIONÁVEL (OBRIGATÓRIO):
+        Abra com uma pergunta provocativa ou uma afirmação intrigante que desafie o senso comum.
+        Adapte a essência do gancho: '{gancho}' com mistério e empolgação.
+        Fórmulas de alto impacto (crie uma versão 100% inédita):
+        - "Já percebeu o que os mais sábios fazem em silêncio?"
+        - "E se tudo o que te disseram sobre sucesso estiver errado?"
+        - "Existe um segredo invisível no poder da escolha."
+        REGRA: Entre 5 e 8 palavras. Altamente curioso e desafiador. Sem "..." automático.
 
-        SLIDE 2 — EMPATIA COM O PROBLEMA (OBRIGATÓRIO):
-        Conecte com a luta cotidiana real: a sensação de estar no automático, de sacrificar a vida esperando um futuro que não chega.
-        Mostre que ENTENDE e que existe um ponto de mudança.
-        REGRA: 15 a 25 palavras. Tom acolhedor e empático.
+        SLIDE 2 — LÓGICA & CONEXÃO EMPOLGANTE (OBRIGATÓRIO):
+        Conecte os fatos com uma lógica brilhante e entusiasmada. Mostre o porquê as coisas acontecem.
+        Desperte o leitor com uma visão perspicaz sobre o comportamento humano ou princípios de vida.
+        REGRA: Entre 5 e 8 palavras. Lógica cristalina, tom inspirador e vívido.
 
-        SLIDE 3 — A SOLUÇÃO / INSIGHT DE MUDANÇA (OBRIGATÓRIO):
-        O insight prático, a sabedoria real, a virada de mentalidade que muda tudo.
-        Entregue de forma simples, clara e reconfortante.
-        REGRA: 15 a 25 palavras. Tom de revelação e alívio.
+        PEXELS QUERY (ESTRITAMENTE ESCURO E CINEMATOGRÁFICO):
+        - TODOS os vídeos DEVEM ser estritamente escuros, noturnos, intimistas e cinematográficos.
+        - PROIBIDO ABSOLUTAMENTE: salas e escritórios claros, luz branca de lâmpadas de estudo, pessoas estudando em bibliotecas ou mesas iluminadas.
+        - Busque em inglês por termos de iluminação quente/escura (ex: dark room warm amber glow night 35mm, rain window dark city lights amber glow, moody night interior warm shadows intimate).
 
-        SLIDE 4/5 — CTA ACOLHEDOR (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
-        Convite caloroso e natural para seguir o perfil. Deve fluir como continuação da história.
-        REGRA: Máximo 15 palavras. Tom íntimo, não comercial.
+        SLIDE 3 — A VIRADA DE SABEDORIA (MOMENTO EUREKA - OBRIGATÓRIO):
+        A grande revelação de clareza mental e alegria interior! O insight que faz o leitor sorrir e pensar "Genial!".
+        Entregue um princípio elevado, prático e libertador.
+        REGRA: Entre 5 e 8 palavras. Tom de revelação extraordinária e elevação.
 
-        PEXELS QUERY:
-        - Termos em inglês noturnos e quentes: warm amber room cozy, rain window amber glow, coffee steam night, silent city lights.
+        SLIDE 4 — CTA ELEVADO & INSPIRADOR (OBRIGATÓRIO — ÚLTIMO SLIDE):
+        Convite elegante e nobre para acompanhar a jornada de sabedoria e clareza no perfil.
+        REGRA: Entre 5 e 8 palavras. Tom pessoal, caloroso e inspirador.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom caloroso, sereno e autoral.
+        - Máximo 3 linhas. Tom vibrante, sereno, sábio e autoral.
         - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA).
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 — Gancho de identificação noturna (máx 12 palavras)",
-            "Slide 2 — Empatia com o problema do dia a dia",
-            "Slide 3 — O insight / solução que muda o jogo",
-            "Slide 4 — CTA acolhedor de encerramento"
+            "Slide 1 — Gancho curioso & questionável",
+            "Slide 2 — Lógica & conexão empolgante",
+            "Slide 3 — Virada de sabedoria (Momento Eureka)",
+            "Slide 4 — CTA elevado & inspirador"
           ],
           "pexels_queries": [
             "warm ambient bedroom cozy night",
@@ -861,24 +869,24 @@ def gerar_conteudo_gemini(tipo):
         SLIDE 1 — GANCHO VISCERAL (obrigatório):
         - Ataque a dor principal do material de forma direta e cirúrgica.
         - Use a estrutura do gancho de referência de hoje: "{gancho}" (formato: {descricao_categoria}).
-        - Máximo 12 palavras. Frase que para o scroll imediatamente.
+        - Entre 5 e 8 palavras. Frase que para o scroll imediatamente. Sem "..." automático.
         - NÃO mencione link, bio ou material aqui.
 
         SLIDE 2 — APROFUNDAMENTO DA DOR (obrigatório):
         - Aprofunde a dor do Slide 1. Crie o loop de curiosidade.
         - Deixe o espectador pensando: "como eu resolvo isso?" sem dar a resposta inteira ainda.
-        - Máximo 15 palavras. Tom íntimo e empático.
+        - Entre 5 e 8 palavras. Tom íntimo e empático.
 
         SLIDE 3 — A REVELAÇÃO DA SOLUÇÃO (obrigatório):
         - Revele que o sistema condensado está pronto e economiza semanas ou meses de tentativa e erro.
         - Conecte com a transformação exata do material: "{solucao_pdf_limpo}".
         - Use um dos termos de alto valor (ex: "Estruturei o Playbook...", "Mapeei no Dossiê de Execução...").
-        - Máximo 15 palavras. Tom esperançoso, direto e de altíssimo valor prático.
+        - Entre 5 e 8 palavras. Tom esperançoso, direto e de altíssimo valor prático.
 
         SLIDE 4 — QUEBRA DE OBJEÇÃO (opcional, use se quiser 4 ou 5 slides):
         - Destrua a principal desculpa ou dúvida de quem ainda hesita.
         - Exemplo de tom: "Não precisa de horas. São passos práticos aplicáveis hoje."
-        - Máximo 12 palavras.
+        - Entre 5 e 8 palavras.
 
         ÚNTIMO SLIDE — CTA DE ALTA CONVERSÃO CONECTADO AO MATERIAL (obrigatório, sempre o slide final):
         - Deve citar a promessa da obra da semana: "{titulo_pdf_limpo}".
@@ -899,10 +907,11 @@ def gerar_conteudo_gemini(tipo):
           * "Libere o Playbook completo '{titulo_pdf_limpo}' no link do meu perfil."
           * "Comente [PALAVRA-CHAVE] ou acesse o link no meu perfil para obter o Dossie '{titulo_pdf_limpo}'."
           * "O Blueprint '{titulo_pdf_limpo}' está disponível gratuitamente no link do perfil."
-        - Máximo 20 palavras.
+        - Entre 5 e 8 palavras.
 
         REGRAS ABSOLUTAS:
-        * Máximo de 20 palavras por slide.
+        * Entre 5 e 8 palavras por slide (máximo 8).
+        * PROIBIDO usar "..." em todo gancho — use no máximo 1 vez por post, somente quando criar tensão real.
         * PROIBIDO mencionar link ou bio antes do último slide.
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.

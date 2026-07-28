@@ -316,9 +316,9 @@ def _gerar_carrossel(img, W_full, H, dados):
     # Calcula o deslocamento do fundo (panning) para criar o efeito panorâmico contínuo
     step = (W_full - slide_W) / (num_slides - 1) if num_slides > 1 else 0
     
-    # Usa a fonte do dia da semana (sistema de identidade visual diária)
-    estilo_sorteado = obter_fonte_do_dia()
-    print(f"🎨 Usando fonte do dia no Carrossel: {estilo_sorteado}")
+    # Usa a fonte oficial definida para o tipo de post
+    estilo_sorteado = obter_fonte_do_dia(tipo="carousel")
+    print(f"🎨 Usando fonte oficial no Carrossel: {estilo_sorteado}")
     
     # Fontes maiores para garantir legibilidade no carrossel 1080x1080
     font_capa, font_slides, _ = carregar_fontes(tamanho_display=86, tamanho_body=72, tamanho_detalhe=26, estilo=estilo_sorteado)
@@ -441,8 +441,8 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
         frases = list(frases) + [_random.choice(ctas_seguir)]
         print(f"📣 [CTA Visual] Slide de CTA injetado no final do {tipo.upper()}.")
 
-    estilo_sorteado = obter_fonte_do_dia()
-    print(f"🎨 Usando fonte do dia no Reels: {estilo_sorteado}")
+    estilo_sorteado = obter_fonte_do_dia(tipo=tipo)
+    print(f"🎨 Usando fonte oficial no Reels: {estilo_sorteado}")
 
     # Determina o caminho e tamanho da fonte para passar ao motor de animação
     nome_fonte = estilo_sorteado if estilo_sorteado.endswith(".ttf") else estilo_sorteado + ".ttf"
@@ -526,8 +526,8 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
     layout_style = random.choice(["classic", "bottom", "quote"])
     print(f"🎨 Usando estilo de layout: {layout_style.upper()}")
     
-    # Usa a fonte do dia independente do layout
-    estilo_fonte = obter_fonte_do_dia()
+    # Usa a fonte oficial definida para o tipo de post
+    estilo_fonte = obter_fonte_do_dia(tipo=tipo)
         
     font_display, _, _ = carregar_fontes(48, 24, 24, estilo=estilo_fonte)
     

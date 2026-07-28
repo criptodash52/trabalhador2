@@ -532,8 +532,9 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
     ✗ NÃO explique
     ✗ NÃO conclua
     ✗ NÃO entregue a solução
-    ✗ NÃO passe de 12 palavras
-    ✓ Pare exatamente no ponto de maior tensão (o “...” é onde ele para)
+    ✗ NÃO passe de 8 palavras — mantenha entre 5 e 8 palavras, frases curtas e cortantes
+    ✗ NÃO use "..." de forma automática ou em todo gancho — use NO MÁXIMO 1 vez por post, somente quando criar tensão real e inesperada
+    ✓ O corte abrupto da frase já cria suspense — não precisa de reticências para isso
     ✓ O leitor DEVE sentir necessidade física de abrir o Slide 2
 
     SLIDE 2 — REVELAÇÃO (PAGA A PROMESSA)

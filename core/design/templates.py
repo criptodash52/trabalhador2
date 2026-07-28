@@ -42,11 +42,17 @@ FONTE_POR_DIA = {
     6: "MontserratBold", # Domingo
 }
 
-def obter_fonte_do_dia():
-    """Retorna o nome da fonte programada para o dia de hoje."""
-    dia = datetime.now(timezone.utc).weekday()
-    fonte = FONTE_POR_DIA.get(dia, "Montserrat")
-    print(f"[FONTE] Fonte do dia ({['Seg','Ter','Qua','Qui','Sex','Sab','Dom'][dia]}): {fonte}")
+def obter_fonte_do_dia(tipo=None):
+    """
+    Retorna a fonte oficial do sistema baseada no tipo de post:
+    - Playfair Display (Playfair) para pexels_story, pexels_story_noite e reels_conquistador.
+    - Bebas Neue (BebasNeue) para reels, reels_noite, reels_leads, carousel e storys.
+    """
+    if tipo in ["pexels_story", "pexels_story_noite", "reels_conquistador"]:
+        fonte = "Playfair"
+    else:
+        fonte = "BebasNeue"
+    print(f"[FONTE] Fonte oficial do tipo ({tipo or 'padrao'}): {fonte}")
     return fonte
 
 def garantir_fontes():

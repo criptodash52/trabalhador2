@@ -60,6 +60,8 @@ def _quebrar_texto_por_pixels(draw, texto, fonte, largura_max_px):
 
 def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
     """Desenha texto centralizado com sombra/fundo em um frame (numpy array)."""
+    if frame_array.dtype != np.uint8:
+        frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
 
@@ -133,6 +135,8 @@ PALETAS_CONQUISTADOR = [
 ]
 
 def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta=None):
+    if frame_array.dtype != np.uint8:
+        frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
     
@@ -236,6 +240,8 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
 
 def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
     """Desenha o CTA final com visual dourado e destacado — maior impacto visual."""
+    if frame_array.dtype != np.uint8:
+        frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
 
@@ -309,6 +315,8 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
 
 def _aplicar_efeito_cinematico(frame_array, efeito):
     """Aplica efeitos visuais no frame para variar o estilo."""
+    if frame_array.dtype != np.uint8:
+        frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     if efeito == "none":
         return frame_array
         
@@ -355,6 +363,24 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     else:
         queries_lista = list(query)
 
+    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Anti-Claro / Anti-Estudo) ---
+    # Remove termos que trazem vídeos claros ou de estudantes em bibliotecas/escritórios bem iluminados.
+    TERMOS_PROIBIDOS_VIDEO = [
+        "study", "studying", "student", "library", "classroom", "school",
+        "sunlight", "daylight", "meadow", "park", "bright office", "white room"
+    ]
+    queries_higienizadas = []
+    for q in queries_lista:
+        q_clean = q.lower()
+        for term in TERMOS_PROIBIDOS_VIDEO:
+            q_clean = q_clean.replace(term, "").strip()
+        if len(q_clean) < 4:
+            q_clean = "dark night city street golden amber light 35mm"
+        if "dark" not in q_clean and "night" not in q_clean:
+            q_clean += " dark night amber glow"
+        queries_higienizadas.append(q_clean)
+    queries_lista = queries_higienizadas
+
     logger.info(f"🎥 Buscando vídeos com {len(queries_lista)} quer{'y' if len(queries_lista)==1 else 'ies'}: {queries_lista}")
 
     slides = list(slides)
@@ -398,10 +424,14 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         # Baixa vídeos suficientes para cobrir toda a duração sem precisar de loop (5s por clip)
         num_videos_necessarios = min(20, max(6, int(duracao_necessaria_reels / 5.0) + 1))
         logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
+    elif (not is_noite) and (not is_conquistador):
+        # pexels_story da Manhã: Duração fixada em 15.0 segundos (4 slides de 3.75s)
+        duracao_necessaria_reels = 15.0
+        num_videos_necessarios = 3
+        logger.info(f"📊 [PEXELS_STORY MANHÃ] Duração fixada em {duracao_necessaria_reels:.0f}s (4 slides de 3.75s)")
     else:
-        num_slides_estimado = len(slides) if slides else 3
+        num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 7.0
-        # Baixa vídeos suficientes para cobrir toda a duração sem precisar de loop
         num_videos_necessarios = min(15, max(4, int(duracao_necessaria_reels / 5.0) + 1))
         logger.info(f"📊 [PEXELS_STORY] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
 
@@ -610,9 +640,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 logger.warning(f"⚠️ Não foi possível carregar vídeo final: {e_load_outro}")
                 outro_clip = None
         
-        # Usa Playfair exclusivamente para o Conquistador; senão, a fonte do dia
-        estilo_do_dia = "Playfair.ttf" if is_conquistador else obter_fonte_do_dia()
-        logger.info(f"✨ Fonte do dia para o vídeo: {estilo_do_dia}")
+        # Usa Playfair.ttf para pexels_story (manhã e noite) e reels_conquistador; BebasNeue.ttf para reels_leads
+        if is_conquistador or is_noite or (not is_reels_leads):
+            estilo_do_dia = "Playfair.ttf"
+        else:
+            estilo_do_dia = "BebasNeue.ttf"
+        logger.info(f"✨ Fonte do vídeo ({'Playfair' if 'Playfair' in estilo_do_dia else 'BebasNeue'}): {estilo_do_dia}")
         
         # Resolução do vídeo original
         video_w, _ = clip.size
@@ -653,11 +686,15 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
             tempo_slide_normal = 0.0
             if not slide_start_times:
-                duracao_gancho = 5.0
-                if total_slides > 1:
-                    tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
+                if (not is_noite) and (not is_conquistador) and (not is_reels_leads):
+                    duracao_gancho = duracao / total_slides if total_slides > 0 else 3.75
+                    tempo_slide_normal = duracao_gancho
                 else:
-                    tempo_slide_normal = duracao
+                    duracao_gancho = 5.0
+                    if total_slides > 1:
+                        tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
+                    else:
+                        tempo_slide_normal = duracao
 
             # O Reels Leads e o Story Noturno sempre usam o filtro de cores quentes (warm_amber)
             if is_reels_leads or is_noite:
@@ -750,7 +787,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     t_slide = t - slide_start_times[idx]
                     duracao_do_slide = slide_start_times[idx + 1] - slide_start_times[idx]
                 elif total_slides > 1:
-                    if t < duracao_gancho:
+                    if (not is_noite) and (not is_conquistador) and (not is_reels_leads):
+                        idx = min(int(t / tempo_slide_normal), total_slides - 1) if tempo_slide_normal > 0 else 0
+                        t_slide = t - (idx * tempo_slide_normal)
+                        duracao_do_slide = tempo_slide_normal
+                    elif t < duracao_gancho:
                         idx = 0
                         t_slide = t
                         duracao_do_slide = duracao_gancho
@@ -817,6 +858,9 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 
                 # Desenha o Selo foto_perfil.png no topo, a Marca d'água no rodapé e o efeito de brilho no CTA
                 frame = _desenhar_elementos_marca(frame, fator_escala, is_cta=(idx == idx_cta), t_slide=t_slide)
+                # Garante que o frame retornado e sempre uint8 (evita erro 'Cannot handle this data type: <i8')
+                if isinstance(frame, np.ndarray) and frame.dtype != np.uint8:
+                    frame = np.clip(frame, 0, 255).astype(np.uint8)
                 return frame
 
             final_clip = VideoClip(make_frame, duration=duracao)
