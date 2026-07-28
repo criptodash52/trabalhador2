@@ -487,22 +487,9 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
 
             return frames
 
-        # --- Narração por Voz Neural para reels_noite (18h) com Sincronização 1:1 ---
+        # Narração de voz removida do reels_noite — usa apenas música de fundo
         audio_narracao_clip = None
-        caminho_narracao = None
         duracoes_sincronizadas = []
-        if tipo == "reels_noite":
-            try:
-                from core.audio.tts import gerar_audio_narracao_sincronizada
-                logger.info("🎙️ [18h reels_noite] Gerando narração por voz neural sincronizada slide a slide...")
-                caminho_narracao, duracoes_sincronizadas = gerar_audio_narracao_sincronizada(textos)
-                if caminho_narracao and os.path.exists(caminho_narracao):
-                    try:
-                        audio_narracao_clip = AudioFileClip(caminho_narracao)
-                    except Exception:
-                        pass
-            except Exception as e_tts:
-                logger.warning(f"⚠️ Não foi possível gerar narração sincronizada para reels_noite: {e_tts}")
 
         # --- Gera os clipes ---
         clips = []
@@ -559,33 +546,11 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             except Exception as e_outro:
                 logger.warning(f"⚠️ Erro ao acoplar o vídeo final: {e_outro}")
 
-        # Se houver áudio de narração, suaviza a música de fundo para o mínimo (5%) e combina os dois
-        if audio_narracao_clip is not None:
-            try:
-                from moviepy.editor import CompositeAudioClip
-                duracao_real_video = video_clip.duration
-                # Suaviza a música de fundo para 5% do volume e ajusta para a duração REAL do vídeo (slides + logo)
-                bg_suave = audio_clip.volumex(0.05) if hasattr(audio_clip, 'volumex') else audio_clip
-                bg_suave = bg_suave.set_duration(duracao_real_video)
-                audio_final_composto = CompositeAudioClip([audio_narracao_clip, bg_suave])
-                audio_final_composto.fps = 44100  # Necessário no MoviePy 1.x
-                try:
-                    video_clip = video_clip.with_audio(audio_final_composto)
-                except AttributeError:
-                    video_clip = video_clip.set_audio(audio_final_composto)
-                logger.success("🎙️ Narração por voz + Música suave aplicadas no reels_noite!")
-            except Exception as e_mix:
-                logger.warning(f"⚠️ Erro ao mixar áudio de narração no vídeo: {e_mix}. Usando apenas música.")
-                try:
-                    video_clip = video_clip.with_audio(audio_clip)
-                except AttributeError:
-                    video_clip = video_clip.set_audio(audio_clip)
-        else:
-            # Aplica a música sobre o vídeo completo (slides + vídeo final)
-            try:
-                video_clip = video_clip.with_audio(audio_clip)
-            except AttributeError:
-                video_clip = video_clip.set_audio(audio_clip)
+        # Aplica a música sobre o vídeo completo (slides + vídeo final)
+        try:
+            video_clip = video_clip.with_audio(audio_clip)
+        except AttributeError:
+            video_clip = video_clip.set_audio(audio_clip)
 
         logger.info(f"⚙️ Renderizando slideshow de {len(caminhos_imagens)} slides + vídeo final...")
 

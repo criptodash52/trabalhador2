@@ -285,8 +285,8 @@ def main():
                 print(f"⚠️ Falha ao postar na conta 2 (conta 1 OK): {e}")
         
         yt_video_id = ""
-        # Postagem opcional no YouTube Shorts para formatos de vídeo
-        if POSTAR_NO_YOUTUBE and args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads"] and isinstance(midia, str) and midia.endswith(".mp4"):
+        # Postagem opcional no YouTube Shorts para formatos de vídeo (reels_leads é exclusivo do Instagram)
+        if POSTAR_NO_YOUTUBE and args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador"] and isinstance(midia, str) and midia.endswith(".mp4"):
             try:
                 # Carrega o áudio específico do YouTube
                 from core.media.reels import trocar_audio_video, garantir_audio_reels

@@ -13,6 +13,7 @@ import os
 import sys
 import re
 import json
+import random
 import requests
 from loguru import logger
 
@@ -23,10 +24,25 @@ from core.config.settings import IG_ACCESS_TOKEN, IG_ACCOUNT_ID, IG_ACCESS_TOKEN
 
 # Palavras-chave gerais ativas para disparar a resposta
 PALAVRAS_CHAVE_PADRAO = [
-    "FOCO", "SABEDORIA", "LIBERDADE", "DISCIPLINA", "CLAREZA", "PAZ", "LIVRO", "PDF", "QUERO", "LINK", "EBOOK", "BAIXAR"
+    "SABEDORIA", "FOCO", "LIBERDADE", "DISCIPLINA", "CLAREZA", "PAZ", "LIVRO", "PDF", "QUERO", "LINK", "EBOOK", "BAIXAR"
 ]
 
-MENSAGEM_RESPOSTA_PADRAO = "Link na bio! Acessa lá 📲"
+# Variações de resposta — uma diferente a cada comentário respondido
+MENSAGENS_RESPOSTA = [
+    "Já te mandei no direct ✨ Espero que faça sentido pra você 🙏",
+    "Enviado no direct pra você 📩 Aproveita bem esse material!",
+    "Vai chegar no seu direct agora 🙌 Que bom que você pediu!",
+    "Te mandei lá no direct 💬 Qualquer dúvida é só falar!",
+    "Feito ✅ Chegou no seu direct. Boa leitura e bons insights!",
+    "Acabei de te enviar no direct 📖 Espero que abra novas perspectivas!",
+    "Pronto, foi pro seu direct 🤝 Esse material pode te surpreender!",
+    "Já enviado 📩 Fique de olho no seu direct. Valeu pela interação!",
+]
+
+
+def _sortear_mensagem_resposta() -> str:
+    """Retorna uma mensagem de resposta aleatória da lista de variações."""
+    return random.choice(MENSAGENS_RESPOSTA)
 
 ARQUIVO_HISTORICO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "midia_temp", "comentarios_respondidos.json"))
 
@@ -98,20 +114,22 @@ def buscar_comentarios_do_post(media_id: str) -> list[dict]:
     return []
 
 
-def responder_comentario_publico(comment_id: str, mensagem: str = MENSAGEM_RESPOSTA_PADRAO) -> bool:
-    """Responde a um comentário publicamente no post com 'Link na bio! Acessa lá 📲'."""
+def responder_comentario_publico(comment_id: str, mensagem: str | None = None) -> bool:
+    """Responde a um comentário publicamente no post com uma mensagem amigável variada."""
     if not IG_ACCESS_TOKEN:
         return False
 
+    mensagem_final = mensagem or _sortear_mensagem_resposta()
+
     url = f"https://graph.facebook.com/v19.0/{comment_id}/replies"
     params = {
-        "message": mensagem,
+        "message": mensagem_final,
         "access_token": IG_ACCESS_TOKEN,
     }
     try:
         res = requests.post(url, params=params, timeout=15)
         if res.status_code in (200, 201):
-            logger.success(f"💬 Comentário {comment_id} respondido: '{mensagem}'")
+            logger.success(f"💬 Comentário {comment_id} respondido: '{mensagem_final}'")
             return True
         else:
             logger.warning(f"⚠️ Erro ao responder comentário (HTTP {res.status_code}): {res.text[:120]}")
@@ -190,12 +208,13 @@ def _monitorar_conta(token: str, account_id: str, palavras: list, historico: set
             if palavra_encontrada:
                 logger.info(f"🎯 '{palavra_encontrada}' detectada no comentário de @{username} (conta {account_id})!")
 
+                mensagem_variada = _sortear_mensagem_resposta()
                 url_r = f"https://graph.facebook.com/v19.0/{comment_id}/replies"
-                params_r = {"message": MENSAGEM_RESPOSTA_PADRAO, "access_token": token}
+                params_r = {"message": mensagem_variada, "access_token": token}
                 try:
                     res_r = requests.post(url_r, params=params_r, timeout=15)
                     if res_r.status_code in (200, 201):
-                        logger.success(f"💬 Comentário {comment_id} respondido!")
+                        logger.success(f"💬 Comentário {comment_id} respondido: '{mensagem_variada}'")
                         historico.add(comment_id)
                         stats["respostas_enviadas"] += 1
                     else:

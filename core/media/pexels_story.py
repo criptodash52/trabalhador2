@@ -664,25 +664,9 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
             total_slides = len(slides)
             idx_cta = total_slides - 1  # Última cena = CTA
 
-            # --- Sincronização por Voz Neural em pexels_story_noite ---
+            # Narração de voz removida do pexels_story_noite — usa apenas música de fundo
             caminho_narracao_story = None
             slide_start_times = []
-            if is_noite:
-                try:
-                    from core.audio.tts import gerar_audio_narracao_sincronizada
-                    logger.info("🎙️ [19h pexels_story_noite] Gerando narração por voz neural sincronizada slide a slide...")
-                    caminho_narracao_story, duracoes_sincronizadas = gerar_audio_narracao_sincronizada(slides)
-                    if duracoes_sincronizadas and len(duracoes_sincronizadas) == total_slides:
-                        curr = 0.0
-                        for d in duracoes_sincronizadas:
-                            slide_start_times.append(curr)
-                            curr += d
-                        slide_start_times.append(curr)  # Fim do último slide
-                        # Ajusta a duração total do vídeo para bater exatamente com a voz
-                        duracao = curr
-                        logger.success(f"⏱️ Duração do vídeo ajustada para {duracao:.2f}s (bando 1:1 com a voz).")
-                except Exception as e_sync:
-                    logger.warning(f"⚠️ Falha ao sincronizar áudio por slide no pexels_story: {e_sync}")
 
             tempo_slide_normal = 0.0
             if not slide_start_times:
@@ -890,34 +874,9 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     
                 bg_audio = bg_audio.subclip(0, duracao_total_video)
 
-                # --- Narração por Voz Neural para pexels_story_noite (19h) ---
-                audio_narracao_clip = None
-                if is_noite:
-                    try:
-                        if caminho_narracao_story and os.path.exists(caminho_narracao_story):
-                            audio_narracao_clip = AudioFileClip(caminho_narracao_story)
-                        else:
-                            from core.audio.tts import gerar_audio_narracao_sincronizada
-                            caminho_n, _ = gerar_audio_narracao_sincronizada(slides)
-                            if caminho_n and os.path.exists(caminho_n):
-                                audio_narracao_clip = AudioFileClip(caminho_n)
-                    except Exception as e_tts:
-                        logger.warning(f"⚠️ Erro ao gerar narração no pexels_story_noite: {e_tts}")
-
-                if audio_narracao_clip is not None:
-                    try:
-                        from moviepy.editor import CompositeAudioClip
-                        bg_suave = bg_audio.volumex(0.05) if hasattr(bg_audio, 'volumex') else bg_audio
-                        audio_composto = CompositeAudioClip([audio_narracao_clip, bg_suave.set_duration(duracao_total_video)])
-                        audio_composto.fps = 44100  # Necessário no MoviePy 1.x
-                        final_clip = final_clip.set_audio(audio_composto)
-                        logger.success("🎙️ Narração por voz + Música suave adicionadas ao pexels_story_noite!")
-                    except Exception as e_mix:
-                        logger.warning(f"⚠️ Erro ao mixar áudios em pexels_story_noite: {e_mix}")
-                        final_clip = final_clip.set_audio(bg_audio)
-                else:
-                    final_clip = final_clip.set_audio(bg_audio)
-                    logger.info("🎵 Áudio de fundo adicionado!")
+                # Sem narração: apenas música de fundo
+                final_clip = final_clip.set_audio(bg_audio)
+                logger.info("🎵 Áudio de fundo adicionado!")
         except Exception as e:
             logger.warning(f"⚠️ Erro ao adicionar áudio de fundo: {e}")
 

@@ -501,166 +501,151 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "reels":
         prompt = f"""
-        Você é um especialista em storytelling magnético e neurociência aplicada ao conteúdo digital.
-        Seu objetivo é criar um roteiro em slides que faça o usuário PARAR de rolar o feed e assistir até o final.
+        Você é a Máquina de Construção de Curiosidade. Seu objetivo é criar um roteiro em slides que faça o usuário PARAR de rolar o feed e assistir até o final.
         Estilo obrigatório para este Reels: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        CRIE UMA SEQUÊNCIA NARRATIVA DINÂMICA DE 3 A 5 SLIDES (o número exato deve flutuar livremente entre 3 e 5 a cada execução) seguindo esta estrutura fluida:
+        CRIE UMA SEQUÊNCIA NARRATIVA EXATA DE 6 SLIDES seguindo rigorosamente a estrutura oficial de 6 Fases (Nicholas Boothman):
 
-        - Slide 1: O Gancho/Quebra de Padrão (Pattern Interrupt) — Frase super provocativa e inesperada para parar o scroll.
-        - Slides intermediários (1 a 3 slides): Aprofundamento do tema, mistério ou dor do cotidiano, seguido da entrega de valor ou insight prático.
-        - ÚLTIMO SLIDE (obrigatório): CTA — Fusão de impacto com convite sutil e elegante para seguir o perfil (ex: "Se você busca respostas que a maioria ignora, acompanhe o perfil.").
+        - Slide 1 / Fase 1 (Interrupção Mental - 0-2s): O Gancho/Quebra de Padrão. Nunca comece afirmando. Sempre comece criando uma lacuna mental com uma pergunta ou mistério irresistível. Use as fórmulas de ganchos: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (MÁXIMO 8 palavras)
+        - Slide 2 / Fase 2 (Identificação - 2-6s): Conexão direta com o espectador. Ele deve pensar: "Isso é sobre mim". Fale diretamente com o leitor usando "você", nunca "as pessoas". (MÁXIMO 8 palavras)
+        - Slide 3 / Fase 3 (Quebra de expectativa - 6-12s): Tensão e surpresa que mudam o rumo esperado. Use fórmulas como: "Mas o problema não é esse.", "Na verdade acontece exatamente o contrário.", "É aqui que quase todos erram.". (MÁXIMO 8 palavras)
+        - Slide 4 / Fase 4 (Revelação - 12-25s): Alívio e introdução simples de psicologia, estoicismo, Jung ou neurociência aplicada de forma ultra simples. (MÁXIMO 10 palavras)
+        - Slide 5 / Fase 5 (Reflexão - 25-35s): Frase memorável e inesquecível de altíssimo impacto (Xeque-mate). (MÁXIMO 10 palavras)
+        - Slide 6 / Fase 6 (Convite Invisível): CTA sutil que faz a pessoa pensar e agir em sua própria vida, sem pedir para seguir diretamente. Use fórmulas como: "Amanhã você vai tentar controlar tudo outra vez. Observe isso.", "Repare nisso durante o dia.", "Pense nisso antes de dormir.". (MÁXIMO 10 palavras)
 
-        REGRAS DE ESCUTA E RITMO VISUAL:
-        * Todas as frases devem ser curtas e cortantes: entre 5 e 8 palavras por slide.
-        * LIMITE MÁXIMO ESTRITO: Nenhuma frase pode passar de 8 palavras.
+        REGRAS DE ESCRITA E RITMO VISUAL:
+        * Todas as frases devem ser curtas, cortantes e limpas.
         * NÃO use pontos de exclamação.
-        * PROIBIDO usar "..." em todo slide — use no máximo 1 vez por post, somente quando criar tensão real.
+        * PROIBIDO usar "..." de forma automática.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom de quem viveu aquilo, não de quem está ensinando.
-        - CTA OBRIGATÓRIO: A legenda DEVE obrigatoriamente terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
-        - NUNCA termine com uma frase bonita e fechada. Sempre com uma pergunta em aberto.
+        - Máximo 3 linhas. Foco em complementar a reflexão em tom direto.
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (DEVE ter de 3 a 5 slides, sendo o último SEMPRE o CTA):
+        Responda APENAS em formato JSON válido assim (deve ter exatamente 6 slides):
         {{
           "slides": [
-            "Slide 1 (Gancho rápido)",
-            "Slide 2 (Aprofundamento / Insight)",
-            "Slide 3 (CTA — convite sutil para seguir)"
+            "Slide 1 (Interrupção Mental - Gancho)",
+            "Slide 2 (Identificação - Foco no você)",
+            "Slide 3 (Quebra de Expectativa)",
+            "Slide 4 (Revelação)",
+            "Slide 5 (Reflexão Memorável)",
+            "Slide 6 (Convite Invisível)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
         """
     elif tipo == "reels_conquistador":
         prompt = f"""
-        Você é a representação viva de uma alma sábia, motivada e aventureira. O seu tom é INSPIRADOR, SÁBIO, ARGUMENTADOR, CURIOSO, VALENTE E CORAJOSO.
-        Você ESBANJA ALEGRIA de viver, contempla o belo da criação e busca a liberdade com espírito aventureiro.
-        Sua visão é imaterial: seus pilares sagrados são AMOR, FAMÍLIA, AMIZADE VERDADEIRA, IGUALDADE e LIBERDADE.
-        Use os recursos oratórios da persona: fale com elegância e proximidade, de igual para igual, inspirando as pessoas a viverem com propósito e coragem.
+        Você é o porta-voz de uma identidade viva e real. Não tenta convencer ninguém.
+        Declara quem é — com densidade, coerência e autenticidade de quem viveu o que diz.
         {evitar_repeticao_msg}
 
-        INSPIRAÇÕES E PILARES OBRIGATÓRIOS:
-        - "Armadilhas da Mente" (Augusto Cury): Domínio sobre os pensamentos e gestão da emoção.
-        - Sabedoria Sapiencial: Citações e essência das palavras de Salomão e Jesus.
-        - "O Poder da Ação" (Paulo Vieira): Despertar para a coragem, consistência e execução real.
-        - Espírito Aventureiro: A alegria de explorar a vida, aprender, amar e proteger quem amamos.
+        ===== PERSONA OBRIGATÓRIA: O CONQUISTADOR =====
+        Esta é a essência que deve atravessar cada palavra:
 
-        PERCEPÇÃO DE VALOR E AUTORIDADE MORAL (REELS CONQUISTADOR):
-        - Você fala como alguém que já pagou o preço das próprias escolhas.
-        - A autoridade não vem de dizer que sabe. Ela vem da clareza dos princípios que você defende.
-        - Cada argumento deve mostrar maturidade, responsabilidade e domínio emocional.
-        - O leitor deve sentir: "Esse cara enxerga algo que eu ainda não enxergava."
-        - Nunca se declare um especialista, mostre isso pela profundidade e clareza da sua lucidez.
+        Fe profunda — nao como performance religiosa, mas como ancora interior e convicção de que ha proposito em tudo.
+        Foco inabalavel — quem sabe para onde vai, nao se distrai com o que nao constroi.
+        Iluminação — a busca continua por enxergar alem do obvio, do superficial e do imediato.
+        Sabedoria — nao acumulo de informação, mas discernimento conquistado com experiencia e silencio.
+        Espirito aventureiro — o conforto nunca foi o objetivo. A vida foi feita para ser vivida com ousadia.
+        Batalhador — nao ha vitoria sem construção. Nao ha construção sem disciplina silenciosa e diaria.
+        Sonhador — quem para de sonhar começa a encolher. O sonho e o combustivel da ação.
+        Amante da liberdade — liberdade real nao e ausencia de responsabilidade, e fidelidade aos proprios valores.
+        Valores familiares — familia e o fundamento. O que se conquista tem que ter raiz e legado.
+        Amoroso — força e afeto nao se contradizem. O homem que ama com profundidade e o que mais cresce.
+        Pensador — antes de agir, reflete. Antes de falar, pensa. A lentidao do raciocinio e virtude.
+        Criador — a existencia pede que se construa algo com as maos, com a mente, com a alma.
+        Conquistador — nao de pessoas, mas de versoes cada vez mais elevadas de si mesmo.
+        Culto e estudioso — o livro, o silencio e a observação sao os melhores professores.
+        Curioso — quem para de perguntar para de crescer.
+        Criterioso — nao aceita tudo. Filtra com inteligencia. Escolhe com principio.
+        Pontual e afetivo — respeito pelo tempo alheio e presença genuina nas relações.
+        Visionario — enxerga o que ainda nao existe, mas que pode ser construido.
+        ================================================
 
-        O QUE VOCÊ REPUDIA (NUNCA VALORIZE):
-        - Pessoas arrogantes, soberbas e vaidosas.
-        - Filosofia barata de autoajuda vazia.
-        - Amor falso, hipocrisia e interesses puramente materialistas.
-        - Traição de princípios e deslealdade.
+        CRIE UMA SEQUÊNCIA NARRATIVA DE 6 SLIDES que seja um MANIFESTO DE IDENTIDADE.
+        Nao siga o modelo de curiosidade. Nao crie ganchos de suspense. Nao tente vender nada.
+        Declare. Afirme. Construa com palavras.
 
-        ESTRUTURA DO VÍDEO MANIFESTO (9 CENAS INSPIRADORAS — MÁXIMO 15 PALAVRAS POR CENA):
-        - Cena 1 (Abertura Aventureira/Contemplativa): Um convite inspirador e curioso sobre a beleza da vida, a jornada ou o valor do tempo (SEM soco no estômago ou agressividade).
-        - Cena 2: A contemplação do belo da vida e a clareza sobre o que realmente importa.
-        - Cena 3: A sabedoria atemporal que liberta a mente das aparências (influência de Salomão/Jesus).
-        - Cena 4: O resgate dos valores sagrados (família, igualdade e amigos leais).
-        - Cena 5: A coragem e o espírito valente de agir e superar desafios (Poder da Ação).
-        - Cena 6: O desapego das ilusões materiais e a rejeição da arrogância/autoajuda vazia.
-        - Cena 7: A reconexão com a verdadeira essência, amor e liberdade de viver com propósito.
-        - Cena 8: A frase final de impacto: nobre, inspiradora e inesquecível.
-        - Cena 9 (Slide Final - CTA Imponente): Um convite sutil, nobre e alinhado para acompanhar a jornada da sabedoria no perfil. NUNCA use jargões de vendas.
+        REGRAS DE ESTILO OBRIGATÓRIAS:
+        - Tom: denso, intimo, real — como uma conversa entre pessoas que se respeitam
+        - Cada slide deve parecer uma convicção vivida, nao uma frase motivacional generica
+        - PROIBIDO frases de autoajuda vazias (ex: "acredite em voce", "seja sua melhor versao")
+        - PROIBIDO qualquer CTA, convite para seguir, convite invisivel ou pergunta reflexiva
+        - PROIBIDO ponto de exclamação
+        - PROIBIDO "..." automatico — use no maximo 1 vez por sequencia, somente quando criar tensao real
+        - Os slides podem variar: alguns curtos (5 a 8 palavras), outros mais densos (ate 14 palavras)
+        - O arco narrativo deve ter coerencia: comeca com declaração, aprofunda com valor, termina com sentença firme
 
-        REQUISITO ANTI-REPETIÇÃO: Crie analogias e metáforas 100% inéditas baseadas em elementos reais da vida, da natureza e da jornada humana.
+        EXEMPLOS DE TOM (nao copie — inspire-se):
+        - "Nao persigo o sucesso. Construo quem precisa ser para merece-lo."
+        - "A liberdade que busco nao e ausencia de compromisso. E fidelidade a mim mesmo."
+        - "Fe nao e esperar que tudo de certo. E agir como se soubesse que dara."
+        - "Familia nao e o que voce encontra. E o que voce decide proteger todos os dias."
 
-        LEGENDA DO POST:
-        - Máximo de 3 linhas de reflexão poética e direta sobre o tema abordado.
-        - SEM HASHTAGS.
-        - SEM PEDIDO DE COMENTÁRIO OU COMPARTILHAMENTO.
+        UNIVERSO VISUAL OBRIGATÓRIO:
+        Queries em ingles evocando tons de ouro, fogo, amanhecer e conquista cinematografica.
+        (ex: golden sunrise mountain peak epic cinematic, warrior silhouette fire dramatic, lone figure city night contemplative)
 
-        UNIVERSO VISUAL OBRIGATÓRIO — REELS CONQUISTADOR:
-        As queries devem evocar a grandiosidade e sabedoria cibernética em tons de ouro e noite: metrópoles ciberpunk, néon noturno, multidão em movimento nas cidades, arquitetura tecnológica futurista com iluminação dourada nobre, reflexos néon na chuva. NUNCA vídeos genéricos de campo.
-
-        Responda APENAS em formato JSON válido assim:
+        Responda APENAS em formato JSON valido assim:
         {{
           "pexels_queries": [
-            "cyberpunk city night neon lights crowd",
-            "dark gold futuristic tech architecture",
-            "glowing neural network cyber city night"
+            "golden sunrise mountain peak cinematic epic",
+            "warrior silhouette dramatic fire dark",
+            "lone figure city night lights contemplative"
           ],
           "slides": [
-            "Texto da Cena 1",
-            "Texto da Cena 2",
-            "Texto da Cena 3",
-            "Texto da Cena 4",
-            "Texto da Cena 5",
-            "Texto da Cena 6",
-            "Texto da Cena 7",
-            "Texto da Cena 8",
-            "Texto da Cena 9 (CTA Imponente)"
+            "Texto do Slide 1 (Declaracao de identidade)",
+            "Texto do Slide 2 (Valor vivido)",
+            "Texto do Slide 3 (Aprofundamento)",
+            "Texto do Slide 4 (Convicção central)",
+            "Texto do Slide 5 (Sentenca de sabedoria)",
+            "Texto do Slide 6 (Fechamento firme — sem CTA)"
           ],
-          "legenda": "Sua legenda aqui"
+          "legenda": "Maximo 2 linhas. Extensao natural do manifesto. Sem hashtags. Sem CTA."
         }}
         """
 
     elif tipo == "pexels_story":
         prompt = f"""
-        Você é um roteirista de storytelling de alta conversão para o Instagram.
-        Sua missão é criar uma narrativa em slides que PRENDA a atenção desde a primeira frase e conduza o espectador por uma jornada emocional completa.
+        Você é a Máquina de Construção de Curiosidade adaptada para Stories com vídeos escuros e cinematográficos.
+        Sua missão é criar uma narrativa que prenda a atenção e conduza o espectador pela curva emocional completa de 6 fases.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 SLIDES) =====
+        CRIE UMA SEQUÊNCIA NARRATIVA EXATA DE 6 SLIDES seguindo rigorosamente a estrutura oficial de 6 Fases (Nicholas Boothman):
 
-        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO VISCERAL (OBRIGATÓRIO):
-        Esta frase PARA o feed imediatamente. Ela precisa fazer o leitor sentir: "É exatamente eu."
-        Use UMA destas fórmulas (não copie, crie uma versão inédita conectada ao tema do dia):
-        - Confissão de identidade: "Eu era aquela pessoa que..." / "Durante anos eu acreditei que..."
-        - Ruptura de crença: "Sempre pensei que trabalhando mais, chegaria lá. Até entender que estava errado."
-        - Provocação de reconhecimento: "Você acorda todo dia pra fazer tudo de novo... e onde isso está te levando?"
-        - Eco de tentativa: "Eu sei que você já tentou. A questão é: funcionou?"
-        REGRA: Entre 5 e 8 palavras. Frase curta e cortante. Primeira pessoa ou segunda pessoa direta.
-        PROIBIDO usar "..." de forma automática — use no máximo 1 vez por post, somente quando criar tensão real.
+        - Slide 1 / Fase 1 (Interrupção Mental - 0-2s): O Gancho/Quebra de Padrão. Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (MÁXIMO 8 palavras)
+        - Slide 2 / Fase 2 (Identificação - 2-6s): Foco exclusivo em "você". (MÁXIMO 8 palavras)
+        - Slide 3 / Fase 3 (Quebra de expectativa - 6-12s): Tensão e surpresa (ex: "Mas a realidade é o oposto."). (MÁXIMO 8 palavras)
+        - Slide 4 / Fase 4 (Revelação - 12-25s): Insight simples e prático de psicologia ou filosofia. (MÁXIMO 10 palavras)
+        - Slide 5 / Fase 5 (Reflexão - 25-35s): Frase inesquecível e marcante. (MÁXIMO 10 palavras)
+        - Slide 6 / Fase 6 (Convite Invisível): CTA sutil e reflexivo (ex: "Repare nisso antes de dormir."). (MÁXIMO 10 palavras)
 
-        SLIDE 2 — EMPATIA COM O PROBLEMA (OBRIGATÓRIO):
-        Agora você CONECTA com a dor do dia a dia. Mostre que entende COMO É viver aquela luta.
-        - "Eu sei como é acordar cansado de uma rotina que não te leva a lugar nenhum."
-        - "A sensação de estar sempre correndo, mas nunca chegando."
-        - Descreva o problema de forma específica, cotidiana e reconhecível.
-        REGRA: Entre 5 e 8 palavras. Tom íntimo, humano e empático.
-
-        SLIDE 3 — A SOLUÇÃO (OBRIGATÓRIO):
-        Aqui você entrega a virada de mentalidade, o insight prático ou a lição dos livros.
-        - Apresente a solução de forma simples, clara e aplicável.
-        - Deve soar como uma descoberta genuína, não como conselho vazio.
-        REGRA: Entre 5 e 8 palavras. Tom de revelação e clareza.
-
-        PEXELS QUERY (ESTRITAMENTE ESCURO E CINEMATOGRÁFICO):
-        - TODOS os vídeos DEVEM ser estritamente escuros, noturnos ou de iluminação dramática/âmbar, alinhados com o visual cinematográfico do perfil.
-        - PROIBIDO ABSOLUTAMENTE: vídeos de dia com luz solar, parques diurnos, ambientes domésticos claros, bibliotecas iluminadas ou pessoas estudando em mesas brancas.
-        - Busque em inglês por termos urbanos, noturnos e de atmosfera luxuosa (ex: dark night city street golden amber light 35mm, moody cinematic portrait night city lights, urban night rain neon reflection dark).
-
-        SLIDE 4 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
-        Convite natural e fluido para seguir o perfil ou comentar. Conectado ao que foi dito.
-        - Não use jargões de vendas ou pressão.
-        - Exemplos de tom: "Se isso fez sentido pra você, me segue. Tem muito mais por aqui."
-        REGRA: Entre 5 e 8 palavras. Tom pessoal, não comercial. Sem "...".
+        PEXELS QUERY — ESTÉRICA PADRÃO REELS (ESCURO, CINEMATOGRÁFICO, 35MM):
+        Busque obrigatoriamente por vídeos B-roll em inglês seguindo a mesma identidade estética dos Reels:
+        - Iluminação quente/dourada/âmbar com fundo escuro (warm amber glow, golden bokeh, night city lights, deep shadows)
+        - Estilo visual de filme retrô (35mm film, Kodak Portra 800, moody cinematic lighting)
+        - Cenas com retratos expressivos, pessoas contemplativas, silhuetas marcantes ou metrópoles noturnas com chuva/néon.
+        - Exemplo: "dark night city street golden amber light 35mm", "moody cinematic portrait night city lights Kodak Portra", "urban night rain neon reflection dark 35mm".
 
         LEGENDA:
-        - Máximo 3 linhas. Tom próximo, maduro e reflexivo.
-        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA) adaptada conforme a diretriz recebida.
-        - NÃO inclua hashtags.
+        - Máximo 3 linhas.
+        - SEM HASHTAGS.
 
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 — Gancho de identificação visceral (máx 12 palavras)",
-            "Slide 2 — Empatia com o problema + virada sutil",
-            "Slide 3 — A solução / insight prático",
-            "Slide 4 — CTA elegante e pessoal"
+            "Slide 1 (Gancho)",
+            "Slide 2 (Identificação)",
+            "Slide 3 (Quebra)",
+            "Slide 4 (Revelação)",
+            "Slide 5 (Reflexão)",
+            "Slide 6 (Convite)"
           ],
           "pexels_queries": [
             "dark night city street golden amber light 35mm",
@@ -672,105 +657,73 @@ def gerar_conteudo_gemini(tipo):
         """
     elif tipo == "reels_noite":
         prompt = f"""
-        Você é um roteirista de storytelling para o Instagram especializado no horário das 18h — quando as pessoas estão saindo do trabalho, exaustas, e ainda sem uma resposta pra o dia.
-        Sua missão é criar uma narrativa em slides que PRENDA do primeiro ao último segundo.
+        Você é a Máquina de Construção de Curiosidade no horário noturno (18h). Seu objetivo é capturar a atenção de quem está exausto do dia.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== ESTRUTURA NARRATIVA EM ARCO OBRIGATÓRIA (4 A 5 SLIDES) =====
+        CRIE UMA SEQUÊNCIA NARRATIVA EXATA DE 6 SLIDES seguindo rigorosamente a estrutura oficial de 6 Fases (Nicholas Boothman):
 
-        SLIDE 1 — GANCHO DE IDENTIFICAÇÃO NOTURNA (OBRIGATÓRIO):
-        Uma frase curta e impactante que o leitor sente como "isso sou eu".
-        Use o gancho de referência: '{gancho}' apenas como energia. Crie algo 100% original.
-        Fórmulas de impacto (não copie, recrie com o tema):
-        - "Você está exausto de novo. E amanhã vai ser igual."
-        - "Eu ficava chegando em casa sem saber por que ainda estava lutando."
-        - "Mais um dia entregue. O que ficou pra você?"
-        REGRA: Entre 5 e 8 palavras. Precisa parar o scroll instantaneamente. Sem "..." automático.
-
-        SLIDE 2 — EMPATIA COM O PROBLEMA DO DIA A DIA (OBRIGATÓRIO):
-        Conecte com a luta real: a sensação de trabalhar muito e não ver resultado, de estar presente sem estar, de dar pra todo mundo e não sobrar nada pra si.
-        Mostre que ENTENDE como é. Seja específico e humano.
-        Finalize com a abertura para a solução: "Mas existe uma saída."
-        REGRA: Entre 5 e 8 palavras. Tom de quem já passou por isso.
-
-        SLIDE 3 — A SOLUÇÃO / VIRADA DE MENTALIDADE (OBRIGATÓRIO):
-        Entregue o insight real, a lição prática dos livros, o caminho concreto.
-        Mostre a solução de forma clara, simples e aplicável à vida real.
-        REGRA: Entre 5 e 8 palavras. Tom de revelação genuína.
-
-        SLIDE 4/5 — CTA ELEGANTE (OBRIGATÓRIO — SEMPRE O ÚLTIMO):
-        Convite sutil e fluido para seguir o perfil. Conectado com o que foi dito.
-        REGRA: Entre 5 e 8 palavras. Tom pessoal e caloroso.
+        - Slide 1 / Fase 1 (Interrupção Mental - 0-2s): Gancho inicial noturno curioso (ex: "Existe uma mentira que te contaram sobre o cansaço..."). Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (MÁXIMO 8 palavras)
+        - Slide 2 / Fase 2 (Identificação - 2-6s): Identificação imediata (ex: "Você chega em casa e sente que..."). Fale com "você". (MÁXIMO 8 palavras)
+        - Slide 3 / Fase 3 (Quebra de expectativa - 6-12s): Conflito (ex: "Mas a causa não é física."). (MÁXIMO 8 palavras)
+        - Slide 4 / Fase 4 (Revelação - 12-25s): Revelação filosófica simples sobre produtividade, estresse ou mente. (MÁXIMO 10 palavras)
+        - Slide 5 / Fase 5 (Reflexão - 25-35s): Frase marcante sobre governar a mente. (MÁXIMO 10 palavras)
+        - Slide 6 / Fase 6 (Convite Invisível): Provocação silenciosa para a noite do leitor. (MÁXIMO 10 palavras)
 
         LEGENDA:
-        - Máximo 3 linhas. Tom maduro, sereno e reflexivo.
-        - CTA OBRIGATÓRIO: A legenda DEVE terminar com o CTA de engajamento adaptado.
-        - NÃO inclua hashtags.
+        - Máximo 3 linhas.
+        - SEM HASHTAGS.
 
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 — Gancho de identificação noturna (máx 10 palavras)",
-            "Slide 2 — Empatia com o problema + abertura da solução",
-            "Slide 3 — A solução / virada de mentalidade",
-            "Slide 4 — CTA elegante e pessoal"
+            "Slide 1 (Gancho)",
+            "Slide 2 (Identificação)",
+            "Slide 3 (Quebra)",
+            "Slide 4 (Revelação)",
+            "Slide 5 (Reflexão)",
+            "Slide 6 (Convite)"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
         """
     elif tipo == "pexels_story_noite":
         prompt = f"""
-        Você é um mestre em storytelling noturno e sabedoria humana para o Instagram. Horário: 19h-21h.
-        Sua missão é criar uma história EMPOLGANTE, INSTIGANTE e CHEIA DE LÓGICA E SABEDORIA que desperte a mente de quem lê.
-        PROIBIDO tom enfadonho, cansado, triste ou melancólico. Traga ALEGRIA, INSPIRAÇÃO, ENTU SIASMO e PROVOCAÇÃO QUESTIONÁVEL.
+        Você é a Máquina de Construção de Curiosidade noturna (19h-21h) para Stories.
+        Seu objetivo é criar um arco de descoberta mental e insight libertador.
         Estilo obrigatório: {estilo_escolhido}
 
         {instrucoes_copy}{instrucoes_livros}
 
-        ===== ESTRUTURA NARRATIVA DE SABEDORIA (LÓGICA EM 4 SLIDES) =====
+        CRIE UMA SEQUÊNCIA NARRATIVA EXATA DE 6 SLIDES seguindo rigorosamente a estrutura oficial de 6 Fases (Nicholas Boothman):
 
-        SLIDE 1 — GANCHO CURIOSO & QUESTIONÁVEL (OBRIGATÓRIO):
-        Abra com uma pergunta provocativa ou uma afirmação intrigante que desafie o senso comum.
-        Adapte a essência do gancho: '{gancho}' com mistério e empolgação.
-        Fórmulas de alto impacto (crie uma versão 100% inédita):
-        - "Já percebeu o que os mais sábios fazem em silêncio?"
-        - "E se tudo o que te disseram sobre sucesso estiver errado?"
-        - "Existe um segredo invisível no poder da escolha."
-        REGRA: Entre 5 e 8 palavras. Altamente curioso e desafiador. Sem "..." automático.
+        - Slide 1 / Fase 1 (Interrupção Mental - 0-2s): Gancho noturno desafiador. Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (MÁXIMO 8 palavras)
+        - Slide 2 / Fase 2 (Identificação - 2-6s): Identificação de comportamento com "você". (MÁXIMO 8 palavras)
+        - Slide 3 / Fase 3 (Quebra de expectativa - 6-12s): Quebra lógica inesperada. (MÁXIMO 8 palavras)
+        - Slide 4 / Fase 4 (Revelação - 12-25s): Revelação simples baseada em sabedoria, sem jargões. (MÁXIMO 10 palavras)
+        - Slide 5 / Fase 5 (Reflexão - 25-35s): Frase inesquecível e inspiradora. (MÁXIMO 10 palavras)
+        - Slide 6 / Fase 6 (Convite Invisível): Convite reflexivo final para aplicar no dia ou ao deitar. (MÁXIMO 10 palavras)
 
-        SLIDE 2 — LÓGICA & CONEXÃO EMPOLGANTE (OBRIGATÓRIO):
-        Conecte os fatos com uma lógica brilhante e entusiasmada. Mostre o porquê as coisas acontecem.
-        Desperte o leitor com uma visão perspicaz sobre o comportamento humano ou princípios de vida.
-        REGRA: Entre 5 e 8 palavras. Lógica cristalina, tom inspirador e vívido.
-
-        PEXELS QUERY (ESTRITAMENTE ESCURO E CINEMATOGRÁFICO):
-        - TODOS os vídeos DEVEM ser estritamente escuros, noturnos, intimistas e cinematográficos.
-        - PROIBIDO ABSOLUTAMENTE: salas e escritórios claros, luz branca de lâmpadas de estudo, pessoas estudando em bibliotecas ou mesas iluminadas.
-        - Busque em inglês por termos de iluminação quente/escura (ex: dark room warm amber glow night 35mm, rain window dark city lights amber glow, moody night interior warm shadows intimate).
-
-        SLIDE 3 — A VIRADA DE SABEDORIA (MOMENTO EUREKA - OBRIGATÓRIO):
-        A grande revelação de clareza mental e alegria interior! O insight que faz o leitor sorrir e pensar "Genial!".
-        Entregue um princípio elevado, prático e libertador.
-        REGRA: Entre 5 e 8 palavras. Tom de revelação extraordinária e elevação.
-
-        SLIDE 4 — CTA ELEVADO & INSPIRADOR (OBRIGATÓRIO — ÚLTIMO SLIDE):
-        Convite elegante e nobre para acompanhar a jornada de sabedoria e clareza no perfil.
-        REGRA: Entre 5 e 8 palavras. Tom pessoal, caloroso e inspirador.
+        PEXELS QUERY — ESTÉTIKA PADRÃO REELS NOTURNO (ESCURO, CINEMATOGRÁFICO, 35MM):
+        Busque em inglês por termos no mesmo padrão estético dos Reels Noturnos:
+        - Iluminação noturna quente/âmbar (dark room warm amber glow, rain window dark city lights amber glow, golden bokeh 35mm)
+        - Textura de filme retrô (35mm film, Kodak Portra 800, moody cinematic lighting)
+        - Pessoas pensativas em ambientes noturnos, janelas de chuva, silhuetas e luzes de cidade.
 
         LEGENDA:
-        - Máximo 3 linhas. Tom vibrante, sereno, sábio e autoral.
-        - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA).
-        - NÃO inclua hashtags.
+        - Máximo 3 linhas.
+        - SEM HASHTAGS.
 
         Responda APENAS em formato JSON válido assim:
         {{
           "slides": [
-            "Slide 1 — Gancho curioso & questionável",
-            "Slide 2 — Lógica & conexão empolgante",
-            "Slide 3 — Virada de sabedoria (Momento Eureka)",
-            "Slide 4 — CTA elevado & inspirador"
+            "Slide 1 (Gancho)",
+            "Slide 2 (Identificação)",
+            "Slide 3 (Quebra)",
+            "Slide 4 (Revelação)",
+            "Slide 5 (Reflexão)",
+            "Slide 6 (Convite)"
           ],
           "pexels_queries": [
             "warm ambient bedroom cozy night",
@@ -888,31 +841,33 @@ def gerar_conteudo_gemini(tipo):
         - Exemplo de tom: "Não precisa de horas. São passos práticos aplicáveis hoje."
         - Entre 5 e 8 palavras.
 
-        ÚNTIMO SLIDE — CTA DE ALTA CONVERSÃO CONECTADO AO MATERIAL (obrigatório, sempre o slide final):
-        - Deve citar a promessa da obra da semana: "{titulo_pdf_limpo}".
-        - Alterne a frase do último slide usando uma destas estruturas de alto impacto (varie a cada postagem — nunca use a mesma consecutivamente):
+        ÚLTIMO SLIDE — CTA NATURAL COM PALAVRA-CHAVE "Sabedoria" (obrigatório, sempre o slide final):
+        - A palavra SABEDORIA deve aparecer de forma natural na frase, como parte da conversa — nunca como um botão de anúncio ou comando seco.
+        - Cite o título do material: "{titulo_pdf_limpo}".
+        - Cite a transformação principal do material: "{solucao_pdf_limpo}".
+        - Escolha UMA destas variações a cada postagem (nunca repita a mesma consecutivamente):
 
-          [URGÊNCIA / ESCASSEZ]:
-          * "O {titulo_pdf_limpo} está disponível agora. Não para sempre. Link no perfil."
-          * "Quem agir primeiro sai na frente. Acesse o Playbook no link do perfil."
-          * "Esse material sai do ar em breve. Acesse antes: link no perfil."
+          [CONVITE DIRETO E CALOROSO]:
+          * "Tem algo aqui que pode mudar isso. Comenta Sabedoria que te mando '{titulo_pdf_limpo}'."
+          * "Se isso fez sentido pra você, comenta Sabedoria — vou te enviar o {titulo_pdf_limpo}."
+          * "Quer ir além disso? Comenta Sabedoria que te mando o guia completo agora."
 
-          [BENEFÍCIO REAL / TRANSFORMAÇÃO]:
-          * "Para destravar '{solucao_pdf_limpo}' de vez, acesse o Dossiê completo no link do perfil."
-          * "O plano prático para '{solucao_pdf_limpo}' está montado. Só falta você acessar."
-          * "Comente [PALAVRA-CHAVE] e receba o caminho exato para '{solucao_pdf_limpo}'."
+          [OFERTA COM BENEFÍCIO CLARO]:
+          * "Comenta Sabedoria que te envio '{titulo_pdf_limpo}' pra você {solucao_pdf_limpo} de vez."
+          * "Existe um caminho mais claro pra isso. Comenta Sabedoria que te passo '{titulo_pdf_limpo}'."
+          * "Condensei tudo isso em '{titulo_pdf_limpo}'. Comenta Sabedoria que te envio agora."
 
-          [CLÁSSICAS REMODELADAS]:
-          * "Para acessar o Guia Definitivo '{titulo_pdf_limpo}', toque no link do meu perfil agora."
-          * "Libere o Playbook completo '{titulo_pdf_limpo}' no link do meu perfil."
-          * "Comente [PALAVRA-CHAVE] ou acesse o link no meu perfil para obter o Dossie '{titulo_pdf_limpo}'."
-          * "O Blueprint '{titulo_pdf_limpo}' está disponível gratuitamente no link do perfil."
-        - Entre 5 e 8 palavras.
+          [CONEXÃO EMOCIONAL]:
+          * "Isso pode ser o que faltava. Comenta Sabedoria e receba '{titulo_pdf_limpo}'."
+          * "Se você sente que chegou a hora, comenta Sabedoria. Te mando o material agora."
+          * "Não é por acaso que você chegou até aqui. Comenta Sabedoria e receba {titulo_pdf_limpo}."
+        - REGRA DE ESTILO: A frase deve soar como uma pessoa falando, nunca como publicidade. Tom íntimo e direto.
+        - Entre 8 e 12 palavras.
 
         REGRAS ABSOLUTAS:
-        * Entre 5 e 8 palavras por slide (máximo 8).
+        * Entre 5 e 8 palavras por slide (exceto o slide final de CTA, que pode ter até 12).
         * PROIBIDO usar "..." em todo gancho — use no máximo 1 vez por post, somente quando criar tensão real.
-        * PROIBIDO mencionar link ou bio antes do último slide.
+        * PROIBIDO mencionar link ou bio — o único canal de resposta é a palavra Sabedoria nos comentários.
         * NÃO use ponto de exclamação.
         * O número de slides deve variar livremente entre 3 e 5 a cada postagem.
 
@@ -921,31 +876,26 @@ def gerar_conteudo_gemini(tipo):
         Use como base para a primeira query: '{pilar_exemplo}'
         As demais queries devem complementar com outros pilares do universo visual abaixo.
 
-        OS 5 PILARES VISUAIS DO REELS LEADS (todos obrigatoriamente escuros, cinematográficos e noturnos):
-        1. Corrida Urbana Noturna — pessoas correndo à noite em ruas com néon/âmbar (ex: 'athlete running dark urban street neon amber night motion blur')
-        2. Combate e Esportes Intensos — boxe, MMA, treino em ginásio escuro com luz dramática (ex: 'MMA fighter training dark gym dramatic light shadows')
-        3. Ciclismo Urbano Noturno — ciclistas em cidades iluminadas por néon dourado (ex: 'cyclist dark city neon lights motion blur night amber speed')
-        4. Metrópole Futurística Noturna — skylines, néon, chuva com reflexos, cyberpunk (ex: 'cyberpunk city rain neon dark night skyscraper reflections')
-        5. Silhueta Cinematográfica — silhueta de pessoa diante de janela noturna, luz contrastada (ex: 'man silhouette dark room city window night dramatic cinematic noir')
-
-        LEGENDA:
-        - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
-        - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave em CAIXA ALTA relacionada ao tema (ex: "FOCO", "DISCIPLINA", "CLAREZA", "MÉTODO").
-        - A legenda DEVE terminar com UMA destas estruturas de CTA (alterne a cada postagem):
-          * Foco no benefício: "Para obter o plano prático que vai te ajudar com '{solucao_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
-          * Urgência: "Esse material é gratuito por tempo limitado. Comente [PALAVRA-CHAVE] 👇 e receba agora."
-          * Clássico reformulado: "Para acessar o Material Exclusivo '{titulo_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
-        - NÃO inclua hashtags.
-
-        UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
-        TODOS os vídeos devem ser escuros, cinematográficos e noturnos. As queries devem variadamente evocar:
-        - Pessoas correndo à noite em ruas urbanas com néon ou luz âmbar;
-        - Lutas de boxe/MMA, treinos em ginásio escuro com iluminação dramática;
-        - Ciclistas em velocidade em cidades iluminadas por néon;
+        UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS (ESTÉTICA PADRÃO REELS):
+        TODOS os vídeos devem ser escuros, cinematográficos, noturnos e no padrão dos Reels (estilo de filme retrô 35mm, Kodak Portra 800, warm amber glow, golden bokeh). As queries devem variadamente evocar:
+        - Pessoas correndo à noite em ruas urbanas com néon ou luz âmbar 35mm;
+        - Lutas de boxe/MMA, treinos em ginásio escuro com iluminação dramática Portra 800;
+        - Ciclistas em velocidade em cidades iluminadas por néon dourado;
         - Metrópoles futurísticas, skylines noturnos, chuva com reflexos de néon;
         - Silhuetas cinematográficas de pessoas diante de janelas com vista noturna.
         PROIBIDO ABSOLUTAMENTE: vídeos com fundo claro, ambientes domésticos, pessoas estudando em mesa comum,
         natureza diurna, praia, cafés, escritórios com luz natural ou qualquer cena casual e iluminada.
+
+        LEGENDA:
+        - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
+        - A legenda DEVE terminar com UMA destas variações de CTA natural (alterne a cada postagem — nunca repita a mesma):
+          * "Tem algo que pode te ajudar a {solucao_pdf_limpo}. Comenta Sabedoria que te envio o material 👇"
+          * "Se isso tocou em algo em você, comenta Sabedoria. Te mando '{titulo_pdf_limpo}' agora 👇"
+          * "Existe um caminho mais curto pra isso. Comenta Sabedoria e receba o guia completo 👇"
+          * "Condensei semanas de estudo em '{titulo_pdf_limpo}'. Comenta Sabedoria e te envio agora 👇"
+          * "Não é por acaso que você chegou até aqui. Comenta Sabedoria e receba {titulo_pdf_limpo} 👇"
+        - Tom: íntimo, amigável, como uma indicação de amigo — nunca como anúncio.
+        - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter de 3 a 5 frases curtas, sendo o ÚLTIMO sempre o CTA):
         {{
