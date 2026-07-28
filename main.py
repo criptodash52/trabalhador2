@@ -99,6 +99,8 @@ def main():
                         help="Tipo de postagem a gerar")
     parser.add_argument("--dry-run", action="store_true", help="Executa todo o processo sem postar no Instagram")
     parser.add_argument("--reseed-db", action="store_true", help="Repovoa e reconstitui todas as coleções zeradas do Firebase Firestore")
+    parser.add_argument("--custom-tema", type=str, required=False, default=None, help="Tema personalizado do usuário")
+    parser.add_argument("--custom-mensagem", type=str, required=False, default=None, help="Mensagem/texto personalizado do usuário")
     
     args = parser.parse_args()
     
@@ -124,7 +126,11 @@ def main():
             verificar_health()
             
         # Passo 1: Solicita conteúdo ao Gemini
-        conteudo, tema_escolhido, estilo_escolhido = gerar_conteudo_gemini(args.type)
+        conteudo, tema_escolhido, estilo_escolhido = gerar_conteudo_gemini(
+            args.type,
+            custom_tema=args.custom_tema,
+            custom_mensagem=args.custom_mensagem
+        )
         if args.type == "carousel":
             print(f"✨ Título do Carrossel: \"{conteudo.get('titulo')}\"")
         elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads"]:

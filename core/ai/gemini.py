@@ -129,7 +129,7 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
 
     return dados
 
-def gerar_conteudo_gemini(tipo):
+def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
     # Calcula número de slides para stories de forma alternada a cada dia (3 em um dia, 4 no outro)
     dia_ano = datetime.now(timezone.utc).timetuple().tm_yday
     num_slides_story = 3 if dia_ano % 2 == 0 else 4
@@ -150,7 +150,7 @@ def gerar_conteudo_gemini(tipo):
         
     # --- INTEGRAÇÃO COM ANALYTICS CRUZADO (ROLETA VICIADA) E CONQUISTADOR ---
     estado = carregar_estado()
-    tema_escolhido = None
+    tema_escolhido = custom_tema
     contexto_analytics = ""
     evitar_repeticao_msg = ""
     
@@ -159,7 +159,7 @@ def gerar_conteudo_gemini(tipo):
 
     is_conquistador = (tipo == "reels_conquistador")
     
-    if is_conquistador:
+    if is_conquistador and not custom_tema:
         # Loop Cego: Ignora o Analytics e roda pelos 8 temas em sequência
         temas_lista = list(TEMAS_MAPEADOS.keys())
         idx = estado.get("index_conquistador", 0)
@@ -174,7 +174,7 @@ def gerar_conteudo_gemini(tipo):
 
         # Busca histórico DESTE TEMA para evitar repetição de mensagens no Conquistador
         evitar_repeticao_msg = buscar_historico_por_tema(tema_escolhido, tipo_post="reels_conquistador", limite=6)
-    else:
+    elif not custom_tema:
         # Se for o primeiro post do dia, rotaciona o tema sequencialmente
         if estado.get("data_tema_do_dia") == dia_hoje_str and estado.get("tema_do_dia"):
             tema_escolhido = estado["tema_do_dia"]
@@ -192,6 +192,7 @@ def gerar_conteudo_gemini(tipo):
             salvar_estado(estado)
             logger.info(f"🎲 Novo tema sequencial diário ativado: {tema_escolhido}")
 
+    if not custom_tema:
         # Busca histórico DESTE TEMA no historico_posts para não repetir a mensagem
         evitar_repeticao_msg = buscar_historico_por_tema(tema_escolhido, tipo_post=tipo, limite=8)
         if evitar_repeticao_msg:
@@ -246,7 +247,7 @@ def gerar_conteudo_gemini(tipo):
         # [NOVO] Adiciona a visão externa (Olhos da Rede)
         try:
             # Pega o nome do tema escolhido para fazer uma busca cirúrgica no YouTube
-            nome_do_tema_atual = TEMAS_MAPEADOS[tema_escolhido]['nome'] if tema_escolhido in TEMAS_MAPEADOS else None
+            nome_do_tema_atual = TEMAS_MAPEADOS[tema_escolhido]['nome'] if tema_escolhido in TEMAS_MAPEADOS else tema_escolhido
             mundo_real = gerar_contexto_mundo_real(dias=7, tema_especifico=nome_do_tema_atual)
             if mundo_real:
                 contexto_analytics += "\n====================\n" + mundo_real + "\n====================\n\n"
@@ -268,7 +269,10 @@ def gerar_conteudo_gemini(tipo):
             salvar_estado(estado)
             logger.info(f"🧠 Novo sentimento diário sorteado: {sentimento_escolhido.upper()}")
         
-    detalhes_tema = TEMAS_MAPEADOS[tema_escolhido]
+    detalhes_tema = TEMAS_MAPEADOS.get(tema_escolhido, {
+        "nome": tema_escolhido,
+        "angulos": [f"Visão estratégica e prática sobre {tema_escolhido}"]
+    })
     logger.info(f"✨ Tema que guiará o bot hoje: {detalhes_tema['nome']}")
     
     # ---------------- CICLO SEQUENCIAL DE GANCHOS E CTAs ----------------
@@ -292,6 +296,10 @@ def gerar_conteudo_gemini(tipo):
     # Injeta o histórico do tema no instrucoes_copy → propagado automaticamente para TODOS os tipos de post
     if evitar_repeticao_msg:
         instrucoes_copy += evitar_repeticao_msg
+
+    if custom_mensagem:
+        instrucoes_copy += f"\n\n====================\nMENSAGEM E CONCEITO OBRIGATÓRIO SOLICITADO PELO USUÁRIO NO DASHBOARD:\n\"{custom_mensagem}\"\nVocê DEVE obrigatoriamente construir a postagem com base nesta mensagem/ideia do usuário.\n====================\n"
+        logger.info(f"💬 [Studio de Criação] Mensagem do usuário injetada no prompt: {custom_mensagem[:60]}...")
 
     # Estilo de abordagem sorteado (com anti-repetição)
     estilo_escolhido = sortear_estilo(hist_estilos)

@@ -77,6 +77,13 @@ def rodar_agora():
 
     elif hora == 22:
         print("🚀 Executando: Reels Conquistador (Atração de Público)")
+    # Sempre verifica e processa pedidos pendentes do Studio de Criação (Dashboard)
+    try:
+        print("📥 Verificando solicitações pendentes do Studio de Criação (Dashboard)...")
+        subprocess.run(["python", "core/publisher/executor_usuario.py"])
+    except Exception as e_req:
+        print(f"⚠️ Aviso no processador do Studio de Criação: {e_req}")
+
     # Sempre executa o monitor de comentários ao final de qualquer ciclo agendado
     try:
         print("💬 Executando verificação e resposta automática de comentários...")

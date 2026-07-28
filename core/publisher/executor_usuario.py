@@ -62,8 +62,13 @@ def processar_solicitacoes_pendentes():
             print(f"   🎥 Formato:        {tipo_main}")
             print(f"   💬 Mensagem:       {mensagem[:100]}...")
 
-            # Executa o main.py para gerar e publicar o post
+            # Executa o main.py para gerar e publicar o post com as preferências do usuário
             cmd = ["python", "main.py", "--type", tipo_main]
+            if tema and tema != "Geral":
+                cmd.extend(["--custom-tema", tema])
+            if mensagem and mensagem.strip():
+                cmd.extend(["--custom-mensagem", mensagem.strip()])
+
             print(f"🎬 Executando comando: {' '.join(cmd)}")
             res = subprocess.run(cmd, cwd=BOT_PATH)
 
