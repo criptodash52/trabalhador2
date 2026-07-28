@@ -336,7 +336,10 @@ def gerar_conteudo_gemini(tipo):
         Sua comunicação deve ser uma CONVERSA ÍNTIMA, EXCLUSIVA, PROPOSITAL E DIRECIONAL.
         Estilo obrigatório para este story: {estilo_escolhido}
 
-        {instrucoes_copy}{instrucoes_livros}
+        CONTEXTO DO DIA (use como bússola de valor — não copie literalmente):
+        - Tema do dia: {detalhes_tema['nome']}
+        - Ângulo de inspiração: "{sub_angulo}"
+        - Tom emocional do dia: {sentimento_escolhido.upper() if sentimento_escolhido else 'REFLEXÃO'}
 
         DIRETRIZ DE ESCRITA E PERCEPÇÃO DE VALOR:
         - Fale de igual para igual, como um mentor compartilhando uma percepção pessoal profunda do seu dia a dia.
@@ -345,6 +348,7 @@ def gerar_conteudo_gemini(tipo):
         - Evite frases prontas ou conselhos de autoajuda vazios. O objetivo deixa de ser "motivação" e passa a ser "lucidez".
         - Escreva uma única frase curta e com altíssimo impacto emocional (máximo de 15 palavras) que gere uma pequena mudança de perspectiva.
         - NÃO use ponto de exclamação. Use ponto final ou interrogação.
+        - NÃO inclua CTA, convite para seguir ou qualquer chamada para ação.
         
         Responda APENAS em formato JSON válido assim:
         {{
@@ -357,13 +361,17 @@ def gerar_conteudo_gemini(tipo):
         Sua missão é entregar uma PÍLULA DE SABEDORIA MATINAL em pequena dose: clara, elevada, inspiradora e sem nenhum tom carrancudo ou pesado.
         Estilo obrigatório para esta sequência: {estilo_escolhido}
 
-        {instrucoes_copy}{instrucoes_livros}
+        CONTEXTO DO DIA (use como bússola de valor — não copie literalmente):
+        - Tema do dia: {detalhes_tema['nome']}
+        - Ângulo de inspiração: "{sub_angulo}"
+        - Tom emocional do dia: {sentimento_escolhido.upper() if sentimento_escolhido else 'REFLEXÃO'}
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
         - SLIDE 1 (GANCHO CURTO DE AUTORIDADE): Abra com uma frase curta, elegante e provocativa de liderança (máx 10 palavras). Deve despertar curiosidade e posicionar autoridade imediata.
-        - SLIDES INTERMEDIÁRIOS (ENTREGA DE VALOR PRÁTICO): Desenvolva uma pílula diária de sabedoria ou mentalidade baseada no ângulo: "{sub_angulo}". O conteúdo deve parecer um pensamento maduro e de alta lucidez, sem frases prontas.
+        - SLIDES INTERMEDIÁRIOS (ENTREGA DE VALOR PRÁTICO): Desenvolva uma pílula diária de sabedoria ou mentalidade baseada no ângulo acima. O conteúdo deve parecer um pensamento maduro e de alta lucidez, sem frases prontas.
         - SLIDE FINAL (DIREÇÃO E AUTORIDADE): Feche com uma síntese de autoridade moral que dê direção clara, lucidez e posicionamento firme para o dia.
         - PROIBIDO usar tom pesado, vitimista, cansado ou de autoajuda barata.
+        - NÃO inclua CTA, convite para seguir ou qualquer chamada para ação.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não no story (true ou false) de acordo com o tom da conversa.
         
@@ -387,13 +395,17 @@ def gerar_conteudo_gemini(tipo):
         Sua missão é entregar uma dose diária de valor prático para ajustar a rota do dia, com tom sereno, firme e refinado (sem peso ou postura carrancuda).
         Estilo obrigatório para esta sequência: {estilo_escolhido}
 
-        {instrucoes_copy}{instrucoes_livros}
+        CONTEXTO DO DIA (use como bússola de valor — não copie literalmente):
+        - Tema do dia: {detalhes_tema['nome']}
+        - Ângulo de inspiração: "{sub_angulo}"
+        - Tom emocional do dia: {sentimento_escolhido.upper() if sentimento_escolhido else 'REFLEXÃO'}
 
         CRIE UMA SEQUÊNCIA DE EXATAMENTE {num_slides_story} FRASES CURTAS CONECTADAS (MÁXIMO DE 12 PALAVRAS POR FRASE):
         - SLIDE 1 (GANCHO CURTO DE TRANSIÇÃO): Abra com uma frase instigante sobre foco, discernimento ou maestria diante dos ruídos do dia (máx 10 palavras).
-        - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria baseada no ângulo: "{sub_angulo}". Cada frase deve parecer um pensamento que normalmente só surge após muita experiência de vida, evitando frases clichê.
+        - SLIDES INTERMEDIÁRIOS (PÍLULA DE CONHECIMENTO): Entregue uma sacada prática de sabedoria baseada no ângulo acima. Cada frase deve parecer um pensamento que normalmente só surge após muita experiência de vida, evitando frases clichê.
         - SLIDE FINAL (SÍNTESE DE AUTORIDADE): Encerre posicionando autoridade moral e lucidez, inspirando o leitor a concluir o dia com maestria e foco em seus princípios.
         - PROIBIDO tom de reclamação, cansaço excessivo, vitimismo ou conselhos óbvios.
+        - NÃO inclua CTA, convite para seguir ou qualquer chamada para ação.
         - Não use ponto de exclamação.
         - Escolha se quer usar música de fundo ou não (true ou false).
         
