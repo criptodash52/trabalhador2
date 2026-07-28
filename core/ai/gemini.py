@@ -880,12 +880,24 @@ def gerar_conteudo_gemini(tipo):
         - Exemplo de tom: "Não precisa de horas. São passos práticos aplicáveis hoje."
         - Máximo 12 palavras.
 
-        ÚLTIMO SLIDE — CTA DE ALTA CONVERSÃO CONECTADO AO MATERIAL (obrigatório, sempre o slide final):
+        ÚNTIMO SLIDE — CTA DE ALTA CONVERSÃO CONECTADO AO MATERIAL (obrigatório, sempre o slide final):
         - Deve citar a promessa da obra da semana: "{titulo_pdf_limpo}".
-        - Alterne a frase do último slide usando uma destas estruturas de alto impacto:
+        - Alterne a frase do último slide usando uma destas estruturas de alto impacto (varie a cada postagem — nunca use a mesma consecutivamente):
+
+          [URGÊNCIA / ESCASSEZ]:
+          * "O {titulo_pdf_limpo} está disponível agora. Não para sempre. Link no perfil."
+          * "Quem agir primeiro sai na frente. Acesse o Playbook no link do perfil."
+          * "Esse material sai do ar em breve. Acesse antes: link no perfil."
+
+          [BENEFÍCIO REAL / TRANSFORMAÇÃO]:
+          * "Para destravar '{solucao_pdf_limpo}' de vez, acesse o Dossiê completo no link do perfil."
+          * "O plano prático para '{solucao_pdf_limpo}' está montado. Só falta você acessar."
+          * "Comente [PALAVRA-CHAVE] e receba o caminho exato para '{solucao_pdf_limpo}'."
+
+          [CLÁSSICAS REMODELADAS]:
           * "Para acessar o Guia Definitivo '{titulo_pdf_limpo}', toque no link do meu perfil agora."
           * "Libere o Playbook completo '{titulo_pdf_limpo}' no link do meu perfil."
-          * "Comente [PALAVRA-CHAVE] ou acesse o link no meu perfil para obter o Dossiê '{titulo_pdf_limpo}'."
+          * "Comente [PALAVRA-CHAVE] ou acesse o link no meu perfil para obter o Dossie '{titulo_pdf_limpo}'."
           * "O Blueprint '{titulo_pdf_limpo}' está disponível gratuitamente no link do perfil."
         - Máximo 20 palavras.
 
@@ -910,7 +922,10 @@ def gerar_conteudo_gemini(tipo):
         LEGENDA:
         - Máximo 3 linhas. Focada em empatia e conexão emocional com a dor debatida.
         - PALAVRA-CHAVE E CTA OBRIGATÓRIO: Escolha uma palavra-chave em CAIXA ALTA relacionada ao tema (ex: "FOCO", "DISCIPLINA", "CLAREZA", "MÉTODO").
-        - A legenda DEVE terminar conectada ao material da semana: "Para acessar o Material Exclusivo '{titulo_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
+        - A legenda DEVE terminar com UMA destas estruturas de CTA (alterne a cada postagem):
+          * Foco no benefício: "Para obter o plano prático que vai te ajudar com '{solucao_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
+          * Urgência: "Esse material é gratuito por tempo limitado. Comente [PALAVRA-CHAVE] 👇 e receba agora."
+          * Clássico reformulado: "Para acessar o Material Exclusivo '{titulo_pdf_limpo}', comente [PALAVRA-CHAVE] 👇 ou acesse o link no perfil."
         - NÃO inclua hashtags.
 
         UNIVERSO VISUAL OBRIGATÓRIO — REELS LEADS:
