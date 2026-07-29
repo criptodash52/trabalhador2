@@ -1,27 +1,5 @@
 {
-    "indice_gancho_conquistador": 17,
-    "index_animacao_conquistador": 1,
-    "index_pilar_reels_leads": 3,
-    "data_sentimento_do_dia": "2026-07-29",
-    "index_conquistador": 1,
-    "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/I Got You - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Kiss For Amanda - DJ Williams.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/No One Here Gets In Alive - National Sweetheart.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Lost Myself - Lalanne.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/In The Morning - Blue Beat Review.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Free Night in Bushwick - William Rosati.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Town This Small - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Never Coming Down - The Soundlings.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Face in a Cloud - Nathan Moore.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3"
-    ],
-    "indice_arquitetura": 0,
-    "data_tema_do_dia": "2026-07-29",
     "historico_angulos": [
-        "Quebrar promessas que fez a si mesmo destrói a sua autoimagem e te transforma em um covarde mental.",
         "Você não é os pensamentos que passam pela sua cabeça; você é a consciência que os observa.",
         "A pessoa que tem medo de errar já escolheu a pior falha de todas: a inércia.",
         "A maturidade silenciosa de aceitar que você não precisa ter opinião sobre absolutamente tudo.",
@@ -45,15 +23,49 @@
         "Mudar de comportamento exige perder o apego à história triste que você conta sobre si mesmo.",
         "Dinheiro é apenas um amplificador de quem você já é por dentro. O ganancioso vira monstro; o generoso vira farol.",
         "Julgar o erro alheio é o passatempo favorito de quem tem pavor de olhar no espelho.",
-        "Riqueza exige paciência entediante; a pressa de ficar rico rápido enriquece apenas os golpistas."
+        "Riqueza exige paciência entediante; a pressa de ficar rico rápido enriquece apenas os golpistas.",
+        "Por que a mentalidade de que ganhar mais dinheiro resolve tudo não te salva se faltar inteligência emocional para poupar."
     ],
-    "indice_cta": 47,
     "index_tema_diario": 4,
+    "index_pilar_reels_leads": 3,
+    "index_animacao_conquistador": 1,
+    "indice_gancho_conquistador": 17,
     "tema_do_dia": "financas",
+    "fila_musicas_musicas": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/apalonbeats-background-music-529535.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Música-tema-principal-da-série-La-casa-de-papel-_-NETFLIX-_.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/sonican-background-music-new-age-nature-465069.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-thriller-suspense-536629.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-cinematic-trailer-music-561875.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Egzod & Maestro Chives - Royalty (Lyrics) ft. Neoni.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/guilhermebernardes-lone-wolf-10374.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3"
+    ],
+    "index_conquistador": 1,
+    "index_palette_conquistador": 2,
+    "sentimento_do_dia": "amor",
     "index_plataforma_conquistador": 1,
+    "indice_arquitetura": 0,
+    "data_sentimento_do_dia": "2026-07-29",
+    "indice_gancho": 48,
+    "ultimo_carousel": 3,
+    "fila_musicas_musicas-youtube": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/I Got You - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Kiss For Amanda - DJ Williams.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/No One Here Gets In Alive - National Sweetheart.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Lost Myself - Lalanne.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/In The Morning - Blue Beat Review.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Free Night in Bushwick - William Rosati.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Town This Small - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Never Coming Down - The Soundlings.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Face in a Cloud - Nathan Moore.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3"
+    ],
     "ultimos_temas": [],
     "historico_estilos": [
-        "Tom de observação humana e postura: linguagem direta e elegante sobre impor limites em silêncio (ex: 'A temporada de dar satisfação pra quem não merece já passou.')",
         "Tom de ironia leve e verdade cotidiana: exponha contradições humanas com leveza e um toque de humor sutil (ex: 'Fofocam sobre mim, mas continuam assistindo cada passo. Engraçado como a inveja é silenciosa.')",
         "Tom de conselho sereno como ordem: instrução curta e inegociável para a vida (ex: 'Delete os contatos de quem só te procura quando precisa. Pousa esse peso.')",
         "Tom de acolhimento e paz mental: reconheça a luta silenciosa do leitor sem vitimismo (ex: 'Teve dias em que sua única opção era aguentar. E você aguentou. Lembre-se disso.')",
@@ -77,24 +89,14 @@
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
+        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
     ],
-    "ultimo_carousel": 3,
-    "indice_gancho": 47,
-    "index_palette_conquistador": 2,
-    "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-hype-background-music-558271.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/apalonbeats-background-music-529535.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Música-tema-principal-da-série-La-casa-de-papel-_-NETFLIX-_.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/sonican-background-music-new-age-nature-465069.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-thriller-suspense-536629.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-cinematic-trailer-music-561875.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Egzod & Maestro Chives - Royalty (Lyrics) ft. Neoni.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/guilhermebernardes-lone-wolf-10374.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3"
-    ],
+    "data_tema_do_dia": "2026-07-29",
     "historico_midia": [
+        "unsplash_mu-K2DBo3LU",
+        "unsplash_krwjLv3Z9Ng",
+        "unsplash_DP2v5RVK4zE",
         "unsplash_Gc3mf2lLjQM",
         "unsplash_cKFNznGYogA",
         "unsplash_KSWd-58f_fg",
@@ -591,10 +593,7 @@
         "unsplash_jJ0J2eZ3Vog",
         "unsplash_WymXrJBWJks",
         "unsplash_DjvbK2GDgQA",
-        "unsplash_PjK23SRe3o4",
-        "unsplash_kuKZvUmx4lw",
-        "unsplash_bg99LeOTNQA",
-        "unsplash_1CZnZTITIWc"
+        "unsplash_PjK23SRe3o4"
     ],
-    "sentimento_do_dia": "amor"
+    "indice_cta": 47
 }
