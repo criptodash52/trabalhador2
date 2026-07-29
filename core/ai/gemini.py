@@ -485,6 +485,11 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Explique primeiro: por que isso acontece, qual é o erro invisível, qual princípio resolve esse erro.
         - O conhecimento deve parecer difícil de encontrar, mas fácil de entender depois da explicação.
 
+        INSPIRAÇÃO LENDÁRIA DE NARRATIVA (Use como tempero de altíssimo impacto e epicidade):
+        Você pode canalizar esta energia épica e mitológica de grande jornada e legado para construir ganchos ou desfechos memoráveis:
+        "Riqueza, liberdade, poder. Os mestres e empreendedores que dominaram o mercado e conquistaram sua liberdade descobriram algo que mudou suas vidas para sempre. Antes de se retirarem dos holofotes, deixaram um único recado: 'Querem os resultados que conquistamos? Eles estão disponíveis para quem estiver disposto a aprender. Todo o conhecimento necessário foi deixado no mundo. Agora cabe a você encontrá-lo.' E assim começou a nova era dos que possuem sonhos inegociáveis."
+        Use esta aura de mistério, sabedoria e busca por maestria para dar densidade e peso ao texto.
+
         3. LEGENDA:
         - Reforce a provocação do carrossel em 3-4 linhas usando linguagem direta e madura.
         - CTA OBRIGATÓRIO: A legenda DEVE terminar com a chamada para ação (CTA) adaptada conforme a 'DIRETRIZ OBRIGATÓRIA DE CTA' enviada nas instruções.
