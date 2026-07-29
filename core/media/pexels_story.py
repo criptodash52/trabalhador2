@@ -425,10 +425,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         num_videos_necessarios = min(20, max(6, int(duracao_necessaria_reels / 5.0) + 1))
         logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
     elif (not is_noite) and (not is_conquistador):
-        # pexels_story da Manhã: Duração fixada em 15.0 segundos (4 slides de 3.75s)
-        duracao_necessaria_reels = 15.0
-        num_videos_necessarios = 3
-        logger.info(f"📊 [PEXELS_STORY MANHÃ] Duração fixada em {duracao_necessaria_reels:.0f}s (4 slides de 3.75s)")
+        # pexels_story da Manhã: Duração calculada para leitura calma e serena (~6.5s por slide)
+        num_slides_estimado = len(slides) if slides else 6
+        duracao_necessaria_reels = num_slides_estimado * 6.5
+        num_videos_necessarios = min(15, max(4, int(duracao_necessaria_reels / 5.0) + 1))
+        logger.info(f"📊 [PEXELS_STORY MANHÃ] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários (~6.5s por slide)")
     else:
         num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 7.0
@@ -670,15 +671,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
             tempo_slide_normal = 0.0
             if not slide_start_times:
-                if (not is_noite) and (not is_conquistador) and (not is_reels_leads):
-                    duracao_gancho = duracao / total_slides if total_slides > 0 else 3.75
-                    tempo_slide_normal = duracao_gancho
+                duracao_gancho = 5.0
+                if total_slides > 1:
+                    tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
                 else:
-                    duracao_gancho = 5.0
-                    if total_slides > 1:
-                        tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
-                    else:
-                        tempo_slide_normal = duracao
+                    tempo_slide_normal = duracao
 
             # O Reels Leads e o Story Noturno sempre usam o filtro de cores quentes (warm_amber)
             if is_reels_leads or is_noite:
