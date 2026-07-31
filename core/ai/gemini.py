@@ -600,14 +600,15 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - "Familia nao e o que voce encontra. E o que voce decide proteger todos os dias."
 
         UNIVERSO VISUAL OBRIGATÓRIO:
-        Queries em ingles evocando tons de ouro, fogo, amanhecer e conquista cinematografica.
-        (ex: golden sunrise mountain peak epic cinematic, warrior silhouette fire dramatic, lone figure city night contemplative)
+        Queries em inglês evocando a identidade visual da marca: tom escuro, cinematográfico, iluminação âmbar/dourada noturna.
+        PROIBIDO: cenas de natureza de dia, matos, campos, praias ou sol direto.
+        (ex: dark luxury city night golden amber 35mm, warrior silhouette fire dark cinematic, lone figure city night lights contemplative)
 
         Responda APENAS em formato JSON valido assim:
         {{
           "pexels_queries": [
-            "golden sunrise mountain peak cinematic epic",
-            "warrior silhouette dramatic fire dark",
+            "dark luxury city night golden amber 35mm",
+            "warrior silhouette fire dark cinematic",
             "lone figure city night lights contemplative"
           ],
           "slides": [

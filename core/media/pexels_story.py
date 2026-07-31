@@ -363,11 +363,14 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     else:
         queries_lista = list(query)
 
-    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Anti-Claro / Anti-Estudo) ---
-    # Remove termos que trazem vídeos claros ou de estudantes em bibliotecas/escritórios bem iluminados.
+    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Estrito Anti-Claro / Anti-Natureza de Dia) ---
+    # Elimina vídeos claros, matos, praias, campos, florestas ensolaradas e escritórios claros para manter a estética única da marca.
     TERMOS_PROIBIDOS_VIDEO = [
         "study", "studying", "student", "library", "classroom", "school",
-        "sunlight", "daylight", "meadow", "park", "bright office", "white room"
+        "sunlight", "daylight", "meadow", "park", "bright office", "white room",
+        "field", "grass", "green grass", "farm", "hay", "beach", "ocean daylight",
+        "flower", "flowers", "garden", "nature daylight", "sunny", "landscape green",
+        "trees daylight", "mountain sunrise", "bright day", "sun"
     ]
     queries_higienizadas = []
     for q in queries_lista:
@@ -377,7 +380,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         if len(q_clean) < 4:
             q_clean = "dark night city street golden amber light 35mm"
         if "dark" not in q_clean and "night" not in q_clean:
-            q_clean += " dark night amber glow"
+            q_clean += " dark night amber gold 35mm cinematic"
         queries_higienizadas.append(q_clean)
     queries_lista = queries_higienizadas
 
@@ -649,12 +652,9 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 logger.warning(f"⚠️ Não foi possível carregar vídeo final: {e_load_outro}")
                 outro_clip = None
         
-        # Usa Playfair.ttf para pexels_story (manhã e noite) e reels_conquistador; BebasNeue.ttf para reels_leads
-        if is_conquistador or is_noite or (not is_reels_leads):
-            estilo_do_dia = "Playfair.ttf"
-        else:
-            estilo_do_dia = "BebasNeue.ttf"
-        logger.info(f"✨ Fonte do vídeo ({'Playfair' if 'Playfair' in estilo_do_dia else 'BebasNeue'}): {estilo_do_dia}")
+        # Padroniza a fonte BebasNeue.ttf em caixa alta para 100% dos vídeos da marca (garante legibilidade e identidade forte)
+        estilo_do_dia = "BebasNeue.ttf"
+        logger.info(f"✨ Fonte da marca padronizada: {estilo_do_dia}")
         
         # Resolução do vídeo original
         video_w, _ = clip.size
@@ -685,15 +685,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 else:
                     tempo_slide_normal = duracao
 
-            # O Reels Leads e o Story Noturno sempre usam o filtro de cores quentes (warm_amber)
-            if is_reels_leads or is_noite:
-                efeito_escolhido = "warm_amber"
-                logger.info("🟠 Filtro warm_amber (cores quentes) aplicado.")
-            else:
-                efeitos = ["none", "none", "cinematic_bars", "vignette_dark"]
-                efeito_escolhido = random.choice(efeitos)
-                if efeito_escolhido != "none":
-                    logger.info(f"✨ Aplicando efeito de vídeo: {efeito_escolhido.upper()}")
+            # Efeito visual de marca: GARANTE escurecimento e tom dark gold/amber para NUNCA ter vídeos claros estourados
+            efeitos_marca = ["warm_amber", "dark_gold_neon", "vignette_dark"]
+            efeito_escolhido = random.choice(efeitos_marca)
+            logger.info(f"🟠 Filtro de marca exclusivo aplicado: {efeito_escolhido.upper()}")
 
             # Para o Conquistador: usa animação sequencial pré-definida; demais formatos: sorteio aleatório
             if is_conquistador and animacao_conquistador:

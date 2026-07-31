@@ -76,7 +76,12 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         img_valida_url = None
         img_id_valido = None
         
-        TERMOS_PROIBIDOS_BUSCA = ["candle", "velas", "cross", "cruzes", "church", "religion", "skull", "occult"]
+        TERMOS_PROIBIDOS_BUSCA = [
+            "candle", "velas", "cross", "cruzes", "church", "religion", "skull", "occult",
+            "meadow", "field", "grass", "green grass", "farm", "hay", "beach", "ocean daylight",
+            "flower", "flowers", "garden", "nature daylight", "sunny", "sunlight", "daylight",
+            "bright office", "white room", "landscape green", "trees daylight", "sun"
+        ]
         for query_atual in queries_a_tentar:
             # Garante que nenhum termo indesejado entre na busca
             for t_proibido in TERMOS_PROIBIDOS_BUSCA:
@@ -367,7 +372,7 @@ def _gerar_carrossel(img, W_full, H, dados):
                 print(f"⚠️ Erro ao aplicar logo no carrossel: {e}")
 
         if not logo_aplicado:
-            font_marca_serif, _, _ = carregar_fontes(50, 72, 26, estilo="Playfair")
+            font_marca_serif, _, _ = carregar_fontes(50, 72, 26, estilo="BebasNeue")
             desenhar_marca_dagua_ouro(draw, (slide_W/2, slide_H - 80), "GUSTAVO_8K_", font_marca_serif)
         
         if idx == 0:  # Capa (Playfair Display)
@@ -510,7 +515,7 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
                 print(f"⚠️ Erro ao aplicar marca d'água no rodapé ({e}). Usando fallback de texto.")
 
         if not logo_aplicado:
-            font_marca_serif, _, _ = carregar_fontes(86, 22, 24, estilo="Playfair")
+            font_marca_serif, _, _ = carregar_fontes(86, 22, 24, estilo="BebasNeue")
             desenhar_marca_dagua_ouro(draw, (W/2, H - 200), "GUSTAVO_8K_", font_marca_serif)
             draw_text_with_shadow(draw, (W/2, H - 280), f"{idx+1} / {len(frases)}", font_body, fill=CORES["texto_secundario"], anchor="ms")
 
@@ -584,7 +589,7 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
                 print(f"⚠️ Erro ao aplicar marca d'água no rodapé (estático): {e}")
 
         if not logo_aplicado:
-            font_marca_serif, _, _ = carregar_fontes(48, 24, 24, estilo="Playfair")
+            font_marca_serif, _, _ = carregar_fontes(48, 24, 24, estilo="BebasNeue")
             desenhar_marca_dagua_ouro(draw, (W/2, y_watermark), "GUSTAVO_8K_", font_marca_serif)
         
         # ── Proteção de layout: limpa quebras e limita linhas ──
