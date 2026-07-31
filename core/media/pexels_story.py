@@ -239,17 +239,17 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
 
 
 def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
-    """Desenha o CTA final com visual dourado e destacado — maior impacto visual."""
+    """Desenha o CTA final com o mesmo estilo limpo dos demais slides — sem caixa, sem flash amarelo."""
     if frame_array.dtype != np.uint8:
         frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
 
-    # Criamos a camada transparente para o CTA
-    cta_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    draw = ImageDraw.Draw(cta_layer)
+    # Camada de texto transparente (sem fundo, sem caixa)
+    txt_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(txt_layer)
 
-    margem_px = int(w * 0.08)
+    margem_px = int(w * 0.075)
     largura_max_texto = w - (margem_px * 2)
 
     linhas = _quebrar_texto_por_pixels(draw, texto, fonte_cta, largura_max_texto)
@@ -263,32 +263,19 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         alturas.append(bb[3] - bb[1])
         larguras.append(bb[2] - bb[0])
 
-    espaco_entre = 18
-    padding_h = 36
-    padding_v = 28
-
+    espaco_entre = 14
+    padding_v = 20
     total_h = sum(alturas) + espaco_entre * (len(linhas) - 1) + padding_v * 2
-    total_w = min(max(larguras) + padding_h * 2, w - margem_px * 2)
+    by0 = (h - total_h) // 2
 
-    bx0 = max((w - total_w) // 2, margem_px)
-    by0 = (h - total_h) // 2 + deslocamento_y
-    bx1 = min(bx0 + total_w, w - margem_px)
-    by1 = by0 + total_h
-    
-    # Borda dourada + fundo escuro na camada do CTA com opacidade controlada
-    draw.rounded_rectangle([bx0 - 4, by0 - 4, bx1 + 4, by1 + 4], radius=22, fill=(212, 175, 55, int(200 * fade_alpha)))
-    draw.rounded_rectangle([bx0, by0, bx1, by1], radius=18, fill=(10, 10, 10, int(210 * fade_alpha)))
-
-    # Texto em dourado vibrante com sombra
-    y = by0 + padding_v
+    y = by0 + padding_v + deslocamento_y
     chars_drawn = 0
     for linha, alt, lw in zip(linhas, alturas, larguras):
         x = (w - lw) // 2
-        
+
         if chars_to_show is not None:
             if chars_drawn >= chars_to_show:
                 break
-            
             linha_len = len(linha)
             if chars_drawn + linha_len > chars_to_show:
                 linha_render = linha[:chars_to_show - chars_drawn]
@@ -297,19 +284,15 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             chars_drawn += linha_len + 1
         else:
             linha_render = linha
-            
-        # Sombra preta
-        draw.text((x + 3, y + 3), linha_render, font=fonte_cta, fill=(0, 0, 0, int(255 * fade_alpha)))
-        # Texto dourado
-        draw.text((x, y), linha_render, font=fonte_cta, fill=(255, 215, 0, int(255 * fade_alpha)))
+
+        # Sombra suave + contorno preto (igual ao _adicionar_texto_frame)
+        draw.text((x + 3, y + 3), linha_render, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+        draw.text((x, y), linha_render, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
+                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
         y += alt + espaco_entre
 
-    # Mescla escurecimento de fundo suave
-    escurece = Image.new("RGBA", img.size, (0, 0, 0, int(120 * fade_alpha)))
-    img = Image.alpha_composite(img.convert("RGBA"), escurece)
-    
-    # Mescla o CTA desenhado por cima
-    img = Image.alpha_composite(img, cta_layer).convert("RGB")
+    # Sem escurecimento extra — o overlay da marca já cobre o vídeo inteiro
+    img = Image.alpha_composite(img.convert("RGBA"), txt_layer).convert("RGB")
 
     return np.array(img)
 
