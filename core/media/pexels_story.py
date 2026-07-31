@@ -743,13 +743,8 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     draw.text((x_marca + 2, y_marca + 2), texto_marca, font=fonte_rodape, fill=(0, 0, 0, 200))
                     draw.text((x_marca, y_marca), texto_marca, font=fonte_rodape, fill=(250, 185, 55))
 
-                # --- 3. EFEITO DE BRILHO PULSANTE DOURADO NO CTA FINAL ---
-                if is_cta:
-                    import math
-                    # Pulsa suavemente de 0 a 1 usando seno
-                    intense = int(45 * (0.5 + 0.5 * math.sin(t_slide * 4)))
-                    aura = Image.new("RGBA", (w, h), (212, 175, 55, intense))
-                    img = Image.alpha_composite(img, aura)
+                # --- 3. CTA LIMPO E SEM EFEITO DE BRILHO PULSANTE ---
+                # Efeito de aura pulsante removido permanentemente para evitar oscilações de luz/pisca-pisca
 
                 return np.array(img.convert("RGB"))
 
