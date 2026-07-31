@@ -59,13 +59,12 @@ def _quebrar_texto_por_pixels(draw, texto, fonte, largura_max_px):
     return linhas
 
 def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
-    """Desenha texto centralizado com sombra/fundo em um frame (numpy array)."""
+    """Desenha texto centralizado com sombra/fundo em um frame. Destaca 'SABEDORIA' em Dourado."""
     if frame_array.dtype != np.uint8:
         frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
 
-    # Criamos uma camada de texto transparente
     txt_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(txt_layer)
 
@@ -84,12 +83,9 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
         larguras.append(bb[2] - bb[0])
 
     espaco_entre = 14
-    padding_h = 24
     padding_v = 20
 
     total_h = sum(alturas) + espaco_entre * (len(linhas) - 1) + padding_v * 2
-    
-    # Apenas calculamos by0 para posicionar o texto
     by0 = (h - total_h) // 2
 
     y = by0 + padding_v + deslocamento_y
@@ -100,22 +96,48 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
         if chars_to_show is not None:
             if chars_drawn >= chars_to_show:
                 break
-            
             linha_len = len(linha)
             if chars_drawn + linha_len > chars_to_show:
                 linha_render = linha[:chars_to_show - chars_drawn]
             else:
                 linha_render = linha
-            chars_drawn += linha_len + 1 # +1 for space between words
+            chars_drawn += linha_len + 1
         else:
             linha_render = linha
+
+        # Se a linha contém 'SABEDORIA', renderiza palavra por palavra para destacar 'SABEDORIA' em Dourado
+        if "SABEDORIA" in linha_render.upper():
+            palavras = linha_render.split(" ")
+            # Calcula a largura total para centralização
+            largura_total_linha = 0
+            larguras_palavras = []
+            espaco_w = draw.textbbox((0, 0), " ", font=fonte)[2] - draw.textbbox((0, 0), " ", font=fonte)[0]
+            for p in palavras:
+                pw = draw.textbbox((0, 0), p, font=fonte)[2] - draw.textbbox((0, 0), p, font=fonte)[0]
+                larguras_palavras.append(pw)
+                largura_total_linha += pw
+            largura_total_linha += espaco_w * (len(palavras) - 1)
             
-        # Efeito de contorno (stroke) mais estilo premium em vez de apenas sombra
-        draw.text((x + 3, y + 3), linha_render, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha))) # Sombra suave
-        draw.text((x, y), linha_render, font=fonte, fill=(255, 255, 255, int(255 * fade_alpha)), stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha))) # Contorno forte
+            cur_x = (w - largura_total_linha) // 2
+            for p, pw in zip(palavras, larguras_palavras):
+                p_clean = p.upper().replace("'", "").replace('"', '').replace(',', '').replace('.', '')
+                if p_clean == "SABEDORIA":
+                    cor_palavra = (255, 215, 0, int(255 * fade_alpha)) # Dourado Brilhante #FFD700
+                else:
+                    cor_palavra = (255, 255, 255, int(255 * fade_alpha)) # Branco Puro
+                
+                # Sombra suave
+                draw.text((cur_x + 3, y + 3), p, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
+                # Texto com contorno preto
+                draw.text((cur_x, y), p, font=fonte, fill=cor_palavra, stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                cur_x += pw + espaco_w
+        else:
+            # Sombra suave + Contorno preto com preenchimento Branco Puro
+            draw.text((x + 3, y + 3), linha_render, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
+            draw.text((x, y), linha_render, font=fonte, fill=(255, 255, 255, int(255 * fade_alpha)), stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+            
         y += alt + espaco_entre
 
-    # Mescla a camada do texto com a imagem de fundo
     img = Image.alpha_composite(img.convert("RGBA"), txt_layer).convert("RGB")
 
     return np.array(img)
@@ -297,41 +319,30 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
     return np.array(img)
 
 def _aplicar_efeito_cinematico(frame_array, efeito):
-    """Aplica efeitos visuais no frame para variar o estilo."""
+    """Aplica filtro escuro noturno (Dark Overlay 45%) uniforme em todos os frames."""
     if frame_array.dtype != np.uint8:
         frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
-    if efeito == "none":
-        return frame_array
         
     img = Image.fromarray(frame_array)
     w, h = img.size
+    
+    # Camada de escurecimento noturno uniforme (Dark Aesthetic constante)
+    dark_overlay = Image.new("RGBA", (w, h), (0, 0, 0, 115)) # 45% opacidade preta
+    img = Image.alpha_composite(img.convert("RGBA"), dark_overlay).convert("RGB")
     draw = ImageDraw.Draw(img)
     
     if efeito == "cinematic_bars":
-        # Altura das tarjas (12% da altura)
         bar_h = int(h * 0.12)
         draw.rectangle([0, 0, w, bar_h], fill=(0, 0, 0))
         draw.rectangle([0, h - bar_h, w, h], fill=(0, 0, 0))
         
-    elif efeito == "vignette_dark":
-        # Escurece levemente a imagem inteira (moody)
-        overlay = Image.new("RGBA", (w, h), (0, 0, 0, 80))
-        img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
-        
     elif efeito == "warm_amber":
-        # Aplica uma tonalidade quente (âmbar/dourado) de aconchego e abertura
-        overlay = Image.new("RGBA", (w, h), (245, 150, 45, 30))  # Overlay laranja/ouro suave
-        img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+        amber_overlay = Image.new("RGBA", (w, h), (212, 175, 55, 25))
+        img = Image.alpha_composite(img.convert("RGBA"), amber_overlay).convert("RGB")
         
-    elif efeito == "cyber_glow":
-        # Aplica uma tonalidade azul ciberpunk/ciano com alto contraste noturno
-        overlay = Image.new("RGBA", (w, h), (10, 30, 60, 45))  # Overlay ciberpunk escuro
-        img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
-
     elif efeito == "dark_gold_neon":
-        # Aplica uma tonalidade de Ouro Metálico e iluminação escura nobre
-        overlay = Image.new("RGBA", (w, h), (212, 175, 55, 35)) # Overlay ouro metálico sabedoria
-        img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+        gold_overlay = Image.new("RGBA", (w, h), (180, 140, 30, 30))
+        img = Image.alpha_composite(img.convert("RGBA"), gold_overlay).convert("RGB")
         
     return np.array(img)
 
@@ -346,14 +357,15 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     else:
         queries_lista = list(query)
 
-    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Estrito Anti-Claro / Anti-Natureza de Dia) ---
-    # Elimina vídeos claros, matos, praias, campos, florestas ensolaradas e escritórios claros para manter a estética única da marca.
+    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Estrito Anti-Claro / Anti-Academia / Anti-Natureza) ---
+    # Elimina vídeos claros, academias iluminadas, matos, praias, campos, florestas ensolaradas e escritórios claros.
     TERMOS_PROIBIDOS_VIDEO = [
         "study", "studying", "student", "library", "classroom", "school",
         "sunlight", "daylight", "meadow", "park", "bright office", "white room",
         "field", "grass", "green grass", "farm", "hay", "beach", "ocean daylight",
         "flower", "flowers", "garden", "nature daylight", "sunny", "landscape green",
-        "trees daylight", "mountain sunrise", "bright day", "sun"
+        "trees daylight", "mountain sunrise", "bright day", "sun",
+        "gym", "boxing", "workout", "training", "fitness", "ring", "boxing ring", "athlete daylight"
     ]
     queries_higienizadas = []
     for q in queries_lista:
