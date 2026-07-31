@@ -284,31 +284,66 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         p2_p.drawOn(canvas, box_x + box_padding, text_y)
         
     elif has_italic_box:
-        # Italic box fica fixa no rodapé do card
+        # Italic box fica fixa no rodapé do card (Card 4)
         box_padding = 8
         box_x = x + 12
         box_h = 55
         box_y = y + 15
         box_w = width - 24
-        # Limite superior disponível para titulo + parágrafo = acima da box + gap
-        area_topo_bottom = box_y + box_h + 8  # bottom da area de texto
+        area_topo_bottom = box_y + box_h + 8  # Limite inferior do texto (topo da caixa itálica)
         
-        # Title
-        title_p = Paragraph(title, title_style)
-        w, h = title_p.wrap(width - 24, height)
-        title_p.drawOn(canvas, x + 12, y + height - 15 - h)
+        # 1. Desenha o Título no topo do card
+        # Se o título for longo (mais de 28 caracteres), ajusta a fonte para não empurrar o texto
+        effective_title_font_size = title_font_size
+        if len(title) > 28:
+            effective_title_font_size = title_font_size - 2
+        if len(title) > 40:
+            effective_title_font_size = title_font_size - 3.5
+
+        card_title_style = ParagraphStyle(
+            name=f"title_c4_{x}_{y}",
+            fontName=font_map["sans-bold"],
+            fontSize=effective_title_font_size,
+            leading=effective_title_font_size + 3,
+            textColor=get_color("#ffffff"),
+            spaceAfter=6
+        )
         
-        # Parágrafo 1 — limita altura disponível para não colidir com a box
-        available_h = (y + height - 15 - h - 10) - area_topo_bottom
-        p1_p = Paragraph(paragraphs[0], body_style)
-        w1, h1 = p1_p.wrap(width - 24, max(available_h, 20))
-        draw_y1 = y + height - 15 - h - 10 - h1
-        # Garante que o parágrafo não ultrapasse o topo da italic box
+        title_p = Paragraph(title, card_title_style)
+        w_title, h_title = title_p.wrap(width - 24, height)
+        title_top_y = y + height - 15
+        title_p.drawOn(canvas, x + 12, title_top_y - h_title)
+        
+        title_bottom_y = title_top_y - h_title
+        
+        # 2. Parágrafo 1 — posicionado estritamente ABAIXO do título
+        max_p_height = title_bottom_y - 6 - area_topo_bottom
+        
+        # Ajusta fonte do corpo se o espaço for muito apertado
+        curr_body_font_size = body_font_size
+        if max_p_height < 45:
+            curr_body_font_size = body_font_size - 1.5
+
+        c4_body_style = ParagraphStyle(
+            name=f"body_c4_{x}_{y}",
+            fontName=font_map["sans"],
+            fontSize=curr_body_font_size,
+            leading=curr_body_font_size + 2.5,
+            textColor=get_color("#eff6ff")
+        )
+        
+        p1_p = Paragraph(paragraphs[0], c4_body_style)
+        w1, h1 = p1_p.wrap(width - 24, max(max_p_height, 20))
+        
+        # Desenha o texto logo abaixo do título
+        draw_y1 = title_bottom_y - 6 - h1
+        # Se ultrapassar o topo da caixa itálica, fixa no limite e previne subir sobre o título
         if draw_y1 < area_topo_bottom:
             draw_y1 = area_topo_bottom
+            
         p1_p.drawOn(canvas, x + 12, draw_y1)
         
-        # Italic box fixa no rodapé
+        # 3. Caixa Itálica fixa no rodapé
         canvas.saveState()
         canvas.setFillColor(get_color("rgba(255,255,255,0.08)"))
         canvas.setStrokeColor(get_color("rgba(255,255,255,0.15)"))

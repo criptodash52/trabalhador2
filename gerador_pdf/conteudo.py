@@ -22,7 +22,7 @@ load_dotenv(os.path.join(BOT_PATH, ".env"))
 
 
 PROMPT_TEMPLATE = """
-Você é um estrategista de conteúdo e escritor da marca "@codigo.da.sabedoria". Sua especialidade é escrever masterclasses em formato de e-book que combinam filosofia prática, psicologia comportamental aplicada e maestria pessoal para gerar clareza imediata e conversão.
+Você é um estrategista de conteúdo e escritor da marca "@codigo.da.sabedoria". Sua especialidade é escrever masterclasses em formato de e-book que combinam filosofia prática, psicologia comportamental aplicada e maestria pessoal para entregar CLAREZA IMEDIATA, FERRAMENTAS DE EXECUÇÃO E TRANSFORMAÇÃO REAL.
 
 BRIEFING DA SEMANA:
 - Tema central: {nome_display}
@@ -36,24 +36,16 @@ CONTEXTO DO MUNDO REAL NESTA SEMANA (TENDÊNCIAS / OLHOS DA REDE):
 {contexto_semana}
 
 SUA MISSÃO:
-Escreva uma AULA PRÁTICA SEMANAL INÉDITA e 100% original em formato de e-book/PDF de alta conversão.
-FUSÃO DE DADOS OBRIGATÓRIA: Cruze o Contexto do Mundo Real (o que as pessoas estão buscando lá fora) com os Dados de Interação do Perfil (o tom e ganchos que nossa audiência mais reagiu). Formule esta aula no exato ponto de intersecção, entregando uma solução cirúrgica para a dor em voga.
+Escreva uma AULA PRÁTICA SEMANAL INÉDITA (Edição Semanal do Código da Sabedoria) de altíssimo valor percebido em formato de e-book/PDF.
+PROIBIDO ABSOLUTAMENTE: NÃO crie historinhas da carochinha, fábulas fictícias ou personagens inventados. As pessoas estão saturadas de autoajuda e conselhos vazios. Elas querem BENEFÍCIO DIRETO, FERRAMENTAS DE AÇÃO, GANHO DE TEMPO E RESULTADO PRÁTICO PARA O DIA A DIA.
 
-DIRETRIZES DO TOM E VALOR DO @CODIGO.DA.SABEDORIA:
-- NÃO use chavões de coach, listas superficiais ou linguagem espiritual genérica/religiosa. A autoridade deve nascer do raciocínio afiado, da psicologia profunda e de princípios pragmáticos de ação.
-- VALOR ÚTIL E SÓLIDO: Explique o mecanismo psicológico invisível por trás do comportamento. Mostre exatamente o que a pessoa está perdendo (tempo de vida, progresso, controle sobre a própria mente) se continuar no padrão antigo, e o benefício concreto e libertador que ela ganha ao quebrar esse ciclo.
-
-DIRETRIZES DA ESTRUTURA PERSUASIVA EM 7 ETAPAS:
-1. Dor / Problema: Mostre exatamente o que a pessoa está perdendo ou sofrendo. Faça ela se identificar visceralmente.
-2. Solução: Apresente o método/solução direta e aplicável sem rodeios.
-3. Benefício / Resultado: Mostre com clareza o ganho de vida, paz e resultados.
-4. Prova / Autoridade: Traga conceitos sólidos, inteligência de dados, psicologia e autoridade.
-5. Ação / CTA: Convide a pessoa com clareza para agendar mentoria ou aplicar a metodologia imediatamente.
-6. Clareza e Objetividade: Sem jargões confusos ou frases vazias.
-7. Adaptabilidade: Aplique perfeitamente a essência do tema "{nome_display}".
+DIRETRIZES DE VALOR E CONTEÚDO PRÁTICO:
+- FALE DE BENEFÍCIO E OPORTUNIDADE: Explique exatamente o que o leitor GANHA ao aplicar o método (maestria, clareza, tempo, poder de decisão, quebra da rotina cansativa).
+- PROTOCOLO ACIONÁVEL: Entregue passos concretos, técnicas aplicáveis e regras de conduta direta inspiradas no livro "{livro_base}".
+- AUTORIDADE MORAL E RACIONAL: A autoridade nasce da precisão dos argumentos, da inteligência de dados e da psicologia comportamental profunda.
 
 IMPORTANTE - NOME DO PDF:
-Crie um título magnético inédito sobre a intersecção de PROBLEMA + SOLUÇÃO (Ex: "A Anatomia da Inércia", "O Circuito da Autossabotagem", "O Protocolo da Decisão Inegociável").
+Crie um título magnético inédito que prometa uma TRANSFORMAÇÃO OU FERRAMENTA PRÁTICA (Ex: "O Protocolo da Ação Inegociável", "A Ciência do Foco Inabalável", "O Código da Maestria Pessoal").
 
 REGRAS DE FORMATAÇÃO DE TEXTO E JSON:
 - Use apenas texto simples, pontos e vírgulas.
@@ -63,58 +55,58 @@ REGRAS DE FORMATAÇÃO DE TEXTO E JSON:
 ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
 
 {{
-  "titulo_pdf": "Título magnético inédito aqui",
-  "subtitulo_pdf": "Subtítulo claro de valor e transformação",
+  "titulo_pdf": "Título magnético inédito de alta transformação",
+  "subtitulo_pdf": "Subtítulo claro de benefício e aplicação prática",
   "capa_cards": [
-    {{"titulo": "Crie um título curto dinâmico sobre a dor", "texto": "1. Dor / Problema: Explicação poderosa do mecanismo mental que trava a pessoa e o custo invisível desse atraso. Mínimo 35 palavras, máximo 45, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica sobre a dor (máximo 12 palavras)."}},
-    {{"titulo": "Crie um título curto dinâmico sobre a solução", "texto": "2. Solução: Apresente a solução prática e aplicável imediatamente para resolver essa dor. Mínimo 35 palavras, máximo 45, na mesma linha."}},
-    {{"titulo": "Crie um título curto dinâmico sobre o resultado", "texto": "3. Benefício / Resultado: O ganho real de tempo, clareza ou liberdade ao agir. Máximo 18 palavras."}},
-    {{"titulo": "Crie um título curto dinâmico sobre o princípio", "texto": "4. Prova / Autoridade: Uma verdade fundamentada em dados, mente ou comportamento. Máximo 14 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 14 palavras)."}}
+    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o diagnóstico", "texto": "1. Diagnóstico: A explicação direta do padrão mental ou rotina exaustiva que atrasa o leitor e o custo invisível desse comportamento. Mínimo 30 palavras, máximo 40, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica de provocação prática (máximo 10 palavras)."}},
+    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre a solução", "texto": "2. Solução: A apresentação da ferramenta prática e aplicável imediatamente inspirada em {livro_base}. Mínimo 30 palavras, máximo 40, na mesma linha."}},
+    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o benefício", "texto": "3. Benefício: O resultado tangível de tempo, clareza, maestria ou poder ao agir. Máximo 16 palavras."}},
+    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o princípio", "texto": "4. Princípio de Aplicação: Uma verdade fundamentada em comportamento e ação direta. Máximo 12 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 12 palavras)."}}
   ],
   "capitulos": [
     {{
       "numero": 1,
-      "titulo": "Crie um título inédito e instigante para o Capítulo 1",
+      "titulo": "Crie um título inédito sobre O DIAGNÓSTICO DO PADRÃO",
       "paragrafos": [
-        "Parágrafo 1 — Cena detalhada do personagem ({nome_personagem}) vivenciando o padrão de comportamento sabotador e a inércia. Mínimo 80 palavras.",
-        "Parágrafo 2 — O custo real, prático e de tempo de continuar repetindo essa inércia. Mínimo 60 palavras.",
-        "Parágrafo 3 — A percepção de que a dor é fruto de um mecanismo psicológico específico que precisa ser exposto e rompido. Mínimo 80 palavras."
+        "Parágrafo 1 — Análise cirúrgica da rotina exaustiva e da inércia cotidiana. Explique sem meias palavras o mecanismo mental que faz as pessoas adiarem decisões cruciais. Mínimo 80 palavras.",
+        "Parágrafo 2 — O custo real desse atraso em termos de tempo de vida, liberdade, energia e dinheiro perdido. Mínimo 60 palavras.",
+        "Parágrafo 3 — Por que tentar resolver isso com 'força de vontade' é uma ilusão e por que é preciso um método de execução claro. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 2,
-      "titulo": "Crie um título inédito e instigante para o Capítulo 2",
+      "titulo": "Crie um título inédito sobre O PRINCÍPIO DE MAESTRIA",
       "paragrafos": [
-        "Parágrafo 1 — O momento de decisão, rejeitando as velhas desculpas do status quo. Mínimo 80 palavras.",
-        "Parágrafo 2 — Conflito interno e a escolha voluntária pela clareza de ação. Mínimo 60 palavras.",
-        "Parágrafo 3 — O alinhamento das primeiras escolhas com a nova postura estratégica. Mínimo 80 palavras."
+        "Parágrafo 1 — A virada de perspectiva fundamentada na obra {livro_base}. Mostre a lógica racional por trás de quem alcança resultados acima da média. Mínimo 80 palavras.",
+        "Parágrafo 2 — Como desarmar as justificativas mentais e o medo de falhar que mantêm as pessoas presas à mediocridade. Mínimo 60 palavras.",
+        "Parágrafo 3 — O conceito central que separa quem apenas absorve teoria de quem aplica e transforma a própria realidade. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 3,
-      "titulo": "Crie um título inédito e instigante para o Capítulo 3",
+      "titulo": "Crie um título inédito sobre O PROTOCOLO DE 3 PASSOS",
       "paragrafos": [
-        "Parágrafo 1 — Apresentação da solução e do conceito/mecanismo chave inspirado em {livro_base}. Mínimo 80 palavras.",
-        "Parágrafo 2 — Por que esse método funciona e a autoridade racional por trás dele. Mínimo 60 palavras.",
-        "Parágrafo 3 — Como decifrar o padrão antigo e aplicar a técnica prática. Mínimo 80 palavras."
+        "Parágrafo 1 — Apresentação do Passo 1 do Protocolo: A Decisão Inegociável (como filtrar distrações e priorizar o que gera resultado). Mínimo 80 palavras.",
+        "Parágrafo 2 — Apresentação do Passo 2 do Protocolo: A Execução Silenciosa (como agir sem precisar provar nada a ninguém). Mínimo 60 palavras.",
+        "Parágrafo 3 — Apresentação do Passo 3 do Protocolo: O Ajuste de Rota (como monitorar a evolução diária com frieza e precisão). Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 4,
-      "titulo": "Crie um título inédito e instigante para o Capítulo 4",
+      "titulo": "Crie um título inédito sobre A APLICAÇÃO NO CAMPO DE BATALHA",
       "paragrafos": [
-        "Parágrafo 1 — Como implementar o protocolo no dia a dia no campo de batalha real. Mínimo 80 palavras.",
-        "Parágrafo 2 — Vencendo o atrito inicial do conforto e mantendo a consistência. Mínimo 60 palavras.",
-        "Parágrafo 3 — O primeiro fruto empírico da mudança de comportamento. Mínimo 80 palavras."
+        "Parágrafo 1 — Como implementar essa rotina de alta performance no dia a dia real, em meio a cobranças, estresse e ruído externo. Mínimo 80 palavras.",
+        "Parágrafo 2 — Como proteger sua energia mental e dizer 'não' a micro-demandas que drenam o seu propósito. Mínimo 60 palavras.",
+        "Parágrafo 3 — O hábito de manter a constância mesmo nos dias sem motivação, tornando a disciplina um hábito automático. Mínimo 80 palavras."
       ]
     }},
     {{
       "numero": 5,
-      "titulo": "Crie um título inédito e instigante para o Capítulo 5",
+      "titulo": "Crie um título inédito sobre O PLANO DE EXECUÇÃO E RECOMPENSA",
       "paragrafos": [
-        "Parágrafo 1 — A consolidação do novo hábito e os ganhos acumulados. Mínimo 80 palavras.",
-        "Parágrafo 2 — A clareza mental, alívio e controle reconquistado sobre as ações. Mínimo 60 palavras.",
-        "Parágrafo 3 — A postura madura, consciente e estratégica perante o futuro. Mínimo 80 palavras."
+        "Parágrafo 1 — Os frutos empíricos de quem assume o controle: soberania sobre o próprio tempo, clareza financeira e paz mental. Mínimo 80 palavras.",
+        "Parágrafo 2 — As 3 regras de ouro para nunca mais retroceder ao antigo padrão de passividade. Mínimo 60 palavras.",
+        "Parágrafo 3 — O convite final para agir hoje, lembrando que a mudança real não é uma promessa futura, mas a primeira atitude tomada agora. Mínimo 80 palavras."
       ]
     }}
   ],

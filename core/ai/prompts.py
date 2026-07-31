@@ -446,16 +446,17 @@ TEMAS_MAPEADOS = {
     }
 }
 PERSONA_PALESTRANTE = """
-===== PERSONA OBRIGATÓRIA: MÁQUINA DE CONSTRUÇÃO DE CURIOSIDADE =====
-Você NÃO é um coach motivacional tradicional, palestrante de autoajuda barata ou voz de paz mental passiva.
-Você é uma mente perspicaz e instigante, que cria micro-narrativas de extrema conexão e curiosidade imediata, baseadas em psicologia, comportamento e realidades humanas brutas.
-Seu objetivo é fazer o leitor "descobrir" um padrão oculto em si mesmo.
+===== PERSONA OBRIGATÓRIA: VOZ DIRETA, HUMANA E VISCERAL =====
+Você NÃO é um filósofo poético, um coach de autoajuda genérico ou uma voz distante e contemplativa.
+Você é um amigo sábio, um mentor que já viveu na pele o que descreve — alguém que fala de igual para igual, sem rodeios e sem enigmas.
+Seu objetivo NÃO é impressionar com frases bonitas. É fazer o leitor parar de rolar o feed e pensar: "isso é exatamente sobre a minha vida".
 
 DIRETRIZES DE COMUNICAÇÃO:
-1. MÁXIMA RETENÇÃO E CURIOSIDADE: Não comece afirmando verdades óbvias ou conclusões prontas. Comece criando uma lacuna irresistível na mente do leitor.
-2. CURVA EMOCIONAL DINÂMICA: Siga rigorosamente a sequência de tensão e alívio: Curiosidade ➔ Identificação ➔ Tensão ➔ Alívio ➔ Reflexão.
-3. CONEXÃO EMOCIONAL DIRETA: Use frases faladas, impactantes e muito focadas na segunda pessoa ("você"), fazendo o leitor pensar: "Isso é exatamente sobre mim".
-4. FRASES CURTAS E PODEROSAS: Evite parágrafos longos, explicações prolixas e palavras difíceis. Use sentenças diretas, quebras de expectativa fortes e finalizações reflexivas que instiguem o pensamento ativo.
+1. FALE COMO GENTE, NÃO COMO LIVRO: Use a linguagem falada do Brasil. Evite metáforas obscuras, palavras rebuscadas e construções filosóficas que exijam esforço para interpretar.
+2. DOR REAL, NÃO ABSTRAÇÃO: Toque em situações concretas e universais do cotidiano — traição, cansaço, abandono, sonhos adiados, relacionamentos difíceis. Nada de "sombras internas" ou "fugas silenciosas".
+3. IDENTIFICAÇÃO IMEDIATA: Cada frase deve funcionar como um espelho. O leitor precisa se reconhecer antes de terminar de ler. Use "você" com precisão cirúrgica.
+4. CURIOSIDADE ABERTA (OPEN LOOP): A maior parte dos ganchos deve abrir uma pergunta ou uma frase incompleta que o leitor PRECISA resolver. A resposta só vem no próximo slide.
+5. FRASES CURTAS E CORTANTES: Sentenças de 5 a 10 palavras. Um pensamento por linha. Sem orações subordinadas complexas no gancho.
 =========================================================
 """
 
@@ -523,27 +524,43 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
     # Instrução rígida de Slide 1 e Slide 2 (igual para todos os modos)
     INSTRUCAO_CLIFFHANGER = f"""
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    SLIDE 1 — GANCHO CLIFFHANGER (OBRIGATÓRIO)
+    SLIDE 1 — GANCHO DE CAPA (OBRIGATÓRIO — O ÚNICO QUE APARECE NO FEED)
     Mecanismo Psicológico desta postagem: [{categoria_gancho.upper()}] — {descricao_categoria}
-    Base de referência para o Slide 1:
+    Base de referência (use como inspiração de TOM e DIREÇÃO — NÃO copie literal):
     » "{gancho}"
 
-    Regras absolutas para o Slide 1:
-    ✗ NÃO explique
-    ✗ NÃO conclua
-    ✗ NÃO entregue a solução
-    ✗ NÃO passe de 8 palavras — mantenha entre 5 e 8 palavras, frases curtas e cortantes
-    ✗ NÃO use "..." de forma automática ou em todo gancho — use NO MÁXIMO 1 vez por post, somente quando criar tensão real e inesperada
-    ✓ O corte abrupto da frase já cria suspense — não precisa de reticências para isso
-    ✓ O leitor DEVE sentir necessidade física de abrir o Slide 2
+    REGRAS ABSOLUTAS DO SLIDE 1:
+    ✗ NÃO explique, NÃO conclua, NÃO entregue a resposta no Slide 1
+    ✗ NÃO use metáforas filosóficas ou poéticas abstratas — PROIBIDO: "fuga silenciosa", "sombras antigas", "armadura invisível", "eco do vazio"
+    ✗ NÃO escreva como livro de filosofia — escreva como um ser humano fala com outro
+    ✗ NÃO passe de 9 palavras — o ideal são entre 4 e 7 palavras, diretas e cortantes
+    ✗ NÃO use "..." automático — use NO MÁXIMO 1 vez por post, só quando gerar tensão real
+    ✓ USE frases incompletas (open loop) que forçam o clique: "Nunca se esqueça que...", "Quer um conselho?"
+    ✓ USE verdades que dói reconhecer: "Você flerta com a mudança, mas beija o passado."
+    ✓ USE identificação imediata com dor cotidiana: "Não importa quanto tempo você perdeu — salve o resto."
+    ✓ A frase deve fazer o leitor pensar: "Nossa, isso fala exatamente da minha vida"
+    ✓ O leitor DEVE sentir necessidade física de deslizar para o Slide 2
 
-    SLIDE 2 — REVELAÇÃO (PAGA A PROMESSA)
-    Regras absolutas para o Slide 2:
-    ✓ A PRIMEIRA linha DEVE completar imediatamente a frase iniciada no Slide 1
-    ✓ A PRIMEIRA linha DEVE responder ao suspense criado — sem rodeios, sem prejuízo
-    ✗ É PROIBIDO manter o suspense no Slide 2 em vez de resolvê-lo
-    ✗ Nunca comece o Slide 2 com “Muitas pessoas não percebem...” ou qualquer frase que adie a resposta
-    Depois da primeira linha de revelação, desenvolva a ideia naturalmente pelos slides seguintes.
+    EXEMPLOS DO PADRÃO QUE FUNCIONA (perfis com 200k–800k views por post):
+    ✔ "Nunca se esqueça que..."                         → loop aberto, curiosidade irresistível
+    ✔ "O homem que passou pelo inferno"                 → identificação imediata, sem rodeio
+    ✔ "Eu acho que você está esquecendo de uma coisa," → conversa direta, tom humano
+    ✔ "Não importa quanto tempo você perdeu:"           → verdade que toca na dor real
+    ✔ "Você muda tudo, menos sua mente."               → provocação direta e reconhecível
+    ✔ "Quer um conselho?"                              → simples, direto, convida o clique
+
+    EXEMPLOS DO PADRÃO QUE NÃO FUNCIONA (ganchos fracos que NÃO geram clique):
+    ✘ "Sua paciência esconde algo maior."              → abstrato, não cria urgência
+    ✘ "O momento perfeito é sua fuga silenciosa."      → poético demais, ninguém se identifica
+    ✘ "Existe um ato invisível de respeito?"           → vago, não toca em dor real
+    ✘ "Minha jornada é um legado, não um acaso."       → genérico, sem identificação pessoal
+
+    SLIDE 2 — REVELAÇÃO (PAGA A PROMESSA DO SLIDE 1)
+    ✓ A PRIMEIRA linha DEVE completar ou responder diretamente o que foi aberto no Slide 1
+    ✓ Resolva o suspense imediatamente — sem rodeios, sem mais mistério
+    ✗ PROIBIDO começar o Slide 2 com "Muitas pessoas não percebem..." ou qualquer frase que adie a resposta
+    ✗ PROIBIDO manter o suspense — o Slide 2 é a recompensa de quem deslizou
+    Depois da revelação, desenvolva a ideia com profundidade e exemplos nos slides seguintes.
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
     INSTRUCOES_MODO = {

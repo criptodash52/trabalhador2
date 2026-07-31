@@ -417,6 +417,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
     # Define quantos vídeos baixar de forma adaptativa:
     # Para reels_leads, calcula com base no número de slides para evitar repetição visual.
+    # Para pexels_story (dia e noite): 1 único vídeo de fundo contínuo (sem cortes entre vídeos).
     # Assume ~5s por slide (leitura confortável) e ~20s por vídeo de fundo (estimativa conservadora).
     if is_reels_leads:
         num_slides_estimado = len(slides) if slides else 30
@@ -425,12 +426,19 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         num_videos_necessarios = min(20, max(6, int(duracao_necessaria_reels / 5.0) + 1))
         logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
     elif (not is_noite) and (not is_conquistador):
-        # pexels_story da Manhã: Duração calculada para leitura calma e serena (~6.5s por slide)
-        num_slides_estimado = len(slides) if slides else 6
-        duracao_necessaria_reels = num_slides_estimado * 6.5
-        num_videos_necessarios = min(15, max(4, int(duracao_necessaria_reels / 5.0) + 1))
-        logger.info(f"📊 [PEXELS_STORY MANHÃ] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários (~6.5s por slide)")
+        # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
+        num_slides_estimado = len(slides) if slides else 4
+        duracao_necessaria_reels = num_slides_estimado * 6.5  # ~6.5s por slide para leitura calma
+        num_videos_necessarios = 1  # ← ÚNICO VÍDEO DE FUNDO CONTÍNUO
+        logger.info(f"📊 [PEXELS_STORY MANHÃ] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários | 1 vídeo de fundo contínuo")
+    elif is_noite and (not is_conquistador):
+        # pexels_story_noite: 1 único vídeo de fundo contínuo + loop suave se necessário
+        num_slides_estimado = len(slides) if slides else 4
+        duracao_necessaria_reels = num_slides_estimado * 7.0  # ~7s por slide à noite
+        num_videos_necessarios = 1  # ← ÚNICO VÍDEO DE FUNDO CONTÍNUO
+        logger.info(f"📊 [PEXELS_STORY NOITE] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários | 1 vídeo de fundo contínuo")
     else:
+        # Outros tipos (conquistador, etc.) — comportamento padrão com múltiplos vídeos
         num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 7.0
         num_videos_necessarios = min(15, max(4, int(duracao_necessaria_reels / 5.0) + 1))
