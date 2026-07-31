@@ -1,16 +1,6 @@
 {
-    "ultimos_temas": [],
-    "sentimento_do_dia": "plenitude",
-    "fila_musicas_musicas-youtube": [],
-    "index_conquistador": 3,
-    "indice_arquitetura": 0,
-    "index_tema_diario": 6,
     "data_tema_do_dia": "2026-07-31",
-    "indice_gancho_conquistador": 19,
-    "index_pilar_reels_leads": 0,
-    "indice_cta": 7,
     "historico_angulos": [
-        "O poder da atenção focada: onde você coloca sua energia mental determina seu estado emocional.",
         "Sentir que não tem tempo, mas na verdade ter muito medo de dar o primeiro passo em direção ao que importa.",
         "O ciclo da ansiedade: quanto mais você evita o problema, maior ele parece na sua cabeça.",
         "Como o estresse crônico destrói sua tomada de decisão e te faz agir por puro impulso primitivo.",
@@ -34,14 +24,20 @@
         "Quando a gaiola dourada do seu emprego confortável já não compensa a sua ansiedade diária e o cansaço.",
         "A ilusão de que o planejamento infinito substitui a execução crua e imperfeita.",
         "O vício invisível em estímulos rápidos que te faz perder horas preciosas do seu dia rolando o feed.",
-        "A maturidade de perdoar o passado do outro sem usá-lo como arma nas discussões do presente."
+        "A maturidade de perdoar o passado do outro sem usá-lo como arma nas discussões do presente.",
+        "Você atrai pessoas carentes porque usa a caridade emocional para tentar se sentir útil e amado."
     ],
+    "sentimento_do_dia": "plenitude",
+    "index_pilar_reels_leads": 0,
     "index_plataforma_conquistador": 1,
-    "ultimo_carousel": 3,
-    "data_sentimento_do_dia": "2026-07-31",
-    "indice_gancho": 1,
-    "index_palette_conquistador": 4,
+    "ultimos_temas": [],
+    "indice_gancho_conquistador": 19,
+    "tema_do_dia": "conexoes",
+    "indice_arquitetura": 0,
     "historico_midia": [
+        "unsplash_jSnwo9uuhG8",
+        "unsplash_hRAHRODkczA",
+        "unsplash_KcxZTJhz9dA",
         "unsplash_wkXy8eatdas",
         "unsplash_JaSIBZmJ_Ds",
         "unsplash_9XNRBrohgtU",
@@ -538,14 +534,13 @@
         "7889095",
         "36144396",
         "6955266",
-        "6598882",
-        "7505656",
-        "7505952",
-        "10833065"
+        "6598882"
     ],
-    "tema_do_dia": "conexoes",
+    "index_palette_conquistador": 4,
+    "index_tema_diario": 6,
+    "index_animacao_conquistador": 3,
+    "fila_musicas_musicas-youtube": [],
     "historico_estilos": [
-        "Tom de lealdade e princípios: exaltar a honra, o respeito e o valor de quem permanece de verdade (ex: 'Valiosas são as pessoas que te dão coisas caras: tempo, lealdade e respeito.')",
         "Tom de acolhimento e paz mental: reconheça a luta silenciosa do leitor sem vitimismo (ex: 'Teve dias em que sua única opção era aguentar. E você aguentou. Lembre-se disso.')",
         "Tom de ironia leve e verdade cotidiana: exponha contradições humanas com leveza e um toque de humor sutil (ex: 'Fofocam sobre mim, mas continuam assistindo cada passo. Engraçado como a inveja é silenciosa.')",
         "Tom de observação humana e postura: linguagem direta e elegante sobre impor limites em silêncio (ex: 'A temporada de dar satisfação pra quem não merece já passou.')",
@@ -569,10 +564,15 @@
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
     ],
+    "indice_cta": 7,
+    "ultimo_carousel": 3,
+    "data_sentimento_do_dia": "2026-07-31",
+    "indice_gancho": 2,
+    "index_conquistador": 3,
     "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Egzod & Maestro Chives - Royalty (Lyrics) ft. Neoni.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/grand_project-wonders-of-the-earth-550792.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-vocal-background-music-562024.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/kontraa-no-sleep-hiphop-music-473847.mp3",
@@ -611,6 +611,5 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/the_mountain-background-music-159125 (1).mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-cinematic-trailer-music-562026.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/jumadiharyanto07-faded-memories-218913.mp3"
-    ],
-    "index_animacao_conquistador": 3
+    ]
 }
