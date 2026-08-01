@@ -469,11 +469,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     # Para pexels_story (dia e noite): 1 único vídeo de fundo contínuo (sem cortes entre vídeos).
     # Assume ~5s por slide (leitura confortável) e ~20s por vídeo de fundo (estimativa conservadora).
     if is_reels_leads:
-        num_slides_estimado = len(slides) if slides else 30
+        num_slides_estimado = len(slides) if slides else 6
         duracao_necessaria_reels = min(num_slides_estimado * 7, 180)  # max 3 min, 7s por slide
-        # Baixa vídeos suficientes para cobrir toda a duração sem precisar de loop (5s por clip)
-        num_videos_necessarios = min(20, max(6, int(duracao_necessaria_reels / 5.0) + 1))
-        logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
+        # 1 vídeo por slide: garante sincronização perfeita entre corte de vídeo e troca de texto
+        num_videos_necessarios = num_slides_estimado
+        logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando {num_videos_necessarios} vídeos (1 por slide)")
     elif (not is_noite) and (not is_conquistador):
         # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
@@ -487,11 +487,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         num_videos_necessarios = 1  # ← ÚNICO VÍDEO DE FUNDO CONTÍNUO
         logger.info(f"📊 [PEXELS_STORY NOITE] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários | 1 vídeo de fundo contínuo")
     else:
-        # Outros tipos (conquistador, etc.) — comportamento padrão com múltiplos vídeos
+        # Conquistador: 1 vídeo por slide para sincronização perfeita
         num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 7.0
-        num_videos_necessarios = min(15, max(4, int(duracao_necessaria_reels / 5.0) + 1))
-        logger.info(f"📊 [PEXELS_STORY] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando até {num_videos_necessarios} vídeos únicos")
+        num_videos_necessarios = num_slides_estimado
+        logger.info(f"📊 [CONQUISTADOR] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando {num_videos_necessarios} vídeos (1 por slide)")
 
     # --- BUSCA DE VÍDEOS: ordem depende da rotação do Conquistador ---
     # plataforma_principal_conquistador: None=padrão(Pixabay→Pexels), 0=Pixabay→Pexels, 1=Pexels→Pixabay
@@ -647,16 +647,45 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         for fn in temp_vids:
             clip_candidatos.append(VideoFileClip(fn))
             
-        if len(clip_candidatos) == 1:
+        if (is_reels_leads or is_conquistador) and slides:
+            # ── SINCRONIZAÇÃO PERFEITA: cada vídeo dura exatamente o mesmo que seu slide de texto ──
+            total_s = len(slides)
+            _dur_gancho = 5.0
+            _tempo_slide = (duracao_necessaria_reels - _dur_gancho) / max(1, total_s - 1) if total_s > 1 else duracao_necessaria_reels
+            _duracoes_por_slide = [_dur_gancho] + [_tempo_slide] * (total_s - 1)
+
+            import moviepy.video.fx.all as _vfx_sync
+            width_target  = min(c.w for c in clip_candidatos)
+            height_target = min(c.h for c in clip_candidatos)
+
+            clips_sincronizados = []
+            for i in range(total_s):
+                c = clip_candidatos[i % len(clip_candidatos)]  # cicla se a API retornar menos vídeos que slides
+                dur_s = _duracoes_por_slide[i]
+                # Faz loop no vídeo se ele for mais curto que a duração do slide
+                if c.duration < dur_s:
+                    c = c.fx(_vfx_sync.loop, duration=dur_s + 0.1)
+                c_sub = c.subclip(0, dur_s)
+                if c_sub.w != width_target or c_sub.h != height_target:
+                    c_sub = c_sub.resize((width_target, height_target))
+                clips_sincronizados.append(c_sub)
+
+            if len(clips_sincronizados) > 1:
+                clip = concatenate_videoclips(clips_sincronizados, method="compose")
+            else:
+                clip = clips_sincronizados[0]
+            logger.info(f"✅ [SYNC] {len(clips_sincronizados)} segmentos sincronizados | gancho={_dur_gancho:.0f}s | slides={_tempo_slide:.1f}s cada")
+
+        elif len(clip_candidatos) == 1:
             clip = clip_candidatos[0]
         else:
             logger.info(f"🔗 Concatendo {len(clip_candidatos)} vídeos diferentes com micro-cortes dinâmicos...")
             width_target = min(c.w for c in clip_candidatos)
             height_target = min(c.h for c in clip_candidatos)
-            
+
             # Calcula a duração de corte por vídeo para cobrir toda a mensagem sem loops
             tempo_corte_por_video = max(5.0, duracao_necessaria_reels / len(clip_candidatos))
-            
+
             clips_redimensionados = []
             for c in clip_candidatos:
                 c_sub = c.subclip(0, min(c.duration, tempo_corte_por_video))
@@ -664,7 +693,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     clips_redimensionados.append(c_sub.resize((width_target, height_target)))
                 else:
                     clips_redimensionados.append(c_sub)
-                    
+
             clip = concatenate_videoclips(clips_redimensionados, method="compose")
         
         # Controle de duração (agora usado para ambos: reels_leads e pexels_story)
