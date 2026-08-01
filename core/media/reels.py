@@ -265,9 +265,11 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             altura_linha = fonte_size + 14
             y_centro = (H - (len(linhas) * altura_linha)) / 2
 
-            # Cor principal (branco) e sombra
-            COR_PRINCIPAL = (255, 255, 255, 255)
-            COR_SOMBRA    = (0, 0, 0, 40)
+            # Cor principal do dia da semana (degradê vibrante) e sombra
+            from core.media.pexels_story import obter_paleta_do_dia
+            _paleta_hoje = obter_paleta_do_dia()
+            COR_PRINCIPAL = (*_paleta_hoje[0], 255)
+            COR_SOMBRA    = (0, 0, 0, 160)
             COR_CINZA     = (180, 180, 180, 255)
             COR_OURO      = (250, 185, 55, 255)
 

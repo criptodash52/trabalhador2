@@ -325,6 +325,10 @@ def _gerar_carrossel(img, W_full, H, dados):
     estilo_sorteado = obter_fonte_do_dia(tipo="carousel")
     print(f"🎨 Usando fonte oficial no Carrossel: {estilo_sorteado}")
     
+    # Cor do dia da semana para o texto
+    from core.media.pexels_story import obter_paleta_do_dia
+    _cor_dia_rgb = tuple(obter_paleta_do_dia()[0])
+
     # Fontes maiores para garantir legibilidade no carrossel 1080x1080
     font_capa, font_slides, _ = carregar_fontes(tamanho_display=86, tamanho_body=72, tamanho_detalhe=26, estilo=estilo_sorteado)
     font_sub = carregar_fontes(tamanho_display=30, tamanho_body=30, tamanho_detalhe=30, estilo=estilo_sorteado)[0]
@@ -380,7 +384,7 @@ def _gerar_carrossel(img, W_full, H, dados):
             linhas = textwrap.wrap(texto, width=18)
             y_inicial = (slide_H - (len(linhas) * 105)) / 2 - 40
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 105), linha, font_capa, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 105), linha, font_capa, fill=_cor_dia_rgb, anchor="ms")
             draw_text_with_shadow(draw, (slide_W/2, slide_H - 55), "Arrasta para o lado ->", font_sub, fill=CORES["destaque"], anchor="ms")
             
         elif texto == "CTA":  # Slide Final
@@ -402,13 +406,13 @@ def _gerar_carrossel(img, W_full, H, dados):
                     linhas_finais.append("")  # mantém linha vazia (espaçamento)
             y_inicial = slide_H * 0.25
             for i, linha in enumerate(linhas_finais):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 78), linha, font_slides, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 78), linha, font_slides, fill=_cor_dia_rgb, anchor="ms")
                 
         else:  # Slides internos (Inter/Montserrat)
             linhas = textwrap.wrap(texto, width=20)
             y_inicial = (slide_H - (len(linhas) * 90)) / 2
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 90), linha, font_slides, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 90), linha, font_slides, fill=_cor_dia_rgb, anchor="ms")
             
         caminho = f"carousel_{uuid.uuid4().hex}_{idx}.jpg"
         slide_img.save(caminho, "JPEG", quality=95)
@@ -614,6 +618,9 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
         Y_MIN_TEXTO = 150       # topo livre — texto pode subir mais
         Y_MAX_TEXTO = H - 280   # acima da marca d'água + folga
 
+        from core.media.pexels_story import obter_paleta_do_dia
+        _cor_dia_estatico = tuple(obter_paleta_do_dia()[0])
+
         if layout_style == "bottom":
             font_display_bot, _, _ = carregar_fontes(42, 24, 24, estilo=estilo_fonte)
             espacamento = 55
@@ -622,7 +629,7 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
             # Garante que não sobe acima do emblema
             y_inicial = max(y_inicial, Y_MIN_TEXTO)
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display_bot, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display_bot, fill=_cor_dia_estatico, anchor="ms")
                 
         elif layout_style == "quote":
             espacamento = 60
@@ -630,7 +637,7 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
             y_inicial = (H - bloco_h) / 2 - 100
             y_inicial = max(y_inicial, Y_MIN_TEXTO)
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (100, y_inicial + i * espacamento), linha, font_display, fill=CORES["texto_principal"], anchor="ls")
+                draw_text_with_shadow(draw, (100, y_inicial + i * espacamento), linha, font_display, fill=_cor_dia_estatico, anchor="ls")
             draw.line([(70, y_inicial - 50), (70, y_inicial + bloco_h)], fill=CORES["destaque"], width=8)
             
         else:
@@ -642,7 +649,7 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
             if y_inicial + bloco_h > Y_MAX_TEXTO:
                 y_inicial = Y_MAX_TEXTO - bloco_h
             for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display, fill=CORES["texto_principal"], anchor="ms")
+                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display, fill=_cor_dia_estatico, anchor="ms")
             
         _uid = uuid.uuid4().hex
         caminho_imagem = f"story_pronto_{_uid}_{idx}.jpg" if tipo in ["story", "story_manha", "story_tarde", "test"] else f"post_pronto_{_uid}_{idx}.jpg"
