@@ -795,13 +795,13 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         # ─────────────────────────────────────────────────────────────────────
 
         prompt = f"""
-        Você é um estrategista de conteúdo e especialista em captação de leais no Instagram para o perfil "@codigo.da.sabedoria_".
-        Sua missão é criar um VÍDEO DE ALTA CONVERSÃO (Reels Leads) de 4 A 6 SLIDES focado em BENEFÍCIO DIRETO, OPORTUNIDADE EXCLUSIVA E APLICAÇÃO PRÁTICA.
+        Você é um estrategista de conteúdo e especialista em captação de leads no Instagram para o perfil "@codigo.da.sabedoria_".
+        Sua missão é criar um VÍDEO DE ALTA CONVERSÃO (Reels Leads) de 4 A 6 SLIDES focado em BENEFÍCIO DIRETO, ANCORAGEM EM DORES REAIS E ENTREGA TANGÍVEL.
         
-        PROIBIDO ABSOLUTAMENTE:
-        - NÃO remoa dores nem use frases de autoajuda abstratas (ex: "fuga silenciosa", "calar a voz interna", "plenitude").
-        - NÃO trate o material como um "PDF gratuito" ou "anúncio chato". Trataremos o material como a "Edição Semanal do Código da Sabedoria" — um plano de ação prático e exclusivo.
-        - As pessoas não querem teorias: elas querem OPORTUNIDADE, EVOLUÇÃO, MAESTRIA, RESULTADO E PODER SOBRE A PRÓPRIA ROTINA.
+        REGRAS DE COPY E TOM DE VOZ (RIGOROSO):
+        - PROIBIDO jargões abstratos de coach/guru (ex: "bússola interna", "calar a voz interna", "negociação da sua verdade", "plenitude").
+        - Substitua metáforas por DORES CONCRETAS E SITUAÇÕES REAIS (ex: dizer 'sim' quando quer dizer 'não', pedir permissão para algo que já sabe fazer, guardar projetos na gaveta por receio, trabalhar o dia todo e sentir que correu em círculos).
+        - Trate a Edição Semanal como um material prático, tangível e de valor imediato (um checklist, um guia em PDF, um framework de passos).
 
         {evitar_repeticao_leads}
 
@@ -811,40 +811,43 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Contexto do Material: {resumo_pdf[:300]}
         =======================================================
 
-        ESTRUTURA OBRIGATÓRIA — REELS LEADS DE ALTA CONVERSÃO (DE 4 A 6 SLIDES NO TOTAL):
+        ESTRUTURA OBRIGATÓRIA — REELS LEADS DE ALTA CONVERSÃO (DE 4 A 6 SLIDES):
 
-        SLIDE 1 — GANCHO DE EVOLUÇÃO E DIFERENCIAL (4 a 8 palavras):
-        - Foque em quebrar a rotina cansativa ou mostrar que o diferencial está na atitude/ação real.
-        - Exemplo de tom: "O diferencial não está no que você faz hoje," ou "Quem busca evolução real não perde tempo com desculpas."
-        - Frase direta que para o scroll imediatamente. Sem "..." automático.
+        SLIDE 1 — GANCHO DE CONTRASTE (4 a 8 palavras):
+        - Frase direta e impactante que para o scroll imediatamente. Exemplo: "Pare de seguir. Comece a comandar." ou "Quem busca evolução real não pede permissão."
 
-        SLIDES INTERMEDIÁRIOS (De 2 a 4 slides de desenvolvimento/convencimento):
-        - Mostre que a virada de chave acontece na execução, apresente o problema/desafio prático e a oportunidade da Edição Semanal do Código da Sabedoria ("{titulo_pdf_limpo}").
-        - Traga insights fortes e instigantes que despertem o desejo do leitor pelo material prático.
+        SLIDES INTERMEDIÁRIOS — DORES REAIS E RECONHECÍVEIS (1 frase de dor por slide):
+        - Aborde situações concretas do dia a dia do leitor.
+        - Exemplos: "Você aceita rotinas que te esgotam só para não contrariar ninguém." / "Sabe exatamente o que precisa ser feito, mas continua pedindo aprovação."
 
-        SLIDE FINAL — CTA UNIFICADO (Promessa no Topo + Instrução de Comentário com Palavra-Chave no Rodapé):
-        - O último slide do vídeo (seja o 4º, 5º ou 6º slide) DEVE ser um CTA unificado.
-        - Ele DEVE conter exatamente o caractere de quebra de linha '\n' dividindo a promessa de valor do material (que ficará na parte superior do slide) da instrução direta do desafio de ação (que ficará no rodapé).
-        - A instrução do rodapé DEVE destacar a palavra 'SABEDORIA' em caixa alta e entre aspas simples.
-        - Exemplo de formato exato para o último slide: "Domine sua verdade com o Protocolo da Essência Inegociável. \n Assuma o controle: comente 'SABEDORIA' e receba seu plano de ação imediato."
+        PENÚLTIMO SLIDE — FORMATO CONCRETO DO MATERIAL:
+        - Explique em uma linha simples o formato prático da Edição Semanal ("{titulo_pdf_limpo}").
+        - Exemplo: "O Protocolo da Essência é um checklist prático para tomar decisões sem hesitar." ou "Um guia em PDF com o método direto para cortar distrações."
+
+        SLIDE FINAL — CTA UNIFICADO COM ENTREGA TANGÍVEL (Promessa Tangível + Comando no Rodapé com \n):
+        - O último slide DEVE conter exatamente a quebra de linha '\n' separando o benefício concreto do comando de ação.
+        - Parte Superior: promessa tangível (ex: "Receba o mapa de execução diária para aplicar hoje mesmo." ou "Receba as 4 perguntas estratégicas para destravar sua rotina.").
+        - Parte Inferior: instrução clara destacando a palavra 'SABEDORIA' em caixa alta e entre aspas simples.
+        - Exemplo exato do slide final: "Receba o roteiro simples para eliminar a hesitação diária. \n Assuma o controle: comente 'SABEDORIA' e receba o guia no Direct."
 
         PEXELS QUERY — PILAR OBRIGATÓRIO DESTA RODADA: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
         As demais queries devem complementar com o mesmo visual cinematográfico e noturno: {pilar_descricao}.
 
         LEGENDA (Máximo 3 a 4 linhas):
-        - Focada no benefício útil e no poder da escolha consciente.
-        - DEVE terminar com a chamada desafiadora destacando a palavra 'SABEDORIA' entre aspas simples. Exemplo: "Comente 'SABEDORIA' abaixo que eu te envio o acesso à edição da semana no Direct 👇"
+        - Focada no benefício útil e direto sem jargões.
+        - DEVE terminar com a chamada destacando a palavra 'SABEDORIA' entre aspas simples. Exemplo: "Comente 'SABEDORIA' abaixo que eu te envio o guia prático no Direct 👇"
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE conter de 4 a 6 frases, sendo a última o CTA unificado com a quebra de linha \n):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE conter de 4 a 6 frases, sendo a última o CTA unificado com \n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
-            "O diferencial não está no que você faz hoje,",
-            "A sabedoria traz evolução quando você a aplica. Afinal, conhecimento sem ação de nada vale.",
-            "Algo que tem feito a diferença na vida de milhares é a edição semanal do Código da Sabedoria.",
-            "Domine sua verdade com o Protocolo da Essência Inegociável. \n Assuma o controle: comente 'SABEDORIA' e receba seu plano de ação imediato."
+            "Pare de seguir. Comece a comandar.",
+            "Você diz 'sim' para os outros enquanto adia o que é importante para você.",
+            "Sabe exatamente o que precisa ser feito, mas continua pedindo aprovação.",
+            "Esta edição é um checklist prático para tomar decisões sem hesitar.",
+            "Receba o guia de 3 passos para parar de negociar suas prioridades. \n Assuma o controle: comente 'SABEDORIA' e receba o material no Direct."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
