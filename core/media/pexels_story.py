@@ -115,19 +115,24 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
 
     return np.array(img)
 
-# 5 paletas de degradê disponíveis para o Conquistador
-PALETAS_CONQUISTADOR = [
-    # 1. Visão Profética
-    ([176, 38, 255], [255, 255, 255], [0, 51, 255]),
-    # 2. Fogo & Glória
-    ([220, 20, 60], [255, 255, 255], [255, 140, 0]),
-    # 3. Natureza & Paz
-    ([0, 168, 107], [255, 255, 255], [30, 144, 255]),
-    # 4. Rei & Sabedoria
-    ([255, 185, 0], [255, 255, 255], [80, 0, 130]),
-    # 5. Paixão & Força
-    ([255, 20, 147], [255, 255, 255], [180, 0, 30]),
-]
+# 7 Paletas de Degradê (Uma para cada dia da semana: 0=Segunda ... 6=Domingo)
+PALETAS_POR_DIA = {
+    0: ([176, 38, 255], [255, 255, 255], [0, 51, 255]),   # Segunda: Visão Profética (Roxo → Branco → Azul)
+    1: ([220, 20, 60],  [255, 255, 255], [255, 140, 0]),  # Terça: Fogo & Glória (Vermelho → Branco → Laranja)
+    2: ([0, 168, 107],  [255, 255, 255], [30, 144, 255]), # Quarta: Natureza & Paz (Verde → Branco → Azul Céu)
+    3: ([255, 185, 0],  [255, 255, 255], [80, 0, 130]),   # Quinta: Rei & Sabedoria (Dourado → Branco → Roxo Escuro)
+    4: ([255, 20, 147], [255, 255, 255], [180, 0, 30]),   # Sexta: Paixão & Força (Rosa → Branco → Vermelho Escuro)
+    5: ([255, 215, 0],  [255, 255, 255], [139, 90, 43]),  # Sábado: Abundância & Ouro (Dourado Âmbar → Branco → Bronze)
+    6: ([0, 229, 255],  [255, 255, 255], [0, 38, 77]),    # Domingo: Clareza & Imensidão (Ciano Néon → Branco → Azul Noturno)
+}
+
+PALETAS_CONQUISTADOR = list(PALETAS_POR_DIA.values())
+
+def obter_paleta_do_dia():
+    """Retorna a paleta de degradê exclusiva do dia da semana atual."""
+    from datetime import datetime
+    dia = datetime.now().weekday()
+    return PALETAS_POR_DIA.get(dia, PALETAS_POR_DIA[0])
 
 def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta=None):
     if frame_array.dtype != np.uint8:
@@ -891,23 +896,20 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 frame = clip.get_frame(t)
                 frame = _aplicar_efeito_cinematico(frame, efeito_escolhido)
                 
-                # Conquistador: degradê com paleta sequencial em todos os slides
-                if is_conquistador:
-                    frame = _adicionar_texto_degrade(
-                        frame, texto_completo, fonte_normal,
-                        chars_to_show=chars_to_show, fade_alpha=fade_alpha,
-                        deslocamento_y=deslocamento_y, paleta=paleta_conquistador
-                    )
-                elif idx == idx_cta:
-                    # Última cena dos demais formatos = CTA em destaque dourado
+                # Degradê colorido padronizado pelo dia da semana para todas as postagens
+                paleta_do_dia = obter_paleta_do_dia()
+                if idx == idx_cta:
+                    # Última cena dos formatos = CTA unificado com destaque dourado na palavra-chave
                     frame = _adicionar_texto_cta(
                         frame, texto_completo, fonte_cta,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
                     )
                 else:
-                    frame = _adicionar_texto_frame(
+                    # Todos os slides normais de todos os formatos usam a cor exclusiva do dia da semana
+                    frame = _adicionar_texto_degrade(
                         frame, texto_completo, fonte_normal,
-                        chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
+                        chars_to_show=chars_to_show, fade_alpha=fade_alpha,
+                        deslocamento_y=deslocamento_y, paleta=paleta_do_dia
                     )
                 
                 # Desenha o Selo foto_perfil.png no topo, a Marca d'água no rodapé e o efeito de brilho no CTA
