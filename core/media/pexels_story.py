@@ -105,37 +105,10 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
         else:
             linha_render = linha
 
-        # Se a linha contém 'SABEDORIA', renderiza palavra por palavra para destacar 'SABEDORIA' em Dourado
-        if "SABEDORIA" in linha_render.upper():
-            palavras = linha_render.split(" ")
-            # Calcula a largura total para centralização
-            largura_total_linha = 0
-            larguras_palavras = []
-            espaco_w = draw.textbbox((0, 0), " ", font=fonte)[2] - draw.textbbox((0, 0), " ", font=fonte)[0]
-            for p in palavras:
-                pw = draw.textbbox((0, 0), p, font=fonte)[2] - draw.textbbox((0, 0), p, font=fonte)[0]
-                larguras_palavras.append(pw)
-                largura_total_linha += pw
-            largura_total_linha += espaco_w * (len(palavras) - 1)
-            
-            cur_x = (w - largura_total_linha) // 2
-            for p, pw in zip(palavras, larguras_palavras):
-                p_clean = p.upper().replace("'", "").replace('"', '').replace(',', '').replace('.', '')
-                if p_clean == "SABEDORIA":
-                    cor_palavra = (255, 215, 0, int(255 * fade_alpha)) # Dourado Brilhante #FFD700
-                else:
-                    cor_palavra = (255, 255, 255, int(255 * fade_alpha)) # Branco Puro
-                
-                # Sombra suave
-                draw.text((cur_x + 3, y + 3), p, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
-                # Texto com contorno preto
-                draw.text((cur_x, y), p, font=fonte, fill=cor_palavra, stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-                cur_x += pw + espaco_w
-        else:
-            # Sombra suave + Contorno preto com preenchimento Branco Puro
-            draw.text((x + 3, y + 3), linha_render, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
-            draw.text((x, y), linha_render, font=fonte, fill=(255, 255, 255, int(255 * fade_alpha)), stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-            
+        # Slides normais: texto sempre branco — destaque dourado só existe no slide do CTA
+        draw.text((x + 3, y + 3), linha_render, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
+        draw.text((x, y), linha_render, font=fonte, fill=(255, 255, 255, int(255 * fade_alpha)), stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+
         y += alt + espaco_entre
 
     img = Image.alpha_composite(img.convert("RGBA"), txt_layer).convert("RGB")
@@ -261,11 +234,31 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
 
 
 def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
-    """Desenha o CTA final com o mesmo estilo limpo dos demais slides — sem caixa, sem flash amarelo."""
+    """Desenha o CTA final destacando a palavra-chave entre aspas simples em Dourado e tamanho maior."""
+    import re as _re
     if frame_array.dtype != np.uint8:
         frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
     img = Image.fromarray(frame_array)
     w, h = img.size
+
+    # Detecta a palavra-chave entre aspas simples no texto (ex: 'SABEDORIA')
+    # Normaliza para maiúsculas para comparação
+    match_keyword = _re.search(r"'([^']+)'", texto)
+    keyword_destaque = match_keyword.group(1).upper().strip() if match_keyword else None
+
+    # Cria uma fonte maior para a palavra-chave (18% maior que a base do CTA)
+    tamanho_cta_base = getattr(fonte_cta, 'size', None)
+    fonte_keyword = None
+    if keyword_destaque and tamanho_cta_base:
+        tamanho_keyword = max(tamanho_cta_base, int(tamanho_cta_base * 1.18))
+        try:
+            caminho_fonte = getattr(fonte_cta, 'path', None)
+            if caminho_fonte and os.path.exists(caminho_fonte):
+                fonte_keyword = ImageFont.truetype(caminho_fonte, tamanho_keyword)
+        except Exception:
+            pass
+    if fonte_keyword is None:
+        fonte_keyword = fonte_cta  # Fallback: mesma fonte se não conseguir carregar maior
 
     # Camada de texto transparente (sem fundo, sem caixa)
     txt_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
@@ -274,43 +267,101 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
     margem_px = int(w * 0.075)
     largura_max_texto = w - (margem_px * 2)
 
-    linhas = _quebrar_texto_por_pixels(draw, texto, fonte_cta, largura_max_texto)
-    if not linhas:
-        return frame_array
+    # Divide o texto se houver uma quebra de linha física '\n'
+    partes = [p.strip() for p in texto.split("\n") if p.strip()]
+    if len(partes) >= 2:
+        texto_topo = partes[0]
+        texto_baixo = partes[1]
+    else:
+        texto_topo = ""
+        texto_baixo = texto
 
-    alturas = []
-    larguras = []
-    for l in linhas:
+    linhas_topo = _quebrar_texto_por_pixels(draw, texto_topo, fonte_cta, largura_max_texto) if texto_topo else []
+    linhas_baixo = _quebrar_texto_por_pixels(draw, texto_baixo, fonte_cta, largura_max_texto)
+
+    # Calcula as dimensões das linhas do topo
+    alturas_topo = []
+    larguras_topo = []
+    for l in linhas_topo:
         bb = draw.textbbox((0, 0), l, font=fonte_cta)
-        alturas.append(bb[3] - bb[1])
-        larguras.append(bb[2] - bb[0])
+        alturas_topo.append(bb[3] - bb[1])
+        larguras_topo.append(bb[2] - bb[0])
+
+    # Calcula as dimensões das linhas de baixo
+    alturas_baixo = []
+    larguras_baixo = []
+    for l in linhas_baixo:
+        bb = draw.textbbox((0, 0), l, font=fonte_cta)
+        alturas_baixo.append(bb[3] - bb[1])
+        larguras_baixo.append(bb[2] - bb[0])
 
     espaco_entre = 14
     padding_v = 20
-    total_h = sum(alturas) + espaco_entre * (len(linhas) - 1) + padding_v * 2
-    by0 = (h - total_h) // 2
+    divisor_espaco = 65  # Espaço visual maior entre o bloco superior (promessa) e o bloco inferior (comando)
 
+    if linhas_topo:
+        total_h = sum(alturas_topo) + espaco_entre * (len(linhas_topo) - 1) + divisor_espaco + sum(alturas_baixo) + espaco_entre * (len(linhas_baixo) - 1) + padding_v * 2
+    else:
+        total_h = sum(alturas_baixo) + espaco_entre * (len(linhas_baixo) - 1) + padding_v * 2
+
+    by0 = (h - total_h) // 2
     y = by0 + padding_v + deslocamento_y
-    chars_drawn = 0
-    for linha, alt, lw in zip(linhas, alturas, larguras):
+
+    # 1. Renderiza as linhas do Topo (Promessa de Valor) em Branco Puro
+    if linhas_topo:
+        for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
+            x = (w - lw) // 2
+            # Sombra suave + contorno preto com texto Branco Puro
+            draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+            draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
+                      stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+            y += alt + espaco_entre
+        y += divisor_espaco - espaco_entre
+
+    # 2. Renderiza as linhas de Baixo (CTA/Desafio) com destaque dourado se contiver a palavra-chave
+    for linha, alt, lw in zip(linhas_baixo, alturas_baixo, larguras_baixo):
         x = (w - lw) // 2
 
-        if chars_to_show is not None:
-            if chars_drawn >= chars_to_show:
-                break
-            linha_len = len(linha)
-            if chars_drawn + linha_len > chars_to_show:
-                linha_render = linha[:chars_to_show - chars_drawn]
-            else:
-                linha_render = linha
-            chars_drawn += linha_len + 1
-        else:
-            linha_render = linha
+        # Verifica se esta linha contém a palavra-chave de destaque
+        linha_upper = linha.upper()
+        contem_keyword = keyword_destaque and keyword_destaque in linha_upper
 
-        # Sombra suave + contorno preto (igual ao _adicionar_texto_frame)
-        draw.text((x + 3, y + 3), linha_render, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
-        draw.text((x, y), linha_render, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
-                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+        if contem_keyword:
+            # Renderiza palavra por palavra: destaca a keyword em Dourado + fonte maior
+            palavras = linha.split(" ")
+            espaco_w = draw.textbbox((0, 0), " ", font=fonte_cta)[2] - draw.textbbox((0, 0), " ", font=fonte_cta)[0]
+            larguras_palavras = []
+            for p in palavras:
+                # Usa fonte maior se for a keyword, normal para as demais
+                p_clean = p.upper().replace("'", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '')
+                f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
+                pw = draw.textbbox((0, 0), p, font=f_usar)[2] - draw.textbbox((0, 0), p, font=f_usar)[0]
+                larguras_palavras.append((pw, f_usar, p_clean))
+
+            # Recalcula a largura total considerando as fontes diferentes por palavra
+            largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
+            cur_x = (w - largura_total_linha) // 2
+
+            for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
+                if p_clean == keyword_destaque:
+                    # Palavra-chave: Dourado Brilhante + maior
+                    cor_palavra = (255, 215, 0, int(255 * fade_alpha))  # #FFD700
+                    bb_k = draw.textbbox((0, 0), p, font=f_usar)
+                    alt_k = bb_k[3] - bb_k[1]
+                    y_offset = (alt - alt_k) // 2  # Centraliza verticalmente com as demais palavras
+                    draw.text((cur_x + 3, y + y_offset + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
+                    draw.text((cur_x, y + y_offset), p, font=f_usar, fill=cor_palavra,
+                              stroke_width=3, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                else:
+                    draw.text((cur_x + 3, y + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
+                    draw.text((cur_x, y), p, font=f_usar, fill=(255, 255, 255, int(255 * fade_alpha)),
+                              stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                cur_x += pw + espaco_w
+        else:
+            # Linha sem keyword: texto todo branco (padrão do CTA)
+            draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+            draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
+                      stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
         y += alt + espaco_entre
 
     # Sem escurecimento extra — o overlay da marca já cobre o vídeo inteiro

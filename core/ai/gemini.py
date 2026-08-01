@@ -796,7 +796,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
 
         prompt = f"""
         Você é um estrategista de conteúdo e especialista em captação de leais no Instagram para o perfil "@codigo.da.sabedoria_".
-        Sua missão é criar um VÍDEO DE ALTA CONVERSÃO (Reels Leads) de EXATAMENTE 4 SLIDES focado em BENEFÍCIO DIRETO, OPORTUNIDADE EXCLUSIVA E APLICAÇÃO PRÁTICA.
+        Sua missão é criar um VÍDEO DE ALTA CONVERSÃO (Reels Leads) de 4 A 6 SLIDES focado em BENEFÍCIO DIRETO, OPORTUNIDADE EXCLUSIVA E APLICAÇÃO PRÁTICA.
         
         PROIBIDO ABSOLUTAMENTE:
         - NÃO remoa dores nem use frases de autoajuda abstratas (ex: "fuga silenciosa", "calar a voz interna", "plenitude").
@@ -811,24 +811,22 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Contexto do Material: {resumo_pdf[:300]}
         =======================================================
 
-        ESTRUTURA OBRIGATÓRIA — REELS LEADS DE ALTA CONVERSÃO (EXATAMENTE 4 SLIDES):
+        ESTRUTURA OBRIGATÓRIA — REELS LEADS DE ALTA CONVERSÃO (DE 4 A 6 SLIDES NO TOTAL):
 
         SLIDE 1 — GANCHO DE EVOLUÇÃO E DIFERENCIAL (4 a 8 palavras):
         - Foque em quebrar a rotina cansativa ou mostrar que o diferencial está na atitude/ação real.
         - Exemplo de tom: "O diferencial não está no que você faz hoje," ou "Quem busca evolução real não perde tempo com desculpas."
         - Frase direta que para o scroll imediatamente. Sem "..." automático.
 
-        SLIDE 2 — O PRINCÍPIO DA APLICAÇÃO PRÁTICA (6 a 10 palavras):
-        - Mostre que a virada de chave acontece na execução, não na teoria.
-        - Exemplo de tom: "A sabedoria traz evolução quando você a aplica. Afinal, conhecimento sem ação de nada vale."
+        SLIDES INTERMEDIÁRIOS (De 2 a 4 slides de desenvolvimento/convencimento):
+        - Mostre que a virada de chave acontece na execução, apresente o problema/desafio prático e a oportunidade da Edição Semanal do Código da Sabedoria ("{titulo_pdf_limpo}").
+        - Traga insights fortes e instigantes que despertem o desejo do leitor pelo material prático.
 
-        SLIDE 3 — A OPORTUNIDADE E A EDIÇÃO SEMANAL (8 a 12 palavras):
-        - Apresente o benefício da Edição Semanal do Código da Sabedoria ("{titulo_pdf_limpo}").
-        - Exemplo de tom: "Algo que tem feito a diferença na vida de milhares é a edição semanal do Código da Sabedoria."
-
-        SLIDE 4 — CTA COM DESAFIO E PALAVRA-CHAVE 'SABEDORIA' (10 a 15 palavras):
-        - Faça uma chamada com desafio pessoal e destaque a palavra 'SABEDORIA' em caixa alta e entre aspas simples.
-        - Exemplo de tom: "Se você realmente deseja mudar algo na sua vida, comente 'SABEDORIA', e eu te provo que a mudança começa com uma pequena atitude."
+        SLIDE FINAL — CTA UNIFICADO (Promessa no Topo + Instrução de Comentário com Palavra-Chave no Rodapé):
+        - O último slide do vídeo (seja o 4º, 5º ou 6º slide) DEVE ser um CTA unificado.
+        - Ele DEVE conter exatamente o caractere de quebra de linha '\n' dividindo a promessa de valor do material (que ficará na parte superior do slide) da instrução direta do desafio de ação (que ficará no rodapé).
+        - A instrução do rodapé DEVE destacar a palavra 'SABEDORIA' em caixa alta e entre aspas simples.
+        - Exemplo de formato exato para o último slide: "Domine sua verdade com o Protocolo da Essência Inegociável. \n Assuma o controle: comente 'SABEDORIA' e receba seu plano de ação imediato."
 
         PEXELS QUERY — PILAR OBRIGATÓRIO DESTA RODADA: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
@@ -839,14 +837,14 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - DEVE terminar com a chamada desafiadora destacando a palavra 'SABEDORIA' entre aspas simples. Exemplo: "Comente 'SABEDORIA' abaixo que eu te envio o acesso à edição da semana no Direct 👇"
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE conter EXATAMENTE 4 frases):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE conter de 4 a 6 frases, sendo a última o CTA unificado com a quebra de linha \n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
             "O diferencial não está no que você faz hoje,",
             "A sabedoria traz evolução quando você a aplica. Afinal, conhecimento sem ação de nada vale.",
             "Algo que tem feito a diferença na vida de milhares é a edição semanal do Código da Sabedoria.",
-            "Se você realmente deseja mudar algo na sua vida, comente 'SABEDORIA', e eu te provo que a mudança começa com uma pequena atitude."
+            "Domine sua verdade com o Protocolo da Essência Inegociável. \n Assuma o controle: comente 'SABEDORIA' e receba seu plano de ação imediato."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
