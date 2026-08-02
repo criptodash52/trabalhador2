@@ -169,5 +169,5 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add gerador_pdf/output/ultimo_conteudo.json estado_migrado.json analytics/dados/recomendacoes.json analytics/dados/memoria_estrategica.json || true
           git diff --staged --quiet || git commit -m "chore: atualizar estado [skip ci]"
-          git pull --rebase origin main || true
+          git pull --rebase -X theirs origin main || true
           git push
