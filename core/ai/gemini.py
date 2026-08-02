@@ -763,28 +763,28 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         PILARES_VISUAIS_LEADS = [
             {
                 "nome": "Corrida Urbana Noturna",
-                "exemplo_query": "athlete running dark urban street motion blur neon amber night",
-                "descricao": "pessoas correndo à noite em ruas urbanas com iluminação néon/âmbar",
+                "exemplo_query": "athlete running dark urban street motion blur neon amber night cinematic",
+                "descricao": "pessoas correndo estritamente à noite em ruas escuras com néon/âmbar",
             },
             {
-                "nome": "Combate e Esportes Intensos",
-                "exemplo_query": "MMA fighter training dark gym shadows dramatic light combat boxing",
-                "descricao": "lutas de boxe/MMA, treinos em ginásio escuro, ringues com iluminação dramática",
+                "nome": "Combate Noturno Dramático",
+                "exemplo_query": "boxer training dark room spotlight shadows dramatic night combat cinematic 35mm",
+                "descricao": "lutas de boxe/MMA em salas escuras com iluminação dramática de holofote, fumaça e sombras intensas (PROIBIDO salas claras de academia de dia)",
             },
             {
                 "nome": "Ciclismo Urbano Noturno",
-                "exemplo_query": "cyclist dark city road neon lights motion blur night amber speed",
-                "descricao": "corridas de bicicleta à noite em cidade iluminada por néon dourado",
+                "exemplo_query": "cyclist dark city road neon lights motion blur night amber speed 35mm",
+                "descricao": "corridas de bicicleta à noite em estradas escuras iluminadas por néon dourado",
             },
             {
-                "nome": "Metropole Futuristica Noturna",
-                "exemplo_query": "cyberpunk city rain neon lights dark night skyscraper reflections wet street",
-                "descricao": "metrópoles modernas à noite, néon urbano, arranha-céus, chuva com reflexos dourados",
+                "nome": "Metropole Noturna e Chuva",
+                "exemplo_query": "cyberpunk city rain neon lights dark night skyscraper reflections wet street 35mm",
+                "descricao": "metrópoles escuras à noite, néon urbano, arranha-céus, chuva com reflexos dourados",
             },
             {
-                "nome": "Silhueta Cinematografica",
-                "exemplo_query": "man silhouette dark room city window night dramatic cinematic shadow noir",
-                "descricao": "silhuetas dramáticas de pessoas diante de janelas com vista noturna, luz contrastada e cinematográfica",
+                "nome": "Silhueta Noturna Contemplativa",
+                "exemplo_query": "man silhouette dark room city window night dramatic cinematic shadow noir 35mm",
+                "descricao": "silhuetas dramáticas noturnas diante de janelas de cidade à noite, luz contrastada e sombras intensas",
             },
         ]
         estado_leads = carregar_estado()
@@ -837,6 +837,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         PEXELS QUERY — PILAR OBRIGATÓRIO DESTA RODADA: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
         As demais queries devem complementar com o mesmo visual cinematográfico e noturno: {pilar_descricao}.
+        PROIBIDO ESTRITAMENTE: vídeos claros, gravados de dia, com luz de janela forte ao fundo ou ambientes iluminados por luz natural (ex: academias claras, parques de dia). Toda query DEVE evocar penumbra, iluminação noturna ou holofotes dramáticos.
 
         LEGENDA (Máximo 3 a 4 linhas):
         - Focada no benefício útil e direto sem jargões.

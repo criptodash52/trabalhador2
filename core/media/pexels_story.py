@@ -506,10 +506,9 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     outro_clip = None
 
 
-    # --- Rotação sequencial exclusiva do Conquistador (animação, paleta, plataforma) ---
+    # --- Rotação sequencial exclusiva do Conquistador (animação e plataforma) ---
     animacao_conquistador = None
-    paleta_conquistador = None
-    plataforma_principal_conquistador = None  # None = usa a cascata padrão
+    plataforma_principal_conquistador = None  # None = usa a cascata padrão (Pixabay -> Pexels)
 
     if is_conquistador:
         estado_conq = carregar_estado()
@@ -518,16 +517,23 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         animacao_conquistador = animacoes_lista[idx_anim]
         estado_conq["index_animacao_conquistador"] = (idx_anim + 1) % len(animacoes_lista)
 
-        idx_pal = estado_conq.get("index_palette_conquistador", 0) % len(PALETAS_CONQUISTADOR)
-        paleta_conquistador = PALETAS_CONQUISTADOR[idx_pal]
-        estado_conq["index_palette_conquistador"] = (idx_pal + 1) % len(PALETAS_CONQUISTADOR)
-
         idx_plat = estado_conq.get("index_plataforma_conquistador", 0) % 2
         plataforma_principal_conquistador = idx_plat  # 0=Pixabay primeiro, 1=Pexels primeiro
         estado_conq["index_plataforma_conquistador"] = (idx_plat + 1) % 2
 
         salvar_estado(estado_conq)
-        logger.info(f"🎨 [CONQUISTADOR] Animação: {animacao_conquistador.upper()} | Paleta: #{idx_pal+1} | Plataforma: {'Pixabay' if idx_plat == 0 else 'Pexels'}")
+        logger.info(f"🎨 [CONQUISTADOR] Animação: {animacao_conquistador.upper()} | Plataforma: {'Pixabay' if idx_plat == 0 else 'Pexels'}")
+
+    # --- Rotação de paletas exclusivas do Reels Leads ---
+    paleta_reels_leads = None
+    if is_reels_leads:
+        estado_leads = carregar_estado()
+        idx_pal_leads = estado_leads.get("index_palette_leads", 0) % len(PALETAS_LEADS)
+        paleta_reels_leads = PALETAS_LEADS[idx_pal_leads]
+        estado_leads["index_palette_leads"] = (idx_pal_leads + 1) % len(PALETAS_LEADS)
+        salvar_estado(estado_leads)
+        nome_pal = "Visão Profética (Roxo/Azul)" if idx_pal_leads == 0 else "Paixão & Força (Rosa/Vermelho)"
+        logger.info(f"🟣 [REELS_LEADS] Paleta exclusiva ativada: #{idx_pal_leads + 1} - {nome_pal}")
 
     # Define quantos vídeos baixar de forma adaptativa:
     # Para reels_leads, calcula com base no número de slides para evitar repetição visual.
@@ -985,11 +991,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         deslocamento_y=deslocamento_y, paleta=PALETA_PADRAO_MARCA
                     )
                 else:
-                    # Slides de corpo do vídeo: paleta fixa da marca (Dourado Âmbar → Branco → Bronze)
+                    # Slides de corpo do vídeo: Reels Leads usa sua paleta exclusiva alternada; demais usam a paleta da marca
+                    paleta_aplicada = paleta_reels_leads if is_reels_leads else PALETA_PADRAO_MARCA
                     frame = _adicionar_texto_degrade(
                         frame, texto_completo, fonte_normal,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha,
-                        deslocamento_y=deslocamento_y, paleta=PALETA_PADRAO_MARCA
+                        deslocamento_y=deslocamento_y, paleta=paleta_aplicada
                     )
                 
                 # Desenha o Selo foto_perfil.png no topo, a Marca d'água no rodapé e o efeito de brilho no CTA
