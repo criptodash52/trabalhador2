@@ -17,8 +17,8 @@ from loguru import logger
 def buscar_historico_por_tema(tema, tipo_post=None, limite=8):
     """
     Busca os últimos posts do mesmo TEMA no historico_posts do Firebase.
-    Retorna uma string de contexto para ser injetada no prompt da IA,
-    instruindo-a a não repetir as frases e ideias já usadas nesse tema.
+    Filtra e ordena NO PYTHON para evitar dependência de índices compostos
+    do Firebase que geram erros 400 silenciosos e deixam a IA rodar cega.
     """
     try:
         from core.analytics.db import get_db
@@ -26,12 +26,19 @@ def buscar_historico_por_tema(tema, tipo_post=None, limite=8):
         if not db:
             return ""
 
-        # Consulta: mesmo tema, ordenado do mais recente ao mais antigo
-        query = db.collection("historico_posts").where("tema", "==", tema)
+        # Busca apenas pelo tema (índice simples — nunca gera erro 400)
+        docs = db.collection("historico_posts") \
+                 .where("tema", "==", tema) \
+                 .limit(40).stream()
+        todos = [doc.to_dict() for doc in docs]
+
+        # Filtra por tipo no Python, sem depender do Firebase
         if tipo_post:
-            query = query.where("tipo", "==", tipo_post)
-        docs = query.order_by("data", direction="DESCENDING").limit(limite).stream()
-        posts_anteriores = [doc.to_dict() for doc in docs]
+            todos = [p for p in todos if p.get("tipo") == tipo_post]
+
+        # Ordena do mais recente ao mais antigo no Python
+        todos.sort(key=lambda x: x.get("data", ""), reverse=True)
+        posts_anteriores = todos[:limite]
 
         if not posts_anteriores:
             return ""
@@ -41,10 +48,14 @@ def buscar_historico_por_tema(tema, tipo_post=None, limite=8):
         msg += "        Você DEVE criar algo completamente diferente — novas frases, novas metáforas, novos ângulos:\n"
         for i, p in enumerate(posts_anteriores):
             frase = p.get("frase_visual") or ""
+            # frase_visual pode ser lista (slides) ou string
+            if isinstance(frase, list):
+                frase = " | ".join(str(s) for s in frase[:3])
             legenda_trecho = (p.get("legenda") or "")[:120]
             data = p.get("data", "")[:10]
+            tipo_reg = p.get("tipo", "")
             if frase or legenda_trecho:
-                msg += f"        * Post {i+1} ({data}): Frase='{frase[:150]}' | Legenda='{legenda_trecho}...'\n"
+                msg += f"        * Post {i+1} ({data}) [{tipo_reg}]: Frase='{str(frase)[:150]}' | Legenda='{legenda_trecho}...'\n"
         msg += "        Qualquer semelhança com os textos acima é inaceitável. Seja 100% original.\n"
         return msg
 
@@ -55,6 +66,7 @@ def buscar_historico_por_tema(tema, tipo_post=None, limite=8):
 def buscar_historico_reels_leads(limite=6):
     """
     Busca os últimos reels_leads gerados em 'historico_reels_leads' no Firebase.
+    Ordena NO PYTHON para evitar o erro 400 de índice composto do Firebase.
     Retorna string de contexto para a IA não repetir os mesmos ganchos e frases.
     """
     try:
@@ -62,10 +74,12 @@ def buscar_historico_reels_leads(limite=6):
         db = get_db()
         if not db:
             return ""
-        docs = db.collection("historico_reels_leads") \
-                 .order_by("data", direction="DESCENDING") \
-                 .limit(limite).stream()
+        # Busca sem order_by para não precisar de índice composto no Firebase
+        docs = db.collection("historico_reels_leads").limit(30).stream()
         posts = [doc.to_dict() for doc in docs]
+        # Ordena do mais recente ao mais antigo no Python
+        posts.sort(key=lambda x: x.get("data", ""), reverse=True)
+        posts = posts[:limite]
         if not posts:
             return ""
         msg = "\n        PROIBIDO REPETIR (HISTÓRICO DOS ÚLTIMOS REELS DE LEADS):\n"
