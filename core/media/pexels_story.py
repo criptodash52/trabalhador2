@@ -972,20 +972,20 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 frame = _aplicar_efeito_cinematico(frame, efeito_escolhido)
 
                 if idx == idx_cta and is_reels_leads:
-                    # Reels Leads: último slide com degradê exclusivo, alternando entre as 2 paletas
-                    frame = _adicionar_texto_cta(
-                        frame, texto_completo, fonte_cta,
-                        chars_to_show=chars_to_show, fade_alpha=fade_alpha,
-                        deslocamento_y=deslocamento_y, paleta_override=paleta_leads_atual
-                    )
-                elif idx == idx_cta:
-                    # Demais formatos: CTA padrão com branco + destaque dourado na palavra-chave
+                    # Reels Leads: Texto em Branco Puro + palavra entre aspas em Dourado Brilhante
                     frame = _adicionar_texto_cta(
                         frame, texto_completo, fonte_cta,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
                     )
+                elif idx == idx_cta:
+                    # Pexels Story e Conquistador: Mantém o degradê da marca até o último frame do vídeo
+                    frame = _adicionar_texto_degrade(
+                        frame, texto_completo, fonte_cta,
+                        chars_to_show=chars_to_show, fade_alpha=fade_alpha,
+                        deslocamento_y=deslocamento_y, paleta=PALETA_PADRAO_MARCA
+                    )
                 else:
-                    # Todos os slides normais: paleta fixa da marca (Dourado Âmbar → Branco → Bronze)
+                    # Slides de corpo do vídeo: paleta fixa da marca (Dourado Âmbar → Branco → Bronze)
                     frame = _adicionar_texto_degrade(
                         frame, texto_completo, fonte_normal,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha,
