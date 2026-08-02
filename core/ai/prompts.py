@@ -531,29 +531,36 @@ def montar_instrucoes_copy(detalhes_tema, contexto_analytics="", historico_angul
 
     REGRAS ABSOLUTAS DO SLIDE 1:
     ✗ NÃO explique, NÃO conclua, NÃO entregue a resposta no Slide 1
-    ✗ NÃO use metáforas filosóficas ou poéticas abstratas — PROIBIDO: "fuga silenciosa", "sombras antigas", "armadura invisível", "eco do vazio"
-    ✗ NÃO escreva como livro de filosofia — escreva como um ser humano fala com outro
     ✗ NÃO passe de 9 palavras — o ideal são entre 4 e 7 palavras, diretas e cortantes
     ✗ NÃO use "..." automático — use NO MÁXIMO 1 vez por post, só quando gerar tensão real
-    ✓ USE frases incompletas (open loop) que forçam o clique: "Nunca se esqueça que...", "Quer um conselho?"
-    ✓ USE verdades que dói reconhecer: "Você flerta com a mudança, mas beija o passado."
-    ✓ USE identificação imediata com dor cotidiana: "Não importa quanto tempo você perdeu — salve o resto."
-    ✓ A frase deve fazer o leitor pensar: "Nossa, isso fala exatamente da minha vida"
-    ✓ O leitor DEVE sentir necessidade física de deslizar para o Slide 2
 
-    EXEMPLOS DO PADRÃO QUE FUNCIONA (perfis com 200k–800k views por post):
-    ✔ "Nunca se esqueça que..."                         → loop aberto, curiosidade irresistível
-    ✔ "O homem que passou pelo inferno"                 → identificação imediata, sem rodeio
-    ✔ "Eu acho que você está esquecendo de uma coisa," → conversa direta, tom humano
-    ✔ "Não importa quanto tempo você perdeu:"           → verdade que toca na dor real
-    ✔ "Você muda tudo, menos sua mente."               → provocação direta e reconhecível
-    ✔ "Quer um conselho?"                              → simples, direto, convida o clique
+    VARIAÇÃO OBRIGATÓRIA DE ESTRUTURA GRAMATICAL:
+    Você DEVE escolher UM dos 6 estilos abaixo para o Slide 1. Proibido usar o mesmo estilo da postagem anterior.
+    Alterne sempre — nunca dois posts seguidos com o mesmo padrão gramatical.
 
-    EXEMPLOS DO PADRÃO QUE NÃO FUNCIONA (ganchos fracos que NÃO geram clique):
-    ✘ "Sua paciência esconde algo maior."              → abstrato, não cria urgência
-    ✘ "O momento perfeito é sua fuga silenciosa."      → poético demais, ninguém se identifica
-    ✘ "Existe um ato invisível de respeito?"           → vago, não toca em dor real
-    ✘ "Minha jornada é um legado, não um acaso."       → genérico, sem identificação pessoal
+    ESTILO 1 — PERGUNTA DIRETA (provoca o leitor a se perguntar sobre si mesmo):
+    → "Você já percebeu que o que te assusta também te define?"
+    → "Sabe aquela decisão que você fica adiando?"
+
+    ESTILO 2 — PROVOCAÇÃO DE IDENTIDADE (divide o mundo em dois perfis):
+    → "Existe um tipo de pessoa que nunca admite que está perdida."
+    → "Tem gente que aprende rindo. E tem gente que só aprende sofrendo."
+
+    ESTILO 3 — ALERTA PRÁTICO (avisa sobre um erro concreto e invisível):
+    → "Cuidado: você pode estar confundindo disciplina com autossabotagem."
+    → "Alerta: o que parece força, às vezes, é medo de errar."
+
+    ESTILO 4 — OBSERVAÇÃO DO COTIDIANO (espelha o comportamento diário):
+    → "A maioria das pessoas falha exatamente no momento em que estava quase lá."
+    → "Todo dia você faz uma escolha que a maioria não percebe que está fazendo."
+
+    ESTILO 5 — FRASE CORTANTE (verdade curta que corta como faca):
+    → "Não economize onde você deveria investir."
+    → "O seu teto é a sua crença — não a sua realidade."
+
+    ESTILO 6 — DESAFIO PESSOAL (convida o leitor a encarar algo interno):
+    → "Se você quer mudar de nível, precisa encarar isto primeiro:"
+    → "Antes de culpar o mundo, faça uma pergunta honesta para si mesmo:"
 
     SLIDE 2 — REVELAÇÃO (PAGA A PROMESSA DO SLIDE 1)
     ✓ A PRIMEIRA linha DEVE completar ou responder diretamente o que foi aberto no Slide 1

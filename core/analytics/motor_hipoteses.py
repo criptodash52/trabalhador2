@@ -16,9 +16,9 @@ from datetime import datetime, timezone
 from loguru import logger
 
 MEMORIA_FILE = "analytics/dados/memoria_estrategica.json"
-AMOSTRA_MINIMA = 30          # Posts mínimos por grupo para considerar válido
+AMOSTRA_MINIMA = 3           # Posts mínimos por grupo para considerar válido (otimizado para início rápido)
 DIFERENCA_MINIMA = 0.15      # 15% de diferença entre grupos A e B para confirmar
-CONFIANCA_CONFIRMACAO = 0.75 # Confiança mínima para marcar como "confirmada"
+CONFIANCA_CONFIRMACAO = 0.65 # Confiança mínima para marcar como "confirmada"
 
 
 def _get_db():
@@ -193,68 +193,96 @@ def _formular_novas_hipoteses(memoria, analises_por_periodo):
             analise_ref = analises_por_periodo[ciclo]
             break
 
-    if not analise_ref:
-        return novas
+    if analise_ref:
+        # --- Hipótese automática: Categoria de gancho com maior growth_score ---
+        ganchos = analise_ref.get("ganchos_stats", {})
+        if len(ganchos) >= 1:
+            ordenados = sorted(ganchos.items(), key=lambda x: x[1].get("growth_score", 0), reverse=True)
+            melhor = ordenados[0]
+            pior = ordenados[-1] if len(ordenados) > 1 else ("outros", {"growth_score": 0.0, "count": 0})
+            hipotese_txt = f"Ganchos do tipo '{melhor[0]}' geram maior crescimento de perfil do que outros ganchos."
+            if hipotese_txt not in hipoteses_existentes:
+                novas.append({
+                    "id": f"h{uuid.uuid4().hex[:6]}",
+                    "hipotese": hipotese_txt,
+                    "variaveis_testadas": ["gancho_categoria"],
+                    "grupo_a": melhor[0],
+                    "grupo_b": pior[0],
+                    "metrica_alvo": "growth_score",
+                    "confianca": 0.5,
+                    "amostra": melhor[1].get("count", 0),
+                    "status": "em_observacao",
+                    "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                })
 
-    # --- Hipótese automática: Categoria de gancho com maior growth_score ---
-    ganchos = analise_ref.get("ganchos_stats", {})
-    if len(ganchos) >= 2:
-        ordenados = sorted(ganchos.items(), key=lambda x: x[1].get("growth_score", 0), reverse=True)
-        melhor, pior = ordenados[0], ordenados[-1]
-        hipotese_txt = f"Ganchos do tipo '{melhor[0]}' convertem mais seguidores do que '{pior[0]}'."
-        if hipotese_txt not in hipoteses_existentes:
-            novas.append({
-                "id": f"h{uuid.uuid4().hex[:6]}",
-                "hipotese": hipotese_txt,
-                "variaveis_testadas": ["gancho_categoria"],
-                "grupo_a": melhor[0],
-                "grupo_b": pior[0],
-                "metrica_alvo": "growth_score",
-                "confianca": 0.5,
-                "amostra": melhor[1].get("count", 0) + pior[1].get("count", 0),
-                "status": "em_observacao",
-                "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            })
+        # --- Hipótese automática: Tipo de CTA com maior growth_score ---
+        ctas = analise_ref.get("ctas_stats", {})
+        if len(ctas) >= 1:
+            ordenados = sorted(ctas.items(), key=lambda x: x[1].get("growth_score", 0), reverse=True)
+            melhor = ordenados[0]
+            pior = ordenados[-1] if len(ordenados) > 1 else ("outros", {"growth_score": 0.0, "count": 0})
+            hipotese_txt = f"CTA do tipo '{melhor[0]}' gera mais conversão de seguidores."
+            if hipotese_txt not in hipoteses_existentes:
+                novas.append({
+                    "id": f"h{uuid.uuid4().hex[:6]}",
+                    "hipotese": hipotese_txt,
+                    "variaveis_testadas": ["tipo_cta"],
+                    "grupo_a": melhor[0],
+                    "grupo_b": pior[0],
+                    "metrica_alvo": "growth_score",
+                    "confianca": 0.5,
+                    "amostra": melhor[1].get("count", 0),
+                    "status": "em_observacao",
+                    "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                })
 
-    # --- Hipótese automática: Tipo de CTA com maior growth_score ---
-    ctas = analise_ref.get("ctas_stats", {})
-    if len(ctas) >= 2:
-        ordenados = sorted(ctas.items(), key=lambda x: x[1].get("growth_score", 0), reverse=True)
-        melhor, pior = ordenados[0], ordenados[-1]
-        hipotese_txt = f"CTA do tipo '{melhor[0]}' gera mais conversão de seguidores do que '{pior[0]}'."
-        if hipotese_txt not in hipoteses_existentes:
-            novas.append({
-                "id": f"h{uuid.uuid4().hex[:6]}",
-                "hipotese": hipotese_txt,
-                "variaveis_testadas": ["tipo_cta"],
-                "grupo_a": melhor[0],
-                "grupo_b": pior[0],
-                "metrica_alvo": "growth_score",
-                "confianca": 0.5,
-                "amostra": melhor[1].get("count", 0) + pior[1].get("count", 0),
-                "status": "em_observacao",
-                "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            })
+        # --- Hipótese automática: Tema com maior ICC vs. tema com menor ICC ---
+        icc = analise_ref.get("icc_por_tema", {})
+        if len(icc) >= 1:
+            ordenados = sorted(icc.items(), key=lambda x: x[1], reverse=True)
+            melhor = ordenados[0]
+            pior = ordenados[-1] if len(ordenados) > 1 else ("geral", 0.0)
+            hipotese_txt = f"O tema '{melhor[0]}' converte mais curiosos em seguidores no perfil."
+            if hipotese_txt not in hipoteses_existentes:
+                novas.append({
+                    "id": f"h{uuid.uuid4().hex[:6]}",
+                    "hipotese": hipotese_txt,
+                    "variaveis_testadas": ["tema"],
+                    "grupo_a": melhor[0],
+                    "grupo_b": pior[0],
+                    "metrica_alvo": "conversao_perfil",
+                    "confianca": 0.5,
+                    "amostra": 1,
+                    "status": "em_observacao",
+                    "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                })
 
-    # --- Hipótese automática: Tema com maior ICC vs. tema com menor ICC ---
-    icc = analise_ref.get("icc_por_tema", {})
-    if len(icc) >= 2:
-        ordenados = sorted(icc.items(), key=lambda x: x[1], reverse=True)
-        melhor, pior = ordenados[0], ordenados[-1]
-        hipotese_txt = f"O tema '{melhor[0]}' converte mais curiosos em seguidores (ICC) do que '{pior[0]}'."
-        if hipotese_txt not in hipoteses_existentes:
-            novas.append({
-                "id": f"h{uuid.uuid4().hex[:6]}",
-                "hipotese": hipotese_txt,
-                "variaveis_testadas": ["tema"],
-                "grupo_a": melhor[0],
-                "grupo_b": pior[0],
-                "metrica_alvo": "conversao_perfil",
-                "confianca": 0.5,
-                "amostra": 0,
-                "status": "em_observacao",
-                "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            })
+    # Bootstrap: Se ainda não houver hipóteses, adiciona hipóteses iniciais em observação
+    if not memoria["hipoteses"]:
+        novas.append({
+            "id": f"h{uuid.uuid4().hex[:6]}",
+            "hipotese": "Ganchos baseados em CURIOSIDADE convertem 25% mais seguidores do que ganchos genéricos.",
+            "variaveis_testadas": ["gancho_categoria"],
+            "grupo_a": "curiosidade",
+            "grupo_b": "generico",
+            "metrica_alvo": "growth_score",
+            "confianca": 0.5,
+            "amostra": 1,
+            "status": "em_observacao",
+            "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        })
+        novas.append({
+            "id": f"h{uuid.uuid4().hex[:6]}",
+            "hipotese": "Posts com foco no tema FINANÇAS e SUPERAÇÃO geram mais compartilhamentos.",
+            "variaveis_testadas": ["tema"],
+            "grupo_a": "financas",
+            "grupo_b": "outros",
+            "metrica_alvo": "conversao_perfil",
+            "confianca": 0.5,
+            "amostra": 1,
+            "status": "em_observacao",
+            "criada_em": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        })
 
     return novas
 
@@ -274,11 +302,10 @@ def rodar_motor(dados_posts, analises_por_periodo=None):
     atualizacoes = _atualizar_hipoteses_existentes(memoria, dados_posts)
 
     # 2. Formula novas hipóteses baseadas nos padrões observados
-    if analises_por_periodo:
-        novas = _formular_novas_hipoteses(memoria, analises_por_periodo)
-        if novas:
-            memoria["hipoteses"].extend(novas)
-            logger.info(f"  {len(novas)} nova(s) hipotese(s) formulada(s).")
+    novas = _formular_novas_hipoteses(memoria, analises_por_periodo or {})
+    if novas:
+        memoria["hipoteses"].extend(novas)
+        logger.info(f"  {len(novas)} nova(s) hipotese(s) formulada(s).")
 
     # 3. Salva memória atualizada
     _salvar_memoria(memoria)

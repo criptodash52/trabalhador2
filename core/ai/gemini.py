@@ -193,10 +193,11 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             logger.info(f"🎲 Novo tema sequencial diário ativado: {tema_escolhido}")
 
     if not custom_tema:
-        # Busca histórico DESTE TEMA no historico_posts para não repetir a mensagem
-        evitar_repeticao_msg = buscar_historico_por_tema(tema_escolhido, tipo_post=tipo, limite=8)
+        # Busca histórico deste TEMA em TODOS os formatos (anti-repetição unificada)
+        # Isso evita que uma ideia publicada em vídeo apareça como carrossel no mesmo dia
+        evitar_repeticao_msg = buscar_historico_por_tema(tema_escolhido, tipo_post=None, limite=10)
         if evitar_repeticao_msg:
-            logger.info(f"📚 Histórico do tema '{tema_escolhido}' carregado para anti-repetição.")
+            logger.info(f"📚 Histórico unificado do tema '{tema_escolhido}' carregado (todos os formatos).")
 
         # NOVO FLUXO: Ciclo sequencial diário
         recomendacoes_file = "analytics/dados/recomendacoes.json"
@@ -254,20 +255,23 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         except Exception as e:
             logger.warning(f"Erro ao coletar Olhos da Rede: {e}")
 
-    # Sorteia sentimento do dia de forma persistente ou diária (apenas para posts comuns - não conquistador)
+    # Sorteia sentimento a cada postagem — sem travar por data
+    # Assim cada publicação do dia carrega uma cor emocional diferente
     sentimento_escolhido = None
     if not is_conquistador:
         from core.ai.styles import SENTIMENTOS_CONFIG
-        if estado.get("data_sentimento_do_dia") == dia_hoje_str and estado.get("sentimento_do_dia"):
-            sentimento_escolhido = estado["sentimento_do_dia"]
-            logger.info(f"🧠 Sentimento do dia continuado: {sentimento_escolhido.upper()}")
-        else:
-            # Sorteia sentimento diário
-            sentimento_escolhido = random.choice(list(SENTIMENTOS_CONFIG.keys()))
-            estado["sentimento_do_dia"] = sentimento_escolhido
-            estado["data_sentimento_do_dia"] = dia_hoje_str
-            salvar_estado(estado)
-            logger.info(f"🧠 Novo sentimento diário sorteado: {sentimento_escolhido.upper()}")
+        hist_sentimentos = estado.get("historico_sentimentos", [])
+        # Filtra sentimentos ainda não usados recentemente
+        opcoes_sentimentos = [s for s in SENTIMENTOS_CONFIG.keys() if s not in hist_sentimentos]
+        if not opcoes_sentimentos:  # Todos já foram usados: reseta e recomeça
+            hist_sentimentos = []
+            opcoes_sentimentos = list(SENTIMENTOS_CONFIG.keys())
+        sentimento_escolhido = random.choice(opcoes_sentimentos)
+        hist_sentimentos.append(sentimento_escolhido)
+        estado["historico_sentimentos"] = hist_sentimentos[-10:]  # Guarda os últimos 10
+        estado["sentimento_do_dia"] = sentimento_escolhido  # Mantém compatível com rest of code
+        salvar_estado(estado)
+        logger.info(f"🧠 Sentimento da postagem: {sentimento_escolhido.upper()} (varia a cada post)")
         
     detalhes_tema = TEMAS_MAPEADOS.get(tema_escolhido, {
         "nome": tema_escolhido,

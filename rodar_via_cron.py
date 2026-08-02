@@ -30,6 +30,8 @@ def rodar_agora():
             print("🚀 [DOMINGO] Executando: Fechamento Semanal, Relatório")
             subprocess.run(["python", "-c", "import sys, io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'); from core.analytics.analisador_semanal import analisar_semana; analisar_semana()"])
             subprocess.run(["python", "core/reports/weekly.py"])
+            print("🔬 [DOMINGO] Executando: Cientista de Dados + Formulador de Hipóteses")
+            subprocess.run(["python", "core/analytics/rodar_analytics.py", "--ciclo", "semanal"])
 
 
     elif hora == 5:
@@ -77,7 +79,10 @@ def rodar_agora():
 
     elif hora == 22:
         print("🚀 Executando: Reels Conquistador (Atração de Público)")
+        subprocess.run(["python", "main.py", "--type", "reels_conquistador"])
+
     # Sempre verifica e processa pedidos pendentes do Studio de Criação (Dashboard)
+    # Roda a cada hora para não deixar nenhuma solicitação esperando
     try:
         print("📥 Verificando solicitações pendentes do Studio de Criação (Dashboard)...")
         subprocess.run(["python", "core/publisher/executor_usuario.py"])
