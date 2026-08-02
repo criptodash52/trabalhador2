@@ -325,9 +325,6 @@ def _gerar_carrossel(img, W_full, H, dados):
     estilo_sorteado = obter_fonte_do_dia(tipo="carousel")
     print(f"🎨 Usando fonte oficial no Carrossel: {estilo_sorteado}")
     
-    # Cor do dia da semana para o texto
-    from core.media.pexels_story import obter_paleta_do_dia
-    _cor_dia_rgb = tuple(obter_paleta_do_dia()[0])
 
     # Fontes maiores para garantir legibilidade no carrossel 1080x1080
     font_capa, font_slides, _ = carregar_fontes(tamanho_display=86, tamanho_body=72, tamanho_detalhe=26, estilo=estilo_sorteado)
@@ -345,8 +342,6 @@ def _gerar_carrossel(img, W_full, H, dados):
         # Elementos de Agência Premium
         desenhar_elementos_premium(draw, slide_W, slide_H)
         
-        # [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida
-
         # 2. Marca d'água / Logo no rodapé
         logo_aplicado = False
         logo_dir = os.path.join("biblioteca_local", "logo")
@@ -378,15 +373,14 @@ def _gerar_carrossel(img, W_full, H, dados):
         if not logo_aplicado:
             font_marca_serif, _, _ = carregar_fontes(50, 72, 26, estilo="BebasNeue")
             desenhar_marca_dagua_ouro(draw, (slide_W/2, slide_H - 80), "GUSTAVO_8K_", font_marca_serif)
-        
-        if idx == 0:  # Capa (Playfair Display)
-            # FIX: width menor = menos chars por linha = texto maior e mais legível
+
+        # Texto com degradê completo da marca via _adicionar_texto_degrade
+        from core.media.pexels_story import PALETA_PADRAO_MARCA, _adicionar_texto_degrade
+        import numpy as _np
+
+        if idx == 0:  # Capa
             linhas = textwrap.wrap(texto, width=18)
-            y_inicial = (slide_H - (len(linhas) * 105)) / 2 - 40
-            for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 105), linha, font_capa, fill=_cor_dia_rgb, anchor="ms")
-            draw_text_with_shadow(draw, (slide_W/2, slide_H - 55), "Arrasta para o lado ->", font_sub, fill=CORES["destaque"], anchor="ms")
-            
+            texto_unificado = "\n".join(linhas)
         elif texto == "CTA":  # Slide Final
             ctas_disponiveis = [
                 ["Gostou deste conteúdo?", "", "Salva para não perder", "e segue a página para mais!"],
@@ -396,23 +390,21 @@ def _gerar_carrossel(img, W_full, H, dados):
                 ["Não perca mais tempo", "com conteúdos vazios.", "", "Acompanhe nossa jornada!"]
             ]
             linhas_cta = random.choice(ctas_disponiveis)
-            # Expande linhas longas para evitar corte nas bordas
-            linhas_finais = []
-            for linha in linhas_cta:
-                if linha.strip():
-                    partes = textwrap.wrap(linha, width=18)
-                    linhas_finais.extend(partes if partes else [linha])
-                else:
-                    linhas_finais.append("")  # mantém linha vazia (espaçamento)
-            y_inicial = slide_H * 0.25
-            for i, linha in enumerate(linhas_finais):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 78), linha, font_slides, fill=_cor_dia_rgb, anchor="ms")
-                
-        else:  # Slides internos (Inter/Montserrat)
-            linhas = textwrap.wrap(texto, width=20)
-            y_inicial = (slide_H - (len(linhas) * 90)) / 2
-            for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (slide_W/2, y_inicial + i * 90), linha, font_slides, fill=_cor_dia_rgb, anchor="ms")
+            texto_unificado = " ".join(l for l in linhas_cta if l.strip())
+        else:  # Slides internos
+            texto_unificado = texto
+
+        if texto_unificado.strip():
+            fonte_slide = font_capa if idx == 0 else font_slides
+            frame_np = _np.array(slide_img)
+            frame_np = _adicionar_texto_degrade(
+                frame_np, texto_unificado, fonte_slide, paleta=PALETA_PADRAO_MARCA
+            )
+            slide_img = Image.fromarray(frame_np)
+            draw = ImageDraw.Draw(slide_img)
+        
+        if idx == 0:
+            draw_text_with_shadow(draw, (slide_W/2, slide_H - 55), "Arrasta para o lado ->", font_sub, fill=CORES["destaque"], anchor="ms")
             
         caminho = f"carousel_{uuid.uuid4().hex}_{idx}.jpg"
         slide_img.save(caminho, "JPEG", quality=95)
@@ -618,38 +610,17 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
         Y_MIN_TEXTO = 150       # topo livre — texto pode subir mais
         Y_MAX_TEXTO = H - 280   # acima da marca d'água + folga
 
-        from core.media.pexels_story import obter_paleta_do_dia
-        _cor_dia_estatico = tuple(obter_paleta_do_dia()[0])
+        # Texto com degradê completo via _adicionar_texto_degrade
+        from core.media.pexels_story import PALETA_PADRAO_MARCA, _adicionar_texto_degrade
+        import numpy as _np
 
-        if layout_style == "bottom":
-            font_display_bot, _, _ = carregar_fontes(42, 24, 24, estilo=estilo_fonte)
-            espacamento = 55
-            bloco_h = len(linhas) * espacamento
-            y_inicial = H - bloco_h - 250
-            # Garante que não sobe acima do emblema
-            y_inicial = max(y_inicial, Y_MIN_TEXTO)
-            for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display_bot, fill=_cor_dia_estatico, anchor="ms")
-                
-        elif layout_style == "quote":
-            espacamento = 60
-            bloco_h = len(linhas) * espacamento
-            y_inicial = (H - bloco_h) / 2 - 100
-            y_inicial = max(y_inicial, Y_MIN_TEXTO)
-            for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (100, y_inicial + i * espacamento), linha, font_display, fill=_cor_dia_estatico, anchor="ls")
-            draw.line([(70, y_inicial - 50), (70, y_inicial + bloco_h)], fill=CORES["destaque"], width=8)
-            
-        else:
-            espacamento = 60
-            bloco_h = len(linhas) * espacamento
-            y_inicial = (H - bloco_h) / 2
-            y_inicial = max(y_inicial, Y_MIN_TEXTO)
-            # Garante que o bloco não desce até a marca d'água
-            if y_inicial + bloco_h > Y_MAX_TEXTO:
-                y_inicial = Y_MAX_TEXTO - bloco_h
-            for i, linha in enumerate(linhas):
-                draw_text_with_shadow(draw, (W/2, y_inicial + i * espacamento), linha, font_display, fill=_cor_dia_estatico, anchor="ms")
+        if linhas:
+            frame_np = _np.array(slide)
+            frame_np = _adicionar_texto_degrade(
+                frame_np, frase_limpa, font_display, paleta=PALETA_PADRAO_MARCA
+            )
+            slide = Image.fromarray(frame_np)
+            draw = ImageDraw.Draw(slide)
             
         _uid = uuid.uuid4().hex
         caminho_imagem = f"story_pronto_{_uid}_{idx}.jpg" if tipo in ["story", "story_manha", "story_tarde", "test"] else f"post_pronto_{_uid}_{idx}.jpg"

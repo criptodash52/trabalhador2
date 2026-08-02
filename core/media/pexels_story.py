@@ -115,24 +115,19 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
 
     return np.array(img)
 
-# 7 Paletas de Degradê (Uma para cada dia da semana: 0=Segunda ... 6=Domingo)
-PALETAS_POR_DIA = {
-    0: ([176, 38, 255], [255, 255, 255], [0, 51, 255]),   # Segunda: Visão Profética (Roxo → Branco → Azul)
-    1: ([220, 20, 60],  [255, 255, 255], [255, 140, 0]),  # Terça: Fogo & Glória (Vermelho → Branco → Laranja)
-    2: ([0, 168, 107],  [255, 255, 255], [30, 144, 255]), # Quarta: Natureza & Paz (Verde → Branco → Azul Céu)
-    3: ([255, 185, 0],  [255, 255, 255], [80, 0, 130]),   # Quinta: Rei & Sabedoria (Dourado → Branco → Roxo Escuro)
-    4: ([255, 20, 147], [255, 255, 255], [180, 0, 30]),   # Sexta: Paixão & Força (Rosa → Branco → Vermelho Escuro)
-    5: ([255, 215, 0],  [255, 255, 255], [139, 90, 43]),  # Sábado: Abundância & Ouro (Dourado Âmbar → Branco → Bronze)
-    6: ([0, 229, 255],  [255, 255, 255], [0, 38, 77]),    # Domingo: Clareza & Imensidão (Ciano Néon → Branco → Azul Noturno)
-}
+# Paleta fixa da marca: Sábado — Abundância & Ouro (Dourado Âmbar → Branco → Bronze)
+# Esta é a identidade visual permanente de todas as postagens do perfil.
+PALETA_PADRAO_MARCA = ([255, 215, 0], [255, 255, 255], [139, 90, 43])
 
-PALETAS_CONQUISTADOR = list(PALETAS_POR_DIA.values())
+# Paletas exclusivas do Reels Leads — alternam a cada geração para diferenciar esse formato
+PALETAS_LEADS = [
+    ([176, 38, 255], [255, 255, 255], [0, 51, 255]),   # Visão Profética (Roxo → Branco → Azul)
+    ([255, 20, 147], [255, 255, 255], [180, 0, 30]),    # Paixão & Força (Rosa → Branco → Vermelho Escuro)
+]
 
 def obter_paleta_do_dia():
-    """Retorna a paleta de degradê exclusiva do dia da semana atual."""
-    from datetime import datetime
-    dia = datetime.now().weekday()
-    return PALETAS_POR_DIA.get(dia, PALETAS_POR_DIA[0])
+    """Retorna a paleta fixa da marca: Dourado Âmbar → Branco → Bronze."""
+    return PALETA_PADRAO_MARCA
 
 def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta=None):
     if frame_array.dtype != np.uint8:
@@ -238,8 +233,9 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
     return np.array(img)
 
 
-def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0):
-    """Desenha o CTA final destacando a palavra-chave entre aspas simples em Dourado e tamanho maior."""
+def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta_override=None):
+    """Desenha o CTA final. Se paleta_override for fornecida (Reels Leads), aplica degradê colorido nas letras.
+    Caso contrário, usa o comportamento padrão: texto em branco com destaque dourado na palavra-chave."""
     import re as _re
     if frame_array.dtype != np.uint8:
         frame_array = np.clip(frame_array, 0, 255).astype(np.uint8)
@@ -310,8 +306,76 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         total_h = sum(alturas_baixo) + espaco_entre * (len(linhas_baixo) - 1) + padding_v * 2
 
     by0 = (h - total_h) // 2
-    y = by0 + padding_v + deslocamento_y
+    y_inicial_bloco = by0 + padding_v + deslocamento_y
+    y = y_inicial_bloco
 
+    # --- Modo Degradê (Reels Leads com paleta_override) ---
+    # Quando paleta_override é fornecida, aplicamos degradê colorido nas letras
+    # usando a mesma técnica de máscara de _adicionar_texto_degrade.
+    if paleta_override:
+        # Camada de sombra/contorno separada da camada de texto
+        shadow_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        shadow_draw = ImageDraw.Draw(shadow_layer)
+        txt_mask_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        mask_draw = ImageDraw.Draw(txt_mask_layer)
+
+        todas_linhas = list(zip(linhas_topo, alturas_topo, larguras_topo)) + \
+                       list(zip(linhas_baixo, alturas_baixo, larguras_baixo))
+
+        y_texto_min = y
+        y_texto_max = y
+        for linha, alt, lw in todas_linhas:
+            y_texto_max += alt + espaco_entre
+        if linhas_topo:
+            y_texto_max += divisor_espaco - espaco_entre
+        h_bloco_total = max(1, y_texto_max - y_texto_min)
+
+        color_top = np.array(paleta_override[0])
+        color_mid = np.array(paleta_override[1])
+        color_bot = np.array(paleta_override[2])
+        gradient_arr = np.zeros((h, w, 3), dtype=np.uint8)
+        for row in range(h):
+            if row < y_texto_min:
+                c = color_top
+            elif row > y_texto_max:
+                c = color_bot
+            else:
+                ratio = (row - y_texto_min) / float(h_bloco_total)
+                if ratio < 0.5:
+                    r = ratio / 0.5
+                    c = color_top * (1 - r) + color_mid * r
+                else:
+                    r = (ratio - 0.5) / 0.5
+                    c = color_mid * (1 - r) + color_bot * r
+            gradient_arr[row, :, :] = c.astype(np.uint8)
+        grad_img = Image.fromarray(gradient_arr, 'RGB')
+
+        y = y_inicial_bloco
+        if linhas_topo:
+            for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
+                x = (w - lw) // 2
+                shadow_draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+                shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
+                                 stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+                y += alt + espaco_entre
+            y += divisor_espaco - espaco_entre
+        for linha, alt, lw in zip(linhas_baixo, alturas_baixo, larguras_baixo):
+            x = (w - lw) // 2
+            shadow_draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+            shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
+                             stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+            mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+            y += alt + espaco_entre
+
+        mask = txt_mask_layer.split()[3]
+        final_txt_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        final_txt_layer.paste(grad_img, (0, 0), mask=mask)
+        img = Image.alpha_composite(img.convert("RGBA"), shadow_layer)
+        img = Image.alpha_composite(img, final_txt_layer).convert("RGB")
+        return np.array(img)
+
+    # --- Modo Padrão (branco + destaque dourado na keyword) ---
     # 1. Renderiza as linhas do Topo (Promessa de Valor) em Branco Puro
     if linhas_topo:
         for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
@@ -337,23 +401,20 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             espaco_w = draw.textbbox((0, 0), " ", font=fonte_cta)[2] - draw.textbbox((0, 0), " ", font=fonte_cta)[0]
             larguras_palavras = []
             for p in palavras:
-                # Usa fonte maior se for a keyword, normal para as demais
                 p_clean = p.upper().replace("'", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '')
                 f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
                 pw = draw.textbbox((0, 0), p, font=f_usar)[2] - draw.textbbox((0, 0), p, font=f_usar)[0]
                 larguras_palavras.append((pw, f_usar, p_clean))
 
-            # Recalcula a largura total considerando as fontes diferentes por palavra
             largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
             cur_x = (w - largura_total_linha) // 2
 
             for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
                 if p_clean == keyword_destaque:
-                    # Palavra-chave: Dourado Brilhante + maior
-                    cor_palavra = (255, 215, 0, int(255 * fade_alpha))  # #FFD700
+                    cor_palavra = (255, 215, 0, int(255 * fade_alpha))
                     bb_k = draw.textbbox((0, 0), p, font=f_usar)
                     alt_k = bb_k[3] - bb_k[1]
-                    y_offset = (alt - alt_k) // 2  # Centraliza verticalmente com as demais palavras
+                    y_offset = (alt - alt_k) // 2
                     draw.text((cur_x + 3, y + y_offset + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
                     draw.text((cur_x, y + y_offset), p, font=f_usar, fill=cor_palavra,
                               stroke_width=3, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
@@ -363,7 +424,6 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
                               stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
                 cur_x += pw + espaco_w
         else:
-            # Linha sem keyword: texto todo branco (padrão do CTA)
             draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
             draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
                       stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
@@ -779,6 +839,19 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 animacao = random.choice(animacoes_disponiveis)
                 logger.info(f"🎬 Animação de texto selecionada: {animacao.upper()}")
 
+            # Reels Leads: sorteia/alterna a paleta exclusiva UMA vez por geração de vídeo
+            paleta_leads_atual = None
+            if is_reels_leads:
+                _estado_leads = carregar_estado()
+                _idx_leads = _estado_leads.get("index_palette_leads", 0) % len(PALETAS_LEADS)
+                paleta_leads_atual = PALETAS_LEADS[_idx_leads]
+                _estado_leads["index_palette_leads"] = (_idx_leads + 1) % len(PALETAS_LEADS)
+                salvar_estado(_estado_leads)
+                nomes_paletas_leads = ["Visão Profética (Roxo→Azul)", "Paixão & Força (Rosa→Vermelho)"]
+                logger.info(f"🎨 [REELS LEADS] Paleta exclusiva: {nomes_paletas_leads[_idx_leads]}")
+
+
+
             def _desenhar_elementos_marca(frame_array, fator_escala=1.0, is_cta=False, t_slide=0.0):
                 """Desenha o logo PNG no rodapé e aplica o brilho pulsante no CTA. [EMBLEMA REMOVIDO DO TOPO]"""
                 img = Image.fromarray(frame_array).convert("RGBA")
@@ -884,32 +957,39 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         progresso = min(t_slide / tempo_ativo, 1.0)
                         chars_to_show = int(progresso * len(texto_completo))
                     elif animacao == "fade":
-                        # Esmaecimento suave nos primeiros 0.8 segundos
-                        fade_alpha = min(1.0, t_slide / 0.8)
+                        # Esmaecimento suave nos primeiros 0.8s com curva Ease-Out
+                        prog_linear = min(1.0, t_slide / 0.8)
+                        fade_alpha = 1.0 - (1.0 - prog_linear) ** 2
                     elif animacao == "reveal":
-                        # Revelação suave (fade + subindo de baixo para cima nos primeiros 0.8 segundos)
-                        progresso = min(1.0, t_slide / 0.8)
-                        fade_alpha = progresso
-                        deslocamento_y = int(20 * (1.0 - progresso) * fator_escala)
+                        # Revelação suave (fade + subida fluida de baixo para cima nos primeiros 0.8s com Ease-Out)
+                        prog_linear = min(1.0, t_slide / 0.8)
+                        ease_out = 1.0 - (1.0 - prog_linear) ** 2
+                        fade_alpha = ease_out
+                        deslocamento_y = int(20 * (1.0 - ease_out) * fator_escala)
                     # "static" mantém fade_alpha=1.0, deslocamento_y=0 e chars_to_show=None
                 
                 frame = clip.get_frame(t)
                 frame = _aplicar_efeito_cinematico(frame, efeito_escolhido)
-                
-                # Degradê colorido padronizado pelo dia da semana para todas as postagens
-                paleta_do_dia = obter_paleta_do_dia()
-                if idx == idx_cta:
-                    # Última cena dos formatos = CTA unificado com destaque dourado na palavra-chave
+
+                if idx == idx_cta and is_reels_leads:
+                    # Reels Leads: último slide com degradê exclusivo, alternando entre as 2 paletas
+                    frame = _adicionar_texto_cta(
+                        frame, texto_completo, fonte_cta,
+                        chars_to_show=chars_to_show, fade_alpha=fade_alpha,
+                        deslocamento_y=deslocamento_y, paleta_override=paleta_leads_atual
+                    )
+                elif idx == idx_cta:
+                    # Demais formatos: CTA padrão com branco + destaque dourado na palavra-chave
                     frame = _adicionar_texto_cta(
                         frame, texto_completo, fonte_cta,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
                     )
                 else:
-                    # Todos os slides normais de todos os formatos usam a cor exclusiva do dia da semana
+                    # Todos os slides normais: paleta fixa da marca (Dourado Âmbar → Branco → Bronze)
                     frame = _adicionar_texto_degrade(
                         frame, texto_completo, fonte_normal,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha,
-                        deslocamento_y=deslocamento_y, paleta=paleta_do_dia
+                        deslocamento_y=deslocamento_y, paleta=PALETA_PADRAO_MARCA
                     )
                 
                 # Desenha o Selo foto_perfil.png no topo, a Marca d'água no rodapé e o efeito de brilho no CTA

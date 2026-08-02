@@ -244,176 +244,57 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
 
         # --- Função: desenha o texto animado sobre um frame numpy ---
         def desenhar_texto_animado(frame_np, texto, t, duracao, dia, W, H, eh_primeiro_slide, eh_ultimo_slide=False):
-            """Renderiza o texto com a animação do dia sobre o frame numpy e retorna novo frame numpy."""
-            # Garante que texto é sempre string (pode vir como lista de frases)
+            """Renderiza o texto com animação do dia usando degradê completo da marca via _adicionar_texto_degrade."""
+            from core.media.pexels_story import PALETA_PADRAO_MARCA, _adicionar_texto_degrade
+            # Garante que texto é sempre string
             if isinstance(texto, list):
                 texto = " ".join(str(x) for x in texto)
             texto = str(texto).strip()
             if not texto:
                 return frame_np
 
-            img = PILImage.fromarray(frame_np).convert("RGBA")
-            txt_layer = PILImage.new("RGBA", (W, H), (0, 0, 0, 0))
-            draw = PILDraw.Draw(txt_layer)
-
             tempo_ativo = max(1.0, duracao - 1.5)
             progresso = min(t / tempo_ativo, 1.0)
 
-            # Quebra o texto em linhas que cabem na tela
-            palavras = texto.split()
-            linhas = textwrap_mod.wrap(texto, width=20)
-            altura_linha = fonte_size + 14
-            y_centro = (H - (len(linhas) * altura_linha)) / 2
+            # Parâmetros de animação (compatíveis com _adicionar_texto_degrade)
+            chars_to_show = None
+            fade_alpha    = 1.0
+            deslocamento_y = 0
 
-            # Cor principal do dia da semana (degradê vibrante) e sombra
-            from core.media.pexels_story import obter_paleta_do_dia
-            _paleta_hoje = obter_paleta_do_dia()
-            COR_PRINCIPAL = (*_paleta_hoje[0], 255)
-            COR_SOMBRA    = (0, 0, 0, 160)
-            COR_CINZA     = (180, 180, 180, 255)
-            COR_OURO      = (250, 185, 55, 255)
-
-            # --- Primeiro slide (capa/gancho) e último slide (CTA): texto 100% estático ---
+            # Slides fixos (capa e CTA): sempre estáticos
             if eh_primeiro_slide or eh_ultimo_slide:
-                for li, linha in enumerate(linhas):
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(linha, font=fonte_texto)
-                    except:
-                        lw = len(linha) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), linha, font=fonte_texto, fill=COR_SOMBRA)
-                    draw.text((x, y), linha, font=fonte_texto, fill=COR_PRINCIPAL)
-            
-            # --- Slides internos (idx > 0) têm a animação do dia ---
-            elif dia == 0:  # Segunda: MÁQUINA DE ESCREVER (letra a letra)
-                total_chars = sum(len(l) for l in linhas) + len(linhas)
-                chars_visiveis = int(progresso * total_chars)
-                chars_drawn = 0
-                for li, linha in enumerate(linhas):
-                    if chars_drawn >= chars_visiveis:
-                        break
-                    chars_restantes = chars_visiveis - chars_drawn
-                    trecho = linha[:chars_restantes]
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(trecho, font=fonte_texto)
-                    except:
-                        lw = len(trecho) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), trecho, font=fonte_texto, fill=COR_SOMBRA)
-                    draw.text((x, y), trecho, font=fonte_texto, fill=COR_PRINCIPAL)
-                    chars_drawn += len(linha) + 1
+                pass  # mantém defaults acima
 
-            elif dia == 1:  # Terça: SURGIMENTO POR PALAVRAS
-                total_palavras = sum(len(l.split()) for l in linhas)
-                palavras_visiveis = max(1, int(progresso * total_palavras))
-                palavras_drawn = 0
-                for li, linha in enumerate(linhas):
-                    palavras_linha = linha.split()
-                    palavras_ate_aqui = palavras_drawn + len(palavras_linha)
-                    if palavras_drawn >= palavras_visiveis:
-                        break
-                    trecho_palavras = palavras_linha[:palavras_visiveis - palavras_drawn]
-                    trecho = " ".join(trecho_palavras)
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(trecho, font=fonte_texto)
-                    except:
-                        lw = len(trecho) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), trecho, font=fonte_texto, fill=COR_SOMBRA)
-                    draw.text((x, y), trecho, font=fonte_texto, fill=COR_PRINCIPAL)
-                    palavras_drawn = palavras_ate_aqui
+            # Slides internos: animação do dia da semana
+            elif dia == 0:  # Segunda: Máquina de Escrever (letra a letra)
+                chars_to_show = int(progresso * len(texto))
 
-            elif dia == 2:  # Quarta: FADE IN SUAVE DO TEXTO
-                alpha = min(int(progresso * 2 * 255), 255)  # completa em 50% do slide
-                cor_txt = (255, 255, 255, alpha)
-                cor_shd = (0, 0, 0, int(alpha * 0.78))
-                for li, linha in enumerate(linhas):
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(linha, font=fonte_texto)
-                    except:
-                        lw = len(linha) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), linha, font=fonte_texto, fill=cor_shd)
-                    draw.text((x, y), linha, font=fonte_texto, fill=cor_txt)
+            elif dia == 1:  # Terça: Surgimento por Palavras (fade progressivo)
+                fade_alpha = min(1.0, progresso * 2)
 
-            elif dia == 3:  # Quinta: ZOOM-IN DINÂMICO (texto cresce de 50% a 100%)
-                escala = 0.5 + 0.5 * min(progresso * 2, 1.0)
-                tamanho_zoom = max(12, int(fonte_size * escala))
-                try:
-                    fonte_zoom = PILFont.truetype(fonte_path or "fontes/BebasNeue.ttf", tamanho_zoom)
-                except:
-                    fonte_zoom = fonte_texto
-                for li, linha in enumerate(linhas):
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(linha, font=fonte_zoom)
-                    except:
-                        lw = len(linha) * (tamanho_zoom * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), linha, font=fonte_zoom, fill=COR_SOMBRA)
-                    draw.text((x, y), linha, font=fonte_zoom, fill=COR_PRINCIPAL)
+            elif dia == 2:  # Quarta: Fade In Suave
+                fade_alpha = min(1.0, progresso * 2)
 
-            elif dia == 4:  # Sexta: ENTRADA DESLIZANTE DE BAIXO
-                deslocamento = int(H * 0.3 * max(0, 1.0 - progresso * 3))
-                for li, linha in enumerate(linhas):
-                    y = y_centro + li * altura_linha + deslocamento
-                    try:
-                        lw = draw.textlength(linha, font=fonte_texto)
-                    except:
-                        lw = len(linha) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    draw.text((x + 2, y + 2), linha, font=fonte_texto, fill=COR_SOMBRA)
-                    draw.text((x, y), linha, font=fonte_texto, fill=COR_PRINCIPAL)
+            elif dia == 3:  # Quinta: Zoom-In (sem chars control, usa fade)
+                fade_alpha = min(1.0, progresso * 2)
 
-            elif dia == 5:  # Sábado: GLITCH / VIBRAÇÃO (nos primeiros 0.6s e a cada 1s)
-                vibra = (t < 0.6) or (0.95 < (t % 1.0) < 1.0)
-                ox = _random.randint(-8, 8) if vibra else 0
-                oy = _random.randint(-5, 5) if vibra else 0
-                # Canal vermelho deslocado (efeito glitch de cor)
-                cor_glitch = (255, 40, 40, 180) if vibra else COR_SOMBRA
-                for li, linha in enumerate(linhas):
-                    y = y_centro + li * altura_linha
-                    try:
-                        lw = draw.textlength(linha, font=fonte_texto)
-                    except:
-                        lw = len(linha) * (fonte_size * 0.55)
-                    x = (W - lw) / 2
-                    if vibra:
-                        draw.text((x + ox + 4, y + oy + 4), linha, font=fonte_texto, fill=cor_glitch)
-                    draw.text((x + 2, y + 2), linha, font=fonte_texto, fill=COR_SOMBRA)
-                    draw.text((x + ox, y + oy), linha, font=fonte_texto, fill=COR_PRINCIPAL)
+            elif dia == 4:  # Sexta: Deslizamento de baixo
+                deslocamento_y = int(H * 0.15 * max(0, 1.0 - progresso * 3))
 
-            elif dia == 6:  # Domingo: KARAOKÊ (palavras acendem de cinza para dourado)
-                total_palavras = sum(len(l.split()) for l in linhas)
-                palavras_acesas = int(progresso * total_palavras)
-                contador_p = 0
-                for li, linha in enumerate(linhas):
-                    palavras_linha = linha.split()
-                    try:
-                        lw_total = draw.textlength(linha, font=fonte_texto)
-                    except:
-                        lw_total = len(linha) * (fonte_size * 0.55)
-                    x_linha = (W - lw_total) / 2
-                    y = y_centro + li * altura_linha
-                    x_cursor = x_linha
-                    for palavra in palavras_linha:
-                        cor_p = COR_OURO if contador_p < palavras_acesas else COR_CINZA
-                        draw.text((x_cursor + 2, y + 2), palavra, font=fonte_texto, fill=COR_SOMBRA)
-                        draw.text((x_cursor, y), palavra, font=fonte_texto, fill=cor_p)
-                        try:
-                            pw = draw.textlength(palavra + " ", font=fonte_texto)
-                        except:
-                            pw = len(palavra + " ") * (fonte_size * 0.55)
-                        x_cursor += pw
-                        contador_p += 1
+            elif dia == 5:  # Sábado: Reveal (fade + subida)
+                fade_alpha = min(1.0, t / 0.8)
+                deslocamento_y = int(20 * (1.0 - min(1.0, t / 0.8)))
 
-            # Compõe o texto sobre o frame
-            img = PILImage.alpha_composite(img, txt_layer)
-            return np.array(img.convert("RGB"))
+            elif dia == 6:  # Domingo: Typewriter também (padrão universal)
+                chars_to_show = int(progresso * len(texto))
+
+            return _adicionar_texto_degrade(
+                frame_np, texto, fonte_texto,
+                chars_to_show=chars_to_show,
+                fade_alpha=fade_alpha,
+                deslocamento_y=deslocamento_y,
+                paleta=PALETA_PADRAO_MARCA
+            )
 
         # --- Função: gera todos os frames de um slide (imagem + texto animado) ---
         def gerar_frames_slide(caminho_img, texto, duracao, dia, eh_primeiro_slide, W, H, fps, eh_ultimo_slide=False):  # noqa
@@ -423,15 +304,27 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
             img_pil = PILImage.open(caminho_img).convert("RGB").resize((W, H), PILImage.Resampling.LANCZOS)
             img_np  = np.array(img_pil)
 
+            # Pré-redimensiona uma única vez se a animação do dia envolver Zoom (dias 2 e 5)
+            # Evita chamar resize() pesados 24 vezes por segundo a cada frame!
+            img_zoomed_np = None
+            if dia in [2, 5]:
+                scale_max = 1.12
+                w_zoom, h_zoom = int(W * scale_max), int(H * scale_max)
+                img_zoomed_pil = img_pil.resize((w_zoom, h_zoom), PILImage.Resampling.LANCZOS)
+                img_zoomed_np  = np.array(img_zoomed_pil)
+
             frames = []
             for f in range(total_frames):
                 t = f / fps
                 progresso = t / duracao
                 frame = img_np.copy()
 
-                # --- Transição de entrada da IMAGEM (slides 2+) ---
+                # --- Transição de entrada da IMAGEM (slides 2+) com curva suave (Ease-Out) ---
                 if not eh_primeiro_slide and t < 0.5:
-                    p = t / 0.5
+                    p_linear = t / 0.5
+                    # Curva Ease-Out: movimento começa rápido e freia suavemente (sem tranco)
+                    p = 1.0 - (1.0 - p_linear) ** 2
+
                     if dia == 0:
                         frame = (frame * p).astype(np.uint8)
                     elif dia == 1:
@@ -441,12 +334,14 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                         if dst_w > 0:
                             canvas[:, :dst_w] = frame[:, offset_x:]
                         frame = canvas
-                    elif dia == 2:
-                        scale = 1.0 + 0.10 * progresso
-                        new_w, new_h = int(W * scale), int(H * scale)
-                        iz = PILImage.fromarray(frame).resize((new_w, new_h), PILImage.Resampling.LANCZOS)
-                        cx, cy = (new_w - W) // 2, (new_h - H) // 2
-                        frame = np.array(iz.crop((cx, cy, cx + W, cy + H)))
+                    elif dia == 2 and img_zoomed_np is not None:
+                        # Zoom In ultra rápido via fatiamento de matriz (0ms)
+                        scale_curr = 1.0 + 0.12 * p
+                        w_c, h_c = int(W * scale_curr), int(H * scale_curr)
+                        cx, cy = (img_zoomed_np.shape[1] - w_c) // 2, (img_zoomed_np.shape[0] - h_c) // 2
+                        frame = img_zoomed_np[cy:cy+h_c, cx:cx+w_c]
+                        if frame.shape[0] != H or frame.shape[1] != W:
+                            frame = np.array(PILImage.fromarray(frame).resize((W, H), PILImage.Resampling.BILINEAR))
                     elif dia == 3:
                         offset_y = int(H * (1.0 - p))
                         canvas = np.zeros_like(frame)
@@ -461,12 +356,14 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                         if dst_w > 0:
                             canvas[:, offset_x:] = frame[:, :dst_w]
                         frame = canvas
-                    elif dia == 5:
-                        scale = 1.10 - 0.10 * progresso
-                        new_w, new_h = int(W * scale), int(H * scale)
-                        iz = PILImage.fromarray(frame).resize((new_w, new_h), PILImage.Resampling.LANCZOS)
-                        cx, cy = (new_w - W) // 2, (new_h - H) // 2
-                        frame = np.array(iz.crop((cx, cy, cx + W, cy + H)))
+                    elif dia == 5 and img_zoomed_np is not None:
+                        # Zoom Out ultra rápido via fatiamento de matriz (0ms)
+                        scale_curr = 1.12 - 0.12 * p
+                        w_c, h_c = int(W * scale_curr), int(H * scale_curr)
+                        cx, cy = (img_zoomed_np.shape[1] - w_c) // 2, (img_zoomed_np.shape[0] - h_c) // 2
+                        frame = img_zoomed_np[cy:cy+h_c, cx:cx+w_c]
+                        if frame.shape[0] != H or frame.shape[1] != W:
+                            frame = np.array(PILImage.fromarray(frame).resize((W, H), PILImage.Resampling.BILINEAR))
                     elif dia == 6:
                         offset_y = int(H * (1.0 - p))
                         canvas = np.zeros_like(frame)
@@ -479,10 +376,11 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                 if texto:
                     frame = desenhar_texto_animado(frame, texto, t, duracao, dia, W, H, eh_primeiro_slide, eh_ultimo_slide)
 
-                # --- FadeOut no final do slide ---
+                # --- FadeOut suave no final do slide ---
                 frames_restantes = total_frames - f
                 if frames_restantes <= fade_frames and fade_frames > 0:
-                    alpha = frames_restantes / fade_frames
+                    alpha_linear = frames_restantes / fade_frames
+                    alpha = alpha_linear ** 2  # curva suave de fechamento
                     frame = (frame * alpha).astype(np.uint8)
 
                 frames.append(frame)
