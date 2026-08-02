@@ -265,12 +265,10 @@ def buscar_insights_conta_api():
             continue
 
         executou_pelo_menos_uma = True
-        logger.info(f"📥 Coletando insights globais para o perfil {acc_id}...")
-
-        # 1. Coleta Reach consolidado de 28 dias
+        # 1. Coleta Reach e Impressions consolidado de 28 dias
         url_28d = (
             f"https://graph.facebook.com/v19.0/{acc_id}/insights"
-            f"?metric=reach"
+            f"?metric=reach,impressions"
             f"&period=days_28"
             f"&access_token={token}"
         )
@@ -290,9 +288,11 @@ def buscar_insights_conta_api():
                                 break
                         if val == 0:
                             val = values[-1].get("value", 0)
-
+ 
                         if name == "reach":
                             reach_total += val
+                        elif name == "impressions":
+                            impressions_total += val
             else:
                 logger.warning(f"Não foi possível obter insights 28d para {acc_id}: {res.text}")
         except Exception as e:

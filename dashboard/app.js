@@ -1013,6 +1013,8 @@ function abrirModalPost(postId) {
             modalMediaEl = `<div class="no-img-gradient"><i data-lucide="${isVid?'video':'image'}"></i><span>Mídia Local / Publicada</span></div>`;
         }
 
+    const legendaFormatada = formatarLegenda(post.legenda || '');
+
     const metCard = (label, val, color='var(--text)') => `
         <div style="background:rgba(255,255,255,0.01);border:1px solid var(--border);padding:.5rem;border-radius:8px;text-align:center;">
             <div style="font-size:.62rem;color:var(--text-sec);text-transform:uppercase;margin-bottom:.15rem;">${label}</div>
@@ -1239,20 +1241,29 @@ async function carregarSolicitacoes() {
     if (!listEl) return;
 
     try {
-        const snap = await db.collection('solicitacoes_postagem').orderBy('solicitado_em', 'desc').limit(10).get();
+        const snap = await db.collection('solicitacoes_postagem').limit(20).get();
         if (snap.empty) {
             listEl.innerHTML = '<div class="empty-state"><i data-lucide="inbox"></i><span>Nenhuma solicitação enviada ainda.</span></div>';
             lucide.createIcons();
             return;
         }
 
+        // Ordena no JS para não precisar de índice composto no Firebase
+        const docs = [];
+        snap.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
+        docs.sort((a, b) => {
+            const ta = a.solicitado_em?.seconds || 0;
+            const tb = b.solicitado_em?.seconds || 0;
+            return tb - ta;
+        });
+        const dez = docs.slice(0, 10);
+
         let html = '';
-        snap.forEach(doc => {
-            const data = doc.data();
+        dez.forEach(data => {
             const fmt = NOMES_FORMATOS[data.tipo_post] || data.tipo_post;
             const dataStr = data.solicitado_em ? fmtDataCompleta(data.solicitado_em.toDate()) : 'Recentemente';
-            const statusClass = (data.status === 'publicado') ? 'status-publicado' : 'status-pendente';
-            const statusLabel = (data.status === 'publicado') ? '✅ Publicado' : '⏳ Pendente (Robô)';
+            const statusClass = (data.status === 'publicado') ? 'status-publicado' : (data.status === 'erro') ? 'status-erro' : 'status-pendente';
+            const statusLabel = (data.status === 'publicado') ? '✅ Publicado' : (data.status === 'erro') ? '❌ Erro' : '⏳ Pendente (Robô)';
 
             html += `
                 <div class="req-item">

@@ -90,6 +90,11 @@ def processar_solicitacoes_pendentes():
                     print(f"⚠️ Aviso ao enviar e-mail de notificação: {e_mail}")
             else:
                 print(f"❌ [Studio de Criação] Falha ao processar a postagem para o pedido '{doc_id}'.")
+                # Atualiza status no Firebase para erro
+                db.collection("solicitacoes_postagem").document(doc_id).update({
+                    "status": "erro",
+                    "processado_em": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+                })
 
         return True
 
