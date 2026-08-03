@@ -9,7 +9,6 @@ import uuid
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 from core.ai.gemini import gerar_conteudo_gemini
-from core.ai.prompts import TEMAS_MAPEADOS
 from core.design.motor_visual import criar_arte
 from core.publisher.instagram import postar_no_instagram
 from core.publisher.email_notifier import enviar_email_notificacao
@@ -178,7 +177,7 @@ def main():
                     is_noite=(args.type == "pexels_story_noite")
                 )
         else:
-            midia = criar_arte(args.type, conteudo, tema_escolhido, TEMAS_MAPEADOS)
+            midia = criar_arte(args.type, conteudo, tema_escolhido)
             if isinstance(midia, list): arquivos_gerados.extend(midia)
             elif isinstance(midia, str): arquivos_gerados.append(midia)
             elif isinstance(midia, tuple): arquivos_gerados.extend(midia[0])

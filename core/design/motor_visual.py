@@ -13,7 +13,7 @@ from core.config.state import verificar_midia_recente, registrar_midia_usada
 
 from core.config.settings import PEXELS_API_KEY, PIXABAY_API_KEY, UNSPLASH_ACCESS_KEY
 
-def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None):
+def buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=None):
     """
     Busca de imagem em Cascata (Fase 2):
     Nível 1: Unsplash API (Fotos Reais)
@@ -34,10 +34,6 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
         orientation = "squarish"
 
     query_termo = "cyberpunk,futuristic,city night,neon lights,dark gold"
-    if tema_escolhido and tema_escolhido in TEMAS_MAPEADOS:
-        query_termo = TEMAS_MAPEADOS[tema_escolhido].get("query_unsplash", query_termo)
-
-
     # ── Direção de Arte Fixa 'Ecos da Consciência' (80% Noturna, Luz Dourada/Âmbar, 35mm Film, Pessoas/Afetividade) ──
     UNSPLASH_FALLBACKS = {
         "espiritualidade": ["artistic portrait person thoughtful warm golden night light 35mm", "person looking night sky city lights warm amber glow cinematic bokeh", "contemplative person night ambient lighting 35mm film aesthetic"],
@@ -277,11 +273,11 @@ def buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=None
     print("⚠️ Sem imagens locais disponíveis. Usando fundo escuro sólido.")
     return Image.new('RGBA', (W, H), color=(20, 20, 20, 255)), W, H
 
-def criar_arte(tipo, dados, tema_escolhido, TEMAS_MAPEADOS):
+def criar_arte(tipo, dados, tema_escolhido):
     print(f"🎨 Desenhando arte ({tipo.upper()}) com Design Premium...")
     
     prompt_imagem = dados.get("prompt_imagem")
-    img, W, H = buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=prompt_imagem)
+    img, W, H = buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=prompt_imagem)
     
     # Aplica Gradient Inteligente em vez de overlay preto sólido
     img = aplicar_mesh_gradient(img)
@@ -289,9 +285,9 @@ def criar_arte(tipo, dados, tema_escolhido, TEMAS_MAPEADOS):
     if tipo == "carousel":
         return _gerar_carrossel(img, W, H, dados)
     elif tipo in ["reels", "reels_noite", "reels_conquistador", "story_manha"]:
-        return _gerar_reels(img, W, H, dados, tema_escolhido, TEMAS_MAPEADOS, tipo=tipo)
+        return _gerar_reels(img, W, H, dados, tema_escolhido, tipo=tipo)
     else:
-        return _gerar_estatico(img, W, H, tipo, dados, tema_escolhido, TEMAS_MAPEADOS)
+        return _gerar_estatico(img, W, H, tipo, dados, tema_escolhido)
 
 def desenhar_marca_dagua_ouro(draw, posicao, texto, fonte):
     """Desenha a assinatura da marca com efeito glow dourado imitando o logo original."""
@@ -412,7 +408,7 @@ def _gerar_carrossel(img, W_full, H, dados):
         
     return caminhos_arquivos
 
-def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tipo="reels"):
+def _gerar_reels(img, W, H, dados, tema_escolhido=None, tipo="reels"):
     """Gera os fundos dos slides do Reels (sem texto baked) e retorna as frases separadas para animação."""
     import random as _random
     caminhos_fundos = []
@@ -461,9 +457,10 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
     font_display, font_body, _ = carregar_fontes(86, 22, 24, estilo=estilo_sorteado)
 
     for idx, frase in enumerate(frases):
-        if idx > 0 and tema_escolhido and TEMAS_MAPEADOS:
+        if idx > 0 and tema_escolhido:
+            # Busca uma nova imagem para o próximo slide
             prompt_secundario = dados.get("prompt_imagem")
-            nova_img, _, _ = buscar_imagem_fundo("reels", tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=prompt_secundario)
+            nova_img, _, _ = buscar_imagem_fundo("reels", tema_escolhido, prompt_imagem=prompt_secundario)
             nova_img = aplicar_mesh_gradient(nova_img)
             slide = nova_img.convert("RGB")
         else:
@@ -523,7 +520,7 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, TEMAS_MAPEADOS=None, tip
     # Retorna tuple: (fundos sem texto, frases para animar, caminho fonte, tamanho fonte)
     return (caminhos_fundos, frases, caminho_fonte_valido, 86)
 
-def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=None):
+def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None):
     layout_style = random.choice(["classic", "bottom", "quote"])
     print(f"🎨 Usando estilo de layout: {layout_style.upper()}")
     
@@ -541,9 +538,10 @@ def _gerar_estatico(img, W, H, tipo, dados, tema_escolhido=None, TEMAS_MAPEADOS=
     for idx, frase in enumerate(frases):
         # FIX: Para Stories com múltiplos slides, busca imagem diferente por slide
         tipo_story = tipo in ["story_manha", "story_tarde"]
-        if tipo_story and idx > 0 and tema_escolhido and TEMAS_MAPEADOS:
+        if tipo_story and idx > 0 and tema_escolhido:
+            # Busca uma nova imagem para os próximos slides da sequência
             prompt_secundario = dados.get("prompt_imagem")
-            nova_img, _, _ = buscar_imagem_fundo(tipo, tema_escolhido, TEMAS_MAPEADOS, prompt_imagem=prompt_secundario)
+            nova_img, _, _ = buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=prompt_secundario)
             nova_img = aplicar_mesh_gradient(nova_img)
             slide = nova_img.convert("RGB")
         else:

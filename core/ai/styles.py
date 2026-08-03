@@ -162,28 +162,28 @@ LISTA_GANCHOS_CONQUISTADOR = [
 # ==========================================
 ARQUITETURAS_NARRATIVAS = [
     {
-        "nome": "Problema-Solução Clássico",
-        "descricao": "Identifique a dor cotidiana do leitor logo após o gancho, aprofunde o incômodo (bata na ferida) e então entregue o insight/passo prático como recompensa."
+        "nome": "Visão de Grandeza",
+        "descricao": "Identifique uma ambição ardente do leitor logo após o gancho, eleve o estado de espírito (mostre o topo) e então entregue o princípio prático para chegar lá."
     },
     {
-        "nome": "Confissão Pessoal / Storytelling",
-        "descricao": "Fale como se estivesse compartilhando um erro ou aprendizado pessoal do próprio palestrante ('Eu já estive exatamente onde você está agora...'). Use a primeira pessoa do plural ('nós') para criar aliança com o ouvinte."
+        "nome": "O Ponto de Virada",
+        "descricao": "Fale como se estivesse compartilhando o momento exato em que a sua vida mudou ('O dia em que a chave virou para mim...'). Use a primeira pessoa do plural ('nós') para criar aliança de poder com o ouvinte."
     },
     {
-        "nome": "Pergunta & Investigação Cirúrgica",
-        "descricao": "Faça uma série de perguntas e vá guiando o leitor passo a passo para desmascarar as próprias desculpas ou mentiras mentais, revelando a raiz real do problema."
+        "nome": "Pergunta & Investigação Magnética",
+        "descricao": "Faça uma série de perguntas e vá guiando o leitor passo a passo para desmascarar as próprias desculpas, revelando que ele já tem o poder que procura."
     },
     {
-        "nome": "Metáfora / Analogia do Cotidiano",
-        "descricao": "Use uma analogia física rica (como o funcionamento de uma represa, uma xícara transbordando, uma árvore sem raízes) para explicar um padrão de comportamento de forma extremamente visual."
+        "nome": "Metáfora de Alta Frequência",
+        "descricao": "Use uma analogia de poder e magnitude (como a aerodinâmica de um jato, a precisão de um atirador, a gravidade de um planeta) para explicar a mentalidade vencedora de forma puramente visual e eletrizante."
     },
     {
-        "nome": "Confronto e Alerta de Tempo",
-        "descricao": "Abordagem crua e direta. Alerte o leitor de que o tempo está passando, destrua a falsa ilusão de conforto e chame-o para agir imediatamente com firmeza e autoridade."
+        "nome": "Confronto de Autoridade",
+        "descricao": "Abordagem crua, direta e magnética. Quebre a ilusão da mediocridade e chame o leitor para assumir o controle absoluto da própria vida agora mesmo, com energia de líder."
     },
     {
-        "nome": "Micro-Fábula de Personagem",
-        "descricao": "Apresente uma cena curta com um personagem sem nome ('Às 23h, ele olhou para as telas...'). Narre a dor dele e deixe que a lição prática surja do desfecho natural da cena."
+        "nome": "A Cena do Triunfo",
+        "descricao": "Apresente uma cena curta com um personagem sem nome ('Às 23h, ele fechou o contrato...'). Narre o momento da vitória silenciosa e deixe que a lição prática surja da atitude dele."
     }
 ]
 
@@ -387,82 +387,82 @@ def proximo_cta(indice_atual=0):
 SENTIMENTOS_CONFIG = {
     # ── Família 1: Desejo & Aspiração (Ideal para inspirar e gerar conexão de alta qualidade)
     "poder": {
-        "tom": "Transmita autoridade incansável e domínio das emoções. Use frases firmes e seguras. Fale de auto-maestria.",
-        "busca_imagem": ["determined male leader portrait night city golden lights 35mm", "strong artistic portrait person night cityscape deep shadows", "powerful stance person night city golden bokeh cinematic", "intense portrait night city lights Kodak Portra 800"],
+        "tom": "Transmita autoridade incansável, magnetismo e domínio. Use frases firmes. Fale de auto-maestria e de viver no topo.",
+        "busca_imagem": ["concert crowd cheering stadium lights glowing cinematic 35mm", "determined male leader walking fast city lights power", "luxury car driving fast night city neon blur", "powerful stance person standing on top of mountain sunrise"],
         "pasta_audio": "desejo_poder"
     },
     "luxuria": {
-        "tom": "Desperte o desejo pelo extraordinário e pelo conhecimento restrito aos 1%. Fale sobre segredos ocultos e exclusividade.",
-        "busca_imagem": ["artistic couple night city lights warm amber glow 35mm", "stylish person night city reflections golden neon mood", "glamour artistic portrait night warm shadows cinematic", "intimate couple night city lighting Kodak Portra 800"],
+        "tom": "Desperte o desejo pelo extraordinário, pelo acesso restrito e pela vida que a maioria apenas sonha em ter.",
+        "busca_imagem": ["luxury lifestyle elegant person night city lights golden bokeh", "high end party celebration champagne flashing lights 35mm", "stadium concert lasers smoke excitement crowd", "exclusive VIP event warm lighting luxury cinematic"],
         "pasta_audio": "desejo_poder"
     },
     "sensualidade": {
-        "tom": "Trabalhe com o magnetismo do mistério e o poder do silêncio atraente. Fale com classe, sem vulgaridade.",
-        "busca_imagem": ["artistic portrait person night warm shadow amber light 35mm", "intimate atmosphere couple night city warm lighting", "moody silhouette portrait night golden glow cinematic", "artistic romance night city street lighting 35mm"],
+        "tom": "Trabalhe com o magnetismo do mistério, da autoconfiança inabalável e da atração fatal que a clareza gera.",
+        "busca_imagem": ["charismatic speaker stage spotlight crowd watching 35mm", "confident person smiling bright city lights night glowing", "magnetic portrait warm stage lighting cinematic", "elegant confident walk night city street neon"],
         "pasta_audio": "desejo_poder"
     },
     "prazer": {
-        "tom": "Conecte com a satisfação genuína de colher frutos do esforço e viver sob seus próprios termos. Sensação de conquista.",
-        "busca_imagem": ["joyful person night city rooftop celebrating warm golden light 35mm", "artistic portrait person smiling night city lights warm glow", "happy couple laughing night city street bokeh cinematic", "peaceful contentment person night warm lighting 35mm"],
+        "tom": "Conecte com a satisfação genuína da vitória, o êxtase de viver nos seus próprios termos. Celebração pura.",
+        "busca_imagem": ["joyful crowd concert hands up laser lights 35mm", "person celebrating victory arms raised sunrise mountain", "ecstatic group of friends laughing luxury rooftop night", "triumph celebration confetti lights cinematic"],
         "pasta_audio": "desejo_poder"
     },
     "plenitude": {
-        "tom": "Foque no alívio de se sentir completo e em paz consigo mesmo. Acabe com a sensação de estar correndo em vão.",
-        "busca_imagem": ["tranquil person contemplating night city skyline golden glow 35mm", "peaceful artistic portrait person night warm ambient light", "serene person looking at night city lights deep shadows", "calm moment person night cityscape Kodak Portra 800"],
+        "tom": "Foque na sensação de governo absoluto sobre a própria vida. O alívio poderoso de saber exatamente quem você é.",
+        "busca_imagem": ["majestic sunrise over ocean person looking far 35mm", "peaceful but powerful stance grand canyon morning light", "serene leader looking over bright city skyline", "calm confidence person bright morning sunlight cinematic"],
         "pasta_audio": "conexao_lealdade"
     },
 
-    # ── Família 2: Tensão & Ação (Excelente para engajamento frio, ganchos rápidos de 2s e comentários)
+    # ── Família 2: Tensão & Ação (Ganchos de velocidade, despertar, virada de jogo)
     "escassez": {
-        "tom": "Gere senso de urgência e perda de tempo. Chame a atenção para a velocidade com que os anos passam enquanto o leitor hesita.",
-        "busca_imagem": ["person walking alone night city rain golden neon reflections 35mm", "moody portrait person looking at time night cityscape shadows", "thoughtful person night city street rain reflections cinematic", "dramatic portrait night city lights deep shadows 35mm"],
+        "tom": "Gere senso de urgência para a grandeza. O tempo não está acabando para sofrer, está passando enquanto o topo te espera.",
+        "busca_imagem": ["fast motion blur sports car night city lights cinematic", "sprinter running fast stadium lights track 35mm", "dynamic movement crowd concert jumping energy", "urgent action fast pace city life neon blur"],
         "pasta_audio": "tensao_acao"
     },
     "raiva": {
-        "tom": "Manifeste indignação fria contra a mediocridade, a distração fácil e a hipocrisia social do mundo atual.",
-        "busca_imagem": ["intense determined portrait person night city rain 35mm", "dramatic lighting person night city street deep shadows", "strong emotional portrait person night neon reflections", "intense glare person night cityscape Kodak Portra 800"],
+        "tom": "Manifeste uma indignação eletrizante contra a mediocridade. Uma energia de revolta que impulsiona para a ação extrema.",
+        "busca_imagem": ["intense rock concert guitarist stage lights 35mm", "athlete screaming victory intense stadium lights", "powerful dynamic sports action bright lights cinematic", "fierce determined look person running fast"],
         "pasta_audio": "tensao_acao"
     },
-    "medo": {
-        "tom": "Toque na dor inconsciente e no perigo de continuar na mesma situação de estagnação por covardia de mudar.",
-        "busca_imagem": ["moody portrait person looking back night city street rain 35mm", "vulnerable artistic portrait person night city shadows glow", "person walking alone night city street fog golden light", "dramatic atmosphere person night city bokeh 35mm"],
+    "ousadia": {
+        "tom": "Toque no perigo de viver uma vida morna e esquecível. Provoque a coragem e a fome de arriscar alto.",
+        "busca_imagem": ["person standing edge of cliff looking at sunrise cinematic", "base jumper jumping off mountain extreme wide angle 35mm", "daring action sports bright sky intense light", "fearless leader addressing massive crowd stadium"],
         "pasta_audio": "tensao_acao"
     },
-    "duvida": {
-        "tom": "Faça perguntas perturbadoras. Desafie as verdades que o leitor julga inabaláveis. Crie incerteza intelectual.",
-        "busca_imagem": ["thoughtful person looking at rainy window night city lights 35mm", "contemplative portrait person night city golden shadows", "puzzled artistic portrait person night ambient lighting", "person questioning thoughts night city reflection Kodak Portra"],
+    "desafio": {
+        "tom": "Faça perguntas provocadoras de alto nível. Desafie o leitor a subir o próprio sarrafo e parar de aceitar o básico.",
+        "busca_imagem": ["athlete staring down opponent intense stadium lighting 35mm", "confident smile looking directly at camera bright light", "challenging confident posture city skyline background", "leader standing tall among crowd cinematic lighting"],
         "pasta_audio": "tensao_acao"
     },
     "curiosidade": {
-        "tom": "Abra loops mentais com promessas de revelação sobre o comportamento humano. O leitor precisa virar a tela.",
-        "busca_imagem": ["artistic portrait person reading book under warm night lamp 35mm", "curious person looking at night city lights golden glow", "thoughtful person discovering something night warm lighting", "intimate artistic reading moment night cityscape bokeh"],
+        "tom": "Abra loops mentais com o 'segredo dos que chegam lá'. O magnetismo do que a elite sabe e a massa ignora.",
+        "busca_imagem": ["stage curtain opening bright light shining through 35mm", "mystery silhouette walking into bright glowing doorway", "illuminated book glowing magical light knowledge", "discover hidden treasure glowing golden light cinematic"],
         "pasta_audio": "tensao_acao"
     },
 
     # ── Família 3: Conexão & Lealdade (Ideal para Stories e aquecimento de base de seguidores)
     "amor": {
-        "tom": "Aborde com altruísmo puro, empatia real e proteção aos valores familiares. O valor do sacrifício por quem se ama.",
-        "busca_imagem": ["warm genuine affectionate hug couple night city lights 35mm", "tender moment couple night golden ambient lighting cinematic", "artistic affection couple night city street Kodak Portra 800", "intimate embrace couple night warm golden bokeh"],
+        "tom": "Aborde a força imbatível de quem constrói algo para quem ama. A paixão que levanta impérios.",
+        "busca_imagem": ["passionate crowd singing together concert lights 35mm", "joyful family running on bright sunny beach cinematic", "warm powerful embrace golden hour sunlight", "loyal team celebrating victory trophy lights"],
         "pasta_audio": "conexao_lealdade"
     },
     "carinho": {
-        "tom": "Fale com tom de proximidade e cuidado de um verdadeiro mentor. Acolha e ofereça suporte prático com calma.",
-        "busca_imagem": ["gentle caring moment couple night warm ambient light 35mm", "affectionate portrait person night city warm golden glow", "tender embrace couple night city lights soft bokeh", "caring mentor comforting person night warm lighting"],
+        "tom": "Fale com o magnetismo de um líder que cuida da sua tribo. Uma voz forte, mas que eleva quem está perto.",
+        "busca_imagem": ["leader shaking hands smiling crowd bright lights 35mm", "mentor clapping for student success bright stage", "warm genuine smile connection bright sunlight", "loyal fans reaching out to stage concert cinematic"],
         "pasta_audio": "conexao_lealdade"
     },
     "afeto": {
-        "tom": "Mostre a importância das alianças verdadeiras e amizades de aço. Construa pontes emocionais seguras.",
-        "busca_imagem": ["two genuine friends laughing together night city street 35mm", "warm friendship hug night city lights golden bokeh", "intimate human connection night city warm ambient light", "loyal friends talking night city street Kodak Portra"],
+        "tom": "Celebre a irmandade de quem corre pelo mesmo objetivo. A energia de um time imbatível.",
+        "busca_imagem": ["team huddle sports stadium bright lights intense 35mm", "friends laughing throwing hands in air sunset beach", "tribe celebrating around massive bonfire night", "loyal crew walking together confident slow motion"],
         "pasta_audio": "conexao_lealdade"
     },
     "alegria": {
-        "tom": "Celebre vitórias reais, a beleza da natureza e a felicidade sincera de viver com propósito.",
-        "busca_imagem": ["joyful person laughing night city street golden lights 35mm", "happy group friends celebrating night city rooftop glow", "radiant smile person night city bokeh cinematic", "cheerful moment person night cityscape warm lighting"],
+        "tom": "Celebre vitórias de forma barulhenta e eufórica. A felicidade extrema de viver no pico de performance.",
+        "busca_imagem": ["euphoric crowd jumping concert confetti lasers 35mm", "champagne pop celebration luxury yacht sunny day", "radiant laughter group of winners stadium lights", "pure joy dancing neon lights club cinematic"],
         "pasta_audio": "conexao_lealdade"
     },
     "esperanca": {
-        "tom": "Mostre que mesmo na noite mais escura, a alvorada virá. Dê perspectivas positivas de crescimento real.",
-        "busca_imagem": ["hopeful person looking up night city golden lights 35mm", "inspiring portrait young person night city light reflection", "optimistic look person night cityscape warm amber glow", "bright hope person night city street Kodak Portra 800"],
+        "tom": "Mostre que a glória é inevitável para quem não para. Uma visão épica e grandiosa do futuro.",
+        "busca_imagem": ["epic sunrise over futuristic city bright golden light 35mm", "person raising flag on mountain peak sun shining", "triumphant orchestra playing bright stage lights", "soaring eagle flying into bright sun cinematic"],
         "pasta_audio": "conexao_lealdade"
     }
 }
