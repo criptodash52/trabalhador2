@@ -1,10 +1,20 @@
 {
     "index_tema_diario": 1,
-    "indice_gancho_conquistador": 24,
-    "index_animacao_conquistador": 3,
+    "index_palette_leads": 1,
+    "ultimos_temas": [],
+    "sentimento_do_dia": "raiva",
     "index_conquistador": 8,
+    "indice_arquitetura": 3,
+    "historico_angulos": [
+        "O Poder da Ação (Paulo Vieira)",
+        "Pai Rico, Pai Pobre (Robert Kiyosaki)",
+        "O Poder do Hábito (Charles Duhigg)",
+        "Marianne Williamson",
+        "Blink (Malcolm Gladwell)",
+        "Malcolm X / Nelson Mandela",
+        "Mais Esperto que o Diabo (Napoleon Hill)"
+    ],
     "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/In The Morning - Blue Beat Review.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Never Coming Down - The Soundlings.mp3",
@@ -18,6 +28,7 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/I Got You - Anno Domini Beats.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3"
     ],
+    "indice_gancho": 45,
     "fila_musicas_musicas": [
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/thriller-suspense-536629 (1).mp3",
@@ -58,8 +69,8 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3"
     ],
+    "data_sentimento_do_dia": "2026-08-02",
     "index_plataforma_conquistador": 1,
-    "indice_gancho": 45,
     "historico_midia": [
         "unsplash_5C8DGuMVFrU",
         "unsplash_zcz3rlfpNPY",
@@ -562,7 +573,14 @@
         "28385817",
         "15980421"
     ],
-    "data_sentimento_do_dia": "2026-08-02",
+    "index_animacao_conquistador": 3,
+    "tema_do_dia": "O Poder do Hábito (Charles Duhigg)",
+    "indice_gancho_conquistador": 24,
+    "data_tema_do_dia": "2026-08-03",
+    "indice_cta": 40,
+    "index_pilar_reels_leads": 0,
+    "index_palette_conquistador": 1,
+    "ultimo_carousel": 3,
     "historico_estilos": [
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
@@ -590,9 +608,6 @@
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
     ],
-    "index_pilar_reels_leads": 0,
-    "data_tema_do_dia": "2026-08-03",
-    "indice_cta": 40,
     "historico_sentimentos": [
         "curiosidade",
         "alegria",
@@ -604,21 +619,5 @@
         "poder",
         "carinho",
         "raiva"
-    ],
-    "ultimo_carousel": 3,
-    "ultimos_temas": [],
-    "indice_arquitetura": 3,
-    "index_palette_leads": 1,
-    "sentimento_do_dia": "raiva",
-    "index_palette_conquistador": 1,
-    "tema_do_dia": "O Poder do Hábito (Charles Duhigg)",
-    "historico_angulos": [
-        "O Poder da Ação (Paulo Vieira)",
-        "Pai Rico, Pai Pobre (Robert Kiyosaki)",
-        "O Poder do Hábito (Charles Duhigg)",
-        "Marianne Williamson",
-        "Blink (Malcolm Gladwell)",
-        "Malcolm X / Nelson Mandela",
-        "Mais Esperto que o Diabo (Napoleon Hill)"
     ]
 }
