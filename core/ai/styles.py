@@ -183,7 +183,7 @@ ARQUITETURAS_NARRATIVAS = [
     },
     {
         "nome": "A Cena do Triunfo",
-        "descricao": "Apresente uma cena curta com um personagem sem nome ('Às 23h, ele fechou o contrato...'). Narre o momento da vitória silenciosa e deixe que a lição prática surja da atitude dele."
+        "descricao": "Crie uma cena curta INÉDITA com um personagem sem nome em um cenário de sucesso (NÃO copie o exemplo antigo das 23h). Narre o momento da vitória silenciosa e deixe que a lição prática surja da atitude dele."
     }
 ]
 

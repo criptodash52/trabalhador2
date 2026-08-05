@@ -865,10 +865,10 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Apresente o material ("{titulo_pdf_limpo}") como a resposta natural ao que foi identificado nos slides anteriores.
         - Exemplo: "Este guia é um passo a passo para você saber exatamente o que priorizar."
 
-        SLIDE FINAL — CTA COM ENTREGA TANGÍVEL (use \n para separar):
-        - Parte Superior: promessa positiva e concreta.
-        - Parte Inferior: instrução com 'SABEDORIA' em caixa alta e entre aspas simples.
-        - Exemplo: "Receba o plano de 4 etapas para direcionar seu tempo. \n Aja com clareza: comente 'SABEDORIA' e receba o guia no Direct."
+        SLIDE FINAL — CTA COM ENTREGA TANGÍVEL (use \\n para separar):
+        - Parte Superior (ANTES do \\n): instrução direta com a palavra 'SABEDORIA' em caixa alta.
+        - Parte Inferior (DEPOIS do \\n): promessa positiva e concreta do que a pessoa vai receber.
+        - Exemplo: "Aja com clareza: comente 'SABEDORIA' e receba o guia no Direct. \\n Receba o plano de 4 etapas para direcionar seu tempo."
 
         PEXELS QUERY — PILAR OBRIGATÓRIO DESTA RODADA: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
@@ -888,7 +888,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             "Às vezes a gente está ocupado com tudo, menos com o que realmente importa.",
             "Energia sem direção é só cansaço disfaçado de produtividade.",
             "Este guia é um passo a passo para você saber exatamente o que priorizar.",
-            "Receba o plano de 4 etapas para direcionar seu tempo e energia. \n Aja com clareza: comente 'SABEDORIA' e receba o guia no Direct."
+            "Aja com clareza: comente 'SABEDORIA' e receba o guia no Direct. \\n Receba o plano de 4 etapas para direcionar seu tempo e energia."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
