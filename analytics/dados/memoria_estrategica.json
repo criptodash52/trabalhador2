@@ -1,61 +1,61 @@
 {
+    "conhecimento_consolidado": [],
     "hipoteses": [
         {
+            "metrica_alvo": "growth_score",
+            "criada_em": "2026-08-03",
+            "grupo_a": "AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada.",
+            "hipotese": "Ganchos do tipo 'AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada.' geram maior crescimento de perfil do que outros ganchos.",
             "confianca": 0.5,
             "amostra": 9,
-            "grupo_a": "AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada.",
-            "criada_em": "2026-08-03",
-            "hipotese": "Ganchos do tipo 'AFIRMAÇÃO QUE CHOCA — Abra com uma verdade impopular e ousada.' geram maior crescimento de perfil do que outros ganchos.",
-            "grupo_b": "AFIRMAÇÃO — Abra com uma visão grandiosa e ousada.",
-            "id": "ha94ba0",
-            "status": "em_observacao",
             "variaveis_testadas": [
                 "gancho_categoria"
             ],
-            "metrica_alvo": "growth_score"
+            "id": "ha94ba0",
+            "grupo_b": "AFIRMAÇÃO — Abra com uma visão grandiosa e ousada.",
+            "status": "em_observacao"
         },
         {
+            "metrica_alvo": "growth_score",
+            "criada_em": "2026-08-03",
+            "grupo_a": "compartilhamento",
+            "hipotese": "CTA do tipo 'compartilhamento' gera mais conversão de seguidores.",
             "confianca": 0.5,
             "amostra": 14,
-            "grupo_a": "compartilhamento",
-            "criada_em": "2026-08-03",
-            "hipotese": "CTA do tipo 'compartilhamento' gera mais conversão de seguidores.",
-            "grupo_b": "comentario",
-            "id": "ha9e96f",
-            "status": "em_observacao",
             "variaveis_testadas": [
                 "tipo_cta"
             ],
-            "metrica_alvo": "growth_score"
+            "id": "ha9e96f",
+            "grupo_b": "comentario",
+            "status": "em_observacao"
         },
         {
+            "metrica_alvo": "growth_score",
+            "criada_em": "2026-08-03",
+            "grupo_a": "curiosidade",
+            "hipotese": "Ganchos baseados em CURIOSIDADE convertem 25% mais seguidores do que ganchos genéricos.",
             "confianca": 0.5,
             "amostra": 1,
-            "grupo_a": "curiosidade",
-            "criada_em": "2026-08-03",
-            "hipotese": "Ganchos baseados em CURIOSIDADE convertem 25% mais seguidores do que ganchos genéricos.",
-            "grupo_b": "generico",
-            "id": "h969fe3",
-            "status": "em_observacao",
             "variaveis_testadas": [
                 "gancho_categoria"
             ],
-            "metrica_alvo": "growth_score"
+            "id": "h969fe3",
+            "grupo_b": "generico",
+            "status": "em_observacao"
         },
         {
+            "metrica_alvo": "conversao_perfil",
+            "criada_em": "2026-08-03",
+            "grupo_a": "financas",
+            "hipotese": "Posts com foco no tema FINANÇAS e SUPERAÇÃO geram mais compartilhamentos.",
             "confianca": 0.5,
             "amostra": 1,
-            "grupo_a": "financas",
-            "criada_em": "2026-08-03",
-            "hipotese": "Posts com foco no tema FINANÇAS e SUPERAÇÃO geram mais compartilhamentos.",
-            "grupo_b": "outros",
-            "id": "hc99c70",
-            "status": "em_observacao",
             "variaveis_testadas": [
                 "tema"
             ],
-            "metrica_alvo": "conversao_perfil"
+            "id": "hc99c70",
+            "grupo_b": "outros",
+            "status": "em_observacao"
         }
-    ],
-    "conhecimento_consolidado": []
+    ]
 }
