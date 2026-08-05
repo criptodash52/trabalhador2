@@ -29,30 +29,8 @@ on:
           - test
 
   schedule:
-    # Roda a cada hora entre 7h UTC (4h BRT) e 1h UTC do dia seguinte (22h BRT)
-    # Isso cobre: 4h coleta, 6h reels+story, 7h pexels, 9h carousel,
-    #             12h reels almoço, 17h story tarde, 18h reels noite,
-    #             19h pexels noite, 22h reels conquistador
-    # E a cada hora verifica a fila do Studio de Criação (solicitações pendentes)
-    - cron: '0 7 * * *'   # 4h BRT
-    - cron: '0 8 * * *'   # 5h BRT (Domingo: geração PDF)
-    - cron: '0 9 * * *'   # 6h BRT
-    - cron: '0 10 * * *'  # 7h BRT
-    - cron: '0 11 * * *'  # 8h BRT
-    - cron: '0 12 * * *'  # 9h BRT
-    - cron: '0 13 * * *'  # 10h BRT
-    - cron: '0 14 * * *'  # 11h BRT
-    - cron: '0 15 * * *'  # 12h BRT
-    - cron: '0 16 * * *'  # 13h BRT
-    - cron: '0 17 * * *'  # 14h BRT
-    - cron: '0 18 * * *'  # 15h BRT
-    - cron: '0 19 * * *'  # 16h BRT
-    - cron: '0 20 * * *'  # 17h BRT
-    - cron: '0 21 * * *'  # 18h BRT
-    - cron: '0 22 * * *'  # 19h BRT
-    - cron: '0 23 * * *'  # 20h BRT
-    - cron: '0 0 * * *'   # 21h BRT
-    - cron: '0 1 * * *'   # 22h BRT
+    # 04:00 BRT - Coleta diária de métricas (e Relatório Semanal aos domingos)
+    - cron: '0 7 * * *'
 
 permissions:
   contents: write

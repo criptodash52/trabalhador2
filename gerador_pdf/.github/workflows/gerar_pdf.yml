@@ -1,11 +1,6 @@
 name: Gerador de PDF Semanal
 
 on:
-  # Roda todo domingo às 03:00 UTC (meia-noite no horário de Brasília)
-  # Depois que o ajustador.py já processou os dados da semana
-  schedule:
-    - cron: '0 3 * * 0'
-
   # Permite rodar manualmente para testar
   workflow_dispatch:
     inputs:

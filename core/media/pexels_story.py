@@ -845,16 +845,6 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 animacao = random.choice(animacoes_disponiveis)
                 logger.info(f"🎬 Animação de texto selecionada: {animacao.upper()}")
 
-            # Reels Leads: sorteia/alterna a paleta exclusiva UMA vez por geração de vídeo
-            paleta_leads_atual = None
-            if is_reels_leads:
-                _estado_leads = carregar_estado()
-                _idx_leads = _estado_leads.get("index_palette_leads", 0) % len(PALETAS_LEADS)
-                paleta_leads_atual = PALETAS_LEADS[_idx_leads]
-                _estado_leads["index_palette_leads"] = (_idx_leads + 1) % len(PALETAS_LEADS)
-                salvar_estado(_estado_leads)
-                nomes_paletas_leads = ["Visão Profética (Roxo→Azul)", "Paixão & Força (Rosa→Vermelho)"]
-                logger.info(f"🎨 [REELS LEADS] Paleta exclusiva: {nomes_paletas_leads[_idx_leads]}")
 
 
 
