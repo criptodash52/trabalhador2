@@ -22,7 +22,9 @@ load_dotenv(os.path.join(BOT_PATH, ".env"))
 
 
 PROMPT_TEMPLATE = """
-Você é um estrategista de conteúdo e escritor da marca "@codigo.da.sabedoria". Sua especialidade é escrever masterclasses em formato de e-book que combinam filosofia prática, psicologia comportamental aplicada e maestria pessoal para entregar CLAREZA IMEDIATA, FERRAMENTAS DE EXECUÇÃO E TRANSFORMAÇÃO REAL.
+Você é um estrategista de conteúdo e escritor da marca "@codigo.da.sabedoria". Sua especialidade é escrever masterclasses em formato de e-book focadas em "SABEDORIA EM AÇÃO" e "Sabedoria que Transforma Destinos".
+
+Sua missão é entregar um e-book de AÇÃO DIRETA, preparando o leitor para um plano prático, consistente e transformador.
 
 BRIEFING DA SEMANA:
 - Tema central: {nome_display}
@@ -36,97 +38,82 @@ CONTEXTO DO MUNDO REAL NESTA SEMANA (TENDÊNCIAS / OLHOS DA REDE):
 {contexto_semana}
 
 SUA MISSÃO:
-Escreva uma AULA PRÁTICA SEMANAL INÉDITA (Edição Semanal do Código da Sabedoria) de altíssimo valor percebido em formato de e-book/PDF.
-PROIBIDO ABSOLUTAMENTE: NÃO crie historinhas da carochinha, fábulas fictícias ou personagens inventados. As pessoas estão saturadas de autoajuda e conselhos vazios. Elas querem BENEFÍCIO DIRETO, FERRAMENTAS DE AÇÃO, GANHO DE TEMPO E RESULTADO PRÁTICO PARA O DIA A DIA.
+Escreva um E-BOOK DE AÇÃO DIRETA E EXTREMAMENTE PRÁTICA. As pessoas estão saturadas de teoria vazia. O PDF deve entregar uma EXPERIÊNCIA guiada, estruturada em ensinamentos práticos e claros para o dia a dia.
 
-DIRETRIZES DE VALOR E CONTEÚDO PRÁTICO:
-- FALE DE BENEFÍCIO E OPORTUNIDADE: Explique exatamente o que o leitor GANHA ao aplicar o método (maestria, clareza, tempo, poder de decisão, quebra da rotina cansativa).
-- PROTOCOLO ACIONÁVEL: Entregue passos concretos, técnicas aplicáveis e regras de conduta direta inspiradas no livro "{livro_base}".
-- AUTORIDADE MORAL E RACIONAL: A autoridade nasce da precisão dos argumentos, da inteligência de dados e da psicologia comportamental profunda.
+ESTRUTURA DA NARRATIVA (Obrigatório seguir em cada capítulo):
+- Emoção: Provoque uma emoção forte (desconforto com a inércia, desejo de mudança, clareza brutal).
+- História: Uma breve ilustração, metáfora ou fato (inspirado no livro base) que ancore a lição.
+- Lição Útil Revelada: O ensinamento prático aplicado à vida real. O que fazer HOJE.
 
-IMPORTANTE - NOME DO PDF:
-Crie um título magnético inédito que prometa uma TRANSFORMAÇÃO OU FERRAMENTA PRÁTICA (Ex: "O Protocolo da Ação Inegociável", "A Ciência do Foco Inabalável", "O Código da Maestria Pessoal").
+DIRETRIZES DE VALOR:
+- Tom de voz: Autoridade moral, incisivo, direto, focado em libertar a pessoa da "vida no automático".
+- Plano de Ação: O e-book deve culminar em um Plano de Ação prático (pode ser de dias, passos ou regras) que a pessoa consiga aplicar imediatamente. Crie um método dinâmico com base no {livro_base}.
 
 REGRAS DE FORMATAÇÃO DE TEXTO E JSON:
 - Use apenas texto simples, pontos e vírgulas.
 - É PROIBIDO usar emojis, caracteres especiais, aspas redondas ou travessões longos. Use apenas aspas duplas retas (") e hífens simples (-).
 - CRÍTICO: NUNCA use quebras de linha literais (Enter) dentro dos textos do JSON. Escreva tudo na mesma linha contínua.
+- REGRA DE IMAGENS: Para a capa, cada capítulo e o plano de ação, crie um "prompt_imagem". Deve ser um descritivo em INGLÊS focado em fotografia hiper-realista, escura, cinematográfica.
 
 ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
 
 {{
-  "titulo_pdf": "Título magnético inédito de alta transformação",
-  "subtitulo_pdf": "Subtítulo claro de benefício e aplicação prática",
+  "titulo_pdf": "Título magnético inédito focando em método e clareza",
+  "subtitulo_pdf": "Subtítulo de benefício direto (ex: O método passo a passo para assumir o controle)",
+  "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
   "capa_cards": [
-    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o diagnóstico", "texto": "1. Diagnóstico: A explicação direta do padrão mental ou rotina exaustiva que atrasa o leitor e o custo invisível desse comportamento. Mínimo 30 palavras, máximo 40, na mesma linha.", "pergunta_destaque": "Uma pergunta cirúrgica de provocação prática (máximo 10 palavras)."}},
-    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre a solução", "texto": "2. Solução: A apresentação da ferramenta prática e aplicável imediatamente inspirada em {livro_base}. Mínimo 30 palavras, máximo 40, na mesma linha."}},
-    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o benefício", "texto": "3. Benefício: O resultado tangível de tempo, clareza, maestria ou poder ao agir. Máximo 16 palavras."}},
-    {{"titulo": "Crie um título inédito de 2 a 4 palavras sobre o princípio", "texto": "4. Princípio de Aplicação: Uma verdade fundamentada em comportamento e ação direta. Máximo 12 palavras.", "citacao_destaque": "Uma citação marcante sobre o método (máximo 12 palavras)."}}
+    {{"titulo": "Crie um título curto e inédito para o card de diagnóstico", "texto": "Escreva aqui o diagnóstico da dor {dor_central} em até 30 palavras — direto e incisivo.", "pergunta_destaque": "Crie uma pergunta que cutuca a ferida do leitor em no máximo 10 palavras."}},
+    {{"titulo": "Crie um título curto e inédito para o card do método", "texto": "Descreva o método ou benefício central do livro {livro_base} em até 20 palavras."}},
+    {{"titulo": "Crie um título curto e inédito para o card do ritmo ou ganho", "texto": "Qual o ganho concreto que o leitor tem ao aplicar isso? Até 15 palavras."}},
+    {{"titulo": "Crie um título curto e inédito para o card da identidade ou princípio", "texto": "Escreva um princípio transformador em até 12 palavras.", "citacao_destaque": "Crie uma citação de até 10 palavras da essência do {livro_base}. Sempre termine com: Código da Sabedoria."}}
   ],
   "capitulos": [
     {{
       "numero": 1,
-      "titulo": "Crie um título inédito sobre O DIAGNÓSTICO DO PADRÃO",
+      "titulo": "Título inédito dinâmico para o Diagnóstico",
+      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
       "paragrafos": [
-        "Parágrafo 1 — Análise cirúrgica da rotina exaustiva e da inércia cotidiana. Explique sem meias palavras o mecanismo mental que faz as pessoas adiarem decisões cruciais. Mínimo 80 palavras.",
-        "Parágrafo 2 — O custo real desse atraso em termos de tempo de vida, liberdade, energia e dinheiro perdido. Mínimo 60 palavras.",
-        "Parágrafo 3 — Por que tentar resolver isso com 'força de vontade' é uma ilusão e por que é preciso um método de execução claro. Mínimo 80 palavras."
+        "Parágrafo 1 — EMOÇÃO: Toque na dor {dor_central}. Mostre o custo invisível da rotina automática e da falta de clareza mental.",
+        "Parágrafo 2 — HISTÓRIA: Conte um breve fato, estudo ou metáfora inspirada no livro {livro_base} sobre alguém que rompeu a inércia.",
+        "Parágrafo 3 — LIÇÃO: Ensinamento prático — como identificar o que estava te segurando sem perceber e dar o primeiro passo hoje."
       ]
     }},
     {{
       "numero": 2,
-      "titulo": "Crie um título inédito sobre O PRINCÍPIO DE MAESTRIA",
+      "titulo": "Título inédito dinâmico para o Controle ou Perspectiva",
+      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
       "paragrafos": [
-        "Parágrafo 1 — A virada de perspectiva fundamentada na obra {livro_base}. Mostre a lógica racional por trás de quem alcança resultados acima da média. Mínimo 80 palavras.",
-        "Parágrafo 2 — Como desarmar as justificativas mentais e o medo de falhar que mantêm as pessoas presas à mediocridade. Mínimo 60 palavras.",
-        "Parágrafo 3 — O conceito central que separa quem apenas absorve teoria de quem aplica e transforma a própria realidade. Mínimo 80 palavras."
+        "Parágrafo 1 — EMOÇÃO: A dificuldade de manter o foco e o cérebro que prefere o sofrimento conhecido à mudança.",
+        "Parágrafo 2 — HISTÓRIA: Metáfora ou exemplo prático do livro {livro_base} sobre o controle dos próprios impulsos.",
+        "Parágrafo 3 — LIÇÃO: Ensinamento prático — A técnica exata para dominar a própria atenção e reprogramar a mentalidade."
       ]
     }},
     {{
       "numero": 3,
-      "titulo": "Crie um título inédito sobre O PROTOCOLO DE 3 PASSOS",
+      "titulo": "Título inédito dinâmico para Ação e Planejamento",
+      "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
       "paragrafos": [
-        "Parágrafo 1 — Apresentação do Passo 1 do Protocolo: A Decisão Inegociável (como filtrar distrações e priorizar o que gera resultado). Mínimo 80 palavras.",
-        "Parágrafo 2 — Apresentação do Passo 2 do Protocolo: A Execução Silenciosa (como agir sem precisar provar nada a ninguém). Mínimo 60 palavras.",
-        "Parágrafo 3 — Apresentação do Passo 3 do Protocolo: O Ajuste de Rota (como monitorar a evolução diária com frieza e precisão). Mínimo 80 palavras."
-      ]
-    }},
-    {{
-      "numero": 4,
-      "titulo": "Crie um título inédito sobre A APLICAÇÃO NO CAMPO DE BATALHA",
-      "paragrafos": [
-        "Parágrafo 1 — Como implementar essa rotina de alta performance no dia a dia real, em meio a cobranças, estresse e ruído externo. Mínimo 80 palavras.",
-        "Parágrafo 2 — Como proteger sua energia mental e dizer 'não' a micro-demandas que drenam o seu propósito. Mínimo 60 palavras.",
-        "Parágrafo 3 — O hábito de manter a constância mesmo nos dias sem motivação, tornando a disciplina um hábito automático. Mínimo 80 palavras."
-      ]
-    }},
-    {{
-      "numero": 5,
-      "titulo": "Crie um título inédito sobre O PLANO DE EXECUÇÃO E RECOMPENSA",
-      "paragrafos": [
-        "Parágrafo 1 — Os frutos empíricos de quem assume o controle: soberania sobre o próprio tempo, clareza financeira e paz mental. Mínimo 80 palavras.",
-        "Parágrafo 2 — As 3 regras de ouro para nunca mais retroceder ao antigo padrão de passividade. Mínimo 60 palavras.",
-        "Parágrafo 3 — O convite final para agir hoje, lembrando que a mudança real não é uma promessa futura, mas a primeira atitude tomada agora. Mínimo 80 palavras."
+        "Parágrafo 1 — EMOÇÃO: O sentimento de trabalhar exausto sem nunca sentir que está chegando a algum lugar.",
+        "Parágrafo 2 — HISTÓRIA: Um insight poderoso do livro {livro_base} sobre planejamento, antecipação e escolha de metas reais.",
+        "Parágrafo 3 — LIÇÃO: Ensinamento prático — Como desenhar um plano à prova de desculpas para a sua semana."
       ]
     }}
   ],
-  "citacao_destaque": "Citação forte que resume a autoridade e utilidade prática da aula.",
-  "titulo_citacao": "Título curto para a página da citação (máximo 4 palavras)",
-  "verso_base": "Um provérbio, aforismo ou reflexão filosófica/bíblica sobre sabedoria prática",
-  "referencia_verso": "Referência do texto (ex: Provérbios 14:23 ou Sêneca)",
+  "citacao_destaque": "Citação impactante do livro {livro_base} sobre ação e sabedoria.",
+  "titulo_citacao": "A Regra de Ouro",
+  "verso_base": "Um provérbio ou reflexão filosófica/bíblica que ancore a lição prática de sabedoria.",
+  "referencia_verso": "Referência (ex: Provérbios ou Filosofia Estoica)",
   "plano_acao": {{
-    "titulo_secao": "Título dinâmico do Plano de Ação",
-    "subtitulo": "Subtítulo prático e dinâmico para os passos de ação imediata.",
+    "titulo_secao": "Crie um título totalmente original para este plano — pode ser um protocolo de qualquer número de dias, regras, pilares, ou o formato que melhor se encaixar no tema {nome_display} e no livro {livro_base}.",
+    "prompt_imagem": "Crie um prompt cinematográfico em inglês para a imagem do plano de ação, hiper-realista e dark.",
+    "subtitulo": "Crie um subtítulo que explique de forma instigante como executar este método específico.",
     "passos": [
-      {{"numero": 1, "titulo": "Título do Passo 1", "descricao": "Descrição prática da ação."}},
-      {{"numero": 2, "titulo": "Título do Passo 2", "descricao": "Descrição prática da ação."}},
-      {{"numero": 3, "titulo": "Título do Passo 3", "descricao": "Descrição prática da ação."}},
-      {{"numero": 4, "titulo": "Título do Passo 4", "descricao": "Descrição prática da ação."}}
+      "ATENÇÃO: Crie entre 3 e 6 passos — o número exato deve ser o que faz mais sentido para o método criado. Cada passo deve ter: numero (inteiro), titulo (inédito e criativo) e descricao (prática e aplicável hoje, baseada em {livro_base})."
     ]
   }},
-  "fechamento": "Parágrafo final de fechamento, convite sutil e persuasivo para mentoria ou aprofundamento prático.",
-  "titulo_fechamento": "Título curto do Fechamento (ex: O Próximo Passo)",
-  "rodape": "Produzido com foco, método e propósito prático."
+  "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
+  "titulo_fechamento": "SABEDORIA EM AÇÃO",
+  "rodape": "Código da Sabedoria — Conhecimento que Transforma Destinos."
 }}
 
 Retorne APENAS o JSON, sem texto antes ou depois.
@@ -193,6 +180,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
     conteudo_emergencia = {
       "titulo_pdf": "O Domínio da Mente",
       "subtitulo_pdf": "O método para silenciar a autossabotagem e assumir o controle.",
+      "prompt_imagem_capa": "Cinematic dark moody photography of a glowing brain structure in deep shadows, highly detailed, 8k",
       "capa_cards": [
         {"titulo": "A Névoa", "texto": "A autossabotagem não chega gritando. Ela sussurra que 'amanhã é um dia melhor'. Ela te convence de que o conforto de hoje vale mais que o orgulho de amanhã. É a prisão mais invisível que existe.", "pergunta_destaque": "Você sente que sua vida está travada nas desculpas de sempre?"},
         {"titulo": "A Solução", "texto": "O domínio não nasce da motivação, mas da clareza inegociável. Quando você decide que a dor da disciplina é menor que a dor do arrependimento, o jogo vira. O método é implacável."},
@@ -203,6 +191,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         {
           "numero": 1,
           "titulo": "O Peso Invisível",
+          "prompt_imagem": "Cinematic dark moody photography of a man carrying a heavy stone in the shadows, 8k",
           "paragrafos": [
             "Existe uma guerra silenciosa acontecendo dentro de você todos os dias. Ela não usa armas de fogo, mas desculpas muito bem articuladas. Quando o despertador toca, quando o projeto exige atenção, quando a mudança precisa acontecer, uma voz interna entra em ação. Ela é persuasiva. Ela conhece suas fraquezas melhor do que ninguém, porque ela é você. E na maioria das vezes, ela vence sem você nem perceber que estava em uma batalha.",
             "Essa voz prospera no conforto. Ela te convence de que não há problema em adiar, de que você merece um descanso, de que amanhã você estará mais preparado. E assim, os dias viram semanas, e as semanas viram anos. O potencial não realizado começa a pesar nos ombros como chumbo. A frustração de saber do que você é capaz, mas ver-se paralisado pela própria mente, é a dor mais silenciosa que existe.",
@@ -212,6 +201,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         {
           "numero": 2,
           "titulo": "O Ponto de Ruptura",
+          "prompt_imagem": "Cinematic dark moody photography of a cracked mirror reflecting a serious face in the dark, 8k",
           "paragrafos": [
             "A mudança raramente acontece por inspiração; ela costuma nascer do puro e absoluto desconforto. Chega um momento em que a dor de permanecer exatamente onde você está se torna insuportável. É o instante em que você olha no espelho e não reconhece mais a pessoa acomodada do outro lado. Esse é o momento sagrado. O atrito. A faísca que pode incendiar a floresta das suas velhas desculpas.",
             "Nesse momento de clareza, a bifurcação aparece. De um lado, a estrada familiar do 'depois eu faço', pavimentada com justificativas confortáveis. Do outro, o caminho íngreme da disciplina, onde não há aplausos, apenas o som da sua própria respiração ofegante. É a escolha entre a dor momentânea do esforço ou a dor crônica do arrependimento.",
@@ -221,6 +211,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         {
           "numero": 3,
           "titulo": "A Disciplina como Espada",
+          "prompt_imagem": "Cinematic dark moody photography of a glowing sword being forged in dark shadows, 8k",
           "paragrafos": [
             "Motivação é um combustível adulterado. Ela te leva até a esquina e te abandona no primeiro obstáculo. A disciplina, por outro lado, é um motor a diesel: pesado para ligar, mas impossível de parar depois que ganha tração. A disciplina não pergunta como você está se sentindo. Ela não se importa se chove lá fora ou se você dormiu mal. Ela simplesmente exige execução.",
             "A grande chave é entender que a disciplina não é uma prisão, é a própria definição de liberdade. Quem não domina a si mesmo será eternamente escravo de seus impulsos e das circunstâncias. Ao forjar hábitos de ferro, você automatiza o sucesso. Você retira o peso da decisão diária e coloca sua mente no piloto automático para o crescimento constante.",
@@ -230,6 +221,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         {
           "numero": 4,
           "titulo": "A Forja do Hábito",
+          "prompt_imagem": "Cinematic dark moody photography of an anvil and hammer in the dark with sparks, 8k",
           "paragrafos": [
             "Não subestime o poder repulsivo da sua velha rotina. Quando você começa a implementar a nova ordem, o sistema reage com força total. Os primeiros dias são marcados por um entusiasmo ingênuo, mas logo o atrito se apresenta. A cama parece mais macia, as distrações parecem mais urgentes. Esse é o vale da sombra da morte da mudança de hábito. É aqui que 99% das pessoas desistem e voltam para o começo.",
             "Mas você não. Você sabe que o atrito é apenas o som da fraqueza abandonando seu corpo. Você se concentra na execução do micro-hábito. Não importa o quão pequeno seja o passo, importa que ele seja dado. A consistência é muito mais poderosa do que a intensidade. Uma gota d'água cavando uma rocha não precisa de força, precisa apenas de tempo e de uma direção imutável.",
@@ -239,6 +231,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
         {
           "numero": 5,
           "titulo": "O Horizonte Silencioso",
+          "prompt_imagem": "Cinematic dark moody photography of a man looking out of a window at a dark vast ocean, 8k",
           "paragrafos": [
             "Os anos passam. A guerra diária já não é mais exaustiva; tornou-se o seu habitat natural. A voz que antes gritava desculpas, agora apenas sussurra de vez em quando, sendo rapidamente silenciada pela autoridade das suas ações. O novo padrão não é mais algo que você faz, é quem você é. A estrutura de hábitos de ferro sustenta a sua vida como as fundações de um arranha-céu.",
             "Existe uma paz profunda que nasce do dever cumprido. Quando você encosta a cabeça no travesseiro à noite, não há sussurros de arrependimento, apenas o silêncio confortável de quem deixou tudo no campo de batalha. O contraste entre a sua versão antiga e a atual é tão abismal que você tem dificuldade de reconhecer quem costumava ser.",
@@ -249,6 +242,7 @@ def gerar_conteudo_pdf(briefing: dict) -> dict:
       "citacao_destaque": "Sofra a dor da disciplina ou sofra a dor do arrependimento. A diferença é que a disciplina pesa gramas, enquanto o arrependimento pesa toneladas.",
       "plano_acao": {
         "titulo_secao": "Plano de Ação",
+        "prompt_imagem": "Cinematic dark moody photography of a glowing notebook and pen on a dark desk, 8k",
         "subtitulo": "Domínio Prático.",
         "passos": [
           {"numero": 1, "titulo": "A Regra dos 5 Minutos", "descricao": "Comprometa-se a fazer a tarefa difícil por apenas 5 minutos. Após começar, o atrito inicial some e a inércia joga a seu favor."},

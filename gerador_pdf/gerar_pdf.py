@@ -28,7 +28,7 @@ except ImportError:
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.colors import Color, HexColor
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle
+from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame, NextPageTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle, Image
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.pdfbase import pdfmetrics
@@ -116,10 +116,9 @@ font_map = load_fonts()
 
 # --- Funções de Desenho e Helpers de Layout ---
 
-def draw_page_gradient(canvas, color1, color2):
-    """Aplica um gradiente vertical completo de fundo de página de forma homogênea."""
+def draw_page_gradient(canvas, color1=None, color2=None):
     canvas.saveState()
-    canvas.linearGradient(0, 841.89, 0, 0, [get_color(color1), get_color(color2)])
+    canvas.linearGradient(0, 841.89, 0, 0, [get_color("#1A1818"), get_color("#1A1818")])
     canvas.restoreState()
 
 def draw_gradient_round_rect(canvas, x, y, width, height, rx, ry, color1, color2, border_color=None):
@@ -475,7 +474,7 @@ def draw_page_1_content(canvas, doc):
             "Você sente que está perdendo os melhores anos da sua família para a correria implacável? O distanciamento invisível transforma lares em abrigos de passagem."
         ]
     
-    draw_gradient_round_rect(canvas, c1_x, c1_y, col_w, grid_height, 18, 18, "#22d3ee", "#3b82f6", border_color="rgba(255,255,255,0.15)")
+    draw_gradient_round_rect(canvas, c1_x, c1_y, col_w, grid_height, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "nevoa", c1_x, c1_y, col_w, grid_height)
     draw_text_in_rect(canvas, c1_title, c1_paragraphs, c1_x, c1_y, col_w, grid_height, title_font_size=18, body_font_size=10, has_highlight=True)
     
@@ -487,7 +486,7 @@ def draw_page_1_content(canvas, doc):
         "A verdadeira solução não está em focar apenas em mais provisão material. A resposta exige uma atitude corajosa, simples e profunda: tempo de qualidade e intencionalidade.",
         "É preciso resgatar a presença active e tecer novamente os fios que mantêm o amor inabalável."
     ]
-    draw_gradient_round_rect(canvas, c2_x, c2_y, double_col_w, row_h, 18, 18, "#c084fc", "#f472b6", border_color="rgba(255,255,255,0.15)")
+    draw_gradient_round_rect(canvas, c2_x, c2_y, double_col_w, row_h, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "solucao", c2_x, c2_y, double_col_w, row_h)
     draw_text_in_rect(canvas, c2_title, c2_paragraphs, c2_x, c2_y, double_col_w, row_h, title_font_size=18, body_font_size=10)
     
@@ -498,7 +497,7 @@ def draw_page_1_content(canvas, doc):
     c3_paragraphs = [cards[2]["texto"]] if len(cards) > 2 else [
         "Onde antes reinava o silêncio, a paz verdadeira se instaura, forjada no fogo das provações e guiada pela união."
     ]
-    draw_gradient_round_rect(canvas, c3_x, c3_y, col_w, row_h, 18, 18, "#818cf8", "#a855f7", border_color="rgba(255,255,255,0.15)")
+    draw_gradient_round_rect(canvas, c3_x, c3_y, col_w, row_h, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "proposito", c3_x, c3_y, col_w, row_h)
     draw_text_in_rect(canvas, c3_title, c3_paragraphs, c3_x, c3_y, col_w, row_h, title_font_size=16, body_font_size=10)
     
@@ -515,7 +514,7 @@ def draw_page_1_content(canvas, doc):
             "O amor exige presença no campo de batalha da rotina.",
             "\"Onde colocamos nosso tempo, ali ancoramos nosso coração.\""
         ]
-    draw_gradient_round_rect(canvas, c4_x, c4_y, col_w, row_h, 18, 18, "#3b82f6", "#4f46e5", border_color="rgba(255,255,255,0.15)")
+    draw_gradient_round_rect(canvas, c4_x, c4_y, col_w, row_h, 18, 18, "#3b82f6", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_text_in_rect(canvas, c4_title, c4_paragraphs, c4_x, c4_y, col_w, row_h, title_font_size=16, body_font_size=10, has_italic_box=True)
 
 # --- Callback Master de Planos de Fundo (Gradients Exatos da Web) ---
@@ -532,7 +531,7 @@ def draw_cover_image_page(canvas, doc):
 
     # 1. Fundo preto absoluto elegante para a capa
     canvas.saveState()
-    canvas.setFillColorRGB(0.04, 0.04, 0.05)
+    canvas.setFillColorRGB(0.10, 0.09, 0.09)
     canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
 
     # 2. Desenha Moldura Dupla Dourada (Estilo Quadro de Luxo)
@@ -594,78 +593,114 @@ def draw_cover_image_page(canvas, doc):
 
     canvas.restoreState()
 
-def draw_all_page_backgrounds(canvas, doc):
-    """Executado dinamicamente para renderizar os fundos, cabeçalhos e rodapés de cada página."""
-    page_num = canvas.getPageNumber()
+# --- Templates Dinâmicos Substituindo numeração rígida de páginas ---
+def get_total_pages(doc):
+    c = getattr(doc, "conteudo", None)
+    caps = c.get("capitulos", []) if c else []
+    return len(caps) + 4 if len(caps) > 0 else 9
+
+def draw_bg_capa(canvas, doc):
+    draw_cover_image_page(canvas, doc)
+
+def draw_bg_bento(canvas, doc):
+    draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
+    draw_page_1_content(canvas, doc)
+    draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
+
+def draw_bg_capitulo(canvas, doc, idx_cap):
+    page_width, page_height = canvas._pagesize
     conteudo = getattr(doc, "conteudo", None)
     capitulos = conteudo.get("capitulos", []) if conteudo else []
-    num_capitulos = len(capitulos) if len(capitulos) > 0 else 5
+    cap_num = idx_cap + 1
+    cap_title = capitulos[idx_cap].get("titulo", f"Capítulo {cap_num}") if idx_cap < len(capitulos) else f"Título do Capítulo {cap_num}"
+    img_path = capitulos[idx_cap].get("img_local") if idx_cap < len(capitulos) else None
     
-    total_paginas = num_capitulos + 4  # Capa-Imagem (1) + Capa-Conteúdo (1) + Capítulos (N) + Citação/Fechamento (1) + Plano (1)
+    # IMPORTANTE: A lib os pode não estar importada no escopo se usarmos lambda, entao referenciamos direto
+    import os
+    has_image = img_path and os.path.exists(str(img_path))
+    is_split = (idx_cap % 2 == 0)
+
+    if has_image and is_split:
+        SPLIT_X = 258
+        canvas.saveState()
+        canvas.setFillColor(Color(0.10, 0.09, 0.09))
+        canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+        canvas.restoreState()
+        canvas.saveState()
+        try:
+            canvas.drawImage(img_path, 0, 0, width=SPLIT_X, height=page_height, preserveAspectRatio=False, mask='auto')
+            canvas.setFillColor(Color(0, 0, 0, alpha=0.30))
+            canvas.rect(0, 0, SPLIT_X, page_height, fill=1, stroke=0)
+        except:
+            canvas.setFillColor(Color(0.10, 0.09, 0.09))
+            canvas.rect(0, 0, SPLIT_X, page_height, fill=1, stroke=0)
+        canvas.restoreState()
+        
+        canvas.saveState()
+        canvas.setStrokeColor(get_color("#d4af37"))
+        canvas.setLineWidth(0.8)
+        canvas.line(SPLIT_X, 28, SPLIT_X, page_height - 28)
+        canvas.restoreState()
+        
+        canvas.saveState()
+        available_w = page_width - SPLIT_X - 30
+        text_x = SPLIT_X + 16
+        label_style = ParagraphStyle(name=f"SplitLbl_{cap_num}", fontName=font_map["sans-bold"], fontSize=7.5, leading=10, textColor=get_color("#d4af37"))
+        title_style = ParagraphStyle(name=f"SplitTtl_{cap_num}", fontName=font_map["display-bold"], fontSize=19, leading=25, textColor=get_color("#ffffff"))
+        p_lbl = Paragraph(f"CAPÍTULO {cap_num}", label_style)
+        lw, lh = p_lbl.wrap(available_w, 20)
+        p_lbl.drawOn(canvas, text_x, page_height - 55)
+        p_ttl = Paragraph(cap_title, title_style)
+        tw, th = p_ttl.wrap(available_w, 120)
+        p_ttl.drawOn(canvas, text_x, page_height - 55 - lh - 8 - th)
+        canvas.restoreState()
+
+    elif has_image and not is_split:
+        canvas.saveState()
+        try:
+            canvas.drawImage(img_path, 0, 0, width=page_width, height=page_height, preserveAspectRatio=False, mask='auto')
+        except:
+            canvas.setFillColor(Color(0.10, 0.09, 0.09))
+            canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+        canvas.setFillColor(Color(0, 0, 0, alpha=0.68))
+        canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+        canvas.restoreState()
+        draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color="#d4af37")
+    else:
+        canvas.saveState()
+        canvas.setFillColor(Color(0.10, 0.09, 0.09))
+        canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+        canvas.restoreState()
+        draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color="#d4af37")
+
+    draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
+
+def draw_bg_fechamento(canvas, doc):
+    draw_page_gradient(canvas, "#0f172a", "#172554")
+    conteudo = getattr(doc, "conteudo", None)
+    titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável") if conteudo else "A Verdade Inabalável"
+    draw_chapter_header(canvas, titulo_citacao, "", subtitle_color="#bfdbfe")
+    draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
+
+def draw_bg_plano(canvas, doc):
+    draw_page_gradient(canvas, "#6366f1", "#141414")
+    draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
     
-    if page_num == 1:
-        # Página 1: Capa exclusiva com a foto_perfil.png
-        draw_cover_image_page(canvas, doc)
-
-    elif page_num == 2:
-        # Página 2: Bento Grid (antiga Página 1)
-        draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
-        draw_page_1_content(canvas, doc)
-        draw_page_number(canvas, 2, total_paginas)
-
-    elif 3 <= page_num <= num_capitulos + 2:
-        # Páginas de Capítulos
-        idx_cap = page_num - 3
-        
-        # Mapeia as cores de gradiente de capítulos
-        grad_cores = [
-            ("#3b82f6", "#a855f7"),  # Blue-Purple
-            ("#a855f7", "#d946ef"),  # Purple-Fuchsia
-            ("#d946ef", "#6366f1"),  # Fuchsia-Indigo
-            ("#6366f1", "#2563eb"),  # Indigo-Blue
-        ]
-        sub_cores = ["#bfdbfe", "#f5d0fe", "#f5d0fe", "#c7d2fe"]
-        
-        cor1, cor2 = grad_cores[idx_cap % len(grad_cores)]
-        sub_color = sub_cores[idx_cap % len(sub_cores)]
-        
-        cap_num = idx_cap + 1
-        cap_title = capitulos[idx_cap].get("titulo", f"Capítulo {cap_num}") if idx_cap < len(capitulos) else f"Título do Capítulo {cap_num}"
-        
-        # Fallback estático caso conteudo seja None
-        if not conteudo:
-            titulos_estaticos = [
-                "A Névoa do Cotidiano",
-                "O Espelho Partido",
-                "O Fio de Ouro",
-                "Tecendo Novamente",
-                "O Novo Manto"
-            ]
-            if idx_cap < len(titulos_estaticos):
-                cap_title = titulos_estaticos[idx_cap]
-        
-        draw_page_gradient(canvas, cor1, cor2)
-        draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color=sub_color)
-        draw_page_number(canvas, page_num, total_paginas)
-
-    elif page_num == num_capitulos + 3:
-        # Página de citação / fechamento
-        draw_page_gradient(canvas, "#0f172a", "#172554")
-        titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável") if conteudo else "A Verdade Inabalável"
-        draw_chapter_header(canvas, titulo_citacao, "", subtitle_color="#bfdbfe")
-        draw_page_number(canvas, page_num, total_paginas)
-
-    elif page_num == num_capitulos + 4:
-        # Página do Plano de Ação
-        draw_page_gradient(canvas, "#6366f1", "#2563eb")
-        # Sem cabeçalho
-        draw_page_number(canvas, page_num, total_paginas)
+    # Custom badge plano de acao
+    draw_gradient_round_rect(canvas, 54, 735, 42, 42, 10, 10, "#60a5fa", "#6366f1")
+    canvas.saveState()
+    canvas.setStrokeColor(get_color("#ffffff"))
+    canvas.setLineWidth(1.5)
+    cx, cy = 54 + 21, 735 + 21
+    canvas.circle(cx, cy, 8, stroke=1, fill=0)
+    canvas.circle(cx, cy, 3, stroke=1, fill=0)
+    canvas.restoreState()
 
 # --- Construção Principal do Story do Documento ---
 
 def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
-    # Margens do Documento
-    doc = SimpleDocTemplate(
+    # Margens do Documento via BaseDocTemplate
+    doc = BaseDocTemplate(
         filename,
         pagesize=A4,
         leftMargin=54,
@@ -677,6 +712,25 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         doc.conteudo = conteudo
     else:
         doc.conteudo = None
+        
+    frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id='normal')
+    
+    templates = [
+        PageTemplate(id='Capa', frames=frame, onPage=draw_bg_capa),
+        PageTemplate(id='Bento', frames=frame, onPage=draw_bg_bento),
+        PageTemplate(id='Fechamento', frames=frame, onPage=draw_bg_fechamento),
+        PageTemplate(id='PlanoAcao', frames=frame, onPage=draw_bg_plano)
+    ]
+    
+    caps = conteudo.get("capitulos", []) if conteudo else []
+    for i in range(len(caps) if len(caps) > 0 else 5):
+        # A magia de criar uma função lambda que "prende" o valor de idx no momento
+        templates.append(
+            PageTemplate(id=f'Capitulo_{i}', frames=frame, onPage=lambda c, d, idx=i: draw_bg_capitulo(c, d, idx))
+        )
+        
+    # O primeiro template da lista é o template inicial do documento (Capa)
+    doc.addPageTemplates(templates)
         
     # Estilos de Texto do Fluxo (Aumentados para preencher elegantemente as páginas, como na Web)
     chapter_body_style = ParagraphStyle(
@@ -739,42 +793,82 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
     story = []
 
     # ==================== PÁGINA 1: CAPA COM IMAGEM ====================
-    # Renderizada de forma estática no canvas via draw_cover_image_page.
-    story.append(Spacer(1, 10))
+    # O template 'Capa' é o primeiro da lista, então já é aplicado na página 1
+    story.append(NextPageTemplate('Bento'))
     story.append(PageBreak())
 
-    # ==================== PÁGINA 2: BENTO GRID (antiga Página 1) ====================
-    # Desenhada de forma estática no canvas. Apenas avançamos o fluxo.
+    # ==================== PÁGINA 2: BENTO GRID ====================
+    # O Bento já está ativo. Adicionamos um Spacer e preparamos o Capitulo_0
+    # como o template da PRÓXIMA página antes de quebrar.
     story.append(Spacer(1, 10))
+    story.append(NextPageTemplate('Capitulo_0'))  
     story.append(PageBreak())
-    
+
     if conteudo:
         # --- MODO DINÂMICO (GEMINI IA) ---
         capitulos = conteudo.get("capitulos", [])
         
         # ==================== PÁGINAS DE CAPÍTULOS ====================
+        SPLIT_X = 258          # deve ser igual ao valor no canvas
+        DOC_LEFT_MARGIN = 54   # leftMargin do doc
+        # leftIndent dentro do story para alinhar texto ao painel direito
+        SPLIT_LEFT_INDENT = (SPLIT_X + 16) - DOC_LEFT_MARGIN  # ≈ 220 pt
+
         for i, cap in enumerate(capitulos):
-            story.append(Spacer(1, 140)) # Abre espaço exato abaixo do cabeçalho fixo do capítulo
+            # O template Capitulo_{i} já está ativo na página atual!
             
+            img_path = cap.get("img_local")
+            has_image = img_path and os.path.exists(str(img_path))
+            is_split = (i % 2 == 0)
             paragrafos = cap.get("paragrafos", [])
-            use_small_style = len(paragrafos) >= 4 or sum(len(p) for p in paragrafos) > 600
-            style_padrao = page5_body_style if use_small_style else chapter_body_style
-            
-            # Estilo itálico dinâmico
-            style_italico = ParagraphStyle(
-                name=f"Italic_{i}",
-                parent=style_padrao,
-                fontName=font_map["sans-italic"],
-                textColor=get_color("#ddd6fe")
-            )
-            
-            for p_idx, paragrafo in enumerate(paragrafos):
-                is_italic = (p_idx == 1) # O segundo parágrafo costuma ser o pensamento em itálico
-                story.append(Paragraph(paragrafo, style_italico if is_italic else style_padrao))
+
+            if has_image and is_split:
+                # Layout A: texto deslocado para o painel direito
+                story.append(Spacer(1, 105))  # espaço abaixo do cabeçalho desenhado no canvas
+                split_body = ParagraphStyle(
+                    name=f"SplitBody_{i}",
+                    fontName=font_map["sans"],
+                    fontSize=11.5,
+                    leading=18,
+                    textColor=get_color("#f5f3ff"),
+                    alignment=TA_JUSTIFY,
+                    spaceAfter=14,
+                    leftIndent=SPLIT_LEFT_INDENT,
+                    rightIndent=0
+                )
+                split_italic = ParagraphStyle(
+                    name=f"SplitItalic_{i}",
+                    parent=split_body,
+                    fontName=font_map["sans-italic"],
+                    textColor=get_color("#d4af37")
+                )
+                for p_idx, paragrafo in enumerate(paragrafos):
+                    story.append(Paragraph(paragrafo, split_italic if p_idx == 1 else split_body))
+
+            else:
+                # Layout B (full bg) ou fallback: texto flui normalmente
+                story.append(Spacer(1, 140))
+                use_small = len(paragrafos) >= 4 or sum(len(p) for p in paragrafos) > 600
+                s_base = page5_body_style if use_small else chapter_body_style
+                s_italic = ParagraphStyle(
+                    name=f"Italic_{i}",
+                    parent=s_base,
+                    fontName=font_map["sans-italic"],
+                    textColor=get_color("#d4af37")
+                )
+                for p_idx, paragrafo in enumerate(paragrafos):
+                    story.append(Paragraph(paragrafo, s_italic if p_idx == 1 else s_base))
+
+            # Define o template para a PRÓXIMA página antes de quebrar
+            if i < len(capitulos) - 1:
+                story.append(NextPageTemplate(f'Capitulo_{i+1}'))
+            else:
+                story.append(NextPageTemplate('Fechamento'))
                 
             story.append(PageBreak())
             
         # ==================== PÁGINA DE CITAÇÃO & FECHAMENTO ====================
+        # O template 'Fechamento' já está ativo.
         story.append(Spacer(1, 100))
         
         fechamento_texto = conteudo.get("fechamento", "")
@@ -820,6 +914,14 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         # ==================== PÁGINA DO PLANO DE AÇÃO ====================
         story.append(Spacer(1, 20)) # Pequena margem superior
         
+        # Inserir imagem do plano se houver
+        if conteudo.get("plano_acao", {}).get("img_local") and os.path.exists(conteudo["plano_acao"]["img_local"]):
+            try:
+                story.append(Image(conteudo["plano_acao"]["img_local"], width=460, height=200))
+                story.append(Spacer(1, 20))
+            except:
+                pass
+        
         plano = conteudo.get("plano_acao", {})
         plano_titulo = plano.get("titulo_secao", "Plano de Ação Diário")
         plano_subtitulo = plano.get("subtitulo", "Aplique estes princípios na rotina para fortalecer os laços.")
@@ -838,7 +940,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans"],
             fontSize=11,
             leading=15,
-            textColor=get_color("#c7d2fe"), # text-purple-200
+            textColor=get_color("#d4af37"), # text-purple-200
             leftIndent=58,
             spaceAfter=25
         )
@@ -860,17 +962,17 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans"],
             fontSize=9.5,
             leading=14,
-            textColor=get_color("#e0e7ff"), # text-purple-100
+            textColor=get_color("#a1a1aa"), # text-purple-100
             alignment=TA_JUSTIFY
         )
         
         passos = plano.get("passos", [])
         
         badge_cores = [
-            ("#3b82f6", "rgba(59, 130, 246, 0.2)"),   # Passo 1
-            ("#a855f7", "rgba(168, 85, 247, 0.2)"),   # Passo 2
-            ("#d946ef", "rgba(217, 70, 239, 0.2)"),   # Passo 3
-            ("#6366f1", "rgba(99, 102, 241, 0.2)")    # Passo 4
+            ("#d4af37", "rgba(212, 175, 55, 0.1)"),   # Passo 1
+            ("#e5e7eb", "rgba(255, 255, 255, 0.05)"),   # Passo 2
+            ("#9ca3af", "rgba(255, 255, 255, 0.05)"),   # Passo 3
+            ("#d1d5db", "rgba(255, 255, 255, 0.05)")    # Passo 4
         ]
         
         plan_rows = []
@@ -909,7 +1011,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
                 fontSize=14,
                 leading=18,
                 textColor=get_color("#3b82f6"),
-                backColor=get_color("rgba(59, 130, 246, 0.2)"),
+                backColor=get_color("rgba(212, 175, 55, 0.1)"),
                 borderPadding=8,
                 alignment=TA_CENTER
             )
@@ -936,7 +1038,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans-bold"],
             fontSize=10,
             leading=12,
-            textColor=get_color("#c7d2fe"),
+            textColor=get_color("#d4af37"),
             alignment=TA_CENTER,
             spaceBefore=15
         )
@@ -963,6 +1065,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             "Eles tinham a casa que sempre sonharam, a estabilidade pela qual tanto lutaram, mas a sensação era de que haviam perdido a si mesmos no processo de conquistar o mundo lá fora.",
             chapter_body_style
         ))
+        story.append(NextPageTemplate('Capitulo_1'))
         story.append(PageBreak())
         
         # ==================== PÁGINA 3 (Capítulo 2) ====================
@@ -987,6 +1090,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             "Era a verdade dolorosa sendo exposta sob a luz do sol da manhã. O espelho da família \"perfeita\", tão bem polido para quem via de fora pelas redes sociais, estava rachado por dentro, pedindo socorro.",
             chapter_body_style
         ))
+        story.append(NextPageTemplate('Capitulo_2'))
         story.append(PageBreak())
         
         # ==================== PÁGINA 4 (Capítulo 3) ====================
@@ -1011,6 +1115,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             "— Sim. Nós deixamos o Arquiteto e o Seu material de fora da nossa construção — respondeu Arthur, segurando firme a mão dela. — Mas ainda há tempo de corrigir a rota. Nós podemos começar a tecer novamente. Hoje.",
             chapter_body_style
         ))
+        story.append(NextPageTemplate('Capitulo_3'))
         story.append(PageBreak())
         
         # ==================== PÁGINA 5 (Capítulo 4) ====================
@@ -1047,6 +1152,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             "Eles deram as mãos em roda. Fizeram uma oração simples, um pouco desajeitada pelo tempo sem prática, mas profundamente honesta. Ali, naquela sala de estar, o Fio de Ouro estava finalmente passando pelo buraco estreito da agulha.",
             page5_body_style
         ))
+        story.append(NextPageTemplate('Fechamento'))
         story.append(PageBreak())
         
         # ==================== PÁGINA 6 (Capítulo 5 & Caixa de Destaque) ====================
@@ -1098,9 +1204,10 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         ]))
         
         story.append(reflection_table)
+        story.append(NextPageTemplate('PlanoAcao'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA 7 (Plano de Ação Diário) ====================
+        # ==================== PÁGINA FINAL (Plano de Ação Diário) ====================
         story.append(Spacer(1, 20))
         
         plan_title_style = ParagraphStyle(
@@ -1117,7 +1224,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans"],
             fontSize=11,
             leading=15,
-            textColor=get_color("#c7d2fe"),
+            textColor=get_color("#d4af37"),
             leftIndent=58,
             spaceAfter=25
         )
@@ -1138,12 +1245,12 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans"],
             fontSize=9.5,
             leading=14,
-            textColor=get_color("#e0e7ff"),
+            textColor=get_color("#a1a1aa"),
             alignment=TA_JUSTIFY
         )
         
         items_data = [
-            ("1", "#3b82f6", "rgba(59, 130, 246, 0.2)", "Alinhamento (A Oração)", "Dedique 10 minutos hoje à noite para orarem juntos, de mãos dadas. Agradeçam e entreguem as preocupações e os desafios ao Criador."),
+            ("1", "#3b82f6", "rgba(212, 175, 55, 0.1)", "Alinhamento (A Oração)", "Dedique 10 minutos hoje à noite para orarem juntos, de mãos dadas. Agradeçam e entreguem as preocupações e os desafios ao Criador."),
             ("2", "#a855f7", "rgba(168, 85, 247, 0.2)", "A Mesa da Comunhão", "Faça pelo menos uma refeição diária com todos da casa. Regra inegociável: distrações digitais e telas devem permanecer desligadas."),
             ("3", "#d946ef", "rgba(217, 70, 239, 0.2)", "Manual de Sabedoria", "Leia um capítulo do livro de Provérbios neste final de semana com sua família, e discutam a aplicação prática para a semana."),
             ("4", "#6366f1", "rgba(99, 102, 241, 0.2)", "O Protocolo do Perdão", "Nunca permita que o sol se ponha ou vá dormir guardando ressentimentos. Tenha a coragem de pedir perdão hoje por alguma ofensa.")
@@ -1190,38 +1297,14 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             fontName=font_map["sans-bold"],
             fontSize=10,
             leading=12,
-            textColor=get_color("#c7d2fe"),
+            textColor=get_color("#d4af37"),
             alignment=TA_CENTER,
             spaceBefore=15
         )
         story.append(Paragraph("PRODUZIDO COM ZELO, FÉ E PROPÓSITO.", footer_style))
         
-    # --- Custom target badge drawn on background canvas for page 7 ---
-    def draw_p7_badge(canvas):
-        draw_gradient_round_rect(canvas, 54, 735, 42, 42, 10, 10, "#60a5fa", "#6366f1")
-        canvas.saveState()
-        canvas.setStrokeColor(get_color("#ffffff"))
-        canvas.setLineWidth(1.5)
-        cx, cy = 54 + 21, 735 + 21
-        canvas.circle(cx, cy, 8, stroke=1, fill=0)
-        canvas.circle(cx, cy, 3, stroke=1, fill=0)
-        canvas.restoreState()
-
-    def draw_p7_extras(canvas, doc):
-        draw_all_page_backgrounds(canvas, doc)
-        conteudo_p7 = getattr(doc, "conteudo", None)
-        capitulos_p7 = conteudo_p7.get("capitulos", []) if conteudo_p7 else []
-        num_capitulos_p7 = len(capitulos_p7) if len(capitulos_p7) > 0 else 5
-        
-        if canvas.getPageNumber() == num_capitulos_p7 + 3:
-            draw_p7_badge(canvas)
-
-    # --- Compilação final com callbacks integrados ---
-    doc.build(
-        story, 
-        onFirstPage=draw_all_page_backgrounds, 
-        onLaterPages=draw_p7_extras
-    )
+    # --- Compilação final usando BaseDocTemplate (PageTemplates) ---
+    doc.build(story)
 
 if __name__ == "__main__":
     print("\033[96m====================================================\033[0m")

@@ -170,7 +170,7 @@ def rodar_ciclo(ciclo):
         return
 
     # 3. Gera recomendacoes cruzadas ponderadas por todos os ciclos disponíveis
-    recs = gerar_recomendacoes_cruzadas(analises_por_periodo)
+    recs = gerar_recomendacoes_cruzadas(analises_por_periodo, metricas=metricas)
     try:
         from core.analytics.db import get_db
         db = get_db()
@@ -231,7 +231,7 @@ def principal():
                 resultado = analisar_padroes(metricas, dias_limite=dias)
                 if "aviso" not in resultado:
                     analises_por_periodo[nome] = resultado
-            recs = gerar_recomendacoes_cruzadas(analises_por_periodo)
+            recs = gerar_recomendacoes_cruzadas(analises_por_periodo, metricas=metricas)
             try:
                 from core.analytics.db import get_db
                 db = get_db()

@@ -210,61 +210,40 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         if evitar_repeticao_msg:
             logger.info(f"📚 Histórico unificado do tema '{tema_escolhido}' carregado (todos os formatos).")
 
-        # NOVO FLUXO: Ciclo sequencial diário
+        # NOVO FLUXO: Lê diretamente o contexto mestre gerado pela IA Estrategista
         recomendacoes_file = "analytics/dados/recomendacoes.json"
-        recomendacoes_semanais_file = "analytics/dados/recomendacoes_semanais.json"
         
-        # Lê o contexto do analytics cruzado (diário/múltiplos períodos)
         try:
             if os.path.exists(recomendacoes_file):
                 with open(recomendacoes_file, "r", encoding="utf-8") as f:
                     rec_cruzada = json.load(f)
-                contexto_analytics += rec_cruzada.get("contexto_para_gemini", "") + "\n\n"
-
-                # --- Fase 6: Injeção de Growth Score, ICC e Hipóteses Confirmadas ---
-                gs_ref = rec_cruzada.get("growth_score_referencia", 0)
-                if gs_ref > 0:
-                    contexto_analytics += f"GROWTH SCORE DE REFERENCIA DA CONTA: {gs_ref:.4f}\n"
-                    contexto_analytics += "  (Este e o benchmark atual. Posts acima deste valor impulsionam crescimento real.)\n\n"
-
-                icc = rec_cruzada.get("icc_por_tema", {})
-                if icc:
-                    tema_icc_lider = max(icc, key=icc.get)
-                    contexto_analytics += f"TEMA COM MAIOR ICC (converte curiosidade em seguidores): {tema_icc_lider.upper()} ({icc[tema_icc_lider]:.1%})\n\n"
-
+                
+                # Monta um super contexto com toda a inteligência gerada pela IA estrategista
+                contexto_analytics += "=== DIRETRIZES ESTRATÉGICAS DA SEMANA (IA) ===\n"
+                
+                if rec_cruzada.get("vibe_da_semana"):
+                    contexto_analytics += f"VIBE DA SEMANA: {rec_cruzada['vibe_da_semana']}\n\n"
+                
+                if rec_cruzada.get("padroes_campeoes"):
+                    contexto_analytics += f"PADRÕES QUE BOMBARAM (Replique isso): {rec_cruzada['padroes_campeoes']}\n\n"
+                
+                if rec_cruzada.get("ganchos_exclusivos"):
+                    ganchos_str = "\n  - ".join(rec_cruzada["ganchos_exclusivos"])
+                    contexto_analytics += f"GANCHOS INÉDITOS SUGERIDOS:\n  - {ganchos_str}\n\n"
+                
+                if rec_cruzada.get("ideias_de_narrativa"):
+                    narrativas_str = "\n  - ".join(rec_cruzada["ideias_de_narrativa"])
+                    contexto_analytics += f"IDEIAS DE NARRATIVA PARA EXPLORAR:\n  - {narrativas_str}\n\n"
+                
+                if rec_cruzada.get("aviso_estrategico"):
+                    contexto_analytics += f"AVISO URGENTE DA IA ESTRATEGISTA: {rec_cruzada['aviso_estrategico']}\n\n"
+                
+                # Também adiciona o resumo clássico (fallback matemático / resumo final)
+                contexto_analytics += f"RESUMO DO CONTEXTO: {rec_cruzada.get('contexto_para_gemini', '')}\n\n"
+                
+                logger.info("✅ Super Contexto estratégico (IA) injetado no prompt.")
         except Exception as e:
-            logger.warning(f"Erro ao ler contexto do analytics cruzado: {e}")
-
-        # Injeta hipóteses confirmadas da Memória Estratégica
-        try:
-            from core.analytics.motor_hipoteses import obter_hipoteses_confirmadas
-            hipoteses = obter_hipoteses_confirmadas()
-            if hipoteses:
-                contexto_analytics += "CONHECIMENTO ESTRATEGICO VALIDADO (hipoteses confirmadas com dados reais):\n"
-                for h in hipoteses[:5]:  # Limita a 5 para não inflar o prompt
-                    contexto_analytics += f"  - {h['hipotese']} (Confianca: {h.get('confianca', 0):.0%}, Amostra: {h.get('amostra', 0)} posts)\n"
-                contexto_analytics += "\n"
-        except Exception:
-            pass  # Motor ainda não rodou; ignora silenciosamente
-
-        # Lê o contexto do analytics semanal (tendências)
-        try:
-            if os.path.exists(recomendacoes_semanais_file):
-                with open(recomendacoes_semanais_file, "r", encoding="utf-8") as f:
-                    rec_semanal = json.load(f)
-                contexto_analytics += rec_semanal.get("contexto_para_gemini", "") + "\n\n"
-        except Exception as e:
-            logger.warning(f"Erro ao ler contexto do analytics semanal: {e}")
-
-        # [NOVO] Adiciona a visão externa (Olhos da Rede)
-        try:
-            # Pega o nome do tema escolhido para fazer uma busca cirúrgica no YouTube
-            nome_do_tema_atual = tema_escolhido.split(" (")[0]
-            mundo_real = gerar_contexto_mundo_real(dias=7, tema_especifico=nome_do_tema_atual)
-            if mundo_real:
-                contexto_analytics += "\n====================\n" + mundo_real + "\n====================\n\n"
-        except Exception as e:
-            logger.warning(f"Erro ao coletar Olhos da Rede: {e}")
+            logger.warning(f"Erro ao ler contexto estratégico (recomendacoes.json): {e}")
 
     # Sorteia sentimento a cada postagem — sem travar por data
     # Assim cada publicação do dia carrega uma cor emocional diferente

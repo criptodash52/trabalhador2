@@ -55,7 +55,16 @@ def rodar_agora():
         subprocess.run(["python", "main.py", "--type", "pexels_story"])
 
     elif hora == 8:
-        print("💤 Nenhuma tarefa específica agendada para as 8:00 BRT.")
+        if dia_semana == 0:  # Segunda-feira
+            minuto = brt_now.minute
+            if minuto < 20:  # ~08:00
+                print("🚀 [SEGUNDA] Executando: Olhos da Rede Semanal")
+                subprocess.run(["python", "-c", "import sys, io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'); from core.ai.olhos_da_rede import coletar_e_salvar_semanal; coletar_e_salvar_semanal()"])
+            elif minuto >= 20:  # ~08:30
+                print("🧠 [SEGUNDA] Executando: Analisador Semanal + IA Estrategista")
+                subprocess.run(["python", "core/analytics/rodar_analytics.py", "--ciclo", "semanal"])
+        else:
+            print("💤 Nenhuma tarefa específica agendada para as 8:00 BRT nos outros dias.")
 
     elif hora == 9:
         print("🚀 Executando: Carousel")

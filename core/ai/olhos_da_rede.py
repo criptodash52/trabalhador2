@@ -124,39 +124,117 @@ def coletar_youtube(dias=7, tema_especifico=None):
     return titulos_youtube
 
 
-def gerar_contexto_mundo_real(dias=7, tema_especifico=None):
-    """
-    Compila todas as fontes de dados em um único texto para o Gemini ler.
-    """
-    logger.info(f"👁️ [Olhos da Rede] Iniciando varredura global (Últimos {dias} dias)...")
-    
-    noticias = coletar_rss(dias=dias)
-    trends = coletar_trends()
-    youtube = coletar_youtube(dias=dias, tema_especifico=tema_especifico)
-    
+def _montar_texto_contexto(youtube, trends, noticias):
+    """Monta o texto de contexto a partir das listas coletadas."""
     contexto = "🌍 O QUE ESTÁ ACONTECENDO NO MUNDO REAL NESTA SEMANA:\n\n"
-    
+
     if youtube:
         contexto += "[YOUTUBE - VÍDEOS MAIS VISTOS DA SEMANA NO NICHO]:\n"
         for t in youtube:
             contexto += f"- {t}\n"
         contexto += "\n"
-        
+
     if trends:
         contexto += "[GOOGLE TRENDS - ASSUNTOS MAIS BUSCADOS HOJE NO BRASIL]:\n"
         for t in trends:
             contexto += f"- {t}\n"
         contexto += "\n"
-        
+
     if noticias:
         contexto += "[MERCADO & NOTÍCIAS - MANCHETES DA SEMANA]:\n"
         for t in noticias:
             contexto += f"- {t}\n"
         contexto += "\n"
-        
+
     contexto += ("INSTRUÇÃO ESTRATÉGICA PARA A IA: Ao criar seu conteúdo, use essas "
                  "informações para se conectar com a urgência e o sentimento atual da audiência. "
                  "Não cite as notícias como um repórter, mas entenda a 'Vibe' da semana para ser "
                  "extremamente relevante e viral.\n")
-                 
     return contexto
+
+
+def gerar_contexto_mundo_real(dias=7, tema_especifico=None):
+    """
+    Primeiro tenta carregar o contexto semanal já salvo no Firestore (modo novo).
+    Se não encontrar, faz a coleta ao vivo como fallback (comportamento original).
+    """
+    contexto_salvo = carregar_contexto_semanal()
+    if contexto_salvo:
+        logger.info("✅ [Olhos da Rede] Contexto semanal carregado do Firestore (sem chamadas externas).")
+        return contexto_salvo
+
+    # Fallback: coleta ao vivo
+    logger.info("👁️ [Olhos da Rede] Contexto semanal não encontrado. Coletando ao vivo...")
+    noticias = coletar_rss(dias=dias)
+    trends = coletar_trends()
+    youtube = coletar_youtube(dias=dias, tema_especifico=tema_especifico)
+    return _montar_texto_contexto(youtube, trends, noticias)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# MODO NOVO: coleta semanal + persistência no Firestore
+# ─────────────────────────────────────────────────────────────────────
+
+def coletar_e_salvar_semanal():
+    """
+    Coleta todos os dados externos da semana (YouTube, Google Trends, RSS)
+    e salva na coleção 'olhos_da_rede_semanal' no Firestore.
+    Deve rodar UMA VEZ por semana (toda segunda-feira às 08:00 BRT).
+    """
+    logger.info("🗓️ [Olhos da Rede SEMANAL] Iniciando coleta e salvamento semanal...")
+
+    noticias = coletar_rss(dias=7)
+    trends = coletar_trends()
+    youtube = coletar_youtube(dias=7)
+    contexto_texto = _montar_texto_contexto(youtube, trends, noticias)
+
+    agora = datetime.now(timezone.utc)
+    semana_iso = agora.strftime("%Y-W%W")
+
+    doc = {
+        "semana": semana_iso,
+        "coletado_em": agora.isoformat(),
+        "youtube": youtube,
+        "trends": trends,
+        "noticias": noticias,
+        "contexto_texto": contexto_texto,
+    }
+
+    try:
+        from core.analytics.db import get_db
+        db = get_db()
+        if db:
+            db.collection("olhos_da_rede_semanal").document(semana_iso).set(doc)
+            logger.success(f"✅ [Olhos da Rede] Dados da semana {semana_iso} salvos no Firestore!")
+        else:
+            logger.warning("⚠️ Firebase indisponível. Dados da semana não foram salvos.")
+    except Exception as e:
+        logger.error(f"❌ Erro ao salvar Olhos da Rede no Firestore: {e}")
+
+    return doc
+
+
+def carregar_contexto_semanal():
+    """
+    Carrega o contexto dos Olhos da Rede da semana atual do Firestore.
+    Retorna o texto pronto para injetar no prompt, ou None se não encontrar.
+    """
+    try:
+        from core.analytics.db import get_db
+        db = get_db()
+        if not db:
+            return None
+
+        agora = datetime.now(timezone.utc)
+        semana_iso = agora.strftime("%Y-W%W")
+
+        doc = db.collection("olhos_da_rede_semanal").document(semana_iso).get()
+        if doc.exists:
+            dados = doc.to_dict()
+            contexto = dados.get("contexto_texto", "")
+            if contexto:
+                return contexto
+        return None
+    except Exception as e:
+        logger.warning(f"⚠️ Erro ao carregar contexto semanal do Firestore: {e}")
+        return None

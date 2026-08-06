@@ -12,6 +12,10 @@ Roda todo domingo de madrugada (via GitHub Actions ou cron externo).
 import os
 import sys
 import json
+import uuid
+import urllib.parse
+import requests
+import time
 from datetime import datetime
 
 # Garante encoding UTF-8 no terminal Windows
@@ -52,12 +56,52 @@ def main():
     print("\n─── ETAPA 2: Geração de Conteúdo ───")
     conteudo = gerar_conteudo_pdf(briefing)
 
+    # ─── ETAPA 2.5: Gerar Imagens de Apoio via IA (Pollinations) ───
+    print("\n─── ETAPA 2.5: Geração de Imagens (Pollinations) ───")
+    pasta_imagens = os.path.join(PASTA_SAIDA, "imagens_temp")
+    os.makedirs(pasta_imagens, exist_ok=True)
+    
+    def baixar_img(prompt, prefix):
+        if not prompt: return None
+        print(f"   Gerando imagem para {prefix}...")
+        seed = uuid.uuid4().int % 2147483647
+        prompt_encoded = urllib.parse.quote(prompt)
+        url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=800&height=500&nologo=true&model=flux-realism&seed={seed}"
+        for tentativa in range(1, 3):  # 2 tentativas
+            try:
+                time.sleep(2)  # pausa entre requisicoes para evitar rate limit
+                resp = requests.get(url, timeout=45)
+                if resp.status_code == 200 and len(resp.content) > 5000:
+                    nome_arq = f"{prefix}_{uuid.uuid4().hex[:6]}.jpg"
+                    caminho = os.path.join(pasta_imagens, nome_arq)
+                    with open(caminho, 'wb') as f:
+                        f.write(resp.content)
+                    print(f"      [OK] {nome_arq} ({len(resp.content)//1024}KB)")
+                    return caminho
+                else:
+                    print(f"      [!] Tentativa {tentativa}: status={resp.status_code} size={len(resp.content)}")
+            except Exception as e:
+                print(f"      [!] Tentativa {tentativa} falhou: {e}")
+        print(f"      [SKIP] {prefix} sem imagem - usando fundo escuro.")
+        return None
+
+    if "prompt_imagem_capa" in conteudo:
+        conteudo["img_local_capa"] = baixar_img(conteudo["prompt_imagem_capa"], "capa")
+    
+    if "capitulos" in conteudo:
+        for idx, cap in enumerate(conteudo["capitulos"]):
+            if "prompt_imagem" in cap:
+                cap["img_local"] = baixar_img(cap["prompt_imagem"], f"capitulo_{idx+1}")
+                
+    if "plano_acao" in conteudo and "prompt_imagem" in conteudo["plano_acao"]:
+        conteudo["plano_acao"]["img_local"] = baixar_img(conteudo["plano_acao"]["prompt_imagem"], "plano_acao")
+
     # Salva o JSON do conteúdo para debug
     caminho_json = os.path.join(PASTA_SAIDA, "ultimo_conteudo.json")
     os.makedirs(PASTA_SAIDA, exist_ok=True)
     with open(caminho_json, "w", encoding="utf-8") as f:
         json.dump(conteudo, f, ensure_ascii=False, indent=2)
-    print(f"   💾 Conteúdo salvo em: {caminho_json}")
+    print(f"\n   💾 Conteúdo e dados salvos em: {caminho_json}")
 
     # ─── ETAPA 3: Montar o PDF visual ───
     print("\n─── ETAPA 3: Construção Visual do PDF ───")

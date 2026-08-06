@@ -29,8 +29,12 @@ on:
           - test
 
   schedule:
-    # 04:00 BRT - Coleta diária de métricas (e Relatório Semanal aos domingos)
+    # 04:00 BRT - Coleta diária de métricas
     - cron: '0 7 * * *'
+    # 08:00 BRT toda segunda - Olhos da Rede semanal
+    - cron: '0 11 * * 1'
+    # 08:30 BRT toda segunda - Analisador + IA estrategista
+    - cron: '30 11 * * 1'
 
 permissions:
   contents: write

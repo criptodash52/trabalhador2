@@ -418,7 +418,7 @@ def rodar_coleta():
         # Removido: if not is_story and agora - post_dt < timedelta(hours=24): continue
         # Agora coletamos as métricas no mesmo dia, sem esperar 24h.
 
-        if agora - post_dt > timedelta(days=30):
+        if agora - post_dt > timedelta(days=60):
             continue
 
         tipo_post = post.get("tipo", "feed")
