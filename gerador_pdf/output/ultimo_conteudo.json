@@ -1,96 +1,113 @@
 {
-  "titulo_pdf": "A Bússola do Destino Financeiro: Seu Plano para Sair da Roda dos Ratos",
-  "subtitulo_pdf": "O método passo a passo para assumir o controle e construir riqueza real.",
-  "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
+  "titulo_pdf": "O Código do Sonhador: Liberte Sua Voz e Redefina Seu Destino",
+  "subtitulo_pdf": "O método de autoconhecimento inspirado em O Vendedor de Sonhos para uma vida sem máscaras e com propósito.",
+  "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, with a silhouette of a person standing at a crossroads, 8k, hyperrealistic.",
   "capa_cards": [
     {
-      "titulo": "Sua Vida em Loop?",
-      "texto": "Exaustão sem progresso é a armadilha mais antiga da humanidade. Você se sente preso, trabalhando para um sonho que nunca chega?",
-      "pergunta_destaque": "Preso na roda dos ratos?"
+      "titulo": "A Armadilha Invisível",
+      "texto": "Você se dobra em mil para caber onde não cabe, perdendo sua voz e seu valor na eterna busca por aplausos que nunca chegam. É um custo alto demais.",
+      "pergunta_destaque": "Quem é você sem as máscaras?"
     },
     {
-      "titulo": "O Segredo dos Ricos Revelado",
-      "texto": "Entenda a diferença crucial entre ativos e passivos para mudar seu futuro financeiro."
+      "titulo": "O Despertar da Identidade",
+      "texto": "Desvende os segredos de 'O Vendedor de Sonhos' para construir uma fortaleza mental inabalável.",
+      "pergunta_destaque": ""
     },
     {
-      "titulo": "Liberdade Financeira Real",
-      "texto": "Transforme sua mentalidade e construa um caminho de abundância."
+      "titulo": "Destino Resgatado",
+      "texto": "Reconquiste seu tempo, sua paz e o controle da sua própria narrativa em 7 dias.",
+      "pergunta_destaque": ""
     },
     {
-      "titulo": "O Ativo Essencial",
-      "texto": "Invista na sua mente, o maior ativo que você possui.",
-      "citacao_destaque": "Não trabalhe por dinheiro, faça o dinheiro trabalhar para você. Código da Sabedoria."
+      "titulo": "Sua Voz, Seu Poder",
+      "texto": "A verdadeira liberdade é ser quem você é, sem pedir licença.",
+      "citacao_destaque": "O maior espetáculo da vida é o homem que se levanta. Código da Sabedoria."
     }
   ],
   "capitulos": [
     {
       "numero": 1,
-      "titulo": "A Ilusão do Esforço Vazio: Por Que Você Não Chega Lá",
-      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
+      "titulo": "O Eco Silencioso da Sua Ausência",
+      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, seeing a distorted reflection, 8k, hyperrealistic.",
       "paragrafos": [
-        "A afirmação chocante é que você não está exausto por trabalhar muito, mas por trabalhar sem direção. É a sensação de correr em uma esteira, gastando energia vital e vendo a paisagem sempre igual, enquanto a vida financeira dos seus sonhos parece um horizonte que nunca se move. Quantos anos mais você vai trocar seu tempo por uma segurança ilusória?",
-        "Pai Rico nos ensinou que muitos trabalham a vida inteira para o dinheiro, enquanto os ricos fazem o dinheiro trabalhar para eles. Imagine alguém que, ao invés de buscar promoções intermináveis, começou a observar seus gastos, a diferença entre o que 'parece' riqueza e o que 'é' riqueza, e decidiu quebrar o ciclo.",
-        "O primeiro passo é brutalmente simples: pare de olhar para o tamanho da sua conta e comece a mapear seus ativos e passivos. Liste tudo. Onde seu dinheiro realmente vai? Qual 'ativo' está te sugando? Identifique o maior passivo disfarçado de necessidade e comece a desinvestir nele HOJE. A clareza é a sua primeira moeda de troca para a liberdade."
+        "Ninguém nasce para ser coadjuvante da própria vida, mas a maioria se contenta em ser figurante. Você se esforça para ser a versão que agrada a todos, menos a si mesmo, e o custo é uma alma exausta, um destino empoeirado e a sensação de que, mesmo rodeado de companhia, você está irremediavelmente só. É a ironia cruel de tentar preencher um vazio interno com aprovação externa.",
+        "No livro O Vendedor de Sonhos, um misterioso homem resgata pessoas à beira do colapso, não com soluções mágicas, mas com perguntas que desnudam a alma. Ele não oferece um caminho, mas uma lanterna para que cada um encontre o seu, desafiando a lógica de uma sociedade que nos ensina a ser clones de expectativas alheias, não mestres de nossa própria mente.",
+        "Comece hoje a identificar seus 'aplausos tóxicos'. Pegue um caderno e liste 3 decisões ou ações que você tomou na última semana pensando mais no que os outros iriam pensar do que no que você realmente queria. Qual foi o preço dessa escolha? A clareza brutal, por mais desconfortável que seja, é o primeiro passo para a liberdade de quem você realmente é."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_1_4fdcc9.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_462676.jpg"
     },
     {
       "numero": 2,
-      "titulo": "O Campo de Batalha Interno: Dominando Sua Mente Financeira",
-      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
+      "titulo": "A Tirania da Mente Distraída",
+      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword casting shadows, symbolizing inner battle and knowledge, 8k, hyperrealistic.",
       "paragrafos": [
-        "É fácil culpar o mercado, o governo, a sorte. Mas a verdade inconveniente é que seu cérebro adora o drama e a zona de conforto do sofrimento conhecido. Ele prefere a rotina da escassez que você já domina, ao desconforto do crescimento e da mudança. Essa é a maior sabotagem que você enfrenta diariamente.",
-        "Pai Rico sempre enfatizava que o maior investimento que você pode fazer é em sua educação financeira. Ele via que muitos se deixavam levar pelas emoções - medo e ganância - ao invés da lógica e do conhecimento. O controle não vem de controlar o mercado, mas de controlar a si mesmo, suas reações e suas crenças sobre dinheiro.",
-        "A técnica exata para dominar sua atenção é o 'Diário de Ativos Mentais'. Por 7 dias, anote cada pensamento sobre dinheiro: cada crença limitante, cada desculpa, cada impulso de compra. Depois, reescreva-os como 'Ativos'. Por exemplo, 'Não posso comprar isso' vira 'Como posso criar valor para adquirir isso?'. Reprograme sua mentalidade ativamente HOJE."
+        "É engraçado como nosso cérebro, essa máquina fantástica, adora o sofrimento conhecido. Prometemos mudar, mas o sofá e a notificação do celular têm um poder de sucção maior que um buraco negro, nos prendendo na inércia enquanto nossa versão futura grita por socorro. Aceitamos o caos interno como normal, esquecendo que somos os arquitetos de nossa própria paz.",
+        "O Vendedor de Sonhos nos mostra que a mente é um teatro onde muitas vezes somos meros espectadores das nossas próprias crises. Ele ensina que a verdadeira batalha não é contra o mundo, mas contra os 'algozes internos', os pensamentos e impulsos que nos roubam o controle e nos fazem agir contra nossa própria vontade, como escravos de uma rotina pré-programada. A grande contradição é buscar controle externo antes de dominar o caos interno.",
+        "Para dominar sua atenção e reprogramar a mentalidade, adote a 'Regra do Observador Silencioso'. Quando sentir o impulso de se distrair, procrastinar ou fazer algo para agradar, pare por 5 segundos. Observe o pensamento sem julgamento. Pergunte a si mesmo: 'Isso me leva para mais perto ou para mais longe de quem eu quero ser?'. Essa pausa mínima é sua espada contra a tirania da impulsividade e o primeiro passo para reescrever seu código mental hoje."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_2_370aa5.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_5f7227.jpg"
     },
     {
       "numero": 3,
-      "titulo": "A Regra Implacável da Ação: Construindo Sua Torre de Riqueza",
-      "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
+      "titulo": "Desvendando o Labirinto do Destino",
+      "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, a single beam of light breaking through the clouds, 8k, hyperrealistic.",
       "paragrafos": [
-        "Você já sentiu que está sempre a um passo de realizar seus sonhos, mas esse passo nunca é dado? É a frustração de planejar sem executar, de sonhar sem construir. A exaustão não vem só do trabalho, mas da constante auto-sabotagem de não transformar intenção em ação concreta.",
-        "Pai Rico desafiava o senso comum: a casa própria não é sempre um ativo, e a educação formal nem sempre é o caminho para a riqueza. Ele ensinou que planejar é ver o futuro, antecipar riscos e construir pontes para onde você quer chegar, ao invés de apenas reagir ao que acontece. É sobre fazer escolhas estratégicas, não apenas trabalhar mais duro.",
-        "Para desenhar um plano à prova de desculpas, use o 'Protocolo 3x3'. Escolha 3 metas financeiras para os próximos 3 meses. Para cada meta, defina 3 ações concretas e mensuráveis que você pode fazer *nesta semana*. Exemplo: Meta - 'Investir R$500'; Ações: 1- 'Pesquisar 3 opções de investimento', 2- 'Automatizar transferência de R$100 para poupança', 3- 'Ler um capítulo sobre investimentos'. Faça isso HOJE e sinta o controle de volta."
+        "A sensação de estar correndo em círculos é exaustiva. Você trabalha incansavelmente, preenche a agenda, mas o pódio da sua vida parece sempre um horizonte distante. É como remar com um furo no barco: muito esforço, pouco avanço, e a frustração te afoga lentamente. A maioria troca o barco por outro furado, em vez de aprender a consertar o seu próprio.",
+        "Em O Vendedor de Sonhos, a mudança começa com a ousadia de sonhar grande, mas a materialização desse sonho exige o que ele chama de 'micro-revoluções'. Não basta desejar uma floresta, é preciso plantar uma semente por vez, escolher o solo, regar e proteger, transformando o abstrato em passos concretos e gerenciáveis. É a sabedoria de focar no processo, não apenas no resultado final.",
+        "Desenhe seu 'Plano de Batalha Semanal Anti-Desculpas'. No domingo, anote 3 METAS INABALÁVEIS para a semana, alinhadas com quem você quer ser e não com o que esperam de você. Para cada meta, liste 2 ações CONCRETAS e não negociáveis que você fará em dias específicos. Visualize a execução e comprometa-se publicamente com um amigo ou em um diário. Transforme desejo em decreto e comece a executar hoje."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_3_eb726f.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_c2b902.jpg"
     }
   ],
-  "citacao_destaque": "Os pobres e a classe média trabalham por dinheiro. Os ricos têm o dinheiro trabalhando para eles.",
+  "citacao_destaque": "Você não é o que você pensa, você é o que você faz.",
   "titulo_citacao": "A Regra de Ouro",
-  "verso_base": "Sem visão, o povo perece.",
-  "referencia_verso": "Provérbios",
+  "verso_base": "A vida não examinada não vale a pena ser vivida.",
+  "referencia_verso": "Sócrates",
   "plano_acao": {
-    "titulo_secao": "O Protocolo Kairos Financeiro: 4 Passos para Conquistar Sua Soberania",
-    "prompt_imagem": "Cinematic dark moody photography of a complex financial dashboard with glowing data points, hyper-realistic, 8k",
-    "subtitulo": "Este método foi criado para que você comece a construir sua liberdade financeira hoje, aplicando as verdades dos ricos.",
+    "titulo_secao": "O Protocolo do Autodescobrimento Diário: 7 Dias Para Resgatar Você",
+    "prompt_imagem": "Cinematic dark moody photography of a person drawing a map with an old quill on parchment, surrounded by ancient books and a single candle flame, hyperrealistic, 8k.",
+    "subtitulo": "Desperte seu 'Vendedor de Sonhos' interior e construa uma fortaleza mental contra as pressões externas, um dia de cada vez, aplicando a Filosofia da Ação.",
     "passos": [
       {
         "numero": 1,
-        "titulo": "Mapeie Sua Realidade: Onde Está Seu Dinheiro?",
-        "descricao": "Crie uma planilha simples (ou use um caderno) e liste todos os seus ativos (o que coloca dinheiro no seu bolso) e passivos (o que tira dinheiro do seu bolso). Seja implacável. Perceba que muitos 'ativos' são, na verdade, passivos disfarçados. Qual o seu maior 'dreno' financeiro? Identifique-o hoje."
+        "titulo": "O Despertar do Observador (Dia 1)",
+        "descricao": "Ao acordar, antes de qualquer tela, dedique 5 minutos para observar seus pensamentos sem julgamento. Quais emoções surgem? Quais expectativas você já carrega? Apenas anote-as sem tentar mudá-las. Este é o seu mapa mental inicial. Comece hoje a ouvir sua própria voz."
       },
       {
         "numero": 2,
-        "titulo": "Reescreva o Script: De Consumidor a Investidor",
-        "descricao": "Por 7 dias, observe seus padrões de pensamento sobre dinheiro. Cada vez que um pensamento de escassez ou de 'não posso' surgir, pause. Pergunte: 'Como posso transformar isso em uma oportunidade ou ativo?'. Troque a mentalidade de 'ganhar para gastar' pela de 'ganhar para investir'. Comece a agir como um investidor hoje."
+        "titulo": "O Diálogo Silencioso (Dia 2)",
+        "descricao": "Escolha um momento de silêncio (10 minutos) e pergunte a si mesmo: 'O que eu realmente quero, independentemente do que esperam de mim?'. Responda no papel, sem filtros. Permita-se sonhar sem medo das críticas. Esta é a semente do seu destino autêntico."
       },
       {
         "numero": 3,
-        "titulo": "Invista em Você: Sua Maior Fonte de Riqueza",
-        "descricao": "Pai Rico ensinou que a educação financeira é o ativo mais valioso. Comprometa-se a dedicar 30 minutos diários a aprender sobre investimentos, negócios ou novas habilidades que gerem renda. Escolha um livro, um curso online ou um podcast relevante e comece a absorver conhecimento com um propósito claro hoje."
+        "titulo": "O Filtro da Autenticidade (Dia 3)",
+        "descricao": "Identifique uma situação hoje onde você normalmente se curvaria para agradar. Antes de agir, aplique o 'filtro da autenticidade': 'Isso reflete quem eu sou ou quem querem que eu seja?'. Escolha a ação que te fortalece, mesmo que seja desconfortável. Aja hoje com sua verdade."
       },
       {
         "numero": 4,
-        "titulo": "Execute o Inevitável: Metas Claras, Ações Diárias",
-        "descricao": "Defina 3 metas financeiras claras e mensuráveis para os próximos 90 dias. Para cada meta, liste 3 ações concretas que você pode realizar *esta semana*. Registre seu progresso. Lembre-se, pequenas ações consistentes superam grandes intenções esporádicas. Comece a construir sua torre de riqueza HOJE."
+        "titulo": "A Dieta Digital Consciente (Dia 4)",
+        "descricao": "Reduza em 30 minutos o tempo gasto em redes sociais ou notícias que não agregam valor real à sua vida. Use esse tempo para ler, meditar, praticar um hobby ou aprender algo novo que nutre sua alma, não o ego alheio. Seu tempo é seu maior ativo."
+      },
+      {
+        "numero": 5,
+        "titulo": "O Legado do Vendedor (Dia 5)",
+        "descricao": "Pense em uma pequena 'semente de sabedoria' que você pode plantar hoje para alguém. Pode ser um elogio sincero, uma ajuda inesperada ou uma palavra de encorajamento. O legado é construído com pequenas ações que reverberam. Faça algo hoje que impacte positivamente."
+      },
+      {
+        "numero": 6,
+        "titulo": "O Resgate do Sonho Esquecido (Dia 6)",
+        "descricao": "Relembre um sonho antigo, uma paixão que foi deixada de lado por 'obrigações' ou medo. Dedique 15 minutos a ela hoje, seja pesquisando, desenhando, escrevendo ou ouvindo uma música que te conecte a esse sonho. Pequenas faíscas reacendem grandes incêndios."
+      },
+      {
+        "numero": 7,
+        "titulo": "O Novo Contrato (Dia 7)",
+        "descricao": "Com base nas suas anotações da semana, escreva um 'Contrato Pessoal' de 3 regras inegociáveis para sua nova jornada de autoconhecimento e ação. Assine-o e coloque-o em um lugar visível. Esta é sua declaração de independência. Comece a viver este contrato hoje."
       }
     ],
-    "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\plano_acao_908f51.jpg"
+    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_9b9f63.jpg"
   },
   "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
   "titulo_fechamento": "SABEDORIA EM AÇÃO",
   "rodape": "Código da Sabedoria - Conhecimento que Transforma Destinos.",
-  "img_local_capa": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capa_fbf7d8.jpg"
+  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_b3cf4d.jpg"
 }
