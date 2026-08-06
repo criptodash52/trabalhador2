@@ -85,7 +85,7 @@ def fazer_upload_pdf(caminho_local: str, titulo_pdf: str) -> str:
         raise
 
 
-def registrar_campanha_no_firestore(titulo: str, url_pdf: str, briefing: dict):
+def registrar_campanha_no_firestore(titulo: str, url_pdf: str, briefing: dict, landing_page: dict = None):
     """
     Salva os dados da campanha ativa no Firestore.
     A Landing Page vai ler esse documento para exibir o nome certo do PDF
@@ -103,7 +103,8 @@ def registrar_campanha_no_firestore(titulo: str, url_pdf: str, briefing: dict):
         "livro_base": briefing.get("livro_base", ""),
         "semana": semana_str,
         "criada_em": datetime.now(timezone.utc),
-        "ativa": True
+        "ativa": True,
+        "landing_page": landing_page or {}
     }
 
     # Salva com ID único auto-gerado para manter histórico completo de todas as execuções

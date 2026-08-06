@@ -113,7 +113,17 @@ ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
   }},
   "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
   "titulo_fechamento": "SABEDORIA EM AÇÃO",
-  "rodape": "Código da Sabedoria — Conhecimento que Transforma Destinos."
+  "rodape": "Código da Sabedoria — Conhecimento que Transforma Destinos.",
+  "landing_page": {{
+    "promessa_clara": "Crie uma promessa forte em até 10 palavras (Ex: 10 DIAS PARA ATIVAR O MELHOR DE VOCÊ).",
+    "beneficios": [
+      "Escreva um benefício prático e instigante em até 15 palavras (Ex: 10 dias e você identifica o que estava te segurando sem perceber).",
+      "Escreva um benefício prático e instigante em até 15 palavras.",
+      "Escreva um benefício prático e instigante em até 15 palavras.",
+      "Escreva um benefício prático e instigante em até 15 palavras.",
+      "Escreva um benefício prático e instigante em até 15 palavras."
+    ]
+  }}
 }}
 
 Retorne APENAS o JSON, sem texto antes ou depois.

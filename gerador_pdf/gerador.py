@@ -124,7 +124,8 @@ def main():
     # ─── ETAPA 4: Subir para Firebase e registrar campanha ───
     print("\n─── ETAPA 4: Upload para Firebase ───")
     url_pdf = fazer_upload_pdf(caminho_pdf, conteudo["titulo_pdf"])
-    registrar_campanha_no_firestore(conteudo["titulo_pdf"], url_pdf, briefing)
+    landing_page_data = conteudo.get("landing_page", {})
+    registrar_campanha_no_firestore(conteudo["titulo_pdf"], url_pdf, briefing, landing_page_data)
 
     print("\n" + "="*60)
     print("🎉 PDF DA SEMANA GERADO COM SUCESSO!")
