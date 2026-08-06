@@ -1,6 +1,6 @@
 {
+    "index_animacao_conquistador": 0,
     "historico_estilos": [
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
@@ -24,24 +24,50 @@
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
-        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
+        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
+        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')"
     ],
+    "index_conquistador": 4,
     "historico_angulos": [
-        "Malcolm X / Nelson Mandela",
-        "Pai Rico, Pai Pobre (Robert Kiyosaki)",
-        "Mais Esperto que o Diabo (Napoleon Hill)",
-        "Marianne Williamson",
-        "A Arte da Guerra (Sun Tzu)",
-        "Blink (Malcolm Gladwell)",
-        "O Poder do Hábito (Charles Duhigg)",
-        "Provérbios de Salomão",
-        "O Poder da Ação (Paulo Vieira)"
+        "Blink (Malcolm Gladwell)"
     ],
-    "ultimos_temas": [],
-    "indice_cta": 19,
-    "index_pilar_reels_leads": 2,
+    "indice_gancho_conquistador": 29,
+    "fila_musicas_musicas": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3"
+    ],
+    "sentimento_do_dia": "raiva",
+    "index_pilar_reels_leads": 3,
+    "historico_sentimentos": [
+        "plenitude",
+        "poder",
+        "sensualidade",
+        "ousadia",
+        "carinho",
+        "prazer",
+        "alegria",
+        "esperanca",
+        "desafio",
+        "raiva"
+    ],
+    "data_tema_do_dia": "2026-08-06",
+    "ultimo_carousel": 3,
     "index_palette_conquistador": 1,
+    "fila_musicas_musicas-youtube": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Paradise - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
+    ],
+    "index_palette_leads": 0,
     "historico_midia": [
+        "33170386",
+        "36644498",
+        "8718442",
+        "8680237",
+        "10352452",
+        "5450170",
         "34477575",
         "34386837",
         "9864562",
@@ -535,49 +561,14 @@
         "20127320",
         "35674880",
         "12661164",
-        "17675042",
-        "19862139",
-        "27637593",
-        "34841447",
-        "9921183",
-        "unsplash_mu-K2DBo3LU",
-        "unsplash_krwjLv3Z9Ng"
+        "17675042"
     ],
-    "historico_sentimentos": [
-        "curiosidade",
-        "plenitude",
-        "poder",
-        "sensualidade",
-        "ousadia",
-        "carinho",
-        "prazer",
-        "alegria",
-        "esperanca",
-        "desafio"
-    ],
-    "index_tema_diario": 3,
-    "index_palette_leads": 1,
-    "indice_arquitetura": 4,
-    "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Paradise - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
-    ],
-    "indice_gancho_conquistador": 29,
-    "tema_do_dia": "Pai Rico, Pai Pobre (Robert Kiyosaki)",
     "index_plataforma_conquistador": 0,
-    "ultimo_carousel": 3,
-    "index_animacao_conquistador": 0,
-    "sentimento_do_dia": "desafio",
-    "index_conquistador": 4,
-    "data_tema_do_dia": "2026-08-05",
+    "indice_arquitetura": 4,
+    "index_tema_diario": 4,
     "data_sentimento_do_dia": "2026-08-02",
-    "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/alex-morgan-islamic-islamic-music-545510.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3"
-    ],
-    "indice_gancho": 18
+    "tema_do_dia": "Mais Esperto que o Diabo (Napoleon Hill)",
+    "indice_cta": 19,
+    "indice_gancho": 19,
+    "ultimos_temas": []
 }
