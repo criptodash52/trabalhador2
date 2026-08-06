@@ -56,45 +56,147 @@ def main():
     print("\n─── ETAPA 2: Geração de Conteúdo ───")
     conteudo = gerar_conteudo_pdf(briefing)
 
-    # ─── ETAPA 2.5: Gerar Imagens de Apoio via IA (Pollinations) ───
-    print("\n─── ETAPA 2.5: Geração de Imagens (Pollinations) ───")
+    # ─── ETAPA 2.5: Busca de Imagens via Unsplash/Pexels/Pixabay + Conversão P&B ───
+    print("\n─── ETAPA 2.5: Busca de Imagens (Unsplash → Pexels → Pixabay) ───")
     pasta_imagens = os.path.join(PASTA_SAIDA, "imagens_temp")
     os.makedirs(pasta_imagens, exist_ok=True)
-    
-    def baixar_img(prompt, prefix):
-        if not prompt: return None
-        print(f"   Gerando imagem para {prefix}...")
-        seed = uuid.uuid4().int % 2147483647
-        prompt_encoded = urllib.parse.quote(prompt)
-        url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=800&height=500&nologo=true&model=flux-realism&seed={seed}"
-        for tentativa in range(1, 3):  # 2 tentativas
-            try:
-                time.sleep(2)  # pausa entre requisicoes para evitar rate limit
-                resp = requests.get(url, timeout=45)
-                if resp.status_code == 200 and len(resp.content) > 5000:
-                    nome_arq = f"{prefix}_{uuid.uuid4().hex[:6]}.jpg"
-                    caminho = os.path.join(pasta_imagens, nome_arq)
-                    with open(caminho, 'wb') as f:
-                        f.write(resp.content)
-                    print(f"      [OK] {nome_arq} ({len(resp.content)//1024}KB)")
-                    return caminho
-                else:
-                    print(f"      [!] Tentativa {tentativa}: status={resp.status_code} size={len(resp.content)}")
-            except Exception as e:
-                print(f"      [!] Tentativa {tentativa} falhou: {e}")
-        print(f"      [SKIP] {prefix} sem imagem - usando fundo escuro.")
+
+    UNSPLASH_KEY = os.getenv("UNSPLASH_ACCESS_KEY", "")
+    PEXELS_KEY   = os.getenv("PEXELS_API_KEY", "")
+    PIXABAY_KEY  = os.getenv("PIXABAY_API_KEY", "")
+
+    def extrair_query(prompt_texto):
+        """Extrai palavras-chave simples do prompt da IA para busca nas APIs de fotos."""
+        if not prompt_texto:
+            return "cinematic dramatic portrait"
+        import re
+        texto = prompt_texto.lower()
+        remover = {"cinematic", "moody", "photography", "of", "a", "an", "the",
+                   "in", "with", "dark", "8k", "hiper", "realista", "cinematographic",
+                   "highly", "detailed", "shadows", "and", "at", "looking", "out",
+                   "being", "forged", "photo", "image", "shot", "view", "scene"}
+        palavras = re.findall(r'\b[a-z]{3,}\b', texto)
+        filtradas = [p for p in palavras if p not in remover][:5]
+        return " ".join(filtradas) if filtradas else "dramatic portrait dark shadows"
+
+    def converter_pb(caminho):
+        """Converte a imagem para preto e branco usando Pillow."""
+        try:
+            from PIL import Image as PILImage, ImageOps
+            with PILImage.open(caminho) as img:
+                img_rgb = img.convert("RGB")
+                img_pb = ImageOps.grayscale(img_rgb)
+                img_pb_rgb = img_pb.convert("RGB")  # mantém formato JPEG compatível
+                img_pb_rgb.save(caminho, quality=92)
+            return True
+        except Exception as e:
+            print(f"      [!] Erro ao converter P&B: {e}")
+            return False
+
+    def _salvar_imagem(conteudo_bytes, prefix):
+        """Salva bytes de imagem em disco e retorna o caminho."""
+        nome = f"{prefix}_{uuid.uuid4().hex[:6]}.jpg"
+        caminho = os.path.join(pasta_imagens, nome)
+        with open(caminho, 'wb') as f:
+            f.write(conteudo_bytes)
+        return caminho
+
+    def buscar_unsplash(query, prefix):
+        if not UNSPLASH_KEY:
+            return None
+        try:
+            url = (f"https://api.unsplash.com/photos/random"
+                   f"?query={urllib.parse.quote(query)}&orientation=landscape&content_filter=high")
+            headers = {"Authorization": f"Client-ID {UNSPLASH_KEY}"}
+            resp = requests.get(url, headers=headers, timeout=15)
+            if resp.status_code == 200:
+                img_url = resp.json().get("urls", {}).get("regular", "")
+                if img_url:
+                    ir = requests.get(img_url, timeout=30)
+                    if ir.status_code == 200 and len(ir.content) > 5000:
+                        return _salvar_imagem(ir.content, prefix)
+        except Exception as e:
+            print(f"      [!] Unsplash erro: {e}")
+        return None
+
+    def buscar_pexels(query, prefix):
+        if not PEXELS_KEY:
+            return None
+        try:
+            url = (f"https://api.pexels.com/v1/search"
+                   f"?query={urllib.parse.quote(query)}&per_page=5&orientation=landscape")
+            headers = {"Authorization": PEXELS_KEY}
+            resp = requests.get(url, headers=headers, timeout=15)
+            if resp.status_code == 200:
+                import random as _rnd
+                fotos = resp.json().get("photos", [])
+                if fotos:
+                    img_url = _rnd.choice(fotos).get("src", {}).get("large", "")
+                    if img_url:
+                        ir = requests.get(img_url, timeout=30)
+                        if ir.status_code == 200 and len(ir.content) > 5000:
+                            return _salvar_imagem(ir.content, prefix)
+        except Exception as e:
+            print(f"      [!] Pexels erro: {e}")
+        return None
+
+    def buscar_pixabay(query, prefix):
+        if not PIXABAY_KEY:
+            return None
+        try:
+            url = (f"https://pixabay.com/api/"
+                   f"?key={PIXABAY_KEY}&q={urllib.parse.quote(query)}"
+                   f"&image_type=photo&orientation=horizontal&per_page=5&safesearch=true")
+            resp = requests.get(url, timeout=15)
+            if resp.status_code == 200:
+                import random as _rnd
+                hits = resp.json().get("hits", [])
+                if hits:
+                    img_url = _rnd.choice(hits).get("largeImageURL", "")
+                    if img_url:
+                        ir = requests.get(img_url, timeout=30)
+                        if ir.status_code == 200 and len(ir.content) > 5000:
+                            return _salvar_imagem(ir.content, prefix)
+        except Exception as e:
+            print(f"      [!] Pixabay erro: {e}")
+        return None
+
+    def buscar_foto_pb(prompt, prefix):
+        """Busca foto em cascata (Unsplash → Pexels → Pixabay) e converte para P&B."""
+        if not prompt:
+            return None
+        query = extrair_query(prompt)
+        print(f"   Buscando imagem '{prefix}' (query: '{query}')...")
+        time.sleep(0.5)  # pausa educada entre requisicoes
+
+        caminho = buscar_unsplash(query, prefix)
+        if not caminho:
+            print(f"      [>] Unsplash sem resultado. Tentando Pexels...")
+            caminho = buscar_pexels(query, prefix)
+        if not caminho:
+            print(f"      [>] Pexels sem resultado. Tentando Pixabay...")
+            caminho = buscar_pixabay(query, prefix)
+
+        if caminho:
+            print(f"      [OK] Convertendo para preto e branco...")
+            converter_pb(caminho)
+            print(f"      [OK] {os.path.basename(caminho)}")
+            return caminho
+
+        print(f"      [SKIP] {prefix} sem imagem — usando fundo escuro.")
         return None
 
     if "prompt_imagem_capa" in conteudo:
-        conteudo["img_local_capa"] = baixar_img(conteudo["prompt_imagem_capa"], "capa")
+        conteudo["img_local_capa"] = buscar_foto_pb(conteudo["prompt_imagem_capa"], "capa")
     
     if "capitulos" in conteudo:
         for idx, cap in enumerate(conteudo["capitulos"]):
             if "prompt_imagem" in cap:
-                cap["img_local"] = baixar_img(cap["prompt_imagem"], f"capitulo_{idx+1}")
+                cap["img_local"] = buscar_foto_pb(cap["prompt_imagem"], f"capitulo_{idx+1}")
                 
     if "plano_acao" in conteudo and "prompt_imagem" in conteudo["plano_acao"]:
-        conteudo["plano_acao"]["img_local"] = baixar_img(conteudo["plano_acao"]["prompt_imagem"], "plano_acao")
+        conteudo["plano_acao"]["img_local"] = buscar_foto_pb(conteudo["plano_acao"]["prompt_imagem"], "plano_acao")
+
 
     # Salva o JSON do conteúdo para debug
     caminho_json = os.path.join(PASTA_SAIDA, "ultimo_conteudo.json")

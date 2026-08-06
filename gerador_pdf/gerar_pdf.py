@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-O Fio de Ouro - Gerador de PDF via Terminal (Versão Ultra-Polida)
-Produzido com Zelo, Fé e Propósito.
-Aparência e cores 100% fiéis à versão Web!
+O Fio de Ouro - Gerador de PDF via Terminal (VersÃ£o Ultra-Polida)
+Produzido com Zelo, FÃ© e PropÃ³sito.
+AparÃªncia e cores 100% fiÃ©is Ã  versÃ£o Web!
 """
 
 import os
@@ -12,11 +12,11 @@ import sys
 import subprocess
 import urllib.request
 
-# --- Auto-instalação da biblioteca ReportLab ---
+# --- Auto-instalaÃ§Ã£o da biblioteca ReportLab ---
 try:
     import reportlab
 except ImportError:
-    print("\033[93m[+] Biblioteca 'reportlab' não encontrada. Tentando instalar automaticamente...\033[0m")
+    print("\033[93m[+] Biblioteca 'reportlab' nÃ£o encontrada. Tentando instalar automaticamente...\033[0m")
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "reportlab"])
         import reportlab
@@ -28,13 +28,13 @@ except ImportError:
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.colors import Color, HexColor
-from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame, NextPageTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle, Image
+from reportlab.platypus import BaseDocTemplate, PageTemplate, Frame, NextPageTemplate, Paragraph, Spacer, PageBreak, Table, TableStyle, Image, KeepInFrame
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# --- Configuração de Cores e Transparência Estilo Web ---
+# --- ConfiguraÃ§Ã£o de Cores e TransparÃªncia Estilo Web ---
 
 def get_color(hex_or_rgba, alpha=None):
     """
@@ -63,12 +63,13 @@ def get_color(hex_or_rgba, alpha=None):
             return Color(c.red, c.green, c.blue, alpha)
         return c
 
-# --- Download e Registro Dinâmico de Fontes Premium (Inter & Space Grotesk) ---
+# --- Download e Registro de Fontes: Sans (capa/bento) + Serif Editorial (capÃ­tulos) ---
 
 def load_fonts():
     """
-    Tenta baixar as fontes originais do Google Fonts para manter a mesma
-    identidade tipográfica da Web. Caso falhe, retorna fontes nativas como fallback.
+    Carrega DOIS conjuntos de fontes:
+    1. font_map      â€” Inter + SpaceGrotesk (sans): para a CAPA e o BENTO (pÃ¡gina 2). Preservado.
+    2. font_map_e    â€” Playfair Display + EB Garamond (serif editorial): para os CAPÃTULOS.
     """
     font_dir = os.path.join(os.path.expanduser("~"), ".fio_de_ouro_fonts")
     try:
@@ -76,45 +77,97 @@ def load_fonts():
     except Exception:
         font_dir = os.path.join(os.getcwd(), ".fonts")
         os.makedirs(font_dir, exist_ok=True)
-    
+
     fonts_to_download = {
-        "Inter-Regular": "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Regular.ttf",
-        "Inter-Bold": "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Bold.ttf",
-        "Inter-Italic": "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Italic.ttf",
-        "SpaceGrotesk-Bold": "https://github.com/google/fonts/raw/main/ofl/spacegrotesk/static/SpaceGrotesk-Bold.ttf"
+        # --- Sans (capa e bento) ---
+        "Inter-Regular":    "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Regular.ttf",
+        "Inter-Bold":       "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Bold.ttf",
+        "Inter-Italic":     "https://github.com/google/fonts/raw/main/ofl/inter/static/Inter-Italic.ttf",
+        "SpaceGrotesk-Bold":"https://github.com/google/fonts/raw/main/ofl/spacegrotesk/static/SpaceGrotesk-Bold.ttf",
+        # --- Serif editorial (capÃ­tulos) ---
+        "PlayfairDisplay-Regular": "https://github.com/google/fonts/raw/main/ofl/playfairdisplay/static/PlayfairDisplay-Regular.ttf",
+        "PlayfairDisplay-Bold":    "https://github.com/google/fonts/raw/main/ofl/playfairdisplay/static/PlayfairDisplay-Bold.ttf",
+        "PlayfairDisplay-Italic":  "https://github.com/google/fonts/raw/main/ofl/playfairdisplay/static/PlayfairDisplay-Italic.ttf",
+        "EBGaramond-Regular": "https://github.com/google/fonts/raw/main/ofl/ebgaramond/static/EBGaramond-Regular.ttf",
+        "EBGaramond-Bold":    "https://github.com/google/fonts/raw/main/ofl/ebgaramond/static/EBGaramond-Bold.ttf",
+        "EBGaramond-Italic":  "https://github.com/google/fonts/raw/main/ofl/ebgaramond/static/EBGaramond-Italic.ttf",
     }
-    
+
     registered = {}
-    
     for name, url in fonts_to_download.items():
         dest = os.path.join(font_dir, f"{name}.ttf")
         if not os.path.exists(dest):
             try:
-                # Baixa com timeout curto para não travar em conexões instáveis
+                print(f"   â†“ Baixando fonte: {name}...")
                 urllib.request.urlretrieve(url, dest)
             except Exception:
                 pass
-                
         if os.path.exists(dest):
             try:
                 pdfmetrics.registerFont(TTFont(name, dest))
                 registered[name] = True
             except Exception:
                 pass
-                
-    # Retorna o mapeamento com fallback elegante para Helvetica
-    font_map = {
-        "sans": "Inter-Regular" if "Inter-Regular" in registered else "Helvetica",
-        "sans-bold": "Inter-Bold" if "Inter-Bold" in registered else "Helvetica-Bold",
-        "sans-italic": "Inter-Italic" if "Inter-Italic" in registered else "Helvetica-Oblique",
-        "display-bold": "SpaceGrotesk-Bold" if "SpaceGrotesk-Bold" in registered else "Helvetica-Bold"
+
+    # â”€â”€ Font Map 1: Sans â€” capa e bento (Inter / SpaceGrotesk) â”€â”€
+    font_map_sans = {
+        "sans":         "Inter-Regular"    if "Inter-Regular"    in registered else "Helvetica",
+        "sans-bold":    "Inter-Bold"       if "Inter-Bold"       in registered else "Helvetica-Bold",
+        "sans-italic":  "Inter-Italic"     if "Inter-Italic"     in registered else "Helvetica-Oblique",
+        "display-bold": "SpaceGrotesk-Bold" if "SpaceGrotesk-Bold" in registered else "Helvetica-Bold",
+        "display":      "SpaceGrotesk-Bold" if "SpaceGrotesk-Bold" in registered else "Helvetica-Bold",
+        "display-italic": "Inter-Italic"   if "Inter-Italic"     in registered else "Helvetica-Oblique",
     }
-    return font_map
 
-# Carrega o mapa de fontes globalmente
-font_map = load_fonts()
+    # â”€â”€ Font Map 2: Serif Editorial â€” capÃ­tulos (Playfair Display + EB Garamond) â”€â”€
+    has_playfair = "PlayfairDisplay-Regular" in registered
+    has_garamond = "EBGaramond-Regular" in registered
+    font_map_edit = {
+        "sans":          "EBGaramond-Regular"   if has_garamond  else "Times-Roman",
+        "sans-bold":     "EBGaramond-Bold"      if has_garamond  else "Times-Bold",
+        "sans-italic":   "EBGaramond-Italic"    if has_garamond  else "Times-Italic",
+        "display-bold":  "PlayfairDisplay-Bold"    if has_playfair else "Times-Bold",
+        "display":       "PlayfairDisplay-Regular" if has_playfair else "Times-Roman",
+        "display-italic":"PlayfairDisplay-Italic"  if has_playfair else "Times-Italic",
+    }
 
-# --- Funções de Desenho e Helpers de Layout ---
+    return font_map_sans, font_map_edit
+
+# Carrega ambos os mapas de fontes globalmente
+# font_map    â†’ usado na capa e no bento (Inter/SpaceGrotesk â€” inalterado)
+# font_map_e  â†’ usado nos capÃ­tulos (Playfair Display + EB Garamond â€” editorial)
+font_map, font_map_e = load_fonts()
+
+
+# --- FunÃ§Ãµes de Desenho e Helpers de Layout ---
+
+
+def draw_image_cover(canvas, img_path, x, y, dest_w, dest_h, mask='auto'):
+    """Desenha uma imagem como 'object-fit: cover': amplia e centraliza cortando as bordas
+    para que o destino seja preenchido SEM distorÃ§Ã£o da imagem."""
+    from PIL import Image as PILImage
+    try:
+        with PILImage.open(img_path) as pil_img:
+            src_w, src_h = pil_img.size
+    except Exception:
+        src_w, src_h = 800, 500  # fallback seguro
+
+    scale = max(dest_w / src_w, dest_h / src_h)
+    scaled_w = src_w * scale
+    scaled_h = src_h * scale
+
+    # Calcula o offset de centralizaÃ§Ã£o (clipagem)
+    offset_x = x - (scaled_w - dest_w) / 2
+    offset_y = y - (scaled_h - dest_h) / 2
+
+    canvas.saveState()
+    # Cria uma mÃ¡scara de recorte para evitar que a imagem vaze para fora da Ã¡rea
+    clip = canvas.beginPath()
+    clip.rect(x, y, dest_w, dest_h)
+    canvas.clipPath(clip, stroke=0, fill=0)
+    canvas.drawImage(img_path, offset_x, offset_y, width=scaled_w, height=scaled_h,
+                     preserveAspectRatio=False, mask=mask)
+    canvas.restoreState()
 
 def draw_page_gradient(canvas, color1=None, color2=None):
     canvas.saveState()
@@ -138,19 +191,19 @@ def draw_gradient_round_rect(canvas, x, y, width, height, rx, ry, color1, color2
         canvas.restoreState()
 
 def draw_card_decorations(canvas, card_type, x, y, width, height):
-    """Insere padrões geométricos elegantes e sutis simulando os ícones da interface Web."""
+    """Insere padrÃµes geomÃ©tricos elegantes e sutis simulando os Ã­cones da interface Web."""
     canvas.saveState()
     canvas.setStrokeColor(Color(1, 1, 1, 0.08))
     canvas.setFillColor(Color(1, 1, 1, 0.04))
     canvas.setLineWidth(1.5)
     
-    if card_type == "nevoa":  # Usuários/Família
+    if card_type == "nevoa":  # UsuÃ¡rios/FamÃ­lia
         cx1, cy1 = x + width - 35, y + 45
         cx2, cy2 = x + width - 55, y + 38
         canvas.circle(cx1, cy1, 16, stroke=1, fill=1)
         canvas.circle(cx2, cy2, 12, stroke=1, fill=1)
         
-    elif card_type == "solucao":  # Ícone de Coração / União
+    elif card_type == "solucao":  # Ãcone de CoraÃ§Ã£o / UniÃ£o
         cx, cy = x + width - 55, y + height / 2
         path = canvas.beginPath()
         path.moveTo(cx, cy - 15)
@@ -158,7 +211,7 @@ def draw_card_decorations(canvas, card_type, x, y, width, height):
         path.curveTo(cx + 30, cy - 5, cx + 15, cy + 10, cx, cy - 15)
         canvas.drawPath(path, stroke=1, fill=1)
         
-    elif card_type == "proposito":  # Escudo de Proteção
+    elif card_type == "proposito":  # Escudo de ProteÃ§Ã£o
         cx, cy = x + width - 35, y + 35
         path = canvas.beginPath()
         path.moveTo(cx, cy + 18)
@@ -172,49 +225,86 @@ def draw_card_decorations(canvas, card_type, x, y, width, height):
         
     canvas.restoreState()
 
-def draw_chapter_header(canvas, subtitle, title, subtitle_color="#bfdbfe"):
-    """Desenha o cabeçalho padronizado e refinado dos capítulos com quebra automática de linha."""
+def draw_thin_divider(canvas, y, x_start=None, x_end=None, color="#d4af37", alpha=0.5, thickness=0.7):
+    """Desenha uma linha fina horizontal elegante â€” marca registrada do estilo editorial."""
+    page_w = 595.27
+    margin = 54
+    if x_start is None:
+        x_start = margin
+    if x_end is None:
+        x_end = page_w - margin
     canvas.saveState()
-    # Subtítulo (ex: CAPÍTULO 1)
-    canvas.setFont(font_map["sans-bold"], 10)
-    canvas.setFillColor(get_color(subtitle_color))
-    canvas.drawCentredString(297.63, 785, subtitle.upper())
+    c = get_color(color)
+    canvas.setStrokeColor(Color(c.red, c.green, c.blue, alpha))
+    canvas.setLineWidth(thickness)
+    canvas.line(x_start, y, x_end, y)
+    canvas.restoreState()
+
+def draw_chapter_header(canvas, subtitle, title, subtitle_color="#d4af37"):
+    """Cabeçalho editorial:
+       label pequeno em tracking largo + linha fina + título grande em Playfair Display."""
+    canvas.saveState()
+    page_w = 595.27
+    margin_h = 54
+    text_w = page_w - 2 * margin_h
     
-    # Título Principal do Capítulo (com suporte a quebra automática de linha)
-    font_size = 22
-    if len(title) > 35:
-        font_size = 18
-    if len(title) > 50:
-        font_size = 16
+    # --- Label superior (ex: CAPÃ TULO 1) em tracking largo ---
+    label_style = ParagraphStyle(
+        name=f"chap_label_{hash(subtitle)}",
+        fontName=font_map_e["sans-bold"],   # EB Garamond Bold
+        fontSize=7.5,
+        leading=11,
+        textColor=get_color(subtitle_color),
+        alignment=TA_CENTER,
+        charSpace=4,
+    )
+    p_lbl = Paragraph(subtitle.upper(), label_style)
+    lw, lh = p_lbl.wrap(text_w, 20)
+    lbl_y = 800
+    p_lbl.drawOn(canvas, margin_h, lbl_y)
+    
+    # --- Linha divisÃ³ria fina dourada ---
+    divider_y = lbl_y - 6
+    draw_thin_divider(canvas, divider_y, x_start=margin_h + 80, x_end=page_w - margin_h - 80,
+                      color="#d4af37", alpha=0.6, thickness=0.6)
+    
+    # --- TÃ­tulo Principal â€” Playfair Display Bold ---
+    font_size = 28
+    if len(title) > 30:
+        font_size = 24
+    if len(title) > 45:
+        font_size = 20
 
     cap_title_style = ParagraphStyle(
         name=f"chap_title_{hash(title)}",
-        fontName=font_map["display-bold"],
+        fontName=font_map_e["display-bold"],   # Playfair Display Bold
         fontSize=font_size,
-        leading=font_size + 4,
+        leading=font_size + 7,
         textColor=get_color("#ffffff"),
-        alignment=TA_CENTER
+        alignment=TA_CENTER,
+        spaceBefore=8,
     )
     
-    p_title = Paragraph(title, cap_title_style)
-    margin_h = 40
-    text_w = 595.27 - 2 * margin_h
-    tw, th = p_title.wrap(text_w, 100)
+    if title:
+        p_title = Paragraph(title, cap_title_style)
+        tw, th = p_title.wrap(text_w, 150)
+        p_title.drawOn(canvas, margin_h, divider_y - 12 - th)
     
-    # Desenha o parágrafo centralizado horizontal e alinhado no topo
-    p_title.drawOn(canvas, margin_h, 765 - th)
     canvas.restoreState()
 
 def draw_page_number(canvas, page_num, total_paginas=7):
-    """Insere o número de página com opacidade e elegância."""
+    """Insere o nÃºmero de pÃ¡gina com opacidade e elegÃ¢ncia."""
     canvas.saveState()
-    canvas.setFont(font_map["sans"], 9)
-    canvas.setFillColor(Color(1, 1, 1, 0.4))
-    canvas.drawCentredString(297.63, 35, f"Página {page_num} de {total_paginas}")
+    canvas.setFont(font_map_e["sans"], 8)   # EB Garamond para nÃºmero de pÃ¡gina
+    canvas.setFillColor(Color(1, 1, 1, 0.35))
+    canvas.setStrokeColor(Color(1, 1, 1, 0.15))
+    canvas.setLineWidth(0.5)
+    canvas.line(250, 48, 345, 48)
+    canvas.drawCentredString(297.63, 34, f"{page_num} / {total_paginas}")
     canvas.restoreState()
 
 def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font_size=16, body_font_size=10, has_highlight=False, has_italic_box=False):
-    """Formata e desenha com precisão cirúrgica blocos de textos e caixas destacadas dentro dos Bento Cards."""
+    """Formata e desenha com precisÃ£o cirÃºrgica blocos de textos e caixas destacadas dentro dos Bento Cards."""
     canvas.saveState()
     
     # Title style
@@ -237,7 +327,7 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         spaceAfter=8
     )
     
-    # Custom rendering for Card 1 (A Névoa) with the highlight box at the bottom
+    # Custom rendering for Card 1 (A NÃ©voa) with the highlight box at the bottom
     if has_highlight:
         # Title
         title_p = Paragraph(title, title_style)
@@ -283,16 +373,16 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         p2_p.drawOn(canvas, box_x + box_padding, text_y)
         
     elif has_italic_box:
-        # Italic box fica fixa no rodapé do card (Card 4)
+        # Italic box fica fixa no rodapÃ© do card (Card 4)
         box_padding = 8
         box_x = x + 12
         box_h = 55
         box_y = y + 15
         box_w = width - 24
-        area_topo_bottom = box_y + box_h + 8  # Limite inferior do texto (topo da caixa itálica)
+        area_topo_bottom = box_y + box_h + 8  # Limite inferior do texto (topo da caixa itÃ¡lica)
         
-        # 1. Desenha o Título no topo do card
-        # Se o título for longo (mais de 28 caracteres), ajusta a fonte para não empurrar o texto
+        # 1. Desenha o TÃ­tulo no topo do card
+        # Se o tÃ­tulo for longo (mais de 28 caracteres), ajusta a fonte para nÃ£o empurrar o texto
         effective_title_font_size = title_font_size
         if len(title) > 28:
             effective_title_font_size = title_font_size - 2
@@ -315,10 +405,10 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         
         title_bottom_y = title_top_y - h_title
         
-        # 2. Parágrafo 1 — posicionado estritamente ABAIXO do título
+        # 2. ParÃ¡grafo 1 â€” posicionado estritamente ABAIXO do tÃ­tulo
         max_p_height = title_bottom_y - 6 - area_topo_bottom
         
-        # Ajusta fonte do corpo se o espaço for muito apertado
+        # Ajusta fonte do corpo se o espaÃ§o for muito apertado
         curr_body_font_size = body_font_size
         if max_p_height < 45:
             curr_body_font_size = body_font_size - 1.5
@@ -334,15 +424,15 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         p1_p = Paragraph(paragraphs[0], c4_body_style)
         w1, h1 = p1_p.wrap(width - 24, max(max_p_height, 20))
         
-        # Desenha o texto logo abaixo do título
+        # Desenha o texto logo abaixo do tÃ­tulo
         draw_y1 = title_bottom_y - 6 - h1
-        # Se ultrapassar o topo da caixa itálica, fixa no limite e previne subir sobre o título
+        # Se ultrapassar o topo da caixa itÃ¡lica, fixa no limite e previne subir sobre o tÃ­tulo
         if draw_y1 < area_topo_bottom:
             draw_y1 = area_topo_bottom
             
         p1_p.drawOn(canvas, x + 12, draw_y1)
         
-        # 3. Caixa Itálica fixa no rodapé
+        # 3. Caixa ItÃ¡lica fixa no rodapÃ©
         canvas.saveState()
         canvas.setFillColor(get_color("rgba(255,255,255,0.08)"))
         canvas.setStrokeColor(get_color("rgba(255,255,255,0.15)"))
@@ -364,7 +454,7 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
         p2_p.drawOn(canvas, box_x + box_padding, text_y)
         
     else:
-        # General layout for Card 2 & 3 — com limite inferior para evitar overflow
+        # General layout for Card 2 & 3 â€” com limite inferior para evitar overflow
         bottom_limit = y + 14  # Nunca escreve abaixo da borda inferior do card
         current_y = y + height - 15
         
@@ -379,7 +469,7 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
             available = current_y - bottom_limit
             p = Paragraph(p_text, body_style)
             w_p, h_p = p.wrap(width - 24, available)
-            # Se o parágrafo não cabe, não desenha
+            # Se o parÃ¡grafo nÃ£o cabe, nÃ£o desenha
             if current_y - h_p < bottom_limit:
                 break
             p.drawOn(canvas, x + 12, current_y - h_p)
@@ -388,7 +478,7 @@ def draw_text_in_rect(canvas, title, paragraphs, x, y, width, height, title_font
     canvas.restoreState()
 
 def draw_page_1_content(canvas, doc):
-    """Gera o layout visual completo da Página 1 (Bento Grid com Proporções Perfeitas)."""
+    """Gera o layout visual completo da PÃ¡gina 1 (Bento Grid com ProporÃ§Ãµes Perfeitas)."""
     conteudo = getattr(doc, "conteudo", None)
     
     titulo = "O Fio de Ouro."
@@ -404,7 +494,7 @@ def draw_page_1_content(canvas, doc):
         cards = conteudo.get("capa_cards", [])
         
 
-    # 1. Título e subtítulo com Paragraph para suportar quebra de linha automática
+    # 1. TÃ­tulo e subtÃ­tulo com Paragraph para suportar quebra de linha automÃ¡tica
     canvas.saveState()
     margin_h = 40
     text_width = page_width - 2 * margin_h
@@ -440,10 +530,10 @@ def draw_page_1_content(canvas, doc):
     subtitulo_p = Paragraph(subtitulo, subtitulo_style)
     sw, sh = subtitulo_p.wrap(text_width, 100)
     
-    # Posiciona o bloco título+subtítulo no TOPO da página
+    # Posiciona o bloco tÃ­tulo+subtÃ­tulo no TOPO da pÃ¡gina
     top_margin = 54
     page_height = 841.89
-    # O topo do título começa em (page_height - top_margin), o drawOn recebe o y do canto inferior
+    # O topo do tÃ­tulo comeÃ§a em (page_height - top_margin), o drawOn recebe o y do canto inferior
     titulo_bottom = page_height - top_margin - th
     subtitulo_bottom = titulo_bottom - sh - 8
     
@@ -451,7 +541,7 @@ def draw_page_1_content(canvas, doc):
     subtitulo_p.drawOn(canvas, margin_h, subtitulo_bottom)
     canvas.restoreState()
     
-    # 2. Configurações de Dimensão do Bento Grid (A4: 595.27 x 841.89)
+    # 2. ConfiguraÃ§Ãµes de DimensÃ£o do Bento Grid (A4: 595.27 x 841.89)
     left_margin = 40
     gap = 16
     col_w = 161.09
@@ -460,42 +550,42 @@ def draw_page_1_content(canvas, doc):
     row_h = 182.0
     grid_y = 176.0
     
-    # --- Card 1: A Névoa ---
+    # --- Card 1: A Nevoa ---
     c1_x = left_margin
     c1_y = grid_y
-    c1_title = cards[0]["titulo"] if len(cards) > 0 else "A Névoa"
+    c1_title = cards[0]["titulo"] if len(cards) > 0 else "A Nevoa"
     if len(cards) > 0:
         c1_text = cards[0].get("texto", "")
-        c1_pergunta = cards[0].get("pergunta_destaque", "Você sente que está perdendo os melhores anos do convívio?")
+        c1_pergunta = cards[0].get("pergunta_destaque", "Voce sente que esta perdendo os melhores anos do convivio?")
         c1_paragraphs = [c1_text, c1_pergunta]
     else:
         c1_paragraphs = [
-            "Sob o mesmo teto, mas a quilômetros de distância. A rotina exaustiva, as telas sempre acesas e as preocupações têm roubado o diálogo e o afeto.",
-            "Você sente que está perdendo os melhores anos da sua família para a correria implacável? O distanciamento invisível transforma lares em abrigos de passagem."
+            "Sob o mesmo teto, mas a quilometros de distancia. A rotina exaustiva, as telas sempre acesas e as preocupacoes tem roubado o dialogo e o afeto.",
+            "Voce sente que esta perdendo os melhores anos da sua familia para a correria implacavel? O distanciamento invisivel transforma lares em abrigos de passagem."
         ]
     
     draw_gradient_round_rect(canvas, c1_x, c1_y, col_w, grid_height, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "nevoa", c1_x, c1_y, col_w, grid_height)
     draw_text_in_rect(canvas, c1_title, c1_paragraphs, c1_x, c1_y, col_w, grid_height, title_font_size=18, body_font_size=10, has_highlight=True)
     
-    # --- Card 2: A Solução ---
+    # --- Card 2: A Solucao ---
     c2_x = left_margin + col_w + gap
     c2_y = grid_y + row_h + gap
-    c2_title = cards[1]["titulo"] if len(cards) > 1 else "A Solução"
+    c2_title = cards[1]["titulo"] if len(cards) > 1 else "A Solucao"
     c2_paragraphs = [cards[1]["texto"]] if len(cards) > 1 else [
-        "A verdadeira solução não está em focar apenas em mais provisão material. A resposta exige uma atitude corajosa, simples e profunda: tempo de qualidade e intencionalidade.",
-        "É preciso resgatar a presença active e tecer novamente os fios que mantêm o amor inabalável."
+        "A verdadeira solucao nao esta em focar apenas em mais provisao material. A resposta exige uma atitude corajosa, simples e profunda: tempo de qualidade e intencionalidade.",
+        "E preciso resgatar a presenca ativa e tecer novamente os fios que mantem o amor inabalavel."
     ]
     draw_gradient_round_rect(canvas, c2_x, c2_y, double_col_w, row_h, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "solucao", c2_x, c2_y, double_col_w, row_h)
     draw_text_in_rect(canvas, c2_title, c2_paragraphs, c2_x, c2_y, double_col_w, row_h, title_font_size=18, body_font_size=10)
     
-    # --- Card 3: O Propósito ---
+    # --- Card 3: O Proposito ---
     c3_x = c2_x
     c3_y = grid_y
-    c3_title = cards[2]["titulo"] if len(cards) > 2 else "O Propósito"
+    c3_title = cards[2]["titulo"] if len(cards) > 2 else "O Proposito"
     c3_paragraphs = [cards[2]["texto"]] if len(cards) > 2 else [
-        "Onde antes reinava o silêncio, a paz verdadeira se instaura, forjada no fogo das provações e guiada pela união."
+        "Onde antes reinava o silencio, a paz verdadeira se instaura, forjada no fogo das provacoes e guiada pela uniao."
     ]
     draw_gradient_round_rect(canvas, c3_x, c3_y, col_w, row_h, 18, 18, "#1e3a5f", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_card_decorations(canvas, "proposito", c3_x, c3_y, col_w, row_h)
@@ -507,12 +597,12 @@ def draw_page_1_content(canvas, doc):
     c4_title = cards[3]["titulo"] if len(cards) > 3 else "A Verdade"
     if len(cards) > 3:
         c4_text = cards[3].get("texto", "")
-        c4_citacao = cards[3].get("citacao_destaque", '"Onde colocamos nosso tempo, ali ancoramos nosso coração."')
+        c4_citacao = cards[3].get("citacao_destaque", '"Onde colocamos nosso tempo, ali ancoramos nosso coracao."')
         c4_paragraphs = [c4_text, c4_citacao]
     else:
         c4_paragraphs = [
-            "O amor exige presença no campo de batalha da rotina.",
-            "\"Onde colocamos nosso tempo, ali ancoramos nosso coração.\""
+            "O amor exige presenca no campo de batalha da rotina.",
+            "\"Onde colocamos nosso tempo, ali ancoramos nosso coracao.\""
         ]
     draw_gradient_round_rect(canvas, c4_x, c4_y, col_w, row_h, 18, 18, "#3b82f6", "#111111", border_color="rgba(255,255,255,0.15)")
     draw_text_in_rect(canvas, c4_title, c4_paragraphs, c4_x, c4_y, col_w, row_h, title_font_size=16, body_font_size=10, has_italic_box=True)
@@ -520,12 +610,12 @@ def draw_page_1_content(canvas, doc):
 # --- Callback Master de Planos de Fundo (Gradients Exatos da Web) ---
 
 def draw_cover_image_page(canvas, doc):
-    """Renderiza a Página 1 exclusiva com moldura luxuosa tipo quadro, logo e subtítulo/título dinâmico."""
+    """Renderiza a PÃ¡gina 1 exclusiva com moldura luxuosa tipo quadro, logo e subtÃ­tulo/tÃ­tulo dinÃ¢mico."""
     page_width = 595.27
     page_height = 841.89
     conteudo = getattr(doc, "conteudo", None) or {}
 
-    # Caminho absoluto baseado na localização deste arquivo
+    # Caminho absoluto baseado na localizaÃ§Ã£o deste arquivo
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     logo_path = os.path.join(base_dir, "biblioteca_local", "logo", "foto_perfil.png")
 
@@ -545,7 +635,7 @@ def draw_cover_image_page(canvas, doc):
     canvas.setLineWidth(0.6)
     canvas.rect(m_in, m_in, page_width - 2 * m_in, page_height - 2 * m_in)
 
-    # Cantos ornamentados nos 4 vértices
+    # Cantos ornamentados nos 4 vÃ©rtices
     c_len = 12
     for x, y, dx, dy in [
         (m_in, m_in, 1, 1),
@@ -569,11 +659,11 @@ def draw_cover_image_page(canvas, doc):
             canvas.drawImage(logo_path, logo_x, logo_y, width=logo_size, height=logo_size, mask='auto', preserveAspectRatio=True)
             canvas.restoreState()
         except Exception as e_capa:
-            print(f"⚠️ Aviso: Não foi possível renderizar a capa com foto_perfil.png: {e_capa}")
+            print(f"âš ï¸  Aviso: NÃ£o foi possÃ­vel renderizar a capa com foto_perfil.png: {e_capa}")
     else:
-        print(f"⚠️ Aviso: foto_perfil.png não encontrada em: {logo_path}")
+        print(f"âš ï¸  Aviso: foto_perfil.png nÃ£o encontrada em: {logo_path}")
 
-    # 4. Selo da Marca abaixo do Emblema (sem duplicar o título do PDF que já fica na Página 2)
+    # 4. Selo da Marca abaixo do Emblema (sem duplicar o tÃ­tulo do PDF que jÃ¡ fica na PÃ¡gina 2)
     canvas.saveState()
     margin_h = 50
     text_width = page_width - 2 * margin_h
@@ -587,7 +677,7 @@ def draw_cover_image_page(canvas, doc):
         alignment=TA_CENTER
     )
 
-    p_tagline = Paragraph("CÓDIGO DA SABEDORIA &nbsp;•&nbsp; EDIÇÃO SEMANAL", tagline_style)
+    p_tagline = Paragraph("CODIGO DA SABEDORIA * EDICAO SEMANAL", tagline_style)
     gw, gh = p_tagline.wrap(text_width, 40)
     p_tagline.drawOn(canvas, margin_h, 110)
 
@@ -597,13 +687,32 @@ def draw_cover_image_page(canvas, doc):
 def get_total_pages(doc):
     c = getattr(doc, "conteudo", None)
     caps = c.get("capitulos", []) if c else []
-    return len(caps) + 4 if len(caps) > 0 else 9
+    return len(caps) + 5 if len(caps) > 0 else 10
 
 def draw_bg_capa(canvas, doc):
     draw_cover_image_page(canvas, doc)
 
 def draw_bg_bento(canvas, doc):
-    draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
+    page_width, page_height = canvas._pagesize
+    conteudo = getattr(doc, "conteudo", None) or {}
+    img_path = conteudo.get("img_local_capa")
+    
+    # Desenha imagem de fundo na página 2 se existir, senão usa gradiente
+    import os
+    if img_path and os.path.exists(str(img_path)):
+        try:
+            draw_image_cover(canvas, img_path, 0, 0, page_width, page_height)
+            
+            # Máscara escura para contraste dos cards
+            canvas.saveState()
+            canvas.setFillColor(Color(0, 0, 0, alpha=0.68))
+            canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+            canvas.restoreState()
+        except Exception:
+            draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
+    else:
+        draw_page_gradient(canvas, "#22d3ee", "#3b82f6")
+        
     draw_page_1_content(canvas, doc)
     draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
 
@@ -626,15 +735,17 @@ def draw_bg_capitulo(canvas, doc, idx_cap):
         canvas.setFillColor(Color(0.10, 0.09, 0.09))
         canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
         canvas.restoreState()
-        canvas.saveState()
         try:
-            canvas.drawImage(img_path, 0, 0, width=SPLIT_X, height=page_height, preserveAspectRatio=False, mask='auto')
+            draw_image_cover(canvas, img_path, 0, 0, SPLIT_X, page_height)
+            canvas.saveState()
             canvas.setFillColor(Color(0, 0, 0, alpha=0.30))
             canvas.rect(0, 0, SPLIT_X, page_height, fill=1, stroke=0)
-        except:
+            canvas.restoreState()
+        except Exception as _e:
+            canvas.saveState()
             canvas.setFillColor(Color(0.10, 0.09, 0.09))
             canvas.rect(0, 0, SPLIT_X, page_height, fill=1, stroke=0)
-        canvas.restoreState()
+            canvas.restoreState()
         
         canvas.saveState()
         canvas.setStrokeColor(get_color("#d4af37"))
@@ -645,40 +756,69 @@ def draw_bg_capitulo(canvas, doc, idx_cap):
         canvas.saveState()
         available_w = page_width - SPLIT_X - 30
         text_x = SPLIT_X + 16
-        label_style = ParagraphStyle(name=f"SplitLbl_{cap_num}", fontName=font_map["sans-bold"], fontSize=7.5, leading=10, textColor=get_color("#d4af37"))
-        title_style = ParagraphStyle(name=f"SplitTtl_{cap_num}", fontName=font_map["display-bold"], fontSize=19, leading=25, textColor=get_color("#ffffff"))
-        p_lbl = Paragraph(f"CAPÍTULO {cap_num}", label_style)
+        
+        # Label editorial: tracking largo, dourado, caixa alta
+        label_style = ParagraphStyle(
+            name=f"SplitLbl_{cap_num}",
+            fontName=font_map_e["sans-bold"],   # EB Garamond Bold
+            fontSize=7.5,
+            leading=10,
+            textColor=get_color("#d4af37"),
+            charSpace=3,
+        )
+        # TÃ­tulo em Playfair Display â€” grande e dramÃ¡tico
+        fs_title = 22
+        if len(cap_title) > 30: fs_title = 18
+        if len(cap_title) > 45: fs_title = 15
+        title_style = ParagraphStyle(
+            name=f"SplitTtl_{cap_num}",
+            fontName=font_map_e["display-bold"],   # Playfair Display Bold
+            fontSize=fs_title,
+            leading=fs_title + 6,
+            textColor=get_color("#ffffff"),
+        )
+        
+        lbl_y = page_height - 52
+        p_lbl = Paragraph(f"CAPÃ TULO {cap_num}", label_style)
         lw, lh = p_lbl.wrap(available_w, 20)
-        p_lbl.drawOn(canvas, text_x, page_height - 55)
+        p_lbl.drawOn(canvas, text_x, lbl_y)
+        
+        # Linha divisÃ³ria fina dourada sob o label
+        div_y = lbl_y - 6
+        draw_thin_divider(canvas, div_y, x_start=text_x, x_end=text_x + available_w * 0.7,
+                          color="#d4af37", alpha=0.55, thickness=0.6)
+        
         p_ttl = Paragraph(cap_title, title_style)
-        tw, th = p_ttl.wrap(available_w, 120)
-        p_ttl.drawOn(canvas, text_x, page_height - 55 - lh - 8 - th)
+        tw, th = p_ttl.wrap(available_w, 130)
+        p_ttl.drawOn(canvas, text_x, div_y - 12 - th)
         canvas.restoreState()
 
     elif has_image and not is_split:
-        canvas.saveState()
         try:
-            canvas.drawImage(img_path, 0, 0, width=page_width, height=page_height, preserveAspectRatio=False, mask='auto')
-        except:
+            draw_image_cover(canvas, img_path, 0, 0, page_width, page_height)
+        except Exception:
+            canvas.saveState()
             canvas.setFillColor(Color(0.10, 0.09, 0.09))
             canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+            canvas.restoreState()
+        canvas.saveState()
         canvas.setFillColor(Color(0, 0, 0, alpha=0.68))
         canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
         canvas.restoreState()
-        draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color="#d4af37")
+        draw_chapter_header(canvas, f"CapÃ­tulo {cap_num}", cap_title, subtitle_color="#d4af37")
     else:
         canvas.saveState()
         canvas.setFillColor(Color(0.10, 0.09, 0.09))
         canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
         canvas.restoreState()
-        draw_chapter_header(canvas, f"Capítulo {cap_num}", cap_title, subtitle_color="#d4af37")
+        draw_chapter_header(canvas, f"CapÃ­tulo {cap_num}", cap_title, subtitle_color="#d4af37")
 
     draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
 
 def draw_bg_fechamento(canvas, doc):
     draw_page_gradient(canvas, "#0f172a", "#172554")
     conteudo = getattr(doc, "conteudo", None)
-    titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável") if conteudo else "A Verdade Inabalável"
+    titulo_citacao = conteudo.get("titulo_citacao", "A Verdade InabalÃ¡vel") if conteudo else "A Verdade InabalÃ¡vel"
     draw_chapter_header(canvas, titulo_citacao, "", subtitle_color="#bfdbfe")
     draw_page_number(canvas, canvas.getPageNumber(), get_total_pages(doc))
 
@@ -696,7 +836,291 @@ def draw_bg_plano(canvas, doc):
     canvas.circle(cx, cy, 3, stroke=1, fill=0)
     canvas.restoreState()
 
-# --- Construção Principal do Story do Documento ---
+def draw_bg_oferta(canvas, doc):
+    """Pagina final exclusiva: CTA + cupom SABEDORIA30 + link clicavel."""
+    page_width  = 595.27
+    page_height = 841.89
+
+    # 1. Fundo escuro elegante
+    canvas.saveState()
+    canvas.setFillColorRGB(0.10, 0.09, 0.09)
+    canvas.rect(0, 0, page_width, page_height, fill=1, stroke=0)
+    canvas.restoreState()
+
+    # 2. Moldura dupla dourada (igual a capa)
+    m_out = 24
+    canvas.saveState()
+    canvas.setStrokeColor(get_color("#d97706"))
+    canvas.setLineWidth(1.5)
+    canvas.rect(m_out, m_out, page_width - 2 * m_out, page_height - 2 * m_out)
+    m_in = 30
+    canvas.setStrokeColor(get_color("#fbbf24"))
+    canvas.setLineWidth(0.6)
+    canvas.rect(m_in, m_in, page_width - 2 * m_in, page_height - 2 * m_in)
+    c_len = 12
+    for cx_c, cy_c, dx, dy in [
+        (m_in, m_in, 1, 1),
+        (page_width - m_in, m_in, -1, 1),
+        (m_in, page_height - m_in, 1, -1),
+        (page_width - m_in, page_height - m_in, -1, -1)
+    ]:
+        canvas.setLineWidth(1.2)
+        canvas.line(cx_c, cy_c, cx_c + dx * c_len, cy_c)
+        canvas.line(cx_c, cy_c, cx_c, cy_c + dy * c_len)
+    canvas.restoreState()
+
+    margin = 54
+    text_w = page_width - 2 * margin
+
+    # 3. Label superior em tracking largo - dourado
+    label_style = ParagraphStyle(
+        name="oferta_label",
+        fontName=font_map_e["sans-bold"],
+        fontSize=7.5,
+        leading=11,
+        textColor=get_color("#d4af37"),
+        alignment=TA_CENTER,
+        charSpace=3,
+    )
+    p_lbl = Paragraph("OFERTA EXCLUSIVA * LEITORES DO CODIGO DA SABEDORIA", label_style)
+    lw, lh = p_lbl.wrap(text_w, 20)
+    lbl_y = page_height - 55
+    p_lbl.drawOn(canvas, margin, lbl_y)
+
+    # Linha divisoria fina dourada
+    div_y = lbl_y - 7
+    draw_thin_divider(canvas, div_y, x_start=margin + 50, x_end=page_width - margin - 50,
+                      color="#d4af37", alpha=0.6, thickness=0.6)
+
+    # 4. Titulo principal em Playfair Display
+    titulo_style = ParagraphStyle(
+        name="oferta_titulo",
+        fontName=font_map_e["display-bold"],
+        fontSize=30,
+        leading=36,
+        textColor=get_color("#ffffff"),
+        alignment=TA_CENTER,
+    )
+    subtitulo_style = ParagraphStyle(
+        name="oferta_subtitulo",
+        fontName=font_map_e["sans-italic"],
+        fontSize=12,
+        leading=16,
+        textColor=get_color("#d4af37"),
+        alignment=TA_CENTER,
+    )
+    p_titulo = Paragraph("Codigo da Sabedoria", titulo_style)
+    tw, th = p_titulo.wrap(text_w, 60)
+    titulo_y = div_y - 14 - th
+    p_titulo.drawOn(canvas, margin, titulo_y)
+
+    p_sub = Paragraph("Metodo de Vendas + Copiloto de IA 24/7", subtitulo_style)
+    sw, sh = p_sub.wrap(text_w, 30)
+    sub_y = titulo_y - 8 - sh
+    p_sub.drawOn(canvas, margin, sub_y)
+
+    # 5. Card de beneficios
+    benef_x = margin
+    benef_h = 84
+    benef_y = sub_y - 16 - benef_h
+    benef_w = text_w
+
+    canvas.saveState()
+    canvas.setFillColor(get_color("rgba(255,255,255,0.05)"))
+    canvas.setStrokeColor(get_color("rgba(255,255,255,0.12)"))
+    canvas.setLineWidth(0.8)
+    canvas.roundRect(benef_x, benef_y, benef_w, benef_h, 10, stroke=1, fill=1)
+    canvas.restoreState()
+
+    benef_style = ParagraphStyle(
+        name="oferta_benef",
+        fontName=font_map_e["sans"],
+        fontSize=10.5,
+        leading=15,
+        textColor=get_color("#e8e4e0"),
+    )
+    beneficios_lista = [
+        "[ OK ]  Metodo de Vendas testado em mais de 100.000 vendas reais",
+        "[ OK ]  Copiloto de Vendas IA 24/7 - cria scripts e valida abordagens",
+        "[ OK ]  Garantia de 7 dias - devolucao de 100% sem burocracia",
+    ]
+    pad = 14
+    cy_b = benef_y + benef_h - pad
+    for b_text in beneficios_lista:
+        pb_item = Paragraph(b_text, benef_style)
+        bw_i, bh_i = pb_item.wrap(benef_w - 2 * pad, 20)
+        cy_b -= bh_i
+        pb_item.drawOn(canvas, benef_x + pad, cy_b)
+        cy_b -= 6
+
+    # 6. Caixa do cupom - dourada
+    cup_h = 118
+    cup_y = benef_y - 14 - cup_h
+    cup_x = margin
+    cup_w = text_w
+
+    draw_gradient_round_rect(canvas, cup_x, cup_y, cup_w, cup_h, 14, 14,
+                             "#1a1200", "#2d1f00", border_color="#d4af37")
+    canvas.saveState()
+    canvas.setStrokeColor(get_color("#fbbf24"))
+    canvas.setLineWidth(1.2)
+    canvas.roundRect(cup_x + 3, cup_y + 3, cup_w - 6, cup_h - 6, 12, stroke=1, fill=0)
+    canvas.restoreState()
+
+    # Codigo do cupom em destaque maximo
+    cupom_code_style = ParagraphStyle(
+        name="cupom_code",
+        fontName=font_map["display-bold"],
+        fontSize=24,
+        leading=28,
+        textColor=get_color("#fbbf24"),
+        alignment=TA_CENTER,
+        charSpace=5,
+    )
+    p_code = Paragraph("SABEDORIA30", cupom_code_style)
+    cw_c, ch_c = p_code.wrap(cup_w - 20, 40)
+    code_y = cup_y + cup_h - 16 - ch_c
+    p_code.drawOn(canvas, cup_x + 10, code_y)
+
+    # Sub-label do cupom
+    cupom_sublabel_style = ParagraphStyle(
+        name="cupom_sublabel",
+        fontName=font_map_e["sans-bold"],
+        fontSize=7,
+        leading=10,
+        textColor=get_color("#d4af37"),
+        alignment=TA_CENTER,
+        charSpace=2,
+    )
+    p_sublabel = Paragraph("CUPOM DE DESCONTO EXCLUSIVO - 30% OFF", cupom_sublabel_style)
+    slw, slh = p_sublabel.wrap(cup_w - 20, 15)
+    p_sublabel.drawOn(canvas, cup_x + 10, code_y - 4 - slh)
+
+    # Linha separadora dentro do card
+    sep_y = code_y - 4 - slh - 6
+    draw_thin_divider(canvas, sep_y,
+                      x_start=cup_x + 20, x_end=cup_x + cup_w - 20,
+                      color="#d4af37", alpha=0.3, thickness=0.5)
+
+    # Texto descritivo do cupom
+    cupom_desc_style = ParagraphStyle(
+        name="cupom_desc",
+        fontName=font_map_e["sans"],
+        fontSize=9,
+        leading=13,
+        textColor=get_color("#e8d5a0"),
+        alignment=TA_CENTER,
+    )
+    desc_cupom = ("Este cupom concede 30% de desconto — exclusivo para voce que baixa "
+                  "o CODIGO DA SABEDORIA * EDICAO SEMANAL. "
+                  "Um beneficio para quem realmente quer crescer e evoluir "
+                  "seguindo uma metodologia comprovada.")
+    p_desc_cup = Paragraph(desc_cupom, cupom_desc_style)
+    dw_c, dh_c = p_desc_cup.wrap(cup_w - 30, 60)
+    p_desc_cup.drawOn(canvas, cup_x + 15, cup_y + 10)
+
+    # 7. Secao de preco
+    preco_block_y = cup_y - 12
+    preco_riscado_style = ParagraphStyle(
+        name="preco_riscado",
+        fontName=font_map_e["sans"],
+        fontSize=10,
+        leading=13,
+        textColor=get_color("rgba(255,255,255,0.45)"),
+        alignment=TA_CENTER,
+    )
+    preco_style = ParagraphStyle(
+        name="preco_atual",
+        fontName=font_map["display-bold"],
+        fontSize=30,
+        leading=35,
+        textColor=get_color("#ffffff"),
+        alignment=TA_CENTER,
+    )
+    desconto_style = ParagraphStyle(
+        name="desconto_badge",
+        fontName=font_map["sans-bold"],
+        fontSize=10,
+        leading=13,
+        textColor=get_color("#d4af37"),
+        alignment=TA_CENTER,
+    )
+
+    p_riscado = Paragraph("De R$ 299,00 por apenas:", preco_riscado_style)
+    rw_p, rh_p = p_riscado.wrap(text_w, 20)
+    p_riscado.drawOn(canvas, margin, preco_block_y - rh_p)
+
+    p_preco = Paragraph("R$ 79,90", preco_style)
+    pw_p, ph_p = p_preco.wrap(text_w, 45)
+    preco_actual_y = preco_block_y - rh_p - 4 - ph_p
+    p_preco.drawOn(canvas, margin, preco_actual_y)
+
+    p_desconto = Paragraph("ECONOMIA DE R$ 219,10 - 73% OFF", desconto_style)
+    dw_p, dh_p = p_desconto.wrap(text_w, 20)
+    desconto_final_y = preco_actual_y - 4 - dh_p
+    p_desconto.drawOn(canvas, margin, desconto_final_y)
+
+    # 8. Botao de CTA clicavel
+    btn_margin_h = 50
+    btn_x = margin + btn_margin_h
+    btn_w = text_w - 2 * btn_margin_h
+    btn_h = 44
+    btn_y = desconto_final_y - 16 - btn_h
+
+    draw_gradient_round_rect(canvas, btn_x, btn_y, btn_w, btn_h, 10, 10,
+                             "#d97706", "#92400e", border_color="#fbbf24")
+
+    btn_style = ParagraphStyle(
+        name="btn_text",
+        fontName=font_map["sans-bold"],
+        fontSize=13,
+        leading=16,
+        textColor=get_color("#ffffff"),
+        alignment=TA_CENTER,
+    )
+    p_btn = Paragraph("GARANTIR MEU ACESSO AGORA", btn_style)
+    bw_btn, bh_btn = p_btn.wrap(btn_w - 20, btn_h)
+    btn_text_y = btn_y + (btn_h - bh_btn) / 2
+    p_btn.drawOn(canvas, btn_x + 10, btn_text_y)
+
+    # Link clicavel na area do botao
+    canvas.linkURL(
+        "https://codigodasabedoria.onrender.com",
+        (btn_x, btn_y, btn_x + btn_w, btn_y + btn_h),
+        relative=0
+    )
+
+    # URL visivel abaixo do botao
+    url_style = ParagraphStyle(
+        name="url_label",
+        fontName=font_map_e["sans"],
+        fontSize=8,
+        leading=11,
+        textColor=get_color("rgba(255,255,255,0.35)"),
+        alignment=TA_CENTER,
+    )
+    p_url = Paragraph("codigodasabedoria.onrender.com", url_style)
+    uw, uh = p_url.wrap(text_w, 15)
+    p_url.drawOn(canvas, margin, btn_y - 6 - uh)
+
+    # 9. Rodape com selos de confianca
+    selos_y = btn_y - 6 - uh - 14
+    selos_style = ParagraphStyle(
+        name="selos",
+        fontName=font_map_e["sans"],
+        fontSize=8.5,
+        leading=12,
+        textColor=get_color("rgba(255,255,255,0.40)"),
+        alignment=TA_CENTER,
+    )
+    p_selos = Paragraph(
+        "7 Dias de Garantia Total   *   Pagamento 100% Seguro   *   Acesso Imediato no E-mail",
+        selos_style
+    )
+    sw2, sh2 = p_selos.wrap(text_w, 20)
+    p_selos.drawOn(canvas, margin, selos_y - sh2)
+
+# --- ConstruÃ§Ã£o Principal do Story do Documento ---
 
 def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
     # Margens do Documento via BaseDocTemplate
@@ -719,103 +1143,111 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         PageTemplate(id='Capa', frames=frame, onPage=draw_bg_capa),
         PageTemplate(id='Bento', frames=frame, onPage=draw_bg_bento),
         PageTemplate(id='Fechamento', frames=frame, onPage=draw_bg_fechamento),
-        PageTemplate(id='PlanoAcao', frames=frame, onPage=draw_bg_plano)
+        PageTemplate(id='PlanoAcao', frames=frame, onPage=draw_bg_plano),
+        PageTemplate(id='Oferta', frames=frame, onPage=draw_bg_oferta),
     ]
     
     caps = conteudo.get("capitulos", []) if conteudo else []
     for i in range(len(caps) if len(caps) > 0 else 5):
-        # A magia de criar uma função lambda que "prende" o valor de idx no momento
+        # A magia de criar uma funÃ§Ã£o lambda que "prende" o valor de idx no momento
         templates.append(
             PageTemplate(id=f'Capitulo_{i}', frames=frame, onPage=lambda c, d, idx=i: draw_bg_capitulo(c, d, idx))
         )
         
-    # O primeiro template da lista é o template inicial do documento (Capa)
+    # O primeiro template da lista Ã© o template inicial do documento (Capa)
     doc.addPageTemplates(templates)
         
-    # Estilos de Texto do Fluxo (Aumentados para preencher elegantemente as páginas, como na Web)
+    # ── Estilos de Texto Editoriais ──
+    # Corpo principal: EB Garamond, generoso, bem respirado
     chapter_body_style = ParagraphStyle(
         name="ChapterBody",
-        fontName=font_map["sans"],
-        fontSize=14,
-        leading=23,
-        textColor=get_color("#f5f3ff"), # text-purple-50
+        fontName=font_map_e["sans"],          # EB Garamond Regular
+        fontSize=14.5,
+        leading=22,
+        textColor=get_color("#e8e4e0"),
         alignment=TA_JUSTIFY,
-        spaceAfter=24
+        spaceAfter=16,
+        firstLineIndent=0,
     )
     
+    # ItÃ¡lico dourado â€” citaÃ§Ãµes e passagens de destaque
     chapter_italic_style = ParagraphStyle(
         name="ChapterItalic",
-        fontName=font_map["sans-italic"],
-        fontSize=14,
-        leading=23,
-        textColor=get_color("#ddd6fe"), # text-purple-100
+        fontName=font_map_e["sans-italic"],  # EB Garamond Italic
+        fontSize=14.5,
+        leading=22,
+        textColor=get_color("#c9a84c"),
         alignment=TA_JUSTIFY,
-        spaceAfter=24
+        spaceAfter=16,
+        leftIndent=12,
+        rightIndent=12,
     )
     
-    # Estilo específico para a Página 5 (Capítulo 4) para comportar todos os parágrafos com elegância e sem transbordar
+    # Estilo para pÃ¡ginas densas (mais conteÃºdo)
     page5_body_style = ParagraphStyle(
         name="Page5Body",
         parent=chapter_body_style,
-        fontSize=12.5,
-        leading=19,
-        spaceAfter=14
+        fontSize=14,
+        leading=22,
+        spaceAfter=18
     )
     
-    # Bento Quote Box (Estilização Idêntica ao Web App)
+    # â”€â”€ Caixa de CitaÃ§Ã£o â€” estilo literÃ¡rio elegante â”€â”€
     quote_title_style = ParagraphStyle(
         name="QuoteTitle",
-        fontName=font_map["sans-bold"],
-        fontSize=13,
-        leading=16,
+        fontName=font_map_e["display-bold"],   # Playfair Display Bold
+        fontSize=18,
+        leading=24,
         textColor=get_color("#ffffff"),
         alignment=TA_CENTER,
-        spaceAfter=6
+        spaceAfter=10,
+        charSpace=1,
     )
     quote_text_style = ParagraphStyle(
         name="QuoteText",
-        fontName=font_map["sans-italic"],
-        fontSize=10,
-        leading=14,
-        textColor=get_color("#bfdbfe"), # text-blue-100
+        fontName=font_map_e["display-italic"],  # Playfair Display Italic
+        fontSize=15,
+        leading=23,
+        textColor=get_color("#d4c5a0"),
         alignment=TA_CENTER,
-        spaceAfter=10
+        spaceAfter=12,
     )
     bible_verse_style = ParagraphStyle(
         name="BibleVerse",
-        fontName=font_map["sans-bold"],
-        fontSize=10,
-        leading=13,
-        textColor=get_color("#38bdf8"), # text-blue-300 / sky-400
-        alignment=TA_CENTER
+        fontName=font_map_e["sans-bold"],       # EB Garamond Bold
+        fontSize=11,
+        leading=16,
+        textColor=get_color("#c9a84c"),
+        alignment=TA_CENTER,
+        charSpace=0.5,
     )
     
     story = []
 
-    # ==================== PÁGINA 1: CAPA COM IMAGEM ====================
-    # O template 'Capa' é o primeiro da lista, então já é aplicado na página 1
+    # ==================== PÃ GINA 1: CAPA COM IMAGEM ====================
+    # O template 'Capa' Ã© o primeiro da lista, entÃ£o jÃ¡ Ã© aplicado na pÃ¡gina 1
     story.append(NextPageTemplate('Bento'))
     story.append(PageBreak())
 
-    # ==================== PÁGINA 2: BENTO GRID ====================
-    # O Bento já está ativo. Adicionamos um Spacer e preparamos o Capitulo_0
-    # como o template da PRÓXIMA página antes de quebrar.
+    # ==================== PÃ GINA 2: BENTO GRID ====================
+    # O Bento jÃ¡ estÃ¡ ativo. Adicionamos um Spacer e preparamos o Capitulo_0
+    # como o template da PRÃ“XIMA pÃ¡gina antes de quebrar.
     story.append(Spacer(1, 10))
     story.append(NextPageTemplate('Capitulo_0'))  
     story.append(PageBreak())
 
     if conteudo:
-        # --- MODO DINÂMICO (GEMINI IA) ---
+        # --- MODO DINÃ‚MICO (GEMINI IA) ---
         capitulos = conteudo.get("capitulos", [])
         
-        # ==================== PÁGINAS DE CAPÍTULOS ====================
+        # ==================== PÃ GINAS DE CAPÃ TULOS ====================
         SPLIT_X = 258          # deve ser igual ao valor no canvas
         DOC_LEFT_MARGIN = 54   # leftMargin do doc
         # leftIndent dentro do story para alinhar texto ao painel direito
-        SPLIT_LEFT_INDENT = (SPLIT_X + 16) - DOC_LEFT_MARGIN  # ≈ 220 pt
+        SPLIT_LEFT_INDENT = (SPLIT_X + 16) - DOC_LEFT_MARGIN  # â‰ˆ 220 pt
 
         for i, cap in enumerate(capitulos):
-            # O template Capitulo_{i} já está ativo na página atual!
+            # O template Capitulo_{i} jÃ¡ estÃ¡ ativo na pÃ¡gina atual!
             
             img_path = cap.get("img_local")
             has_image = img_path and os.path.exists(str(img_path))
@@ -823,43 +1255,74 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             paragrafos = cap.get("paragrafos", [])
 
             if has_image and is_split:
-                # Layout A: texto deslocado para o painel direito
-                story.append(Spacer(1, 105))  # espaço abaixo do cabeçalho desenhado no canvas
+                # Layout A: texto deslocado para o painel direito (split com imagem)
+                story.append(Spacer(1, 95))
                 split_body = ParagraphStyle(
                     name=f"SplitBody_{i}",
-                    fontName=font_map["sans"],
-                    fontSize=11.5,
+                    fontName=font_map_e["sans"],          # EB Garamond Regular
+                    fontSize=12.5,
                     leading=18,
-                    textColor=get_color("#f5f3ff"),
+                    textColor=get_color("#e8e4e0"),
                     alignment=TA_JUSTIFY,
-                    spaceAfter=14,
-                    leftIndent=SPLIT_LEFT_INDENT,
+                    spaceAfter=12,
+                    leftIndent=0,
                     rightIndent=0
                 )
                 split_italic = ParagraphStyle(
                     name=f"SplitItalic_{i}",
                     parent=split_body,
-                    fontName=font_map["sans-italic"],
-                    textColor=get_color("#d4af37")
+                    fontName=font_map_e["sans-italic"],   # EB Garamond Italic
+                    textColor=get_color("#c9a84c"),
+                    leftIndent=6,
+                    rightIndent=6,
                 )
+                # Largura da coluna direita (do SPLIT_X ate a margem direita)
+                col_dir_w = doc.width - SPLIT_LEFT_INDENT
+                # Altura disponivel apos o Spacer(95) e o cabecalho do canvas (~100pt)
+                alt_disponivel = doc.height - 95 - 100
+                items_split = []
                 for p_idx, paragrafo in enumerate(paragrafos):
-                    story.append(Paragraph(paragrafo, split_italic if p_idx == 1 else split_body))
+                    items_split.append(Paragraph(paragrafo, split_italic if p_idx == 1 else split_body))
+                # KeepInFrame: conteudo nunca vaza para a proxima pagina
+                kif_split = KeepInFrame(col_dir_w, alt_disponivel, items_split, mode='truncate')
+                # Empurra o bloco para a coluna direita usando uma tabela de 2 colunas
+                tabela_split = Table(
+                    [[Spacer(SPLIT_LEFT_INDENT, 1), kif_split]],
+                    colWidths=[SPLIT_LEFT_INDENT, col_dir_w]
+                )
+                from reportlab.platypus import TableStyle as TS
+                tabela_split.setStyle(TS([
+                    ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 0),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+                    ('TOPPADDING', (0, 0), (-1, -1), 0),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+                ]))
+                story.append(tabela_split)
 
             else:
-                # Layout B (full bg) ou fallback: texto flui normalmente
-                story.append(Spacer(1, 140))
+                # Layout B (full bg) ou fallback: texto flui com muito espaco
+                story.append(Spacer(1, 120))
                 use_small = len(paragrafos) >= 4 or sum(len(p) for p in paragrafos) > 600
                 s_base = page5_body_style if use_small else chapter_body_style
                 s_italic = ParagraphStyle(
                     name=f"Italic_{i}",
                     parent=s_base,
-                    fontName=font_map["sans-italic"],
-                    textColor=get_color("#d4af37")
+                    fontName=font_map_e["sans-italic"],   # EB Garamond Italic
+                    textColor=get_color("#c9a84c"),
+                    leftIndent=12,
+                    rightIndent=12,
                 )
+                # Altura disponivel apos Spacer(120) e cabecalho do canvas (~100pt)
+                alt_full = doc.height - 120 - 100
+                items_full = []
                 for p_idx, paragrafo in enumerate(paragrafos):
-                    story.append(Paragraph(paragrafo, s_italic if p_idx == 1 else s_base))
+                    items_full.append(Paragraph(paragrafo, s_italic if p_idx == 1 else s_base))
+                # KeepInFrame: conteudo nunca vaza para a proxima pagina
+                story.append(KeepInFrame(doc.width, alt_full, items_full, mode='truncate'))
 
-            # Define o template para a PRÓXIMA página antes de quebrar
+
+            # Define o template para a PRÃ“XIMA pÃ¡gina antes de quebrar
             if i < len(capitulos) - 1:
                 story.append(NextPageTemplate(f'Capitulo_{i+1}'))
             else:
@@ -867,8 +1330,8 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
                 
             story.append(PageBreak())
             
-        # ==================== PÁGINA DE CITAÇÃO & FECHAMENTO ====================
-        # O template 'Fechamento' já está ativo.
+        # ==================== PÃ GINA DE CITAÃ‡ÃƒO & FECHAMENTO ====================
+        # O template 'Fechamento' jÃ¡ estÃ¡ ativo.
         story.append(Spacer(1, 100))
         
         fechamento_texto = conteudo.get("fechamento", "")
@@ -883,17 +1346,17 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             story.append(Paragraph(fechamento_texto, p_fechamento_style))
             story.append(Spacer(1, 10))
             
-        # --- Bento Quote Box (Citação de Destaque) ---
-        citacao_texto = conteudo.get("citacao_destaque", "A restauração genuína começa no coração.")
-        titulo_citacao = conteudo.get("titulo_citacao", "A Verdade Inabalável")
+        # --- Bento Quote Box (CitaÃ§Ã£o de Destaque) ---
+        citacao_texto = conteudo.get("citacao_destaque", "A restauraÃ§Ã£o genuÃ­na comeÃ§a no coraÃ§Ã£o.")
+        titulo_citacao = conteudo.get("titulo_citacao", "A Verdade InabalÃ¡vel")
         
-        verso_base = conteudo.get("verso_base", "Se o Senhor não edificar a casa, em vão trabalham os que a edificam.")
+        verso_base = conteudo.get("verso_base", "Se o Senhor nÃ£o edificar a casa, em vÃ£o trabalham os que a edificam.")
         ref_verso = conteudo.get("referencia_verso", "Salmos 127:1")
         
         card_content = [
             [Paragraph(titulo_citacao, quote_title_style)],
             [Paragraph(f'"{citacao_texto}"', quote_text_style)],
-            [Paragraph(f'"{verso_base}"<br/><font color="#ffffff" size="9"><b>— {ref_verso}</b></font>', bible_verse_style)]
+            [Paragraph(f'"{verso_base}"<br/><font color="#ffffff" size="9"><b>&mdash; {ref_verso}</b></font>', bible_verse_style)]
         ]
         
         reflection_table = Table(card_content, colWidths=[460])
@@ -911,7 +1374,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         story.append(reflection_table)
         story.append(PageBreak())
         
-        # ==================== PÁGINA DO PLANO DE AÇÃO ====================
+        # ==================== PÃGINA DO PLANO DE AÃ‡ÃƒO ====================
         story.append(Spacer(1, 20)) # Pequena margem superior
         
         # Inserir imagem do plano se houver
@@ -923,12 +1386,12 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
                 pass
         
         plano = conteudo.get("plano_acao", {})
-        plano_titulo = plano.get("titulo_secao", "Plano de Ação Diário")
-        plano_subtitulo = plano.get("subtitulo", "Aplique estes princípios na rotina para fortalecer os laços.")
+        plano_titulo = plano.get("titulo_secao", "Plano de AÃ§Ã£o DiÃ¡rio")
+        plano_subtitulo = plano.get("subtitulo", "Aplique estes princÃ­pios na rotina para fortalecer os laÃ§os.")
         
         plan_title_style = ParagraphStyle(
             name="PlanTitle",
-            fontName=font_map["display-bold"],
+            fontName=font_map_e["display-bold"],
             fontSize=24,
             leading=28,
             textColor=get_color("#ffffff"),
@@ -937,7 +1400,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         plan_subtitle_style = ParagraphStyle(
             name="PlanSubtitle",
-            fontName=font_map["sans"],
+            fontName=font_map_e["sans"],
             fontSize=11,
             leading=15,
             textColor=get_color("#d4af37"), # text-purple-200
@@ -948,10 +1411,10 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         story.append(Paragraph(plano_titulo, plan_title_style))
         story.append(Paragraph(plano_subtitulo, plan_subtitle_style))
         
-        # Estilos específicos para a tabela estilizada do plano de ação
+        # Estilos especÃ­ficos para a tabela estilizada do plano de aÃ§Ã£o
         item_title_style = ParagraphStyle(
             name="ItemTitle",
-            fontName=font_map["sans-bold"],
+            fontName=font_map_e["sans-bold"],
             fontSize=12,
             leading=15,
             textColor=get_color("#ffffff"),
@@ -959,7 +1422,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         item_desc_style = ParagraphStyle(
             name="ItemDesc",
-            fontName=font_map["sans"],
+            fontName=font_map_e["sans"],
             fontSize=9.5,
             leading=14,
             textColor=get_color("#a1a1aa"), # text-purple-100
@@ -985,7 +1448,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             
             badge_style = ParagraphStyle(
                 name=f"Badge_{num}",
-                fontName=font_map["sans-bold"],
+                fontName=font_map_e["sans-bold"],
                 fontSize=14,
                 leading=18,
                 textColor=get_color(text_color),
@@ -1007,7 +1470,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             # Fallback seguro
             badge_style_fallback = ParagraphStyle(
                 name="Badge_Fallback",
-                fontName=font_map["sans-bold"],
+                fontName=font_map_e["sans-bold"],
                 fontSize=14,
                 leading=18,
                 textColor=get_color("#3b82f6"),
@@ -1015,7 +1478,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
                 borderPadding=8,
                 alignment=TA_CENTER
             )
-            plan_rows.append([Paragraph("1", badge_style_fallback), [Paragraph("Ação Inicial", item_title_style), Paragraph("Comece a agir hoje.", item_desc_style)]])
+            plan_rows.append([Paragraph("1", badge_style_fallback), [Paragraph("Acao Inicial", item_title_style), Paragraph("Comece a agir hoje.", item_desc_style)]])
             
         plan_table = Table(plan_rows, colWidths=[46, 420])
         plan_table.setStyle(TableStyle([
@@ -1032,100 +1495,100 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         story.append(plan_table)
         story.append(Spacer(1, 35))
         
-        # Assinatura de Rodapé do Plano de Ação
+        # Assinatura de Rodape do Plano de Acao
         footer_style = ParagraphStyle(
             name="PlanFooter",
-            fontName=font_map["sans-bold"],
+            fontName=font_map_e["sans-bold"],
             fontSize=10,
             leading=12,
             textColor=get_color("#d4af37"),
             alignment=TA_CENTER,
             spaceBefore=15
         )
-        rodape_texto = conteudo.get("rodape", "PRODUZIDO COM ZELO, FÉ E PROPÓSITO.")
+        rodape_texto = conteudo.get("rodape", "PRODUZIDO COM ZELO, FE E PROPOSITO.")
         story.append(Paragraph(rodape_texto.upper(), footer_style))
         
     else:
-        # --- MODO ESTÁTICO (FALLBACK ORIGINAL) ---
-        # ==================== PÁGINA 2 (Capítulo 1) ====================
+        # --- MODO ESTATICO (FALLBACK ORIGINAL) ---
+        # ==================== PAGINA 2 (Capitulo 1) ====================
         story.append(Spacer(1, 140))
         story.append(Paragraph(
-            "Arthur olhou para o relógio: 23:45. A luz azulada do monitor era a única coisa iluminando o escritório. No andar de baixo, a casa estava em absoluto silêncio. Um silêncio que costumava significar paz, mas que agora parecia um abismo intransponível.",
+            "Arthur olhou para o relogio: 23:45. A luz azulada do monitor era a unica coisa iluminando o escritorio. No andar de baixo, a casa estava em absoluto silencio. Um silencio que costumava significar paz, mas que agora parecia um abismo intransponivel.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "Ele fechou o notebook, esfregando os olhos cansados. Caminhando pelo corredor, passou pelo quarto de Lucas. O adolescente estava isolado com seus fones de ouvido, perdido em um mundo virtual vibrante, completamente alheio a quem passava pela porta. No quarto principal, Helena já dormia, um livro caído sobre o peito, a respiração compassada marcando o fim de mais um dia exaustivo.",
+            "Ele fechou o notebook, esfregando os olhos cansados. Caminhando pelo corredor, passou pelo quarto de Lucas. O adolescente estava isolado com seus fones de ouvido, perdido em um mundo virtual vibrante, completamente alheio a quem passava pela porta. No quarto principal, Helena ja dormia, um livro caido sobre o peito, a respiracao compassada marcando o fim de mais um dia exaustivo.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "— Quando nos tornamos apenas colegas de quarto dividindo boletos? — pensou Arthur, cobrindo a esposa com sutileza e zelo, ajeitando o cobertor sobre seus ombros.",
+            "- Quando nos tornamos apenas colegas de quarto dividindo boletos? - pensou Arthur, cobrindo a esposa com sutileza e zelo, ajeitando o cobertor sobre seus ombros.",
             chapter_italic_style
         ))
         story.append(Paragraph(
-            "Eles tinham a casa que sempre sonharam, a estabilidade pela qual tanto lutaram, mas a sensação era de que haviam perdido a si mesmos no processo de conquistar o mundo lá fora.",
+            "Eles tinham a casa que sempre sonharam, a estabilidade pela qual tanto lutaram, mas a sensacao era de que haviam perdido a si mesmos no processo de conquistar o mundo la fora.",
             chapter_body_style
         ))
         story.append(NextPageTemplate('Capitulo_1'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA 3 (Capítulo 2) ====================
+        # ==================== PAGINA 3 (Capitulo 2) ====================
         story.append(Spacer(1, 140))
         story.append(Paragraph(
-            "Na manhã seguinte, a cozinha parecia uma estação de trem. \"Bons dias\" apressados e mecânicos, café engolido de pé e olhos grudados em telas luminosas de smartphones. Era o caos organizado da família moderna.",
+            "Na manha seguinte, a cozinha parecia uma estacao de trem. 'Bons dias' apressados e mecanicos, cafe engolido de pe e olhos grudados em telas luminosas de smartphones. Era o caos organizado da familia moderna.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "— Helena — Arthur chamou suavemente, segurando sua caneca de café com as duas mãos, interrompendo o fluxo automático da rotina. — Você se lembra da última vez que realmente conversamos? Não sobre as contas da casa, ou as notas do Lucas, mas... sobre nós?",
+            "- Helena - Arthur chamou suavemente, segurando sua caneca de cafe com as duas maos, interrompendo o fluxo automatico da rotina. - Voce se lembra da ultima vez que realmente conversamos? Nao sobre as contas da casa, ou as notas do Lucas, mas... sobre nos?",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "Helena parou, a torrada a meio caminho da boca. Ela olhou para Arthur. Realmente olhou para ele, prestando atenção em seus olhos, pela primeira vez em semanas. Os ombros dela cederam levemente sob o peso invisível que carregava.",
+            "Helena parou, a torrada a meio caminho da boca. Ela olhou para Arthur. Realmente olhou para ele, prestando atencao em seus olhos, pela primeira vez em semanas. Os ombros dela cederam levemente sob o peso invisivel que carregava.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "— Sinto que estamos no mesmo barco, Arthur, mas remando em direções opostas com toda a nossa força — ela admitiu, a voz ligeiramente trêmula. — Nós estamos provendo tudo o que é material para eles. Tudo, exceto nós mesmos.",
+            "- Sinto que estamos no mesmo barco, Arthur, mas remando em direcoes opostas com toda a nossa forca - ela admitiu, a voz ligeiramente tremula. - Nos estamos provendo tudo o que e material para eles. Tudo, exceto nos mesmos.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "Era a verdade dolorosa sendo exposta sob a luz do sol da manhã. O espelho da família \"perfeita\", tão bem polido para quem via de fora pelas redes sociais, estava rachado por dentro, pedindo socorro.",
+            "Era a verdade dolorosa sendo exposta sob a luz do sol da manha. O espelho da familia 'perfeita', tao bem polido para quem via de fora pelas redes sociais, estava rachado por dentro, pedindo socorro.",
             chapter_body_style
         ))
         story.append(NextPageTemplate('Capitulo_2'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA 4 (Capítulo 3) ====================
+        # ==================== PAGINA 4 (Capitulo 3) ====================
         story.append(Spacer(1, 140))
         story.append(Paragraph(
-            "Naquela mesma noite, em vez de se trancar no home office logo após o jantar, Arthur sentou-se no sofá da sala. Ele chamou Helena, segurando um livro antigo, de capa de couro levemente gasta pelas décadas.",
+            "Naquela mesma noite, em vez de se trancar no home office logo apos o jantar, Arthur sentou-se no sofa da sala. Ele chamou Helena, segurando um livro antigo, de capa de couro levemente gasta pelas decadas.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "— Encontrei isso hoje nas minhas coisas de infância — disse ele, passando os dedos sobre a capa. — Era do meu avô. Ele costumava me dizer que uma família é como uma grande tapeçaria. Se você usar apenas fios comuns e rotineiros — trabalho, busca por dinheiro, obrigações — o tecido eventualmente cede e rasga sob a pressão da vida.",
+            "- Encontrei isso hoje nas minhas coisas de infancia - disse ele, passando os dedos sobre a capa. - Era do meu avo. Ele costumava me dizer que uma familia e como uma grande tapecaria. Se voce usar apenas fios comuns e rotineiros - trabalho, busca por dinheiro, obrigacoes - o tecido eventualmente cede e rasga sob a pressao da vida.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "Ele abriu na primeira página, onde havia uma dedicatória escrita à mão. — Mas ele dizia que, se você tecer um \"Fio de Ouro\" por entre eles... a fé, a devoção a Deus, o perdão e a comunhão verdadeira... esse fio dourado fortalece a trama e mantém tudo unido, tornando o tecido inquebrável.",
+            "Ele abriu na primeira pagina, onde havia uma dedicatoria escrita a mao. - Mas ele dizia que, se voce tecer um 'Fio de Ouro' por entre eles... a fe, a devocao a Deus, o perdao e a comunhao verdadeira... esse fio dourado fortalece a trama e mantem tudo unido, tornando o tecido inquebravel.",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "Helena tocou a capa desgastada, os olhos marejados refletindo a luz fraca do abajur. — Temos usado fios muito frágeis e baratos, não é?",
+            "Helena tocou a capa desgastada, os olhos marejados refletindo a luz fraca do abajur. - Temos usado fios muito frageis e baratos, nao e?",
             chapter_body_style
         ))
         story.append(Paragraph(
-            "— Sim. Nós deixamos o Arquiteto e o Seu material de fora da nossa construção — respondeu Arthur, segurando firme a mão dela. — Mas ainda há tempo de corrigir a rota. Nós podemos começar a tecer novamente. Hoje.",
+            "- Sim. Nos deixamos o Arquiteto e o Seu material de fora da nossa construcao - respondeu Arthur, segurando firme a mao dela. - Mas ainda ha tempo de corrigir a rota. Nos podemos comecar a tecer novamente. Hoje.",
             chapter_body_style
         ))
         story.append(NextPageTemplate('Capitulo_3'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA 5 (Capítulo 4) ====================
+        # ==================== PAGINA 5 (Capitulo 4) ====================
         story.append(Spacer(1, 110))
         story.append(Paragraph(
-            "A mudança de rota não aconteceu como mágica em um passe de ilusionismo; ela foi intensamente intencional. E exigiu coragem para confrontar o desconforto.",
+            "A mudanca de rota nao aconteceu como magica em um passe de ilusionismo; ela foi intensamente intencional. E exigiu coragem para confrontar o desconforto.",
             page5_body_style
         ))
         story.append(Paragraph(
-            "— Pessoal, reunião de família na sala. Agora mesmo. — Arthur anunciou em uma sexta-feira à noite, logo após chegar do trabalho, caminhando até o corredor e desconectando o roteador de internet da tomada.",
+            "- Pessoal, reuniao de familia na sala. Agora mesmo. - Arthur anunciou em uma sexta-feira a noite, logo apos chegar do trabalho, caminhando ate o corredor e desconectando o roteador de internet da tomada.",
             page5_body_style
         ))
         story.append(Paragraph(
@@ -1133,29 +1596,29 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             page5_body_style
         ))
         story.append(Paragraph(
-            "— O que aconteceu? A internet caiu de vez no bairro? — Lucas cruzou os braços, frustrado com a interrupção de seu jogo.",
+            "- O que aconteceu? A internet caiu de vez no bairro? - Lucas cruzou os bracos, frustrado com a interrupcao de seu jogo.",
             page5_body_style
         ))
         story.append(Paragraph(
-            "— Não, filho — Helena sorriu com doçura, sentando-se no tapete ao lado de Arthur. — Nós só estamos nos reconectando a uma rede muito melhor e infinitamente mais importante.",
+            "- Nao, filho - Helena sorriu com docura, sentando-se no tapete ao lado de Arthur. - Nos so estamos nos reconectando a uma rede muito melhor e infinitamente mais importante.",
             page5_body_style
         ))
         story.append(Paragraph(
-            "Eles conversaram. No começo, o silêncio sem as telas como escudo foi constrangedor, quase palpável. Mas então, a represa se rompeu. Compartilharam seus medos diários, sonhos engavetados e um longo e necessário pedido de desculpas. Arthur pediu perdão por sua ausência física e mental. Helena pediu perdão por sua impaciência contínua, fruto do esgotamento.",
+            "Eles conversaram. No comeco, o silencio sem as telas como escudo foi constrangedor, quase palpavel. Mas entao, a represa se rompeu. Compartilharam seus medos diarios, sonhos engavetados e um longo e necessario pedido de desculpas. Arthur pediu perdao por sua ausencia fisica e mental. Helena pediu perdao por sua impaciencia continua, fruto do esgotamento.",
             page5_body_style
         ))
         story.append(Paragraph(
-            "— Eu sentia falta de vocês assim... perto — Lucas murmurou, olhando para o chão, deixando sua grossa armadura de adolescente cair por um momento revelador.",
+            "- Eu sentia falta de voces assim... perto - Lucas murmurou, olhando para o chao, deixando sua grossa armadura de adolescente cair por um momento revelador.",
             page5_body_style
         ))
         story.append(Paragraph(
-            "Eles deram as mãos em roda. Fizeram uma oração simples, um pouco desajeitada pelo tempo sem prática, mas profundamente honesta. Ali, naquela sala de estar, o Fio de Ouro estava finalmente passando pelo buraco estreito da agulha.",
+            "Eles deram as maos em roda. Fizeram uma oracao simples, um pouco desajeitada pelo tempo sem pratica, mas profundamente honesta. Ali, naquela sala de estar, o Fio de Ouro estava finalmente passando pelo buraco estreito da agulha.",
             page5_body_style
         ))
         story.append(NextPageTemplate('Fechamento'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA 6 (Capítulo 5 & Caixa de Destaque) ====================
+        # ==================== PAGINA 6 (Capitulo 5 & Caixa de Destaque) ====================
         story.append(Spacer(1, 100))
         
         p5_style = ParagraphStyle(
@@ -1167,28 +1630,28 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         
         story.append(Paragraph(
-            "Meses depois daquela primeira noite sem internet, a casa respirava de outra forma. Não havia se tornado um ambiente imune a falhas — ainda havia discussões ocasionais pelo controle remoto e manhãs pontuadas pelo caos dos horários escolares — mas o silêncio ensurdecedor e gelado havia desaparecido para sempre.",
+            "Meses depois daquela primeira noite sem internet, a casa respirava de outra forma. Nao havia se tornado um ambiente imune a falhas - ainda havia discussoes ocasionais pelo controle remoto e manhas pontuadas pelo caos dos horarios escolares - mas o silencio ensurdecedor e gelado havia desaparecido para sempre.",
             p5_style
         ))
         story.append(Paragraph(
-            "Ele foi substituído por risadas espontâneas no corredor, jantares onde todos os celulares descansavam obrigatoriamente em uma pequena cesta de vime na cozinha, e um senso absoluto e profundo de pertencimento.",
+            "Ele foi substituido por risadas espontaneas no corredor, jantares onde todos os celulares descansavam obrigatoriamente em uma pequena cesta de vime na cozinha, e um senso absoluto e profundo de pertencimento.",
             p5_style
         ))
         story.append(Paragraph(
-            "Arthur e Helena aprenderam, na prática exaustiva do dia a dia, que a família não é um belo troféu de porcelana que se conquista e se coloca na estante da sala para impressionar as visitas e juntar poeira. A família é um jardim vivo que requer cuidado intencional, cultivo diário, rega paciente e um zelo contínuo para arrancar as ervas daninhas da indiferença.",
+            "Arthur e Helena aprenderam, na pratica exaustiva do dia a dia, que a familia nao e um belo trofeu de porcelana que se conquista e se coloca na estante da sala para impressionar as visitas e juntar poeira. A familia e um jardim vivo que requer cuidado intencional, cultivo diario, rega paciente e um zelo continuo para arrancar as ervas daninhas da indiferenca.",
             p5_style
         ))
         story.append(Paragraph(
-            "Encostado no batente da porta, Arthur observava Helena correndo atrás das crianças pelo quintal, sob a luz dourada reconfortante do fim de tarde. Seu peito transbordava de uma gratidão que o dinheiro de seu trabalho jamais poderia comprar.",
+            "Encostado no batente da porta, Arthur observava Helena correndo atras das criancas pelo quintal, sob a luz dourada reconfortante do fim de tarde. Seu peito transbordava de uma gratidao que o dinheiro de seu trabalho jamais poderia comprar.",
             p5_style
         ))
         
         story.append(Spacer(1, 10))
         
         card_content = [
-            [Paragraph("A Verdade Inabalável", quote_title_style)],
-            [Paragraph('"A restauração genuína de um lar começa no exato momento em que reconhecemos que nossas próprias forças são insuficientes. Quando o orgulho humano cede o seu lugar à humildade, e a distração da tela cede lugar ao foco no olhar do outro, Deus constrói fortalezas impenetráveis onde antes havia apenas ruínas."', quote_text_style)],
-            [Paragraph('"Se o Senhor não edificar a casa, em vão trabalham os que a edificam."<br/><font color="#ffffff" size="9"><b>— Salmos 127:1</b></font>', bible_verse_style)]
+            [Paragraph("A Verdade Inabalavel", quote_title_style)],
+            [Paragraph('"A restauracao genuina de um lar comeca no exato momento em que reconhecemos que nossas proprias forcas sao insuficientes. Quando o orgulho humano cede o seu lugar a humildade, e a distracao da tela cede lugar ao foco no olhar do outro, Deus constroi fortalezas impenetraveis onde antes havia apenas ruinas."', quote_text_style)],
+            [Paragraph('"Se o Senhor nao edificar a casa, em vao trabalham os que a edificam."<br/><font color="#ffffff" size="9"><b>- Salmos 127:1</b></font>', bible_verse_style)]
         ]
         
         reflection_table = Table(card_content, colWidths=[460])
@@ -1207,12 +1670,12 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         story.append(NextPageTemplate('PlanoAcao'))
         story.append(PageBreak())
         
-        # ==================== PÁGINA FINAL (Plano de Ação Diário) ====================
+        # ==================== PAGINA FINAL (Plano de Acao Diario) ====================
         story.append(Spacer(1, 20))
         
         plan_title_style = ParagraphStyle(
             name="PlanTitle",
-            fontName=font_map["display-bold"],
+            fontName=font_map_e["display-bold"],
             fontSize=24,
             leading=28,
             textColor=get_color("#ffffff"),
@@ -1221,7 +1684,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         plan_subtitle_style = ParagraphStyle(
             name="PlanSubtitle",
-            fontName=font_map["sans"],
+            fontName=font_map_e["sans"],
             fontSize=11,
             leading=15,
             textColor=get_color("#d4af37"),
@@ -1229,12 +1692,12 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
             spaceAfter=25
         )
         
-        story.append(Paragraph("Plano de Ação Diário", plan_title_style))
-        story.append(Paragraph("Aplique estes princípios na rotina para fortalecer os laços e proteger seu lar.", plan_subtitle_style))
+        story.append(Paragraph("Plano de Acao Diario", plan_title_style))
+        story.append(Paragraph("Aplique estes principios na rotina para fortalecer os lacos e proteger seu lar.", plan_subtitle_style))
         
         item_title_style = ParagraphStyle(
             name="ItemTitle",
-            fontName=font_map["sans-bold"],
+            fontName=font_map_e["sans-bold"],
             fontSize=12,
             leading=15,
             textColor=get_color("#ffffff"),
@@ -1242,7 +1705,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         item_desc_style = ParagraphStyle(
             name="ItemDesc",
-            fontName=font_map["sans"],
+            fontName=font_map_e["sans"],
             fontSize=9.5,
             leading=14,
             textColor=get_color("#a1a1aa"),
@@ -1250,17 +1713,17 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         
         items_data = [
-            ("1", "#3b82f6", "rgba(212, 175, 55, 0.1)", "Alinhamento (A Oração)", "Dedique 10 minutos hoje à noite para orarem juntos, de mãos dadas. Agradeçam e entreguem as preocupações e os desafios ao Criador."),
-            ("2", "#a855f7", "rgba(168, 85, 247, 0.2)", "A Mesa da Comunhão", "Faça pelo menos uma refeição diária com todos da casa. Regra inegociável: distrações digitais e telas devem permanecer desligadas."),
-            ("3", "#d946ef", "rgba(217, 70, 239, 0.2)", "Manual de Sabedoria", "Leia um capítulo do livro de Provérbios neste final de semana com sua família, e discutam a aplicação prática para a semana."),
-            ("4", "#6366f1", "rgba(99, 102, 241, 0.2)", "O Protocolo do Perdão", "Nunca permita que o sol se ponha ou vá dormir guardando ressentimentos. Tenha a coragem de pedir perdão hoje por alguma ofensa.")
+            ("1", "#3b82f6", "rgba(212, 175, 55, 0.1)", "Alinhamento (A Oracao)", "Dedique 10 minutos hoje a noite para orarem juntos, de maos dadas. Agradecam e entreguem as preocupacoes e os desafios ao Criador."),
+            ("2", "#a855f7", "rgba(168, 85, 247, 0.2)", "A Mesa da Comunhao", "Faca pelo menos uma refeicao diaria com todos da casa. Regra inegociavel: distracoes digitais e telas devem permanecer desligadas."),
+            ("3", "#d946ef", "rgba(217, 70, 239, 0.2)", "Manual de Sabedoria", "Leia um capitulo do livro de Proverbios neste final de semana com sua familia, e discutam a aplicacao pratica para a semana."),
+            ("4", "#6366f1", "rgba(99, 102, 241, 0.2)", "O Protocolo do Perdao", "Nunca permita que o sol se ponha ou va dormir guardando ressentimentos. Tenha a coragem de pedir perdao hoje por alguma ofensa.")
         ]
         
         plan_rows = []
         for num, text_color, bg_color, title, desc in items_data:
             badge_style = ParagraphStyle(
                 name=f"Badge_{num}",
-                fontName=font_map["sans-bold"],
+                fontName=font_map_e["sans-bold"],
                 fontSize=14,
                 leading=18,
                 textColor=get_color(text_color),
@@ -1294,16 +1757,21 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         
         footer_style = ParagraphStyle(
             name="PlanFooter",
-            fontName=font_map["sans-bold"],
+            fontName=font_map_e["sans-bold"],
             fontSize=10,
             leading=12,
             textColor=get_color("#d4af37"),
             alignment=TA_CENTER,
             spaceBefore=15
         )
-        story.append(Paragraph("PRODUZIDO COM ZELO, FÉ E PROPÓSITO.", footer_style))
+        story.append(Paragraph("PRODUZIDO COM ZELO, FE E PROPOSITO.", footer_style))
         
-    # --- Compilação final usando BaseDocTemplate (PageTemplates) ---
+    # ==================== PAGINA FINAL: OFERTA / CTA (sempre presente) ====================
+    story.append(NextPageTemplate('Oferta'))
+    story.append(PageBreak())
+    story.append(Spacer(1, 1))
+
+    # --- Compilacao final usando BaseDocTemplate (PageTemplates) ---
     doc.build(story)
 
 if __name__ == "__main__":
@@ -1313,7 +1781,7 @@ if __name__ == "__main__":
     
     nome_arquivo = "O_Fio_de_Ouro_Restauracao.pdf"
     
-    print(f"\033[94m[*] Iniciando a geração do PDF: '{nome_arquivo}'...\033[0m")
+    print(f"\033[94m[*] Iniciando a geracao do PDF: '{nome_arquivo}'...\033[0m")
     try:
         gerar_pdf(nome_arquivo)
         print("\n\033[1;92m[OK] PDF gerado com absoluto sucesso!\033[0m")

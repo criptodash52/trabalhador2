@@ -1,118 +1,116 @@
 {
-  "titulo_pdf": "A Bússola do Destino Financeiro: O Método para Escapar da Rotina Sem Fim",
-  "subtitulo_pdf": "O mapa prático para transformar seu suor em liberdade e propósito.",
+  "titulo_pdf": "A Bússola do Propósito: O Método Direto para Recalibrar sua Alma",
+  "subtitulo_pdf": "O plano prático e incisivo para reencontrar a fé e o sentido da vida.",
   "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
   "capa_cards": [
     {
-      "titulo": "Sua Vida no Loop?",
-      "texto": "Você se sente exausto, empurrando a vida com a barriga, e o destino financeiro parece sempre um passo à frente? Essa é a armadilha do automático.",
-      "pergunta_destaque": "A exaustão compensa?"
+      "titulo": "O Vazio Silencioso",
+      "texto": "Sua vida virou um roteiro automático, sem brilho, sem conexão. Você sente que flutua sem direção, buscando algo que preencha o eco da alma.",
+      "pergunta_destaque": "Você apenas existe?"
     },
     {
-      "titulo": "O Salto Quântico",
-      "texto": "Desvende o segredo dos ricos: ativos versus passivos. Faça o dinheiro trabalhar por você.",
-      "pergunta_destaque": null
+      "titulo": "O Mapa Interior",
+      "texto": "A sabedoria milenar dos Evangelhos aplicada em passos práticos para reacender sua chama interior."
     },
     {
-      "titulo": "Liberdade Real",
-      "texto": "Troque a corrida de ratos por um caminho de crescimento e abundância.",
-      "pergunta_destaque": null
+      "titulo": "Desperte Agora",
+      "texto": "Retome o controle da sua fé e do seu destino em tempo recorde."
     },
     {
-      "titulo": "Mude Sua Mente, Mude Seu Mundo",
-      "texto": "Sua mentalidade é seu maior ativo ou passivo.",
-      "citacao_destaque": "Não trabalhe pelo dinheiro. Código da Sabedoria."
+      "titulo": "Fé em Ação",
+      "texto": "A fé sem obras é morta. Ação define seu destino.",
+      "citacao_destaque": "Aquele que busca encontra. Código da Sabedoria."
     }
   ],
   "capitulos": [
     {
       "numero": 1,
-      "titulo": "A Ilusão da Segurança: Por Que Você Está Preso?",
+      "titulo": "O Piloto Automático da Alma: Por Que Você Perdeu o Rumo",
       "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
       "paragrafos": [
-        "Você acorda, trabalha, paga contas, e repete. De novo. E de novo. A ironia é que, enquanto busca segurança, está, na verdade, trocando sua vida por um contracheque. Sente o peso? Aquele cansaço que nem o fim de semana apaga? É o custo invisível de não saber onde o próximo passo te leva.",
-        "Como o 'Pai Rico' ensinava, a maioria das pessoas passa a vida inteira correndo na 'corrida de ratos', presas num ciclo de ganhar e gastar, sem questionar o jogo. Elas acreditam que um salário maior é a solução, mas é apenas uma esteira mais rápida. O Pai Pobre, por exemplo, trabalhava duro, mas nunca construiu patrimônio.",
-        "O primeiro passo é brutalmente simples: pare de olhar para o salário como seu único horizonte. Comece a mapear seus ativos (o que coloca dinheiro no seu bolso) e passivos (o que tira). Hoje, liste 3 coisas que consomem seu tempo e dinheiro sem retorno. A clareza é a lâmpada que queima a escuridão da inércia."
+        "Você acorda, repete, dorme. Dias se fundem em semanas, e a sensação de vazio se instala, sutil, mas corrosiva. Parece que o mundo gira, mas você está parado, observando a vida acontecer sem realmente vivê-la. O custo? Uma alma desconectada, um propósito esquecido, uma existência que grita por um sentido que teima em não aparecer. É a armadilha da inércia, disfarçada de normalidade.",
+        "Lembra-se da parábola do semeador nos Evangelhos? Muitos recebem a semente da fé e do propósito, mas a deixam cair no caminho, entre espinhos ou em solo pedregoso, onde não pode criar raízes. Assim como o solo precisa ser preparado, a mente precisa se abrir para a verdade. Jesus não esperou que a verdade viesse até Ele; Ele a revelou, convidando à ação imediata para quem quisesse ouvir e aplicar.",
+        "O primeiro passo é brutal: reconheça que você está no piloto automático. O que te prende? Medo, preguiça, a busca por aprovação? Olhe para sua rotina hoje e identifique um único hábito que você sabe que te afasta de sua conexão maior. Substitua-o por cinco minutos de silêncio e reflexão, buscando uma frase, um verso, uma pequena oração. Este é o seu primeiro ato de rebeldia consciente. Faça isso AGORA."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_8da927.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_1_fec966.jpg"
     },
     {
       "numero": 2,
-      "titulo": "O Mestre da Sua Mente: Como Quebrar o Ciclo",
+      "titulo": "Domando o Caos Interno: A Mente Que Resiste à Luz",
       "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
       "paragrafos": [
-        "Seu cérebro é uma máquina incrível de autopreservação, mas ele adora o sofrimento conhecido. Sabe aquela voz que diz 'deixa pra depois', 'é muito difícil', 'você não consegue'? Ela prefere a 'segurança' da sua exaustão diária à incerteza da mudança. É ridículo, mas é assim que a gente se sabota.",
-        "O 'Pai Rico' entendia que o controle não é sobre o dinheiro em si, mas sobre a mentalidade. Ele via pessoas com salários altos afundando em dívidas porque não controlavam seus impulsos e emoções. O dinheiro, para eles, era um vício, não uma ferramenta. A disciplina, ele dizia, vem de dentro.",
-        "Para dominar sua atenção, use a 'Regra dos 5 Minutos': quando a procrastinação bater, comprometa-se a fazer a tarefa por apenas 5 minutos. Na maioria das vezes, você continuará. Reprograme sua mente focando na 'educação financeira': dedique 30 minutos diários a aprender sobre investimentos, ativos ou empreendedorismo. Sem desculpas."
+        "É irritante, não é? Você decide mudar, mas a mente sabotadora insiste em te arrastar de volta para o conforto do conhecido, mesmo que esse 'conforto' seja o sofrimento disfarçado. A procrastinação vira uma arte, a distração um refúgio. Parece que há uma batalha constante dentro de você, e o inimigo mais astuto é a sua própria inércia mental, viciada em padrões que te afastam do seu poder.",
+        "Os Evangelhos nos mostram Jesus frequentemente se retirando para orar, buscando clareza e força antes de cada ação significativa. Ele demonstrava um domínio absoluto sobre Suas próprias distrações e impulsos, focando na Sua missão. Ele não permitia que as vozes externas ou as tentações internas O desviassem. É um exemplo de controle sobre o eu, uma mente que se alinha com o propósito maior, não com o desejo momentâneo.",
+        "Sua atenção é seu ativo mais valioso. Para dominá-la, use a técnica da 'Sentinela da Mente'. Ao invés de lutar contra pensamentos negativos ou dispersos, observe-os sem julgamento, como uma sentinela observa a paisagem. Então, com um 'não' firme, redirecione seu foco para uma frase de gratidão ou uma intenção clara para os próximos 30 minutos. Repita isso sempre que a mente tentar divagar. Treine sua atenção como se treina um músculo. Comece com 5 minutos pela manhã e 5 minutos antes de dormir."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_18bca8.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_2_495970.jpg"
     },
     {
       "numero": 3,
-      "titulo": "O Jogo do Dinheiro: Planeje, Antecipe, Vença",
+      "titulo": "O Alinhamento Divino: Transformando Intenção em Realidade Brutal",
       "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
       "paragrafos": [
-        "É frustrante ver o calendário virar, os anos passarem, e a sensação de estar 'chegando a lugar nenhum' persistir. A exaustão sem propósito é um preço alto demais para se pagar. Mas a boa notícia é que você não precisa de um mapa completo, apenas do próximo passo certo.",
-        "Uma das maiores lições do 'Pai Rico' era sobre antecipação. Ele não reagia ao mercado, ele o estudava para prever movimentos. Ele ensinava que 'os ricos compram ativos, os pobres e a classe média compram passivos pensando que são ativos'. O segredo não é ter mais dinheiro, é saber o que fazer com ele ANTES de tê-lo.",
-        "Para construir um plano à prova de desculpas, comece com a 'Regra do Ativo Semanal'. Escolha UMA ação concreta esta semana que construa um ativo (ex: pesquisar fundos imobiliários, ler um capítulo sobre investimentos, economizar X para um investimento). Transforme essa ação em um compromisso inegociável na sua agenda. Repita semanalmente. A consistência é o motor da transformação."
+        "A exaustão de trabalhar duro sem ver o horizonte, a sensação de que você está sempre correndo, mas nunca chega a lugar nenhum de verdade. É a frustração de ter boas intenções, mas ver seus dias escorrerem entre os dedos, repletos de atividades vazias que não alimentam a alma nem impulsionam seu propósito. Você se sente em um labirinto, e a cada passo, a saída parece mais distante.",
+        "As parábolas de Jesus sobre o construtor da torre ou o homem que semeia sem antes arar a terra são lições de planejamento e antecipação. Ele ensinava que a fé sem a preparação e a ação intencional é como construir sobre a areia. A sabedoria dos Evangelhos não é sobre esperar que as coisas aconteçam, mas sobre semear, cultivar e colher com propósito, entendendo que cada passo é parte de um plano maior.",
+        "Crie seu 'Plano de Ação Semanal de Propósito'. No domingo à noite, dedique 20 minutos para definir 3 prioridades claras para a semana, alinhadas ao seu propósito de reconexão. Não são tarefas, são intenções poderosas. Para cada uma, defina uma ação específica e não negociável para cada dia útil. Por exemplo: 'Segunda: 5 min de meditação focada na gratidão.' 'Terça: Ler um capítulo dos Evangelhos.' Coloque essas ações na sua agenda como compromissos inadiáveis. Este plano é à prova de desculpas, pois já está pré-definido."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_e84bd2.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_3_15969c.jpg"
     }
   ],
-  "citacao_destaque": "Os ricos não trabalham pelo dinheiro. Eles o fazem trabalhar para si.",
+  "citacao_destaque": "A fé, se não tiver obras, é morta em si mesma.",
   "titulo_citacao": "A Regra de Ouro",
-  "verso_base": "A mente que se abre a uma nova ideia jamais voltará ao seu tamanho original.",
-  "referencia_verso": "Albert Einstein",
+  "verso_base": "Nem todo aquele que me diz: Senhor, Senhor! entrará no reino dos céus, mas aquele que faz a vontade de meu Pai que está nos céus.",
+  "referencia_verso": "Evangelho de Mateus 7:21",
   "plano_acao": {
-    "titulo_secao": "O Protocolo da Liberdade Financeira: 6 Passos para Reverter o Jogo",
-    "prompt_imagem": "Cinematic dark moody photography of a person standing at a crossroads, looking at a glowing path with a financial chart overlay, 8k, hyperrealistic.",
-    "subtitulo": "Este é o seu guia intensivo para redefinir sua relação com o dinheiro, implementando hábitos que transformam passivos em ativos e exaustão em propósito.",
+    "titulo_secao": "O Protocolo da Conexão Essencial: 7 Dias para Resgatar sua Alma",
+    "prompt_imagem": "Cinematic dark moody photography of a lone pilgrim standing on a mountain path, illuminated by a divine light breaking through clouds, 8k, hyperrealistic",
+    "subtitulo": "Um guia prático e incisivo para ativar a sabedoria dos Evangelhos em sua rotina diária e manifestar seu propósito.",
     "passos": [
       {
         "numero": 1,
-        "titulo": "Passo 1: O Raio-X da Sua Realidade",
-        "descricao": "Crie uma planilha simples com toda sua renda e despesas (fixas e variáveis). Identifique os 'passivos camuflados' - aqueles gastos que drenam seu dinheiro sem valor real. Onde seu suor REALMENTE vai? Sem essa clareza, você segue no escuro."
+        "titulo": "O Despertar da Consciência",
+        "descricao": "Pela manhã, antes de qualquer tela, dedique 5 minutos ao silêncio. Repita a frase: 'Minha vida tem propósito e eu busco a conexão divina'. Medite sobre o que essa frase significa para você HOJE. Inspire-se em Mateus 6:33: 'Buscai primeiro o Reino de Deus e a Sua justiça, e todas estas coisas vos serão acrescentadas'."
       },
       {
         "numero": 2,
-        "titulo": "Passo 2: Ative a Mente do 'Pai Rico'",
-        "descricao": "Dedique 30 minutos a consumir conteúdo de educação financeira (livro, podcast, artigo). Ao invés de reagir, comece a questionar: 'Se eu fosse o Pai Rico, como eu transformaria essa despesa em investimento?'. Comece a pensar como um investidor, não um consumidor."
+        "titulo": "A Leitura Propositiva",
+        "descricao": "Diariamente, leia um pequeno trecho dos Evangelhos (um parágrafo ou um capítulo curto). Escolha uma frase que ressoe e escreva como você pode aplicá-la em uma ação concreta nas próximas 24 horas. Lembre-se: não é estudo, é aplicação. A fé vem pelo ouvir, mas se manifesta pelo fazer."
       },
       {
         "numero": 3,
-        "titulo": "Passo 3: O Primeiro Ativo (Ação Imediata)",
-        "descricao": "Escolha UMA ação concreta esta semana que construa um ativo ou reduza um passivo significativo. Pode ser economizar X para seu fundo de emergência, pesquisar ações, ou iniciar um pequeno projeto lateral. Torne isso um compromisso inegociável na sua agenda."
+        "titulo": "O Serviço Silencioso",
+        "descricao": "Escolha uma pequena ação de serviço ou bondade, sem esperar reconhecimento. Pode ser um elogio sincero, ajudar alguém discretamente, ou simplesmente ouvir com atenção. Faça isso em segredo, conforme Mateus 6:3-4: 'Quando deres esmola, que a tua mão esquerda não saiba o que faz a tua direita'. O foco é na intenção, não no aplauso."
       },
       {
         "numero": 4,
-        "titulo": "Passo 4: O Mapa do Seu Destino Financeiro",
-        "descricao": "Defina 3 metas financeiras claras, mensuráveis e com prazos (ex: economizar X em 6 meses, quitar dívida Y em 1 ano, investir em Z em 3 meses). Escreva-as e visualize-se alcançando-as. Onde você quer que seu dinheiro te leve daqui a 1, 3 e 5 anos?"
+        "titulo": "A Gratidão Ativa",
+        "descricao": "Ao final do dia, liste três coisas específicas pelas quais você é grato, não apenas 'saúde', mas 'a conversa honesta com um amigo', 'a força para superar um desafio'. Agradeça a Deus por elas. A gratidão eleva sua vibração e conecta você ao fluxo da abundância divina, reconhecendo a provisão em tudo."
       },
       {
         "numero": 5,
-        "titulo": "Passo 5: Crie Seu Escudo de Segurança",
-        "descricao": "Comece HOJE a construir seu fundo de emergência. Mesmo que seja um valor simbólico, é seu primeiro ativo de segurança real. Ele te protege de imprevistos e te impede de voltar à corrida de ratos por desespero. Não subestime o poder de uma reserva."
+        "titulo": "A Vigília da Mente",
+        "descricao": "Durante o dia, sempre que se sentir perdido ou desconectado, pause por 30 segundos. Respire fundo e recite uma pequena oração ou um verso que te traga paz. Lembre-se das palavras de Jesus sobre a importância de vigiar e orar para não cair em tentação (Mateus 26:41). É um reset mental para o propósito."
       },
       {
         "numero": 6,
-        "titulo": "Passo 6: Bússola Ativa (Ajuste e Avance)",
-        "descricao": "No final da semana, revise o que funcionou e o que não funcionou. O que você precisa ajustar? A sabedoria está na adaptação contínua. Comprometa-se a manter pelo menos um novo hábito e repita o 'Passo 3' indefinidamente. A liberdade é um processo contínuo."
+        "titulo": "A Entrega e o Recomeço",
+        "descricao": "Antes de dormir, entregue suas preocupações e ansiedades a uma força maior. Perdoe-se por qualquer falha do dia e visualize o amanhã como uma nova oportunidade para agir com propósito e fé. 'Não vos inquieteis, pois, pelo dia de amanhã' (Mateus 6:34). Durma em paz, sabendo que cada dia é um recomeço."
       }
     ],
-    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_30588b.jpg"
+    "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\plano_acao_29a671.jpg"
   },
   "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
   "titulo_fechamento": "SABEDORIA EM AÇÃO",
-  "rodape": "Código da Sabedoria — Conhecimento que Transforma Destinos.",
+  "rodape": "Código da Sabedoria - Conhecimento que Transforma Destinos.",
   "landing_page": {
-    "promessa_clara": "Desperte seu gênio financeiro em 7 dias.",
+    "promessa_clara": "7 DIAS PARA REENCONTRAR SEU PROPÓSITO E FÉ.",
     "beneficios": [
-      "Identifique o que te prende na corrida de ratos.",
-      "Desenvolva uma mentalidade de investidor, não de consumidor.",
-      "Crie um plano de ação financeiro à prova de desculpas.",
-      "Comece a construir ativos que geram renda para você.",
-      "Transforme exaustão em propósito e liberdade real."
+      "Reacenda sua conexão com o divino e o sentido da vida.",
+      "Domine a mente sabotadora e mantenha o foco no que importa.",
+      "Transforme intenções em ações reais e veja resultados imediatos.",
+      "Aplique a sabedoria milenar dos Evangelhos no seu dia a dia.",
+      "Liberte-se do piloto automático e viva com propósito e paz."
     ]
   },
-  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_a1673d.jpg"
+  "img_local_capa": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capa_7ef16d.jpg"
 }
