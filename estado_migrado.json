@@ -1,18 +1,5 @@
 {
-    "index_palette_leads": 1,
-    "ultimo_carousel": 3,
-    "indice_arquitetura": 3,
-    "index_animacao_conquistador": 3,
-    "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Billie Ellish, Khaild- Lovely.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/alex-morgan-islamic-islamic-music-545510.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3"
-    ],
-    "indice_gancho_conquistador": 28,
-    "index_plataforma_conquistador": 1,
     "historico_estilos": [
-        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
@@ -36,22 +23,9 @@
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
+        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
     ],
-    "index_pilar_reels_leads": 2,
-    "historico_sentimentos": [
-        "curiosidade",
-        "plenitude",
-        "poder",
-        "sensualidade",
-        "ousadia",
-        "carinho",
-        "prazer",
-        "alegria",
-        "esperanca",
-        "desafio"
-    ],
-    "index_conquistador": 3,
     "historico_angulos": [
         "Malcolm X / Nelson Mandela",
         "Pai Rico, Pai Pobre (Robert Kiyosaki)",
@@ -60,17 +34,20 @@
         "A Arte da Guerra (Sun Tzu)",
         "Blink (Malcolm Gladwell)",
         "O Poder do Hábito (Charles Duhigg)",
-        "Provérbios de Salomão"
+        "Provérbios de Salomão",
+        "O Poder da Ação (Paulo Vieira)"
     ],
-    "fila_musicas_musicas-youtube": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Face in a Cloud - Nathan Moore.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Paradise - Anno Domini Beats.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
-    ],
+    "ultimos_temas": [],
+    "indice_cta": 19,
+    "index_pilar_reels_leads": 2,
+    "index_palette_conquistador": 1,
     "historico_midia": [
+        "34477575",
+        "34386837",
+        "9864562",
+        "7066742",
+        "35464492",
+        "38379327",
         "34129125",
         "unsplash_4uk7o7P8nVQ",
         "unsplash_qLwJ2qY2Ovc",
@@ -564,21 +541,43 @@
         "34841447",
         "9921183",
         "unsplash_mu-K2DBo3LU",
-        "unsplash_krwjLv3Z9Ng",
-        "unsplash_DP2v5RVK4zE",
-        "unsplash_Gc3mf2lLjQM",
-        "unsplash_cKFNznGYogA",
-        "unsplash_KSWd-58f_fg",
-        "unsplash_FtukaCInE5k",
-        "unsplash_koThfWrXzuc"
+        "unsplash_krwjLv3Z9Ng"
     ],
-    "data_sentimento_do_dia": "2026-08-02",
-    "tema_do_dia": "Pai Rico, Pai Pobre (Robert Kiyosaki)",
+    "historico_sentimentos": [
+        "curiosidade",
+        "plenitude",
+        "poder",
+        "sensualidade",
+        "ousadia",
+        "carinho",
+        "prazer",
+        "alegria",
+        "esperanca",
+        "desafio"
+    ],
     "index_tema_diario": 3,
-    "ultimos_temas": [],
-    "indice_cta": 18,
-    "indice_gancho": 18,
-    "index_palette_conquistador": 1,
+    "index_palette_leads": 1,
+    "indice_arquitetura": 4,
+    "fila_musicas_musicas-youtube": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Flute's Mourning - Aakash Gandhi.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Paradise - Anno Domini Beats.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Shining (feat. Leon Albertson & Adryon de León) - Leon Albertson feat. Adryon de León.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Fearless - The Soundlings (feat. Ruby Jay).mp3"
+    ],
+    "indice_gancho_conquistador": 29,
+    "tema_do_dia": "Pai Rico, Pai Pobre (Robert Kiyosaki)",
+    "index_plataforma_conquistador": 0,
+    "ultimo_carousel": 3,
+    "index_animacao_conquistador": 0,
     "sentimento_do_dia": "desafio",
-    "data_tema_do_dia": "2026-08-05"
+    "index_conquistador": 4,
+    "data_tema_do_dia": "2026-08-05",
+    "data_sentimento_do_dia": "2026-08-02",
+    "fila_musicas_musicas": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/alex-morgan-islamic-islamic-music-545510.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/good_b_music-ambient-piano-and-strings-10711.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3"
+    ],
+    "indice_gancho": 18
 }
