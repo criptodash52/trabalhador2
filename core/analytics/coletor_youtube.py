@@ -212,7 +212,7 @@ def rodar_coleta_youtube():
         except:
             continue
 
-        if agora - post_dt > timedelta(days=14):
+        if agora - post_dt > timedelta(days=60):
             continue
 
         logger.info(f"📥 Coletando YouTube: vídeo {video_id}...")

@@ -907,61 +907,132 @@ function renderPosts(tipo) {
         grid.innerHTML = '<div class="empty-state"><i data-lucide="inbox"></i><span>Nenhuma postagem neste filtro.</span></div>';
         lucide.createIcons(); return;
     }
-    grid.innerHTML = lista.map(p => {
+
+    let html = `<div class="post-row-container">`;
+
+    html += lista.map(p => {
         const m      = metricasIG[p.post_id] || {};
         const reach  = fmt(m.reach || 0);
         const likes  = fmt(m.likes || m.like_count || 0);
         const saves  = fmt(m.saved || 0);
         const shares = fmt(m.shares || 0);
-        const img    = m.media_url || '';
-        const tag    = (p.tipo||'post').replace('_',' ');
-        const isVid  = tag.includes('reel')||tag.includes('pexels');
+        
+        const tag      = (p.tipo||'post').replace('_',' ');
+        const badgeClass = tag.includes('reel') ? 'reels' : tag.includes('story') ? 'story' : tag.includes('carousel') ? 'carousel' : 'default';
 
-        let mediaClass = 'media-default';
-        if (tag.includes('reel')||tag.includes('pexels')) mediaClass = 'media-reels';
-        else if (tag.includes('story'))    mediaClass = 'media-story';
-        else if (tag.includes('carousel')) mediaClass = 'media-carousel';
+        // Extração e sanitização dos campos de DNA da postagem
+        const objetivoVal = p.objetivo || 'Engajamento';
+        const personaVal   = p.estilo_copy || p.estilo || 'Mente Lúcida';
+        const ganchoVal    = p.gancho_categoria || 'Identidade';
+        const tomVal       = p.tom_emocional || 'Reflexão';
+        const complexVal   = p.complexidade || 'Média';
+        const estruturaVal = p.estrutura_narrativa || 'Problema-Solução';
 
-        const legendaLimpa = (p.legenda||'Sem legenda.').replace(/</g,'&lt;');
-
-        // Elemento de mídia: vídeo para Reels, imagem para os demais
-        let mediaEl = '';
-        if (img) {
-            if (isVid) {
-                mediaEl = `<video src="${img}" preload="none" muted playsinline
-                    style="width:100%;height:100%;object-fit:cover;border-radius:0;"
-                    onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"></video>
-                    <div class="no-img-gradient" style="display:none"><i data-lucide="video"></i><span>Mídia Local</span><small>Vídeo da postagem</small></div>`;
-            } else {
-                mediaEl = `<img src="${img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="no-img-gradient" style="display:none"><i data-lucide="image"></i><span>Mídia Local</span><small>Imagem da postagem</small></div>`;
-            }
+        // Extração de mídias e recursos
+        let pexelsQueriesHtml = '';
+        if (p.pexels_queries && Array.isArray(p.pexels_queries)) {
+            pexelsQueriesHtml = p.pexels_queries.map((q, idx) => `<div><strong>Vídeo ${idx+1}:</strong> "${q}"</div>`).join('');
+        } else if (p.pexels_queries && typeof p.pexels_queries === 'string') {
+            pexelsQueriesHtml = `<div><strong>Vídeo:</strong> "${p.pexels_queries}"</div>`;
+        } else if (p.prompt_imagem) {
+            pexelsQueriesHtml = `<div><strong>Fundo IA:</strong> "${p.prompt_imagem}"</div>`;
         } else {
-            mediaEl = `<div class="no-img-gradient"><i data-lucide="${isVid?'video':'image'}"></i><span>Mídia Local</span><small>Vídeo/Imagem da postagem</small></div>`;
+            pexelsQueriesHtml = `<div><strong>Fundo:</strong> Automático / Biblioteca Local</div>`;
         }
 
+        const musicaVal = p.categoria_musica || 'Misteriosa / Ambiente';
+        const duracaoVal = p.duracao_video ? `${p.duracao_video}s` : '--';
+
+        // Formatação dos slides do post
+        let slidesHtml = '';
+        const slides = p.slides || p.frase || '';
+        if (Array.isArray(slides)) {
+            slidesHtml = slides.map((s, idx) => `
+                <div class="post-row-slide-item">
+                    <span class="post-row-slide-num">${idx+1}.</span>
+                    <span>${s.replace(/\\n/g, ' ')}</span>
+                </div>
+            `).join('');
+        } else if (typeof slides === 'string' && slides.trim()) {
+            slidesHtml = `
+                <div class="post-row-slide-item">
+                    <span class="post-row-slide-num">1.</span>
+                    <span>${slides}</span>
+                </div>
+            `;
+        } else {
+            slidesHtml = `<div>Nenhum slide registrado.</div>`;
+        }
+
+        const legendaLimpa = (p.legenda||'Sem legenda.').replace(/</g,'&lt;');
+        const legendaFormatada = formatarLegenda(legendaLimpa);
+
+        const permalink = m.permalink || '';
+
         return `
-        <article class="post-card" onclick="abrirModalPost('${p.post_id}')">
-            <div class="post-media ${mediaClass}">
-                <span class="post-tag">${tag}</span>
-                ${mediaEl}
+        <article class="post-row" onclick="abrirModalPost('${p.post_id}')">
+            <!-- Cabeçalho do Bloco -->
+            <div class="post-row-header">
+                <div class="post-row-title-wrap">
+                    <span class="post-row-badge ${badgeClass}">${tag}</span>
+                    <strong style="font-size:0.95rem;color:var(--text)">🏷️ ${p.tema||'espiritualidade'} ${p.subtema ? ` | ${p.subtema}` : ''}</strong>
+                </div>
+                <span class="post-row-date">📅 ${fmtDataCompleta(p.data)}</span>
             </div>
-            <div class="post-body">
-                ${p.frase_visual?`<div class="post-title">${p.frase_visual}</div>`:''}
-                <div class="post-caption">${legendaLimpa}</div>
-                <div class="post-foot">
-                    <div class="post-meta"><span>🏷️ ${p.tema||'espiritualidade'}</span><span>${fmtData(p.data)}</span></div>
-                    <div class="post-stats">
-                        <div class="pstat"><i data-lucide="eye"></i>${reach}</div>
-                        <div class="pstat"><i data-lucide="heart"></i>${likes}</div>
-                        <div class="pstat"><i data-lucide="bookmark"></i>${saves}</div>
-                        <div class="pstat"><i data-lucide="share-2"></i>${shares}</div>
+
+            <!-- Tags de DNA Estratégico -->
+            <div class="post-row-dna">
+                <div class="post-row-dna-chip" title="Objetivo da Postagem"><i data-lucide="target"></i> Objetivo: ${objetivoVal}</div>
+                <div class="post-row-dna-chip" title="Estilo de Copy / Persona"><i data-lucide="cpu"></i> Persona: ${personaVal.split('(')[0].trim()}</div>
+                <div class="post-row-dna-chip" title="Gatilho de Gancho"><i data-lucide="magnet"></i> Gancho: ${ganchoVal}</div>
+                <div class="post-row-dna-chip" title="Tom Emocional"><i data-lucide="theater"></i> Tom: ${tomVal}</div>
+                <div class="post-row-dna-chip" title="Estrutura Narrativa"><i data-lucide="align-left"></i> Estrutura: ${estruturaVal}</div>
+                <div class="post-row-dna-chip" title="Complexidade"><i data-lucide="bar-chart-2"></i> Nível: ${complexVal}</div>
+            </div>
+
+            <!-- Recursos de Mídia -->
+            <div class="post-row-media-box">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.25rem;">
+                    <span>⏱️ Duração: <strong>${duracaoVal}</strong></span>
+                    <span>🎵 Trilha sugerida: <strong>${musicaVal}</strong></span>
+                </div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.03); padding-top:0.4rem;">
+                    ${pexelsQueriesHtml}
+                </div>
+            </div>
+
+            <!-- Conteúdo Textual -->
+            <div class="post-row-body-text">
+                <div class="post-row-text-section">
+                    <h4>📝 Texto dos Slides / Vídeo</h4>
+                    <div class="post-row-slides-box">
+                        ${slidesHtml}
+                    </div>
+                </div>
+                <div class="post-row-text-section">
+                    <h4>💬 Legenda</h4>
+                    <div class="post-row-caption-box">
+                        ${legendaFormatada}
                     </div>
                 </div>
             </div>
-        </article>`;
+
+            <!-- Rodapé / Métricas -->
+            <div class="post-row-footer">
+                <div class="post-row-stats">
+                    <div class="post-row-stat-item"><i data-lucide="eye"></i> <span>Alcance: <strong>${reach}</strong></span></div>
+                    <div class="post-row-stat-item active-likes"><i data-lucide="heart"></i> <span>Curtidas: <strong>${likes}</strong></span></div>
+                    <div class="post-row-stat-item active-saves"><i data-lucide="bookmark"></i> <span>Saves: <strong>${saves}</strong></span></div>
+                    <div class="post-row-stat-item active-shares"><i data-lucide="share-2"></i> <span>Shares: <strong>${shares}</strong></span></div>
+                </div>
+                ${permalink ? `<a href="${permalink}" target="_blank" rel="noopener" class="post-row-link" onclick="event.stopPropagation();"><i data-lucide="external-link"></i> Ver no Instagram</a>` : ''}
+            </div>
+        </article>
+        `;
     }).join('');
+
+    html += `</div>`;
+    grid.innerHTML = html;
     lucide.createIcons();
 }
 
