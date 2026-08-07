@@ -88,6 +88,16 @@ GANCHOS_POR_CATEGORIA = {
         "Vale a pena perder sua saúde mental para provar algo aos outros?",
         "Por que você exige do parceiro a maturidade que você não pratica?",
     ],
+    "dilema": [
+        "A escolha que separa quem constrói o futuro de quem só assiste a vida passar...",
+        "No momento da crise, você busca um culpado ou assume o comando?",
+        "O dilema que todo homem enfrenta antes de mudar de patamar...",
+        "Você prefere a dor temporária da disciplina ou a dor vitalícia do arrependimento?",
+        "Aceitar o conforto medíocre hoje ou pagar o preço da grandeza amanhã?",
+        "O divisor de águas entre quem sonha e quem realmente executa...",
+        "Sua postura diante da derrota define o tamanho da sua vitória futura.",
+        "Você domina suas emoções ou é refém do seu estado de espírito?",
+    ],
 }
 
 # ─────────────────────────────────────────────────────────────────────

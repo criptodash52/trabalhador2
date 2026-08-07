@@ -140,7 +140,7 @@ def main():
             print(f"✨ Frase Gerada: \"{conteudo.get('frase')}\"")
             
         # Passo 2: Cria a mídia (imagem, sequência ou vídeo)
-        if args.type in ["pexels_story", "pexels_story_noite", "reels_conquistador", "reels_leads"]:
+        if args.type in ["pexels_story", "pexels_story_noite", "reels_conquistador", "reels_leads", "story_tarde"]:
             from core.media.pexels_story import gerar_pexels_story
             req_id = uuid.uuid4().hex
             _saida = f"pexels_story_{req_id}.mp4"
@@ -158,7 +158,8 @@ def main():
                         tema=tema_escolhido,
                         is_conquistador=(args.type == "reels_conquistador"),
                         is_reels_leads=(args.type == "reels_leads"),
-                        is_noite=(args.type == "pexels_story_noite")
+                        is_noite=(args.type == "pexels_story_noite"),
+                        is_story_tarde=(args.type == "story_tarde")
                     )
                 except Exception as e:
                     print(f"⚠️ [DRY-RUN] Erro ao gerar vídeo do Pexels Story: {e}")
@@ -174,7 +175,8 @@ def main():
                     tema=tema_escolhido,
                     is_conquistador=(args.type == "reels_conquistador"),
                     is_reels_leads=(args.type == "reels_leads"),
-                    is_noite=(args.type == "pexels_story_noite")
+                    is_noite=(args.type == "pexels_story_noite"),
+                    is_story_tarde=(args.type == "story_tarde")
                 )
         else:
             midia = criar_arte(args.type, conteudo, tema_escolhido)
@@ -222,8 +224,8 @@ def main():
                     tipo=args.type
                 )
                 
-        # Passo 3.5: Se for Story (estático), converte obrigatoriamente JPGs para MP4s com música
-        if args.type in ["story_tarde"]:
+        # Passo 3.5: Se for Story (estático), converte JPGs para MP4s (story_tarde agora é gerado direto em vídeo)
+        if args.type in []:
             from core.media.reels import gerar_video_story_individual, garantir_audio_reels
             print("🎵 Convertendo slides de Story para vídeo com música de fundo contínua...")
             midias_em_video = []

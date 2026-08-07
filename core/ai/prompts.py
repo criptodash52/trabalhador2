@@ -40,6 +40,58 @@ FONTES_SABEDORIA = [
     {
         "nome": "A Arte da Guerra (Sun Tzu)",
         "essencia": "O planejamento frio e a execução tática cirúrgica. Vencer antes mesmo de entrar no campo de batalha."
+    },
+    {
+        "nome": "Meditações (Marco Aurélio)",
+        "essencia": "O estoicismo dos imperadores. Imunidade emocional inabalável diante do caos, paz de espírito e domínio absoluto da mente."
+    },
+    {
+        "nome": "Hábitos Atômicos (James Clear)",
+        "essencia": "A ciência dos micro-avanços. Como melhorar 1% todos os dias cria um abismo intransponível entre você e a concorrência."
+    },
+    {
+        "nome": "Trabalho Focado (Cal Newport)",
+        "essencia": "O hiperfoco estratégico. Como produzir resultados extraordinários em um mundo viciado em distrações e superficialidade."
+    },
+    {
+        "nome": "Essencialismo (Greg McKeown)",
+        "essencia": "A busca disciplinada por menos. Eliminar o desnecessário para investir energia máxima apenas no que realmente move a agulha."
+    },
+    {
+        "nome": "Princípios (Ray Dalio)",
+        "essencia": "Tomada de decisão fria e hiper-realista. Aceitar a realidade como ela é e construir sistemas infalíveis de execução."
+    },
+    {
+        "nome": "Os Segredos da Mente Milionária (T. Harv Eker)",
+        "essencia": "A reprogramação dos arquivos mentais sobre riqueza. Como quebrar crenças limitantes sobre dinheiro e faturamento."
+    },
+    {
+        "nome": "O Conceito de Liberdade Existencial",
+        "essencia": "A verdadeira liberdade não consiste em dominar o mundo, acumular riquezas ou exercer poder sobre os outros, mas sim na capacidade de viver de forma autêntica. A busca por autonomia opõe-se ao controle e à ordem impostos a qualquer custo. Além disso, recusa-se tanto a submissão à autoridade quanto a imposição sobre o próximo: a liberdade individual só é plena quando respeita e permite que os outros também sejam livres."
+    },
+    {
+        "nome": "A Vontade Herdada e a Imortalidade",
+        "essencia": "A morte física não representa o fim definitivo de um indivíduo. O verdadeiro encerramento de uma vida ocorre apenas quando os ideais, sonhos e memórias de alguém são esquecidos. Enquanto os valores e propósitos de uma pessoa continuarem a inspirar e ser carregados por gerações futuras, sua essência permanece viva, atravessando o tempo."
+    },
+    {
+        "nome": "Os Sonhos e a Ambição como Sentido da Vida",
+        "essencia": "O sentido da existência é impulsionado pela busca por ideais, independentemente de quão inalcançáveis ou incompreendidos possam parecer para a sociedade. A ausência de ambição e de propósitos equivale a uma estagnação espiritual. É a constante busca por um sonho que confere significado e movimento à vida humana."
+    },
+    {
+        "nome": "A Relatividade da Justiça e a Crítica ao Autoritarismo",
+        "essencia": "A moralidade e a justiça não são conceitos absolutos nem binários. Frequentemente, a ideia de 'justiça' é moldada por aqueles que detêm o poder, sendo utilizada para mascarar o autoritarismo, a censura e a preservação de privilégios. Estruturas que buscam manter a ordem a qualquer custo correm o risco de cometer violência em nome do bem comum. A verdadeira ética exige o questionamento crítico das leis e o entendimento de que a visão sobre o que é 'certo' varia conforme a vivência de cada indivíduo."
+    },
+    {
+        "nome": "Preconceito e os Ciclos de Ódio",
+        "essencia": "O preconceito e a discriminação não são naturais, mas sim comportamentos aprendidos e perpetuados culturalmente. O trauma e a opressão do passado podem gerar um ressentimento que é transmitido até mesmo para gerações que nunca vivenciaram a violência diretamente. Esse ciclo destrutivo só pode ser quebrado por meio do diálogo, da empatia, da educação e da disposição para a convivência pacífica."
+    },
+    {
+        "nome": "Pertencimento e Laços Afetivos",
+        "essencia": "Os laços humanos mais profundos não são determinados exclusivamente pelo parentesco de sangue. O verdadeiro senso de família é construído pela escolha, pelo afeto sincero, pelo respeito mútuo e por propósitos compartilhados. A convivência e a lealdade transformam indivíduos em um porto seguro uns para os outros."
+    },
+    {
+        "nome": "Resumo Filosófico (Princípio da Existência)",
+        "essencia": "A existência ganha significado quando há coragem para buscar a própria liberdade, proteger os semelhantes, questionar estruturas opressivas e manter vivas as aspirações mais profundas, independentemente das adversidades do mundo."
     }
 ]
 
@@ -47,7 +99,10 @@ PERSONAS_MAPEADAS = {
     "O LÍDER CARISMÁTICO": "Tom de quem puxa a multidão. Fala sobre ambição, aproveitar a vida como se não houvesse amanhã, viver em êxtase e conquistar o topo. Eletrizante, apaixonado, contagiante.",
     "O VISIONÁRIO": "Comunicações que inspiram ação e grandeza. Estilo magnético de quem constrói o futuro, desafia o status quo e recusa o básico.",
     "O SÁBIO REI": "Traz verdades atemporais sobre riqueza, prosperidade e como governar a própria vida com majestade e domínio emocional inabalável.",
-    "A ESTRELA (O ÍMÃ)": "Foca em autoconfiança absurda, luz própria brilhante e atração magnética. Tem a certeza absoluta do próprio valor e convida os outros a brilharem também."
+    "A ESTRELA (O ÍMÃ)": "Foca em autoconfiança absurda, luz própria brilhante e atração magnética. Tem a certeza absoluta do próprio valor e convida os outros a brilharem também.",
+    "O ESTRATEGISTA FRIO": "Focado em paciência tática, observação silenciosa e planejamento sem alarde. Fala sobre vencer sem precisar fazer barulho.",
+    "O MESTRE ESTOICO": "Sereno e inabalável. Ensina imunidade emocional absoluta contra críticas, inveja ou julgamentos do mundo.",
+    "O EXECUTIVO DE ELITE": "Comunicação cirúrgica focada em alta performance, gestão impecável de tempo e eliminação total de distrações."
 }
 
 def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_gancho=0, indice_cta=0, indice_arquitetura=0, is_conquistador=False, sentimento_escolhido=None):

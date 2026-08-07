@@ -242,10 +242,16 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
     img = Image.fromarray(frame_array)
     w, h = img.size
 
-    # Detecta a palavra-chave entre aspas simples no texto (ex: 'SABEDORIA')
-    # Normaliza para maiúsculas para comparação
-    match_keyword = _re.search(r"'([^']+)'", texto)
-    keyword_destaque = match_keyword.group(1).upper().strip() if match_keyword else None
+    # Detecta a palavra-chave de destaque no texto.
+    # Aceita: aspas simples retas ('SABEDORIA'), tipográficas (\u2018SABEDORIA\u2019),
+    # aspas duplas ("SABEDORIA") e também SABEDORIA em maiúsculas sem aspas.
+    match_keyword = _re.search(r"['\u2018\u2019\"]([^'\u2018\u2019\"]+)['\u2018\u2019\"]", texto)
+    if match_keyword:
+        keyword_destaque = match_keyword.group(1).upper().strip()
+    else:
+        # Fallback: detecta a própria palavra SABEDORIA em maiúsculas mesmo sem aspas
+        match_sem_aspas = _re.search(r'\bSABEDORIA\b', texto.upper())
+        keyword_destaque = "SABEDORIA" if match_sem_aspas else None
 
     # Cria uma fonte maior para a palavra-chave (18% maior que a base do CTA)
     tamanho_cta_base = getattr(fonte_cta, 'size', None)
@@ -401,7 +407,7 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             espaco_w = draw.textbbox((0, 0), " ", font=fonte_cta)[2] - draw.textbbox((0, 0), " ", font=fonte_cta)[0]
             larguras_palavras = []
             for p in palavras:
-                p_clean = p.upper().replace("'", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '')
+                p_clean = p.upper().replace("'", "").replace("\u2018", "").replace("\u2019", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '')
                 f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
                 pw = draw.textbbox((0, 0), p, font=f_usar)[2] - draw.textbbox((0, 0), p, font=f_usar)[0]
                 larguras_palavras.append((pw, f_usar, p_clean))
@@ -462,7 +468,7 @@ def _aplicar_efeito_cinematico(frame_array, efeito):
         
     return np.array(img)
 
-def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=None, is_conquistador=False, is_reels_leads=False, is_noite=False):
+def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=None, is_conquistador=False, is_reels_leads=False, is_noite=False, is_story_tarde=False):
     from core.config.settings import PEXELS_API_KEY, PIXABAY_API_KEY
     import urllib.parse
     import random
@@ -539,12 +545,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     # Para reels_leads, calcula com base no número de slides para evitar repetição visual.
     # Para pexels_story (dia e noite): 1 único vídeo de fundo contínuo (sem cortes entre vídeos).
     # Assume ~5s por slide (leitura confortável) e ~20s por vídeo de fundo (estimativa conservadora).
-    if is_reels_leads:
-        num_slides_estimado = len(slides) if slides else 6
-        duracao_necessaria_reels = min(num_slides_estimado * 7, 180)  # max 3 min, 7s por slide
-        # 1 vídeo por slide: garante sincronização perfeita entre corte de vídeo e troca de texto
-        num_videos_necessarios = num_slides_estimado
-        logger.info(f"📊 [REELS_LEADS] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários → baixando {num_videos_necessarios} vídeos (1 por slide)")
+    if is_reels_leads or is_story_tarde:
+        # NOVO: 1 único vídeo de até 30 segundos (vídeo curto e de alto impacto)
+        num_slides_estimado = len(slides) if slides else 5
+        duracao_necessaria_reels = 30  # máx 30s
+        num_videos_necessarios = 1  # ← Único vídeo de fundo
+        logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides | 1 vídeo único de até 30s")
     elif (not is_noite) and (not is_conquistador):
         # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
@@ -594,6 +600,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         if len(temp_vids) >= num_videos_necessarios:
                             break
                         vid_id = str(hit.get("id", ""))
+                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos de até 30s
+                        if is_reels_leads or is_story_tarde:
+                            duracao_hit = hit.get("duration", 999)
+                            if duracao_hit > 30:
+                                continue
                         if not verificar_midia_recente(vid_id):
                             videos_dict = hit.get("videos", {})
                             link_download = None
@@ -641,6 +652,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         if len(temp_vids) >= num_videos_necessarios:
                             break
                         vid_id = str(v.get("id", ""))
+                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos de até 30s
+                        if is_reels_leads or is_story_tarde:
+                            duracao_v = v.get("duration", 999)
+                            if duracao_v > 30:
+                                continue
                         if not verificar_midia_recente(vid_id):
                             video_files = v.get("video_files", [])
                             arquivos_verticais = [f for f in video_files if f.get("height", 0) > f.get("width", 0)]
@@ -967,8 +983,8 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 frame = clip.get_frame(t)
                 frame = _aplicar_efeito_cinematico(frame, efeito_escolhido)
 
-                if idx == idx_cta and is_reels_leads:
-                    # Reels Leads: Texto em Branco Puro + palavra entre aspas em Dourado Brilhante
+                if idx == idx_cta and (is_reels_leads or is_story_tarde):
+                    # Reels Leads & Story Tarde: Texto em Branco Puro + palavra entre aspas em Dourado Brilhante
                     frame = _adicionar_texto_cta(
                         frame, texto_completo, fonte_cta,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
