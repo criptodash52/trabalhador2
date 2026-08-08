@@ -18,6 +18,7 @@ from core.publisher.youtube import postar_no_youtube
 def registrar_postagem(tipo, tema, post_id, estilo, frase_visual="", legenda="", gancho_categoria="", tipo_cta="", duracao_video=0, subtema="", objetivo="", categoria_imagem="", categoria_musica="", tom_emocional="", estrutura_narrativa="", complexidade="", video_id_yt=""):
     from core.analytics.db import get_db
     from datetime import datetime, timezone
+    from core.utils.contexto import obter_contexto, limpar_contexto
     
     if not post_id or post_id.startswith("DRY_RUN"):
         return
@@ -26,6 +27,19 @@ def registrar_postagem(tipo, tema, post_id, estilo, frase_visual="", legenda="",
     if not db:
         print("⚠️ Firebase não conectado, postagem não registrada no histórico.")
         return
+        
+    musica_real      = obter_contexto("musica_real",      default=categoria_musica)
+    plataforma_video = obter_contexto("plataforma_video", default="Biblioteca Local")
+    query_video      = obter_contexto("query_video",      default="")
+    sub_angulo       = obter_contexto("sub_angulo",       default="")
+    gancho_abertura  = obter_contexto("gancho_abertura",  default="")
+    arquitetura_nome = obter_contexto("arquitetura_nome", default="")
+    sentimento_post  = obter_contexto("sentimento_post",  default="")
+    estilo_sorteado  = obter_contexto("estilo_escolhido", default="")
+    analytics_ativo  = obter_contexto("analytics_ativo",  default=False)
+    analytics_vibe   = obter_contexto("analytics_vibe",   default="")
+    analytics_padroes= obter_contexto("analytics_padroes",default="")
+    limpar_contexto()
         
     novo_post = {
         "post_id": post_id,
@@ -45,7 +59,18 @@ def registrar_postagem(tipo, tema, post_id, estilo, frase_visual="", legenda="",
         "legenda": legenda,
         "gancho_categoria": gancho_categoria,
         "tipo_cta": tipo_cta,
-        "duracao_video": duracao_video
+        "duracao_video": duracao_video,
+        "musica_real": musica_real,
+        "plataforma_video": plataforma_video,
+        "query_video": query_video,
+        "sub_angulo": sub_angulo,
+        "gancho_abertura": gancho_abertura,
+        "arquitetura_nome": arquitetura_nome,
+        "sentimento_post": sentimento_post,
+        "estilo_sorteado": estilo_sorteado,
+        "analytics_ativo": analytics_ativo,
+        "analytics_vibe": analytics_vibe,
+        "analytics_padroes": analytics_padroes
     }
     
     try:
@@ -265,7 +290,7 @@ def main():
         frase_visual = ""
         if args.type == "carousel":
             frase_visual = conteudo.get("titulo", "")
-        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads"]:
+        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads", "story_tarde"]:
             slides = conteudo.get('slides', [])
             frase_visual = " | ".join(slides) if isinstance(slides, list) else str(slides)
         else:

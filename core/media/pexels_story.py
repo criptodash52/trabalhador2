@@ -382,58 +382,61 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         return np.array(img)
 
     # --- Modo Padrão (branco + destaque dourado na keyword) ---
-    # 1. Renderiza as linhas do Topo (Promessa de Valor) em Branco Puro
+    # 1. Renderiza as linhas do Topo (CTA direto) com destaque dourado na keyword entre aspas
+    #    Ex: "COMENTE 'SABEDORIA' QUE EU TE ENVIO NO DIRECT." → 'SABEDORIA' fica dourada
     if linhas_topo:
         for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
             x = (w - lw) // 2
-            # Sombra suave + contorno preto com texto Branco Puro
-            draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
-            draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
-                      stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+
+            # Verifica se esta linha contém a palavra-chave de destaque
+            linha_upper = linha.upper()
+            contem_keyword = keyword_destaque and keyword_destaque in linha_upper
+
+            if contem_keyword:
+                # Renderiza palavra por palavra: destaca a keyword em Dourado + fonte maior
+                palavras = linha.split(" ")
+                espaco_w = draw.textbbox((0, 0), " ", font=fonte_cta)[2] - draw.textbbox((0, 0), " ", font=fonte_cta)[0]
+                larguras_palavras = []
+                for p in palavras:
+                    p_clean = p.upper().replace("'", "").replace("\u2018", "").replace("\u2019", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '').strip()
+                    f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
+                    pw = draw.textbbox((0, 0), p, font=f_usar)[2] - draw.textbbox((0, 0), p, font=f_usar)[0]
+                    larguras_palavras.append((pw, f_usar, p_clean))
+
+                largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
+                cur_x = (w - largura_total_linha) // 2
+
+                for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
+                    if p_clean == keyword_destaque:
+                        cor_palavra = (255, 215, 0, int(255 * fade_alpha))
+                        bb_k = draw.textbbox((0, 0), p, font=f_usar)
+                        alt_k = bb_k[3] - bb_k[1]
+                        y_offset = (alt - alt_k) // 2
+                        draw.text((cur_x + 3, y + y_offset + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
+                        draw.text((cur_x, y + y_offset), p, font=f_usar, fill=cor_palavra,
+                                  stroke_width=3, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                    else:
+                        draw.text((cur_x + 3, y + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
+                        draw.text((cur_x, y), p, font=f_usar, fill=(255, 255, 255, int(255 * fade_alpha)),
+                                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                    cur_x += pw + espaco_w
+            else:
+                # Sombra suave + contorno preto com texto Branco Puro
+                draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+                draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
+                          stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
             y += alt + espaco_entre
         y += divisor_espaco - espaco_entre
 
-    # 2. Renderiza as linhas de Baixo (CTA/Desafio) com destaque dourado se contiver a palavra-chave
+    # 2. Renderiza as linhas de Baixo (Proposta de Valor) sempre em Branco Puro
+    #    Esta seção é descritiva e não deve ter destaque dourado (a keyword aqui é contextual, não o CTA)
     for linha, alt, lw in zip(linhas_baixo, alturas_baixo, larguras_baixo):
         x = (w - lw) // 2
-
-        # Verifica se esta linha contém a palavra-chave de destaque
-        linha_upper = linha.upper()
-        contem_keyword = keyword_destaque and keyword_destaque in linha_upper
-
-        if contem_keyword:
-            # Renderiza palavra por palavra: destaca a keyword em Dourado + fonte maior
-            palavras = linha.split(" ")
-            espaco_w = draw.textbbox((0, 0), " ", font=fonte_cta)[2] - draw.textbbox((0, 0), " ", font=fonte_cta)[0]
-            larguras_palavras = []
-            for p in palavras:
-                p_clean = p.upper().replace("'", "").replace("\u2018", "").replace("\u2019", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '')
-                f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
-                pw = draw.textbbox((0, 0), p, font=f_usar)[2] - draw.textbbox((0, 0), p, font=f_usar)[0]
-                larguras_palavras.append((pw, f_usar, p_clean))
-
-            largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
-            cur_x = (w - largura_total_linha) // 2
-
-            for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
-                if p_clean == keyword_destaque:
-                    cor_palavra = (255, 215, 0, int(255 * fade_alpha))
-                    bb_k = draw.textbbox((0, 0), p, font=f_usar)
-                    alt_k = bb_k[3] - bb_k[1]
-                    y_offset = (alt - alt_k) // 2
-                    draw.text((cur_x + 3, y + y_offset + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
-                    draw.text((cur_x, y + y_offset), p, font=f_usar, fill=cor_palavra,
-                              stroke_width=3, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-                else:
-                    draw.text((cur_x + 3, y + 3), p, font=f_usar, fill=(0, 0, 0, int(150 * fade_alpha)))
-                    draw.text((cur_x, y), p, font=f_usar, fill=(255, 255, 255, int(255 * fade_alpha)),
-                              stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-                cur_x += pw + espaco_w
-        else:
-            draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
-            draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
-                      stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+        draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
+        draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)),
+                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
         y += alt + espaco_entre
+
 
     # Sem escurecimento extra — o overlay da marca já cobre o vídeo inteiro
     img = Image.alpha_composite(img.convert("RGBA"), txt_layer).convert("RGB")
@@ -621,6 +624,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                                     fv.write(vid_resp.content)
                                 temp_vids.append(temp_vid)
                                 registrar_midia_usada(vid_id)
+                                
+                                try:
+                                    from core.utils.contexto import registrar_contexto
+                                    registrar_contexto("plataforma_video", "Pixabay")
+                                    registrar_contexto("query_video", urllib.parse.unquote(q_encoded))
+                                except Exception as context_err:
+                                    logger.debug(f"Erro ao registrar contexto Pixabay: {context_err}")
                 else:
                     logger.warning("⚠️ Nenhum vídeo encontrado no Pixabay para essa query.")
             else:
@@ -672,6 +682,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                                     fv.write(vid_resp.content)
                                 temp_vids.append(temp_vid)
                                 registrar_midia_usada(vid_id)
+                                
+                                try:
+                                    from core.utils.contexto import registrar_contexto
+                                    registrar_contexto("plataforma_video", "Pexels")
+                                    registrar_contexto("query_video", urllib.parse.unquote(q_encoded))
+                                except Exception as context_err:
+                                    logger.debug(f"Erro ao registrar contexto Pexels: {context_err}")
             else:
                 logger.warning(f"⚠️ Pexels retornou status {response.status_code}.")
         except Exception as e:
@@ -719,6 +736,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                             logger.info(f"📂 [EMERGÊNCIA] Usando vídeo local: {escolhido}")
                             temp_vids.append(escolhido)
                             vids_ja_usados.add(os.path.abspath(escolhido))
+                            
+                            try:
+                                from core.utils.contexto import registrar_contexto
+                                registrar_contexto("plataforma_video", "Biblioteca Local")
+                            except Exception as context_err:
+                                logger.debug(f"Erro ao registrar contexto Local: {context_err}")
                     if len(temp_vids) >= num_videos_necessarios:
                         break
 
@@ -985,8 +1008,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
                 if idx == idx_cta and (is_reels_leads or is_story_tarde):
                     # Reels Leads & Story Tarde: Texto em Branco Puro + palavra entre aspas em Dourado Brilhante
+                    # Normaliza \\n literal → \n real (segunda camada de segurança, caso o gemini.py não tenha normalizado)
+                    texto_cta_norm = texto_completo.replace("\\n", "\n")
                     frame = _adicionar_texto_cta(
-                        frame, texto_completo, fonte_cta,
+                        frame, texto_cta_norm, fonte_cta,
                         chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
                     )
                 elif idx == idx_cta:

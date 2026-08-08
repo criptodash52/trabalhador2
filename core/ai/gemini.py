@@ -112,9 +112,9 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
 
     # ── Truncador de segurança para imagens estáticas ──
     # A IA às vezes gera frases muito longas ignorando o limite pedido no prompt.
-    # Para posts de imagem única (story e story_tarde), limitamos a 20 palavras
+    # Para posts de imagem única (story), limitamos a 20 palavras
     # para garantir que o texto caiba no layout sem sobrepor o emblema ou a marca d'água.
-    if tipo in ["story", "story_tarde"] and "frase" in dados:
+    if tipo == "story" and "frase" in dados:
         frase_val = dados["frase"]
         if isinstance(frase_val, str):
             # Remove quebras de linha que a IA pode gerar
@@ -125,18 +125,31 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
                 dados["frase"] = " ".join(palavras[:20]) + "..."
             else:
                 dados["frase"] = frase_limpa
-        elif isinstance(frase_val, list):
-            # Para listas (story_tarde com 2 frases), limita cada item
-            frases_limpas = []
-            for f in frase_val:
-                f_limpa = str(f).replace("\n", " ").replace("\r", " ").strip()
-                palavras = f_limpa.split()
-                if len(palavras) > 20:
-                    logger.warning(f"⚠️ [IA] Frase do {tipo} (lista) com {len(palavras)} palavras. Truncando para 20.")
-                    frases_limpas.append(" ".join(palavras[:20]) + "...")
-                else:
-                    frases_limpas.append(f_limpa)
-            dados["frase"] = frases_limpas
+
+    # ── Truncador + normalizador para slides do story_tarde ──
+    # O story_tarde usa o campo 'slides' (lista), não 'frase'.
+    # Limita cada slide a 18 palavras e converte '\\n' literal (escape do JSON)
+    # para '\n' real (quebra de linha Python), garantindo que o CTA seja
+    # dividido em dois blocos visuais (topo e baixo) e que 'SABEDORIA' fique dourada.
+    if tipo == "story_tarde" and "slides" in dados:
+        slides_val = dados["slides"]
+        if isinstance(slides_val, list):
+            slides_normalizados = []
+            for s in slides_val:
+                # Converte \\n literal → \n real (vem assim do JSON do Gemini)
+                s_norm = str(s).replace("\\n", "\n").strip()
+                palavras = s_norm.split()
+                if len(palavras) > 18:
+                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 18.")
+                    # Preserva a quebra de linha se existir, truncando apenas a parte longa
+                    if "\n" in s_norm:
+                        partes = s_norm.split("\n", 1)
+                        palavras_topo = partes[0].strip().split()
+                        s_norm = " ".join(palavras_topo[:12]) + "\n" + partes[1].strip()
+                    else:
+                        s_norm = " ".join(palavras[:18]) + "..."
+                slides_normalizados.append(s_norm)
+            dados["slides"] = slides_normalizados
 
     return dados
 
@@ -242,6 +255,14 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
                 contexto_analytics += f"RESUMO DO CONTEXTO: {rec_cruzada.get('contexto_para_gemini', '')}\n\n"
                 
                 logger.info("✅ Super Contexto estratégico (IA) injetado no prompt.")
+                
+                try:
+                    from core.utils.contexto import registrar_contexto
+                    registrar_contexto("analytics_ativo", True)
+                    registrar_contexto("analytics_vibe", rec_cruzada.get("vibe_da_semana", ""))
+                    registrar_contexto("analytics_padroes", rec_cruzada.get("padroes_campeoes", ""))
+                except Exception as ctx_err:
+                    logger.debug(f"Erro ao registrar contexto analytics: {ctx_err}")
         except Exception as e:
             logger.warning(f"Erro ao ler contexto estratégico (recomendacoes.json): {e}")
 
@@ -303,6 +324,16 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
     logger.info(f"🎭 Estilo de abordagem sorteado: {estilo_escolhido.split(':')[0].upper()}")
     logger.info(f"🎣 Mecanismo Psicológico: {categoria_gancho.upper()} | Slide 1: \"{gancho}\"")
     logger.info(f"📐 Arquitetura narrativa: {arquitetura['nome']}")
+    
+    try:
+        from core.utils.contexto import registrar_contexto
+        registrar_contexto("sub_angulo", sub_angulo)
+        registrar_contexto("gancho_abertura", gancho)
+        registrar_contexto("arquitetura_nome", arquitetura.get('nome', ''))
+        registrar_contexto("sentimento_post", sentimento_escolhido or "")
+        registrar_contexto("estilo_escolhido", estilo_escolhido.split(':')[0].strip() if estilo_escolhido else "")
+    except Exception as ctx_err:
+        logger.debug(f"Erro ao registrar contexto estratégico: {ctx_err}")
 
     # Atualiza histórico de ângulos e estilos (mantém os últimos 25)
     hist_angulos.append(sub_angulo)
