@@ -757,8 +757,8 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         for fn in temp_vids:
             clip_candidatos.append(VideoFileClip(fn))
             
-        if (is_reels_leads or is_conquistador) and slides:
-            # ── SINCRONIZAÇÃO PERFEITA: cada vídeo dura exatamente o mesmo que seu slide de texto ──
+        if is_conquistador and slides:
+            # ── SINCRONIZAÇÃO PERFEITA: cada vídeo dura exatamente o mesmo que seu slide de texto (Apenas Conquistador) ──
             total_s = len(slides)
             _dur_gancho = 5.0
             _tempo_slide = (duracao_necessaria_reels - _dur_gancho) / max(1, total_s - 1) if total_s > 1 else duracao_necessaria_reels
