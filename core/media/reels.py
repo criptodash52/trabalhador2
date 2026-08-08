@@ -155,9 +155,9 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
     video_clip = None
     try:
         audio_clip = AudioFileClip(caminho_audio)
-        duracao_por_slide = 7.0
-        DURACAO_ULTIMO_SLIDE = 9.0  # Último slide (CTA) tem mais tempo para leitura
-        DURACAO_GANCHO_COMUM = 5.0  # Gancho do reels dura 5 segundos para leitura confortável
+        duracao_por_slide = 9.0
+        DURACAO_ULTIMO_SLIDE = 11.0  # Último slide (CTA) tem mais tempo para leitura
+        DURACAO_GANCHO_COMUM = 7.0  # Gancho do reels dura 7 segundos para leitura confortável
         n_slides = len(caminhos_imagens)
 
         # Dimensões da imagem (necessário antes de carregar o outro)

@@ -922,32 +922,32 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Exemplo: "A maioria das pessoas gasta energia no lugar errado e chama isso de produtividade."
 
         ► ETAPA 2 — FLUXO LÓGICO:
-        A → B → C → D → E (CTA). Cada slide deve levar naturalmente ao próximo.
+        A → B → C → D → E → F (CTA). Cada slide deve levar naturalmente ao próximo.
         Se um slide puder ser removido sem prejuízo, reescreva a sequência inteira.
 
         ► ETAPA 3 — INTENÇÃO NARRATIVA:
         Escolha UMA: REFLEXÃO | INSPIRAÇÃO | MUDANÇA DE PERSPECTIVA | ENSINO PRÁTICO | EXERCÍCIO.
 
-        ESTRUTURA DOS SLIDES (4 A 6 SLIDES):
+        ESTRUTURA DOS SLIDES (EXATAMENTE 6 SLIDES):
 
         SLIDE 1 — GANCHO (4 a 8 palavras):
         Para o scroll. Use contradição, quebra de crença, pergunta específica ou afirmação inesperada.
         NUNCA use clickbait vazio. O gancho deve estar conectado ao restante.
 
-        SLIDES INTERMEDIÁRIOS — IDENTIFICAÇÃO E DESENVOLVIMENTO:
+        SLIDES 2 a 4 — IDENTIFICAÇÃO E DESENVOLVIMENTO:
         Descreva situações concretas do dia a dia. A pessoa deve pensar: "Isso acontece comigo."
         Mostre o problema, por que ele acontece, o que causa, o que a pessoa perde ao continuar assim.
         Entregue valor real antes de pedir o comentário (ensine, revele, corrija, apresente nova perspectiva).
         PROIBIDO: 2 slides negativos consecutivos sem abrir horizonte de clareza.
 
-        PENÚLTIMO SLIDE — O MATERIAL COMO SOLUÇÃO NATURAL:
-        Apresente "{titulo_pdf_limpo}" como consequência lógica do que foi construído.
-        O material deve surgir como a resposta que a pessoa já estava procurando.
+        SLIDE 5 — O MATERIAL COMO SOLUÇÃO NATURAL:
+        Apresente o NOME EXATO E COMPLETO do material: "{titulo_pdf_limpo}" (sem alterar nenhuma palavra do título), seguido por uma frase mostrando como ele resolve o problema construído.
+        Exemplo: "{titulo_pdf_limpo}. O método direto para alinhar sua fé e seu verdadeiro sentido."
 
-        SLIDE FINAL — CTA (use \\n para separar as duas partes):
-        Parte 1 (ANTES de \\n): instrução direta e simples com 'SABEDORIA' em maiúsculas.
-        Parte 2 (DEPOIS de \\n): promessa positiva e concreta do que a pessoa vai receber.
-        O CTA deve ser a consequência natural da narrativa — não um aviso abrupto.
+        SLIDE 6 — CTA FINAL E PROMESSA (use \\n para separar as duas partes):
+        Parte 1 (ANTES de \\n): instrução direta EXIGINDO aspas simples ao redor da palavra chave. Exemplo: Comente 'SABEDORIA'. (O uso das aspas simples garante que a palavra fique dourada no vídeo final).
+        VARIE O VOCABULÁRIO: Em vez de usar a palavra "guia" repetidamente, utilize sinônimos como: "o acesso", "o material", "a coletânea", "o sistema", "o método".
+        Parte 2 (DEPOIS de \\n): promessa positiva e concreta do que a pessoa vai descobrir ou receber.
 
         PEXELS QUERY — PILAR OBRIGATÓRIO: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
@@ -959,15 +959,16 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - DEVE terminar com variação criativa do CTA 'SABEDORIA'. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido (o array 'slides' DEVE conter de 4 a 6 frases, a última com \\n):
+        Responda APENAS em formato JSON válido (o array 'slides' DEVE conter EXATAMENTE 6 frases, a última com \\n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
             "Gancho de atenção aqui.",
             "Identificação empática concreta.",
             "Desenvolvimento: por que isso acontece.",
-            "{titulo_pdf_limpo} — o caminho que muda isso.",
-            "Comente 'SABEDORIA' e receba no Direct. \\n O que você vai receber e como vai mudar algo concreto."
+            "Nova perspectiva sobre o problema.",
+            "{titulo_pdf_limpo}. O caminho que muda isso.",
+            "Comente 'SABEDORIA' e receba o material no Direct. \\n Descubra como viver com autenticidade, propósito e liberdade real."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",

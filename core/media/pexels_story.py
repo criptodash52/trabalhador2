@@ -860,15 +860,49 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
             # Narração de voz removida do pexels_story_noite — usa apenas música de fundo
             caminho_narracao_story = None
-            slide_start_times = []
-
-            tempo_slide_normal = 0.0
-            if not slide_start_times:
+            # Define o tempo de início exato de cada slide
+            slide_start_times = [0.0] * (total_slides + 1)
+            
+            if is_story_tarde or is_reels_leads:
+                # Formatos de conversão: O último slide (CTA) precisa de MAIS tempo para leitura
+                duracao_ultimo = 10.0  # Último slide fica muito mais tempo na tela
+                duracao_gancho = 6.0
+                
+                if total_slides > 2:
+                    tempo_slide_normal = (duracao - duracao_gancho - duracao_ultimo) / (total_slides - 2)
+                elif total_slides == 2:
+                    tempo_slide_normal = 0.0
+                    duracao_gancho = duracao - duracao_ultimo
+                else:
+                    duracao_gancho = duracao
+                    duracao_ultimo = 0.0
+                    
+                t_atual = 0.0
+                for i in range(total_slides):
+                    slide_start_times[i] = t_atual
+                    if i == 0:
+                        t_atual += duracao_gancho
+                    elif i == total_slides - 1:
+                        t_atual += duracao_ultimo
+                    else:
+                        t_atual += tempo_slide_normal
+            else:
+                # Formatos padrão (Story da manhã, noite, etc)
                 duracao_gancho = 5.0
                 if total_slides > 1:
                     tempo_slide_normal = (duracao - duracao_gancho) / (total_slides - 1)
                 else:
                     tempo_slide_normal = duracao
+                    
+                t_atual = 0.0
+                for i in range(total_slides):
+                    slide_start_times[i] = t_atual
+                    if i == 0:
+                        t_atual += duracao_gancho
+                    else:
+                        t_atual += tempo_slide_normal
+            
+            slide_start_times[total_slides] = duracao
 
             # Efeito visual de marca: GARANTE escurecimento e tom dark gold/amber para NUNCA ter vídeos claros estourados
             efeitos_marca = ["warm_amber", "dark_gold_neon", "vignette_dark"]
@@ -942,35 +976,16 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 return np.array(img.convert("RGB"))
 
             def make_frame(t):
-                if slide_start_times:
-                    # Busca dinamicamente qual slide corresponde ao tempo t exato da voz
-                    idx = 0
-                    for i in range(len(slide_start_times) - 1):
-                        if slide_start_times[i] <= t < slide_start_times[i + 1]:
-                            idx = i
-                            break
-                    else:
-                        idx = total_slides - 1
-                    t_slide = t - slide_start_times[idx]
-                    duracao_do_slide = slide_start_times[idx + 1] - slide_start_times[idx]
-                elif total_slides > 1:
-                    if (not is_noite) and (not is_conquistador) and (not is_reels_leads):
-                        idx = min(int(t / tempo_slide_normal), total_slides - 1) if tempo_slide_normal > 0 else 0
-                        t_slide = t - (idx * tempo_slide_normal)
-                        duracao_do_slide = tempo_slide_normal
-                    elif t < duracao_gancho:
-                        idx = 0
-                        t_slide = t
-                        duracao_do_slide = duracao_gancho
-                    else:
-                        t_restante = t - duracao_gancho
-                        idx = min(1 + int(t_restante / tempo_slide_normal), total_slides - 1)
-                        t_slide = t_restante - ((idx - 1) * tempo_slide_normal)
-                        duracao_do_slide = tempo_slide_normal
+                # Busca dinamicamente qual slide corresponde ao tempo t exato
+                idx = 0
+                for i in range(total_slides):
+                    if slide_start_times[i] <= t < slide_start_times[i + 1]:
+                        idx = i
+                        break
                 else:
-                    idx = 0
-                    t_slide = t
-                    duracao_do_slide = duracao
+                    idx = total_slides - 1
+                t_slide = t - slide_start_times[idx]
+                duracao_do_slide = slide_start_times[idx + 1] - slide_start_times[idx]
                     
                 texto_completo = slides[idx]
                 
