@@ -494,6 +494,7 @@ tr:last-child td { border-bottom:none; }
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
+    grid-column: 1 / -1;
 }
 .post-row {
     background: var(--bg-card);

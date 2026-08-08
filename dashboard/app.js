@@ -898,9 +898,11 @@ function renderPosts(tipo) {
     const lista = postsData.filter(p => {
         if (tipo==='todos') return true;
         const t = (p.tipo||'').toLowerCase();
-        if (tipo==='reels')    return t.includes('reel')||t.includes('pexels');
-        if (tipo==='carousel') return t.includes('carousel');
-        if (tipo==='story')    return t.includes('story');
+        if (tipo==='story')     return t.includes('story') && !t.includes('pexels');
+        if (tipo==='reels')     return (t.includes('reel') || t === 'reels_noite' || t === 'reels') && !t.includes('leads') && !t.includes('conquistador');
+        if (tipo==='pexels')    return t.includes('pexels');
+        if (tipo==='especiais') return t.includes('leads') || t.includes('conquistador');
+        if (tipo==='carousel')  return t.includes('carousel');
         return false;
     });
     if (!lista.length) {
@@ -917,8 +919,43 @@ function renderPosts(tipo) {
         const saves  = fmt(m.saved || 0);
         const shares = fmt(m.shares || 0);
         
-        const tag      = (p.tipo||'post').replace('_',' ');
-        const badgeClass = tag.includes('reel') ? 'reels' : tag.includes('story') ? 'story' : tag.includes('carousel') ? 'carousel' : 'default';
+        // Determina a tag legível baseada no tipo e hora da postagem
+        const tipoBruto = (p.tipo || 'post').toLowerCase();
+        let tag = tipoBruto.toUpperCase().replace('_', ' ');
+        
+        if (tipoBruto === 'reels') {
+            try {
+                // p.data está no formato "YYYY-MM-DD HH:MM:SS"
+                const dt = new Date(p.data);
+                const hora = dt.getHours();
+                if (hora < 11) {
+                    tag = 'REELS MANHÃ';
+                } else if (hora >= 11 && hora < 16) {
+                    tag = 'REELS TARDE';
+                } else {
+                    tag = 'REELS NOITE';
+                }
+            } catch (e) {
+                tag = 'REELS';
+            }
+        } else if (tipoBruto === 'story_manha') {
+            tag = 'STORY MANHÃ';
+        } else if (tipoBruto === 'story_tarde') {
+            tag = 'STORY TARDE';
+        } else if (tipoBruto === 'pexels_story') {
+            tag = 'PEXELS STORY MANHÃ';
+        } else if (tipoBruto === 'pexels_story_noite') {
+            tag = 'PEXELS STORY NOITE';
+        } else if (tipoBruto === 'reels_noite') {
+            tag = 'REELS NOITE';
+        } else if (tipoBruto === 'reels_conquistador') {
+            tag = 'REELS CONQUISTADOR';
+        } else if (tipoBruto === 'reels_leads') {
+            tag = 'REELS LEADS';
+        }
+
+        const tagLower = tag.toLowerCase();
+        const badgeClass = tagLower.includes('reel') ? 'reels' : tagLower.includes('story') ? 'story' : tagLower.includes('carousel') ? 'carousel' : 'default';
 
         // Extração e sanitização dos campos de DNA da postagem
         const objetivoVal = p.objetivo || 'Engajamento';

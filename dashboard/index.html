@@ -404,9 +404,11 @@
         <div class="tab" id="tab-posts">
             <div class="filter-bar">
                 <button class="fbtn active" onclick="filtrar('todos',this)">Todos</button>
-                <button class="fbtn" onclick="filtrar('reels',this)">Reels / Vídeos</button>
+                <button class="fbtn" onclick="filtrar('story',this)">Story Manhã / Tarde</button>
+                <button class="fbtn" onclick="filtrar('reels',this)">Reels Manhã / Tarde / Noite</button>
+                <button class="fbtn" onclick="filtrar('pexels',this)">Pexels Story Manhã / Noite</button>
+                <button class="fbtn" onclick="filtrar('especiais',this)">Conquistador / Leads</button>
                 <button class="fbtn" onclick="filtrar('carousel',this)">Carrossel</button>
-                <button class="fbtn" onclick="filtrar('story',this)">Stories</button>
             </div>
             <div class="posts-grid" id="posts-grid">
                 <div class="empty-state"><i data-lucide="loader" class="spinner"></i><span>Carregando postagens do Firebase...</span></div>
