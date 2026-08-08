@@ -400,6 +400,20 @@ def gerar_recomendacoes_cruzadas(analises_por_periodo, metricas=None):
     with open(RECOMENDACOES_FILE, "w", encoding="utf-8") as f:
         json.dump(recomendacoes, f, indent=4, ensure_ascii=False)
 
+    # Envia para a coleção 'memoria_estrategica/recomendacoes' do Firestore
+    try:
+        from core.analytics.db import get_db
+        db = get_db()
+        if db:
+            # Omitimos 'analises_raw' para evitar estourar o limite de 1MB de documento do Firestore
+            doc_firestore = {k: v for k, v in recomendacoes.items() if k != "analises_raw"}
+            db.collection("memoria_estrategica").doc("recomendacoes").set(doc_firestore)
+            print("🚀 Recomendações estratégicas enviadas com sucesso para o Firestore!")
+        else:
+            print("⚠️ Conexão com Firestore indisponível para salvar as recomendações.")
+    except Exception as db_err:
+        print(f"❌ Erro ao enviar recomendações para o Firestore: {db_err}")
+
     print(f"✅ Recomendações salvas. Ciclos: {ciclos_str} | Virais: {len(bombaram)} | Top 10: {len(top_10)}")
     return recomendacoes
 

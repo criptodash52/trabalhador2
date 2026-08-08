@@ -268,13 +268,38 @@ nav { display:flex; flex-direction:column; gap:.35rem; flex-grow:1; }
 .rec-item.empty { border-left-color:var(--text-muted); color:var(--text-sec); text-align:center; padding:2rem 1rem; }
 
 /* Estratégia donut */
-.estrategia-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:1.5rem; align-items:center; }
-.estrategia-chart-wrap { height:180px; position:relative; }
-.estrategia-legend { display:flex; flex-direction:column; gap:.55rem; overflow-y:auto; max-height:180px; }
-.estrat-leg-item { display:flex; align-items:center; gap:.6rem; font-size:.8rem; }
-.estrat-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-.estrat-nome { flex:1; color:var(--text-sec); }
-.estrat-pct { font-weight:700; color:var(--text); }
+.estrategia-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+.estrategia-chart-wrap {
+    width: 100%;
+    max-width: 200px;
+    height: 180px;
+    position: relative;
+}
+.estrategia-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+    justify-content: center;
+    width: 100%;
+}
+.estrat-leg-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+}
+.estrat-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.estrat-nome { color:var(--text-sec); }
+.estrat-pct { font-weight:700; color:var(--text); margin-left: 0.2rem; }
 
 /* Hipóteses */
 table { width:100%; border-collapse:collapse; font-size:.86rem; }
@@ -583,10 +608,15 @@ tr:last-child td { border-bottom:none; }
 }
 .post-row-body-text {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1.5rem;
 }
-@media(max-width: 900px) {
+@media(max-width: 1100px) {
+    .post-row-body-text {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media(max-width: 768px) {
     .post-row-body-text {
         grid-template-columns: 1fr;
     }
@@ -617,6 +647,52 @@ tr:last-child td { border-bottom:none; }
 .post-row-slide-num {
     color: var(--neon-blue);
     font-weight: 700;
+}
+.post-row-briefing-box {
+    background: rgba(0,0,0,0.15);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--text-sec);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    line-height: 1.4;
+}
+.briefing-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.briefing-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+}
+.briefing-item.analytics-rec {
+    border-left: 2px solid var(--neon-green);
+    padding-left: 0.5rem;
+    margin-top: 0.2rem;
+}
+.briefing-item.analytics-rec .briefing-label {
+    color: var(--neon-green);
+}
+.post-row-dna-chip.angulo {
+    border-color: rgba(0, 195, 255, 0.25);
+    background: rgba(0, 195, 255, 0.03);
+}
+.post-row-dna-chip.angulo i, .post-row-dna-chip.angulo svg {
+    color: #00c3ff;
+}
+.post-row-dna-chip.sentimento {
+    border-color: rgba(255, 0, 127, 0.25);
+    background: rgba(255, 0, 127, 0.03);
+}
+.post-row-dna-chip.sentimento i, .post-row-dna-chip.sentimento svg {
+    color: #ff007f;
 }
 .post-row-caption-box {
     background: rgba(0,0,0,0.1);

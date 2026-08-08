@@ -69,6 +69,12 @@ def garantir_audio_reels(pastas=None):
             escolhido = fila_musicas.pop(0)
             logger.info(f"🎵 Próxima música ({pasta_principal}): '{os.path.basename(escolhido)}' | Restam {len(fila_musicas)} na fila.")
             
+            try:
+                from core.utils.contexto import registrar_contexto
+                registrar_contexto("musica_real", os.path.basename(escolhido))
+            except Exception as context_err:
+                logger.debug(f"Erro ao registrar contexto de música: {context_err}")
+            
             # Salva a fila atualizada no estado
             estado[chave_estado] = fila_musicas
             salvar_estado(estado)

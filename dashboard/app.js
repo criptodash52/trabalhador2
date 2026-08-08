@@ -723,20 +723,91 @@ function renderRecomendacoes(d) {
         box.innerHTML = '<div class="rec-item empty">Nenhuma recomendação ainda. Elas aparecem após o próximo ciclo de analytics.</div>';
         return;
     }
+    
+    // Função auxiliar local para formatar cada item de recomendação
+    const recHtml = (titulo, texto, tipo = 'info') => {
+        let borderCor = 'var(--neon-blue)';
+        let bgCor = 'rgba(255, 255, 255, 0.02)';
+        
+        if (tipo === 'aviso') {
+            borderCor = '#ff3b30';
+            bgCor = 'rgba(255, 59, 48, 0.04)';
+        } else if (tipo === 'vibe') {
+            borderCor = 'var(--neon-purple)';
+            bgCor = 'rgba(124, 77, 255, 0.04)';
+        } else if (tipo === 'padrao') {
+            borderCor = 'var(--neon-green)';
+            bgCor = 'rgba(0, 230, 118, 0.04)';
+        } else if (tipo === 'ideias') {
+            borderCor = 'var(--neon-gold)';
+            bgCor = 'rgba(255, 214, 0, 0.04)';
+        }
+        
+        if (tipo === 'info') {
+            // Estilo idêntico ao clássico (caixa azul sem título separado)
+            return `
+            <div class="rec-item" style="border-left: 3px solid var(--neon-blue); background: rgba(255,255,255,0.015); margin-bottom: 0.8rem; border-radius: 0 8px 8px 0; padding: 0.8rem 1rem; font-size: 0.88rem; line-height: 1.5; color: var(--text-sec);">
+                ${texto}
+            </div>
+            `;
+        }
+        
+        return `
+        <div class="rec-item" style="border-left: 3px solid ${borderCor}; background: ${bgCor}; margin-bottom: 0.8rem; border-radius: 0 8px 8px 0; padding: 0.8rem 1rem;">
+            <div style="font-weight: 700; font-size: 0.76rem; text-transform: uppercase; color: ${borderCor}; margin-bottom: 0.25rem; letter-spacing: 0.4px;">${titulo}</div>
+            <div style="font-size: 0.86rem; line-height: 1.45; color: var(--text-sec);">${texto}</div>
+        </div>
+        `;
+    };
+
     let html = '';
-    if (d.growth_score_referencia !== undefined)
-        html += rec(`📊 <strong>Growth Score de Referência:</strong> ${(d.growth_score_referencia*100).toFixed(3)}%`);
-    if (d.tema_maior_icc && d.icc_por_tema)
-        html += rec(`🎯 <strong>Tema que mais converte seguidores (ICC):</strong> ${d.tema_maior_icc.toUpperCase()} — ${(d.icc_por_tema[d.tema_maior_icc]*100).toFixed(1)}%`);
-    if (d.peso_final_temas) {
-        Object.entries(d.peso_final_temas).sort((a,b) => b[1]-a[1]).slice(0,4).forEach(([t,p]) =>
-            html += rec(`🏆 <strong>${t}:</strong> ${(p*100).toFixed(1)}% do mix de conteúdo`)
-        );
+
+    // 1. AVISO ESTRATÉGICO DA IA (Maior Prioridade)
+    if (d.aviso_estrategico) {
+        html += recHtml('⚠️ Aviso Urgente da IA', d.aviso_estrategico, 'aviso');
     }
-    if (d.ciclos_utilizados?.length)
-        html += rec(`🔄 <strong>Ciclos analisados:</strong> ${d.ciclos_utilizados.map(c => c.toUpperCase()).join(', ')}`);
-    if (d.atualizado_em)
-        html += `<div class="rec-item" style="font-size:.78rem;color:var(--text-muted)">Atualizado: ${d.atualizado_em}</div>`;
+
+    // 2. VIBE DA SEMANA
+    if (d.vibe_da_semana) {
+        html += recHtml('🔮 Vibe de Foco da Semana', d.vibe_da_semana, 'vibe');
+    }
+
+    // 3. PADRÕES CAMPEÕES (O que bombou)
+    if (d.padroes_campeoes) {
+        html += recHtml('📈 Padrões Campeões Identificados', d.padroes_campeoes, 'padrao');
+    }
+
+    // 4. GANCHOS EXCLUSIVOS SUGERIDOS
+    if (d.ganchos_exclusivos && d.ganchos_exclusivos.length) {
+        const listGanchos = d.ganchos_exclusivos.map(g => `<li style="margin-bottom: 0.3rem;">"${g}"</li>`).join('');
+        html += recHtml('🎣 Ganchos Exclusivos Sugeridos', `<ul style="margin: 0; padding-left: 1.1rem; font-size: 0.83rem;">${listGanchos}</ul>`, 'ideias');
+    }
+
+    // 5. IDEIAS DE NARRATIVA
+    if (d.ideias_de_narrativa && d.ideias_de_narrativa.length) {
+        const listNarrativas = d.ideias_de_narrativa.map(n => `<li style="margin-bottom: 0.3rem;">${n}</li>`).join('');
+        html += recHtml('💡 Ideias de Narrativa para Explorar', `<ul style="margin: 0; padding-left: 1.1rem; font-size: 0.83rem;">${listNarrativas}</ul>`, 'ideias');
+    }
+
+    // --- RECOMENDAÇÕES MATEMÁTICAS CLÁSSICAS ---
+    if (d.growth_score_referencia !== undefined) {
+        html += recHtml(null, `📊 <strong>Growth Score de Referência:</strong> ${(d.growth_score_referencia*100).toFixed(3)}%`, 'info');
+    }
+
+    if (d.peso_final_temas) {
+        Object.entries(d.peso_final_temas).sort((a,b) => b[1]-a[1]).slice(0, 4).forEach(([t, p]) => {
+            html += recHtml(null, `🏆 <strong>${t}:</strong> ${(p*100).toFixed(1)}% do mix de conteúdo`, 'info');
+        });
+    }
+
+    if (d.ciclos_utilizados && d.ciclos_utilizados.length) {
+        html += recHtml(null, `🔄 <strong>Ciclos analisados:</strong> ${d.ciclos_utilizados.join(', ').toUpperCase()}`, 'info');
+    }
+
+    if (d.atualizado_em) {
+        html += `<div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 0.6rem; text-align: right;">Atualizado em: ${d.atualizado_em}</div>`;
+    }
+
     box.innerHTML = html || '<div class="rec-item empty">Dados incompletos. Aguarde o próximo ciclo.</div>';
 }
 
@@ -958,31 +1029,39 @@ function renderPosts(tipo) {
         const badgeClass = tagLower.includes('reel') ? 'reels' : tagLower.includes('story') ? 'story' : tagLower.includes('carousel') ? 'carousel' : 'default';
 
         // Extração e sanitização dos campos de DNA da postagem
-        const objetivoVal = p.objetivo || 'Engajamento';
+        const objetivoVal  = p.objetivo || 'Engajamento';
         const personaVal   = p.estilo_copy || p.estilo || 'Mente Lúcida';
         const ganchoVal    = p.gancho_categoria || 'Identidade';
         const tomVal       = p.tom_emocional || 'Reflexão';
         const complexVal   = p.complexidade || 'Média';
-        const estruturaVal = p.estrutura_narrativa || 'Problema-Solução';
+        const estruturaVal = p.estrutura_narrativa || p.arquitetura_nome || 'Problema-Solução';
+        const subAnguloVal = p.sub_angulo || '';
+        const ganchoAberturaVal = p.gancho_abertura || '';
+        const estiloSorteadoVal = p.estilo_sorteado || '';
+        const sentimentoPostVal = p.sentimento_post || '';
+        const analyticsAtivo    = p.analytics_ativo || false;
+        const analyticsVibe     = p.analytics_vibe || '';
+        const analyticsPatterns = p.analytics_padroes || '';
 
         // Extração de mídias e recursos
         let pexelsQueriesHtml = '';
-        if (p.pexels_queries && Array.isArray(p.pexels_queries)) {
-            pexelsQueriesHtml = p.pexels_queries.map((q, idx) => `<div><strong>Vídeo ${idx+1}:</strong> "${q}"</div>`).join('');
-        } else if (p.pexels_queries && typeof p.pexels_queries === 'string') {
-            pexelsQueriesHtml = `<div><strong>Vídeo:</strong> "${p.pexels_queries}"</div>`;
+        const plataformaVal = p.plataforma_video || 'Automático / Biblioteca Local';
+        const queryVideoVal = p.query_video || (p.pexels_queries ? (Array.isArray(p.pexels_queries) ? p.pexels_queries.join(', ') : p.pexels_queries) : '');
+        
+        if (queryVideoVal) {
+            pexelsQueriesHtml = `<div><strong>Fundo (${plataformaVal}):</strong> "${queryVideoVal}"</div>`;
         } else if (p.prompt_imagem) {
             pexelsQueriesHtml = `<div><strong>Fundo IA:</strong> "${p.prompt_imagem}"</div>`;
         } else {
-            pexelsQueriesHtml = `<div><strong>Fundo:</strong> Automático / Biblioteca Local</div>`;
+            pexelsQueriesHtml = `<div><strong>Fundo:</strong> ${plataformaVal}</div>`;
         }
 
-        const musicaVal = p.categoria_musica || 'Misteriosa / Ambiente';
+        const musicaVal = p.musica_real || p.categoria_musica || 'Misteriosa / Ambiente';
         const duracaoVal = p.duracao_video ? `${p.duracao_video}s` : '--';
 
         // Formatação dos slides do post
         let slidesHtml = '';
-        const slides = p.slides || p.frase || '';
+        const slides = p.slides || p.frase || p.frase_visual || '';
         if (Array.isArray(slides)) {
             slidesHtml = slides.map((s, idx) => `
                 <div class="post-row-slide-item">
@@ -991,12 +1070,22 @@ function renderPosts(tipo) {
                 </div>
             `).join('');
         } else if (typeof slides === 'string' && slides.trim()) {
-            slidesHtml = `
-                <div class="post-row-slide-item">
-                    <span class="post-row-slide-num">1.</span>
-                    <span>${slides}</span>
-                </div>
-            `;
+            if (slides.includes(' | ')) {
+                const partes = slides.split(' | ');
+                slidesHtml = partes.map((s, idx) => `
+                    <div class="post-row-slide-item">
+                        <span class="post-row-slide-num">${idx+1}.</span>
+                        <span>${s.trim()}</span>
+                    </div>
+                `).join('');
+            } else {
+                slidesHtml = `
+                    <div class="post-row-slide-item">
+                        <span class="post-row-slide-num">1.</span>
+                        <span>${slides}</span>
+                    </div>
+                `;
+            }
         } else {
             slidesHtml = `<div>Nenhum slide registrado.</div>`;
         }
@@ -1007,7 +1096,7 @@ function renderPosts(tipo) {
         const permalink = m.permalink || '';
 
         return `
-        <article class="post-row" onclick="abrirModalPost('${p.post_id}')">
+        <article class="post-row">
             <!-- Cabeçalho do Bloco -->
             <div class="post-row-header">
                 <div class="post-row-title-wrap">
@@ -1025,6 +1114,8 @@ function renderPosts(tipo) {
                 <div class="post-row-dna-chip" title="Tom Emocional"><i data-lucide="theater"></i> Tom: ${tomVal}</div>
                 <div class="post-row-dna-chip" title="Estrutura Narrativa"><i data-lucide="align-left"></i> Estrutura: ${estruturaVal}</div>
                 <div class="post-row-dna-chip" title="Complexidade"><i data-lucide="bar-chart-2"></i> Nível: ${complexVal}</div>
+                ${subAnguloVal ? `<div class="post-row-dna-chip angulo" title="Ângulo Temático Sorteado"><i data-lucide="compass"></i> Ângulo: ${subAnguloVal}</div>` : ''}
+                ${sentimentoPostVal ? `<div class="post-row-dna-chip sentimento" title="Sentimento da Postagem"><i data-lucide="heart-pulse"></i> Sentimento: ${sentimentoPostVal.toUpperCase()}</div>` : ''}
             </div>
 
             <!-- Recursos de Mídia -->
@@ -1044,6 +1135,17 @@ function renderPosts(tipo) {
                     <h4>📝 Texto dos Slides / Vídeo</h4>
                     <div class="post-row-slides-box">
                         ${slidesHtml}
+                    </div>
+                </div>
+                <div class="post-row-text-section">
+                    <h4>🧠 Briefing enviado para a IA</h4>
+                    <div class="post-row-briefing-box">
+                        ${ganchoAberturaVal ? `<div class="briefing-item"><span class="briefing-label">⚡ Gancho de Abertura:</span> <span>"${ganchoAberturaVal}"</span></div>` : ''}
+                        ${subAnguloVal     ? `<div class="briefing-item"><span class="briefing-label">🧭 Ângulo Temático:</span> <span>${subAnguloVal}</span></div>` : ''}
+                        ${estiloSorteadoVal ? `<div class="briefing-item"><span class="briefing-label">🎭 Estilo de Abordagem:</span> <span>${estiloSorteadoVal}</span></div>` : ''}
+                        ${analyticsAtivo && analyticsVibe ? `<div class="briefing-item analytics-rec"><span class="briefing-label">🤖 Vibe do Analytics:</span> <span>${analyticsVibe}</span></div>` : ''}
+                        ${analyticsAtivo && analyticsPatterns ? `<div class="briefing-item analytics-rec"><span class="briefing-label">📈 Padrão Aplicado:</span> <span>${analyticsPatterns}</span></div>` : ''}
+                        ${!ganchoAberturaVal && !subAnguloVal && !estiloSorteadoVal ? `<div style="color:var(--text-muted);font-size:0.82rem;">Disponível em postagens geradas a partir de agora.</div>` : ''}
                     </div>
                 </div>
                 <div class="post-row-text-section">
