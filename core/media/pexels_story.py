@@ -549,11 +549,11 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     # Para pexels_story (dia e noite): 1 único vídeo de fundo contínuo (sem cortes entre vídeos).
     # Assume ~5s por slide (leitura confortável) e ~20s por vídeo de fundo (estimativa conservadora).
     if is_reels_leads or is_story_tarde:
-        # NOVO: 1 único vídeo de até 30 segundos (vídeo curto e de alto impacto)
+        # NOVO: 1 único vídeo com 30 segundos ou mais (para não repetir fundo)
         num_slides_estimado = len(slides) if slides else 5
-        duracao_necessaria_reels = 30  # máx 30s
+        duracao_necessaria_reels = 30  # Necessário 30s
         num_videos_necessarios = 1  # ← Único vídeo de fundo
-        logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides | 1 vídeo único de até 30s")
+        logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides | 1 vídeo único de 30s ou mais")
     elif (not is_noite) and (not is_conquistador):
         # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
@@ -603,10 +603,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         if len(temp_vids) >= num_videos_necessarios:
                             break
                         vid_id = str(hit.get("id", ""))
-                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos de até 30s
+                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos com 30s ou mais
                         if is_reels_leads or is_story_tarde:
-                            duracao_hit = hit.get("duration", 999)
-                            if duracao_hit > 30:
+                            duracao_hit = hit.get("duration", 0)
+                            if duracao_hit < 30:
                                 continue
                         if not verificar_midia_recente(vid_id):
                             videos_dict = hit.get("videos", {})
@@ -662,10 +662,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         if len(temp_vids) >= num_videos_necessarios:
                             break
                         vid_id = str(v.get("id", ""))
-                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos de até 30s
+                        # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos com 30s ou mais
                         if is_reels_leads or is_story_tarde:
-                            duracao_v = v.get("duration", 999)
-                            if duracao_v > 30:
+                            duracao_v = v.get("duration", 0)
+                            if duracao_v < 30:
                                 continue
                         if not verificar_midia_recente(vid_id):
                             video_files = v.get("video_files", [])
