@@ -1,116 +1,116 @@
 {
-  "titulo_pdf": "A Bússola do Propósito: O Método Direto para Recalibrar sua Alma",
-  "subtitulo_pdf": "O plano prático e incisivo para reencontrar a fé e o sentido da vida.",
+  "titulo_pdf": "A Bússola da Alma: O Código da Reconexão Ativa",
+  "subtitulo_pdf": "O método para reencontrar seu propósito e agir com fé inabalável",
   "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
   "capa_cards": [
     {
-      "titulo": "O Vazio Silencioso",
-      "texto": "Sua vida virou um roteiro automático, sem brilho, sem conexão. Você sente que flutua sem direção, buscando algo que preencha o eco da alma.",
-      "pergunta_destaque": "Você apenas existe?"
+      "titulo": "Sua Alma Desconectada?",
+      "texto": "A rotina te engoliu? Você se move, mas não sente. Uma vida sem bússola, sem norte, sem saber o porquê. Isso cansa, não é?",
+      "pergunta_destaque": "Perdeu o sentido da vida?"
     },
     {
-      "titulo": "O Mapa Interior",
-      "texto": "A sabedoria milenar dos Evangelhos aplicada em passos práticos para reacender sua chama interior."
+      "titulo": "O Mapa dos Evangelhos",
+      "texto": "Reconecte-se à fonte da sabedoria e transforme a fé em ação prática e diária."
     },
     {
-      "titulo": "Desperte Agora",
-      "texto": "Retome o controle da sua fé e do seu destino em tempo recorde."
+      "titulo": "Destino Reescrito",
+      "texto": "Liberte-se do automático e viva uma vida de propósito genuíno."
     },
     {
-      "titulo": "Fé em Ação",
-      "texto": "A fé sem obras é morta. Ação define seu destino.",
-      "citacao_destaque": "Aquele que busca encontra. Código da Sabedoria."
+      "titulo": "A Fé em Movimento",
+      "texto": "Não espere. Crie. Aja. A vida é um verbo.",
+      "citacao_destaque": "A fé, se não tiver obras, é morta em si mesma. Código da Sabedoria."
     }
   ],
   "capitulos": [
     {
       "numero": 1,
-      "titulo": "O Piloto Automático da Alma: Por Que Você Perdeu o Rumo",
+      "titulo": "O Despertar: A Farsa da Vida no Piloto Automático",
       "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
       "paragrafos": [
-        "Você acorda, repete, dorme. Dias se fundem em semanas, e a sensação de vazio se instala, sutil, mas corrosiva. Parece que o mundo gira, mas você está parado, observando a vida acontecer sem realmente vivê-la. O custo? Uma alma desconectada, um propósito esquecido, uma existência que grita por um sentido que teima em não aparecer. É a armadilha da inércia, disfarçada de normalidade.",
-        "Lembra-se da parábola do semeador nos Evangelhos? Muitos recebem a semente da fé e do propósito, mas a deixam cair no caminho, entre espinhos ou em solo pedregoso, onde não pode criar raízes. Assim como o solo precisa ser preparado, a mente precisa se abrir para a verdade. Jesus não esperou que a verdade viesse até Ele; Ele a revelou, convidando à ação imediata para quem quisesse ouvir e aplicar.",
-        "O primeiro passo é brutal: reconheça que você está no piloto automático. O que te prende? Medo, preguiça, a busca por aprovação? Olhe para sua rotina hoje e identifique um único hábito que você sabe que te afasta de sua conexão maior. Substitua-o por cinco minutos de silêncio e reflexão, buscando uma frase, um verso, uma pequena oração. Este é o seu primeiro ato de rebeldia consciente. Faça isso AGORA."
+        "Não é irônico? Estamos mais conectados do que nunca, mas nos sentimos mais sozinhos e vazios. Rolamos feeds infinitos, mas a alma rola no vazio. Acordar e fazer a mesma coisa, dia após dia, esperando um milagre que nunca vem, é a definição de... bem, você sabe o quê. É como o helicóptero que cai: em um instante, a ilusão de controle se desfaz e a gravidade da falta de propósito te puxa para baixo. Você sente que está apenas existindo, e não vivendo, não é? A verdade é que a vida tem um sentido, você só o perdeu de vista.",
+        "Nos Evangelhos, vemos a história de Zaqueu, um cobrador de impostos odiado e isolado. Sua vida era uma rotina de ganância e desprezo. Mas quando Jesus passa, ele não hesita. Sobe numa figueira para ver além da multidão, rompe com o 'normal' e, ao ser notado, decide mudar radicalmente. Não esperou o convite formal, ele agiu para ver e ser visto.",
+        "Pare de justificar a inércia. O primeiro passo para reencontrar o sentido não é uma revelação cósmica, é uma observação brutalmente honesta de onde você está e o que você realmente quer. Faça uma lista de 3 coisas que você faz por obrigação e não por propósito. Hoje, escolha uma delas e pergunte: 'Posso fazer isso de um jeito diferente, com mais intenção, ou posso simplesmente parar de fazê-lo?' A resposta está na sua ação."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_1_fec966.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_72c9e8.jpg"
     },
     {
       "numero": 2,
-      "titulo": "Domando o Caos Interno: A Mente Que Resiste à Luz",
+      "titulo": "A Guerra Interna: Reclamar ou Reconstruir?",
       "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
       "paragrafos": [
-        "É irritante, não é? Você decide mudar, mas a mente sabotadora insiste em te arrastar de volta para o conforto do conhecido, mesmo que esse 'conforto' seja o sofrimento disfarçado. A procrastinação vira uma arte, a distração um refúgio. Parece que há uma batalha constante dentro de você, e o inimigo mais astuto é a sua própria inércia mental, viciada em padrões que te afastam do seu poder.",
-        "Os Evangelhos nos mostram Jesus frequentemente se retirando para orar, buscando clareza e força antes de cada ação significativa. Ele demonstrava um domínio absoluto sobre Suas próprias distrações e impulsos, focando na Sua missão. Ele não permitia que as vozes externas ou as tentações internas O desviassem. É um exemplo de controle sobre o eu, uma mente que se alinha com o propósito maior, não com o desejo momentâneo.",
-        "Sua atenção é seu ativo mais valioso. Para dominá-la, use a técnica da 'Sentinela da Mente'. Ao invés de lutar contra pensamentos negativos ou dispersos, observe-os sem julgamento, como uma sentinela observa a paisagem. Então, com um 'não' firme, redirecione seu foco para uma frase de gratidão ou uma intenção clara para os próximos 30 minutos. Repita isso sempre que a mente tentar divagar. Treine sua atenção como se treina um músculo. Comece com 5 minutos pela manhã e 5 minutos antes de dormir."
+        "Ah, a doce ilusão do sofrimento conhecido! Nosso cérebro é um mestre em nos convencer de que é melhor ficar na jaula familiar do que arriscar a liberdade. É a mesma lógica de quem prefere se endividar com apostas na esperança de um milagre, em vez de construir um plano financeiro sólido. A distração é a nossa droga preferida, e o 'medo de agir' é o nosso vício mais caro. Você se pega rolando o feed quando deveria estar construindo algo, não é? Somos mestres em adiar a própria felicidade. A grande mentira é que você precisa de motivação para começar. A verdade é que você precisa começar para ter motivação.",
+        "Jesus, após quarenta dias no deserto, foi tentado. Não se tratava apenas de comida, mas de poder, glória e desvio de propósito. Ele poderia ter cedido aos impulsos mais primários, mas escolheu a disciplina e a verdade. Com cada tentação, Ele respondeu com sabedoria e foco, mostrando que o domínio começa na mente e na palavra.",
+        "Sua mente não é seu inimigo, é seu músculo mais fraco. Para dominar a atenção, adote a 'Regra dos 5 Minutos de Silêncio'. Ao acordar, antes de qualquer tela, sente-se em silêncio por 5 minutos. Apenas observe seus pensamentos sem julgamento. Depois, escolha uma única 'verdade' (um valor, uma meta, uma frase dos Evangelhos) e repita-a intencionalmente por 60 segundos. Isso não é mágica, é treino. É a sua espada contra o caos mental."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_2_495970.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_3b2b08.jpg"
     },
     {
       "numero": 3,
-      "titulo": "O Alinhamento Divino: Transformando Intenção em Realidade Brutal",
+      "titulo": "O Plano Impecável: Mapeando Sua Jornada Essencial",
       "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
       "paragrafos": [
-        "A exaustão de trabalhar duro sem ver o horizonte, a sensação de que você está sempre correndo, mas nunca chega a lugar nenhum de verdade. É a frustração de ter boas intenções, mas ver seus dias escorrerem entre os dedos, repletos de atividades vazias que não alimentam a alma nem impulsionam seu propósito. Você se sente em um labirinto, e a cada passo, a saída parece mais distante.",
-        "As parábolas de Jesus sobre o construtor da torre ou o homem que semeia sem antes arar a terra são lições de planejamento e antecipação. Ele ensinava que a fé sem a preparação e a ação intencional é como construir sobre a areia. A sabedoria dos Evangelhos não é sobre esperar que as coisas aconteçam, mas sobre semear, cultivar e colher com propósito, entendendo que cada passo é parte de um plano maior.",
-        "Crie seu 'Plano de Ação Semanal de Propósito'. No domingo à noite, dedique 20 minutos para definir 3 prioridades claras para a semana, alinhadas ao seu propósito de reconexão. Não são tarefas, são intenções poderosas. Para cada uma, defina uma ação específica e não negociável para cada dia útil. Por exemplo: 'Segunda: 5 min de meditação focada na gratidão.' 'Terça: Ler um capítulo dos Evangelhos.' Coloque essas ações na sua agenda como compromissos inadiáveis. Este plano é à prova de desculpas, pois já está pré-definido."
+        "A gente se mata de trabalhar, e no final da semana, a sensação é de que empurramos uma pedra morro acima só para vê-la rolar de novo. É o paradoxo da vida moderna: muito esforço, pouco impacto. É como correr sem bússola no meio de uma tempestade, como as vidas perdidas em um acidente súbito. A exaustão não é sinal de produtividade, é sintoma de falta de direção. Você sente que a vida te arrasta, em vez de você arrastar a vida? A pior parte não é não ter um plano, é ter um plano e não executá-lo. A ironia? Você já sabe o que fazer. Só não está fazendo.",
+        "Jesus, antes de iniciar seu ministério, passou tempo em preparação. Suas parábolas, como a do construtor que calcula o custo da torre antes de iniciá-la (Lucas 14:28-30), ou a do rei que avalia suas forças antes de ir à guerra, mostram a importância de um planejamento consciente e da clareza de propósito. Não era sobre 'fazer mais', mas 'fazer o certo'.",
+        "Chega de planos genéricos. Seu plano da semana precisa ser um 'Protocolo de Intenção Divina'. No domingo à noite, ou na segunda de manhã, dedique 30 minutos. 1. Liste 3 resultados cruciais (não tarefas) que você deve alcançar. 2. Para cada resultado, defina a 'primeira ação irreversível' que você fará na segunda-feira. 3. Bloqueie tempo na sua agenda como se fosse um compromisso médico para estas ações. Não é sobre motivação, é sobre compromisso. Faça isso e observe a mágica da clareza."
       ],
-      "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capitulo_3_15969c.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_28778b.jpg"
     }
   ],
-  "citacao_destaque": "A fé, se não tiver obras, é morta em si mesma.",
+  "citacao_destaque": "Quem tem ouvidos para ouvir, ouça. Mas quem tem sabedoria, aja.",
   "titulo_citacao": "A Regra de Ouro",
-  "verso_base": "Nem todo aquele que me diz: Senhor, Senhor! entrará no reino dos céus, mas aquele que faz a vontade de meu Pai que está nos céus.",
-  "referencia_verso": "Evangelho de Mateus 7:21",
+  "verso_base": "A fé sem obras é morta. A verdadeira conexão se manifesta na ação.",
+  "referencia_verso": "Tiago 2:17 - Código da Sabedoria.",
   "plano_acao": {
-    "titulo_secao": "O Protocolo da Conexão Essencial: 7 Dias para Resgatar sua Alma",
-    "prompt_imagem": "Cinematic dark moody photography of a lone pilgrim standing on a mountain path, illuminated by a divine light breaking through clouds, 8k, hyperrealistic",
-    "subtitulo": "Um guia prático e incisivo para ativar a sabedoria dos Evangelhos em sua rotina diária e manifestar seu propósito.",
+    "titulo_secao": "O Protocolo da Reconexão Ativa: 7 Dias para Agir com Propósito",
+    "prompt_imagem": "Cinematic dark moody photography of a person standing at a crossroads, a single beam of light illuminating a path, with ancient symbols subtly integrated, 8k",
+    "subtitulo": "Um guia prático e inadiável para alinhar sua alma, sua mente e suas mãos com o seu verdadeiro chamado.",
     "passos": [
       {
         "numero": 1,
-        "titulo": "O Despertar da Consciência",
-        "descricao": "Pela manhã, antes de qualquer tela, dedique 5 minutos ao silêncio. Repita a frase: 'Minha vida tem propósito e eu busco a conexão divina'. Medite sobre o que essa frase significa para você HOJE. Inspire-se em Mateus 6:33: 'Buscai primeiro o Reino de Deus e a Sua justiça, e todas estas coisas vos serão acrescentadas'."
+        "titulo": "O Dia Zero: Deserto da Reflexão",
+        "descricao": "Antes de tudo, passe 15 minutos em completo silêncio. Sem celular, sem ruído. Pergunte: 'Onde perdi o sentido? O que realmente importa para mim agora?' Anote as 3 primeiras respostas. É seu deserto pessoal de autoconfronto."
       },
       {
         "numero": 2,
-        "titulo": "A Leitura Propositiva",
-        "descricao": "Diariamente, leia um pequeno trecho dos Evangelhos (um parágrafo ou um capítulo curto). Escolha uma frase que ressoe e escreva como você pode aplicá-la em uma ação concreta nas próximas 24 horas. Lembre-se: não é estudo, é aplicação. A fé vem pelo ouvir, mas se manifesta pelo fazer."
+        "titulo": "A Palavra Viva: Semente Diária",
+        "descricao": "Escolha um trecho curto dos Evangelhos ou um provérbio por dia (ex: 5 versículos). Leia-o pela manhã e reflita: 'Como isso se aplica à minha vida HOJE?' Deixe que essa 'palavra' seja sua bússola para o dia."
       },
       {
         "numero": 3,
-        "titulo": "O Serviço Silencioso",
-        "descricao": "Escolha uma pequena ação de serviço ou bondade, sem esperar reconhecimento. Pode ser um elogio sincero, ajudar alguém discretamente, ou simplesmente ouvir com atenção. Faça isso em segredo, conforme Mateus 6:3-4: 'Quando deres esmola, que a tua mão esquerda não saiba o que faz a tua direita'. O foco é na intenção, não no aplauso."
+        "titulo": "Ação do Mestre: Servir e Agir",
+        "descricao": "Inspirado pelos ensinamentos de serviço, encontre uma pequena ação de 'serviço' por dia. Pode ser ajudar um colega, ouvir alguém, fazer uma tarefa doméstica com mais intenção. Não espere a 'grande missão', comece com o próximo."
       },
       {
         "numero": 4,
-        "titulo": "A Gratidão Ativa",
-        "descricao": "Ao final do dia, liste três coisas específicas pelas quais você é grato, não apenas 'saúde', mas 'a conversa honesta com um amigo', 'a força para superar um desafio'. Agradeça a Deus por elas. A gratidão eleva sua vibração e conecta você ao fluxo da abundância divina, reconhecendo a provisão em tudo."
+        "titulo": "A Gratidão Inegociável: Olhar Transformador",
+        "descricao": "Ao final do dia, antes de dormir, liste 3 coisas pelas quais você é genuinamente grato. Não as óbvias. Force-se a encontrar a beleza nas pequenas coisas e nos desafios superados. A gratidão reprograma sua perspectiva."
       },
       {
         "numero": 5,
-        "titulo": "A Vigília da Mente",
-        "descricao": "Durante o dia, sempre que se sentir perdido ou desconectado, pause por 30 segundos. Respire fundo e recite uma pequena oração ou um verso que te traga paz. Lembre-se das palavras de Jesus sobre a importância de vigiar e orar para não cair em tentação (Mateus 26:41). É um reset mental para o propósito."
+        "titulo": "O Desapego Consciente: Liberte-se",
+        "descricao": "Identifique uma 'âncora' que te prende (medo, ressentimento, um objeto que você não usa). Faça um movimento para se desapegar dela. Perdoe alguém, descarte algo, pare de procrastinar uma ligação. A libertação é um ato de fé."
       },
       {
         "numero": 6,
-        "titulo": "A Entrega e o Recomeço",
-        "descricao": "Antes de dormir, entregue suas preocupações e ansiedades a uma força maior. Perdoe-se por qualquer falha do dia e visualize o amanhã como uma nova oportunidade para agir com propósito e fé. 'Não vos inquieteis, pois, pelo dia de amanhã' (Mateus 6:34). Durma em paz, sabendo que cada dia é um recomeço."
+        "titulo": "A Visão Clara: Onde Você Vai?",
+        "descricao": "No sexto dia, revisite suas anotações do 'Dia Zero'. Com as novas perspectivas, reescreva seu 'propósito central' em uma frase. Crie uma meta prática para a próxima semana que te aproxime desse propósito. Seja específico."
       }
     ],
-    "img_local": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\plano_acao_29a671.jpg"
+    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_f4fd40.jpg"
   },
   "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
   "titulo_fechamento": "SABEDORIA EM AÇÃO",
   "rodape": "Código da Sabedoria - Conhecimento que Transforma Destinos.",
   "landing_page": {
-    "promessa_clara": "7 DIAS PARA REENCONTRAR SEU PROPÓSITO E FÉ.",
+    "promessa_clara": "7 DIAS PARA REENCONTRAR SEU PROPÓSITO E AGIR.",
     "beneficios": [
-      "Reacenda sua conexão com o divino e o sentido da vida.",
-      "Domine a mente sabotadora e mantenha o foco no que importa.",
-      "Transforme intenções em ações reais e veja resultados imediatos.",
-      "Aplique a sabedoria milenar dos Evangelhos no seu dia a dia.",
-      "Liberte-se do piloto automático e viva com propósito e paz."
+      "Reconecte-se com sua essência e o sentido da vida.",
+      "Liberte-se da inércia e da rotina vazia.",
+      "Desenvolva uma mente focada e resistente a distrações.",
+      "Crie um plano de ação prático e à prova de desculpas.",
+      "Transforme fé em resultados reais e diários."
     ]
   },
-  "img_local_capa": "C:\\Users\\kali\\Desktop\\ecosistemy\\trabalhador1-main\\gerador_pdf\\output\\imagens_temp\\capa_7ef16d.jpg"
+  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_f7f06d.jpg"
 }
