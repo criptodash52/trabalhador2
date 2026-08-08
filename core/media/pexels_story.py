@@ -864,28 +864,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
             slide_start_times = [0.0] * (total_slides + 1)
             
             if is_story_tarde or is_reels_leads:
-                # Formatos de conversão: O último slide (CTA) precisa de MAIS tempo para leitura
-                duracao_ultimo = 10.0  # Último slide fica muito mais tempo na tela
-                duracao_gancho = 6.0
+                # Formatos de conversão: Divisão igualitária de tempo por slide (5s por slide em um vídeo de 30s com 6 slides)
+                tempo_por_slide = duracao / max(1, total_slides)
                 
-                if total_slides > 2:
-                    tempo_slide_normal = (duracao - duracao_gancho - duracao_ultimo) / (total_slides - 2)
-                elif total_slides == 2:
-                    tempo_slide_normal = 0.0
-                    duracao_gancho = duracao - duracao_ultimo
-                else:
-                    duracao_gancho = duracao
-                    duracao_ultimo = 0.0
-                    
                 t_atual = 0.0
                 for i in range(total_slides):
                     slide_start_times[i] = t_atual
-                    if i == 0:
-                        t_atual += duracao_gancho
-                    elif i == total_slides - 1:
-                        t_atual += duracao_ultimo
-                    else:
-                        t_atual += tempo_slide_normal
+                    t_atual += tempo_por_slide
             else:
                 # Formatos padrão (Story da manhã, noite, etc)
                 duracao_gancho = 5.0
