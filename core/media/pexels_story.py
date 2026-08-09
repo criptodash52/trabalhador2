@@ -233,6 +233,31 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
     return np.array(img)
 
 
+def _desenhar_linha_sem_keyword(mask_draw, linha, x_linha, y_linha, fonte_cta, fonte_keyword, keyword_destaque, fade_alpha, w_img):
+    """Desenha a linha na máscara do degradê mas pula (deixa transparente) a palavra-chave de destaque."""
+    if not keyword_destaque or keyword_destaque not in linha.upper():
+        mask_draw.text((x_linha, y_linha), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+        return
+
+    palavras = linha.split(" ")
+    espaco_w = mask_draw.textbbox((0, 0), " ", font=fonte_cta)[2] - mask_draw.textbbox((0, 0), " ", font=fonte_cta)[0]
+    larguras_palavras = []
+    
+    for p in palavras:
+        p_clean = p.upper().replace("'", "").replace("\u2018", "").replace("\u2019", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '').strip()
+        f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
+        pw = mask_draw.textbbox((0, 0), p, font=f_usar)[2] - mask_draw.textbbox((0, 0), p, font=f_usar)[0]
+        larguras_palavras.append((pw, f_usar, p_clean))
+
+    largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
+    cur_x = (w_img - largura_total_linha) // 2
+
+    for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
+        if p_clean != keyword_destaque:
+            mask_draw.text((cur_x, y_linha), p, font=f_usar, fill=(255, 255, 255, int(255 * fade_alpha)))
+        cur_x += pw + espaco_w
+
+
 def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta_override=None):
     """Desenha o CTA final. Se paleta_override for fornecida (Reels Leads), aplica degradê colorido nas letras.
     Caso contrário, usa o comportamento padrão: texto em branco com destaque dourado na palavra-chave."""
@@ -367,7 +392,9 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
                 shadow_draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
                 shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
                                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-                mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+                # Desenha a máscara do degradê pulando a palavra SABEDORIA (ela será coberta em dourado depois)
+                _desenhar_linha_sem_keyword(mask_draw, linha, x, y, fonte_cta, fonte_keyword,
+                                            keyword_destaque, fade_alpha, w)
                 posicoes_linhas_topo.append((linha, x, y, alt, lw))
                 y += alt + espaco_entre
             y += divisor_espaco - espaco_entre
@@ -376,7 +403,9 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             shadow_draw.text((x + 3, y + 3), linha, font=fonte_cta, fill=(0, 0, 0, int(150 * fade_alpha)))
             shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
                              stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
-            mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+            # Desenha a máscara do degradê pulando a palavra SABEDORIA
+            _desenhar_linha_sem_keyword(mask_draw, linha, x, y, fonte_cta, fonte_keyword,
+                                        keyword_destaque, fade_alpha, w)
             posicoes_linhas_baixo.append((linha, x, y, alt, lw))
             y += alt + espaco_entre
 

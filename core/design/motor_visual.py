@@ -15,10 +15,11 @@ from core.config.settings import PEXELS_API_KEY, PIXABAY_API_KEY, UNSPLASH_ACCES
 
 def buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=None):
     """
-    Busca de imagem em Cascata (Fase 2):
-    Nível 1: Unsplash API (Fotos Reais)
-    Nível 2: Pexels API (Fotos Reais)
-    Nível 3: Pixabay API (Fotos Reais)
+    Busca de imagem em Cascata:
+    Nível 0: FLUX.1 via Hugging Face (IA Geradora - Prioridade Máxima)
+    Nível 1: Unsplash API (Fotos Reais - Emergência)
+    Nível 2: Pexels API (Fotos Reais - Emergência)
+    Nível 3: Pixabay API (Fotos Reais - Emergência)
     Nível 4: Pollinations AI (Geração por IA - Último caso online)
     Nível 5: Biblioteca Local (Modo Offline)
     Nível 6: Fundo Sólido Escuro (Emergência Catastrófica)
@@ -65,6 +66,23 @@ def buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=None):
 
     # Para buscas em APIs de fotos reais: começa pelos fallbacks temáticos coloridos (NÃO usa o prompt cinematográfico da IA)
     queries_a_tentar = queries_fallback + [QUERY_CORINGA]
+
+    # --- NÍVEL 0: FLUX.1 via Hugging Face (IA Geradora - Prioridade Máxima) ---
+    # Apenas para os tipos de post que dependem de imagem como base do slideshow/arte
+    _TIPOS_COM_FLUX = ["reels", "reels_noite", "story_manha", "carousel"]
+    if tipo in _TIPOS_COM_FLUX:
+        try:
+            from core.media.flux_gerador import gerar_imagem_flux
+            print(f"[NIVEL 0] Gerando imagem via FLUX.1 (IA) para o tipo '{tipo}'...")
+            caminho_flux = gerar_imagem_flux(tipo=tipo, tema_escolhido=tema_escolhido)
+            if caminho_flux and os.path.exists(caminho_flux):
+                img = Image.open(caminho_flux).convert("RGBA")
+                print(f"[NIVEL 0] Imagem FLUX carregada com sucesso: {caminho_flux}")
+                return img.resize((W, H), Image.Resampling.LANCZOS), W, H
+            else:
+                print("[NIVEL 0] FLUX falhou em todos os tokens. Usando banco de imagens como emergencia...")
+        except Exception as _e_flux:
+            print(f"[NIVEL 0] Erro inesperado no FLUX: {_e_flux}. Continuando para Unsplash...")
 
     # --- NÍVEL 1: UNSPLASH (Fotos Reais) ---
     if UNSPLASH_ACCESS_KEY:

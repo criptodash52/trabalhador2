@@ -145,9 +145,9 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
                     slides_normalizados.append(s_norm)
                     continue
                 palavras = s_norm.replace("\n", " ").split()
-                if len(palavras) > 15:
-                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 15.")
-                    s_norm = " ".join(palavras[:15]) + "..."
+                if len(palavras) > 10:
+                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 10.")
+                    s_norm = " ".join(palavras[:10]) + "..."
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
@@ -166,9 +166,9 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
                     slides_normalizados.append(s_norm)
                     continue
                 palavras = s_norm.replace("\n", " ").split()
-                if len(palavras) > 15:
-                    logger.warning(f"⚠️ [IA] Slide do reels_leads com {len(palavras)} palavras. Truncando para 15.")
-                    s_norm = " ".join(palavras[:15]) + "..."
+                if len(palavras) > 10:
+                    logger.warning(f"⚠️ [IA] Slide do reels_leads com {len(palavras)} palavras. Truncando para 10.")
+                    s_norm = " ".join(palavras[:10]) + "..."
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
@@ -488,26 +488,27 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Título do Material: "{titulo_pdf_tarde}"
         - Conteúdo resumido: {resumo_pdf_tarde[:350]}
 
-        ESTRUTURA OBRIGATÓRIA DA SEQUÊNCIA (EXATAMENTE {num_slides_story} SLIDES):
+        ESTRUTURA OBRIGATÓRIA DA SEQUÊNCIA (EXATAMENTE 5 OU 6 SLIDES):
 
         SLIDE 1 — ATENÇÃO (GANCHO):
         Abra com uma frase que interrompa o scroll. Pode ser uma contradição, uma descoberta, uma pergunta específica ou uma afirmação inesperada.
         Conectada ao crescimento de vida, clareza ou benefício real que o material da semana entrega.
-        Entre 10 e 15 palavras. Sem ponto de exclamação.
+        Entre 8 e 10 palavras. Sem ponto de exclamação.
 
-        SLIDES INTERMEDIÁRIOS — CONTEXTO, NECESSIDADE E DESEJO:
+        SLIDES 2 e 3 — CONTEXTO E NECESSIDADE:
         Construa a necessidade de forma natural — não invente, REVELE.
         Mostre por que o problema existe, o que ele causa e o que muda quando resolvido.
-        Após o meio da sequência, faça a transição para o material com uma frase iniciada por uma variação de:
-        "Se você [sinônimo de 'busca'] [sinônimo de 'crescimento/conhecimento prático'], e quer [sinônimo de 'evoluir/transformar sua rotina'], o [sinônimo de 'módulo/material/recurso'] desta semana foi criado pra isso."
+        Use tom empático, nunca acusatório. Máximo de 10 palavras por slide.
+
+        SLIDE 4 — TRANSIÇÃO PARA O MATERIAL (frase de convite + título do PDF):
+        Inicie com uma variação criativa de: "Se você [sinônimo de 'busca'] [sinônimo de 'crescimento/conhecimento prático'], e quer [sinônimo de 'evoluir/transformar sua rotina'], o [sinônimo de 'módulo/material/recurso'] desta semana foi criado pra isso."
         Em seguida, apresente o título exato do material: "{titulo_pdf_tarde}".
         Sinônimos para 'busca': persegue, quer, valoriza, abraca, prioriza.
         Sinônimos para 'evoluir': mudar de patamar, crescer de verdade, avançar com intenção, transformar sua rotina.
         Sinônimos para 'módulo/material': {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
-        Se não couber em um slide (mais de 15 palavras), divida: slide de transição + slide com o título separado. O total pode ir a {num_slides_story + 1} slides.
-        Use tom empático, nunca acusatório.
+        Se não couber em um slide (mais de 15 palavras), divida: slide de transição (Slide 4) + slide com o título separado (Slide 5). O total passará a ser 6 slides.
 
-        SLIDE FINAL — CTA COM ENTREGA (use \\n para separar):
+        SLIDE FINAL (5 ou 6) — CTA COM ENTREGA (use \\n para separar):
         Parte 1 (ANTES de \\n): instrucão direta comentando 'SABEDORIA'. Modelo: "Comente 'SABEDORIA' e eu te envio o [sinônimo de módulo] desta semana direto no seu direct."
         VARIE o sinônimo a cada geração: {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
         Parte 2 (DEPOIS de \\n): promessa do que a pessoa vai receber no direct.
@@ -529,14 +530,15 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Termine pedindo para comentar 'SABEDORIA' para receber no direct.
         - NÃO use hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter {num_slides_story} ou {num_slides_story + 1} itens se necessário dividir a transição):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter 5 ou 6 itens):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
             "Slide 1 — Gancho de atenção",
             "Slide 2 — Contexto ou necessidade",
-            "Slide N-1 — Se você persegue crescimento real e quer evoluir na prática, o {sinonimo_modulo} desta semana foi criado pra isso. {titulo_pdf_tarde}.",
-            "Slide {num_slides_story} (CTA) — Comente 'SABEDORIA' e eu te envio o {sinonimo_modulo} desta semana direto no seu direct. \\n Receba o material de direcionamento prático direto no seu direct."
+            "Slide 3 — Aprofundamento do contexto",
+            "Slide 4 — Se você persegue crescimento real e quer evoluir na prática, o {sinonimo_modulo} desta semana foi criado pra isso. {titulo_pdf_tarde}.",
+            "Slide 5 (CTA) — Comente 'SABEDORIA' e eu te envio o {sinonimo_modulo} desta semana direto no seu direct. \\n Receba o material de direcionamento prático direto no seu direct."
           ],
           "pexels_queries": [
             "thoughtful person warm night lighting 35mm",
