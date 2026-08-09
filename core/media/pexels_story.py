@@ -553,8 +553,8 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     else:
         queries_lista = list(query)
 
-    # --- HIGIENIZAÇÃO DE QUERIES (Filtro Estrito Anti-Claro / Anti-Academia / Anti-Natureza) ---
-    # Elimina vídeos claros, academias iluminadas, matos, praias, campos, florestas ensolaradas e escritórios claros.
+    # --- HIGIENIZAÇÃO E PADRONIZAÇÃO DE QUERIES (Filtro Estrito: Solidão Urbana Contemporânea Noturna) ---
+    # Elimina vídeos claros, academias, natureza diurna, praias e escritórios iluminados.
     TERMOS_PROIBIDOS_VIDEO = [
         "study", "studying", "student", "library", "classroom", "school",
         "sunlight", "daylight", "meadow", "park", "bright office", "white room",
@@ -569,13 +569,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         for term in TERMOS_PROIBIDOS_VIDEO:
             q_clean = q_clean.replace(term, "").strip()
         if len(q_clean) < 4:
-            q_clean = "dark night city street golden amber light 35mm"
-        if "dark" not in q_clean and "night" not in q_clean:
-            q_clean += " dark night amber gold 35mm cinematic"
+            q_clean = "contemporary urban solitude night city street golden amber light 35mm"
+        if "night" not in q_clean:
+            q_clean += " night urban solitude 35mm cinematic"
         queries_higienizadas.append(q_clean)
     queries_lista = queries_higienizadas
 
-    logger.info(f"🎥 Buscando vídeos com {len(queries_lista)} quer{'y' if len(queries_lista)==1 else 'ies'}: {queries_lista}")
+    logger.info(f"🎥 Buscando vídeos com {len(queries_lista)} quer{'y' if len(queries_lista)==1 else 'ies'} de Solidão Urbana Noturna: {queries_lista}")
 
     slides = list(slides)
 

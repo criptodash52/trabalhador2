@@ -517,8 +517,8 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Não use "..." mais de 1 vez.
 
         PEXELS/PIXABAY QUERY SUGERIDA:
-        Crie queries cinemáticas, com iluminação dourada e ambiente noturno/premium.
-        Exemplo: "thoughtful person looking out window night city warm golden light 35mm" ou "minimalist study room warm lamp light night cozy ambient 35mm"
+        Crie queries cinemáticas focadas no tema SOLIDÃO URBANA CONTEMPORÂNEA À NOITE.
+        Exemplo: "contemporary urban solitude night city street golden amber light 35mm" ou "lonely person looking at night city lights rooftop 35mm"
 
         LEGENDA (3 a 4 linhas):
         - Benefício direto e prático de ler o material.
