@@ -466,80 +466,100 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         cta_tarde = random.choice(VARIACOES_CTA_TARDE)
 
         prompt = f"""
-        Você é uma IA especialista em psicologia do consumidor, persuasão, copywriting e conversão.
-        Sua função é criar uma sequência de STORIES (em formato VÍDEO) para pessoas que JÁ SEGUEM o perfil @codigo.da.sabedoria_.
-        O objetivo desta sequência é mover o seguidor da ATENÇÃO para a AÇÃO de forma natural e não forçada.
+        Você é um estrategista de conversão, especialista em comportamento humano e copywriting de alta performance.
+        Sua função é criar uma sequência de STORIES em vídeo para AUDIÊNCIA QUENTE — pessoas que JÁ SEGUEM o perfil @codigo.da.sabedoria_.
+        Elas te conhecem. Confiam em você. Mas ainda não pediram o PDF desta semana.
+        Seu trabalho é criar a mensagem que vai fazer elas reconhecerem que precisam desse material agora.
 
-        FLUXO DE CONVERSÃO A SEGUIR (use as etapas necessárias, não todas obrigatoriamente):
-        ATENÇÃO → CONTEXTO → PROBLEMA → CONSEQUÊNCIA → DESEJO → SOLUÇÃO → VALOR → OFERTA → CTA
+        ═══════════════════════════════════════════════════
+        DIFERENÇA FUNDAMENTAL DE AUDIÊNCIA:
+        Esta NÃO é uma audiência fria. A pessoa já te acompanha.
+        Portanto: menos contexto, mais profundidade. Menos apresentação, mais revelação.
+        Fale como um mentor próximo que identificou algo específico e quer compartilhar.
+        A confiança já existe — use-a para ir direto ao ponto com elegância.
+        ═══════════════════════════════════════════════════
 
-        FILOSOFIA BASE (injete sutilmente na narrativa, sem citar diretamente):
-        - A verdadeira liberdade vem de viver de forma autêntica e questionar estruturas limitantes.
-        - A ausência de ambição equivale à estagnação espiritual.
-        - O conhecimento compartilhado é o que mantém vivos os ideais além do tempo.
-        - Laços verdadeiros se constroem por escolha, respeito mútuo e propósitos compartilhados.
-        - A existência ganha significado quando há coragem para manter vivas as aspirações mais profundas.
-
-        MATERIAL DA SEMANA (BASE DA NARRATIVA):
-        - Título do Material: "{titulo_pdf_tarde}"
+        MATERIAL DA SEMANA (CENTRO DE TODA A NARRATIVA):
+        - Título: "{titulo_pdf_tarde}"
         - Conteúdo resumido: {resumo_pdf_tarde[:350]}
 
-        ESTRUTURA OBRIGATÓRIA DA SEQUÊNCIA (EXATAMENTE 5 OU 6 SLIDES):
+        ═══════════════════════════════════════════════════
+        FILOSOFIA BASE (injete de forma invisível — nunca cite diretamente):
+        - Liberdade real vem de viver de forma autêntica, recusando padrões que nunca foram seus.
+        - A ausência de propósito é a única forma de morte em vida.
+        - O conhecimento compartilhado é o que mantém vivos os ideais além do tempo.
+        - A existência ganha significado quando há coragem de manter as aspirações mais profundas.
+        ═══════════════════════════════════════════════════
 
-        SLIDE 1 — ATENÇÃO (GANCHO):
-        Abra com uma frase que interrompa o scroll. Pode ser uma contradição, uma descoberta, uma pergunta específica ou uma afirmação inesperada.
-        Conectada ao crescimento de vida, clareza ou benefício real que o material da semana entrega.
-        Entre 8 e 10 palavras. Sem ponto de exclamação.
+        ANTES DE ESCREVER, DEFINA INTERNAMENTE (não precisa aparecer no JSON):
+        1. Qual é a frustração silenciosa que este material resolve?
+        2. O que muda na vida da pessoa quando ela lê este PDF — não o que o PDF ensina, mas o que ela SENTE ou PERCEBE?
+        3. Por que agora? O que torna este material relevante no momento em que ela vê o story?
 
-        SLIDES 2 e 3 — CONTEXTO E NECESSIDADE:
-        Construa a necessidade de forma natural — não invente, REVELE.
-        Mostre por que o problema existe, o que ele causa e o que muda quando resolvido.
-        Use tom empático, nunca acusatório. Máximo de 10 palavras por slide.
+        ═══════════════════════════════════════════════════
+        ESTRUTURA OBRIGATÓRIA DA SEQUÊNCIA (5 OU 6 SLIDES):
+        ═══════════════════════════════════════════════════
 
-        SLIDE 4 — TRANSIÇÃO PARA O MATERIAL (frase de convite + título do PDF):
-        Inicie com uma variação criativa de: "Se você [sinônimo de 'busca'] [sinônimo de 'crescimento/conhecimento prático'], e quer [sinônimo de 'evoluir/transformar sua rotina'], o [sinônimo de 'módulo/material/recurso'] desta semana foi criado pra isso."
-        Em seguida, apresente o título exato do material: "{titulo_pdf_tarde}".
-        Sinônimos para 'busca': persegue, quer, valoriza, abraca, prioriza.
-        Sinônimos para 'evoluir': mudar de patamar, crescer de verdade, avançar com intenção, transformar sua rotina.
-        Sinônimos para 'módulo/material': {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
-        Se não couber em um slide (mais de 15 palavras), divida: slide de transição (Slide 4) + slide com o título separado (Slide 5). O total passará a ser 6 slides.
+        SLIDE 1 — PARAR E RECONHECER (MÁXIMO 8 a 10 palavras):
+        OBJETIVO COMPORTAMENTAL: fazer o seguidor pausar e pensar "isso é sobre algo que conheço bem".
+        Abra com uma frase que revela algo sobre a realidade da pessoa — observação específica e verdadeira.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras. DEVE caber em exatamente 2 ou 3 linhas na tela.
+        Sem exclamação. Sem clichê. Sem autoajuda vazia.
 
-        SLIDE FINAL (5 ou 6) — CTA COM ENTREGA (use \\n para separar):
-        Parte 1 (ANTES de \\n): instrução direta extremamente curta e objetiva para caber em 2 linhas. Modelo: "Comente 'SABEDORIA' que te envio o material no direct."
-        Parte 2 (DEPOIS de \\n): promessa curta em 1 única linha do benefício principal do PDF.
-        OBRIGATÓRIO: O CTA completo (parte 1 + parte 2) DEVE ser super conciso para que o texto final tenha no máximo 3 linhas na tela.
+        SLIDES 2 e 3 — REVELAR E APROFUNDAR (MÁXIMO 8 a 10 palavras por slide):
+        OBJETIVO COMPORTAMENTAL: criar identificação profunda e despertar o desejo de resolver algo.
+        Nomeie a frustração silenciosa que a pessoa sente mas raramente nomeia.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide. Escreva a ideia de forma sintética e completa.
+        PROIBIDO: tom acusatório, vitimismo, frases longas ou explicativas.
 
+        SLIDE 4 — A PONTE PARA O MATERIAL:
+        OBJETIVO COMPORTAMENTAL: fazer o PDF parecer a resposta natural para o que foi revelado.
+        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Modelo: "Para evoluir na prática, veja o material da semana."
+        Em seguida, o título exato do material: "{titulo_pdf_tarde}".
+        Se a frase + título ultrapassar 12 palavras: OBRIGATÓRIO dividir em 2 slides (Slide 4 = convite curto, Slide 5 = Título do PDF).
+
+        SLIDE FINAL — CTA DIRETO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
+        OBJETIVO COMPORTAMENTAL: tornar a ação simples e imediata.
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'SABEDORIA' pra receber no Direct."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia de evolução da semana."
+        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total. Isso garante EXATAMENTE 2 (ou no máximo 3) linhas na tela.
+
+        ═══════════════════════════════════════════════════
         REGRAS ABSOLUTAS:
-        - Tom: sereno, firme, maduro. Nunca carrancudo, nunca vitimista.
-        - Proibido autoajuda vazia: "acredite em você", "nunca desista", "foco e determinação".
-        - Falar de igual para igual — como um mentor compartilhando uma percepção profunda.
-        - Não use ponto de exclamação.
-        - Não use "..." mais de 1 vez.
+        ═══════════════════════════════════════════════════
+        - Tom: sereno, firme, próximo. Como um mentor que fala de igual para igual.
+        - Cada palavra deve contribuir para: reconhecimento, desejo ou ação. Se não faz nenhuma das 3, corte.
+        - PROIBIDO: "acredite em você", "nunca desista", "foco e determinação", "você é capaz", exclamações.
+        - PROIBIDO: o PDF parecer uma isca, um brinde ou uma recompensa vazia.
+        - PROIBIDO: apresentar o material como algo "grátis" ou "exclusivo" — ele é valioso porque resolve algo real.
+        - Não use "..." mais de uma vez na sequência inteira.
+        - Fale com uma pessoa inteligente que está prestes a perceber algo que ainda não enxergou.
 
-        PEXELS/PIXABAY QUERY SUGERIDA:
-        Crie queries cinemáticas focadas no tema SOLIDÃO URBANA CONTEMPORÂNEA À NOITE.
-        Exemplo: "contemporary urban solitude night city street golden amber light 35mm" ou "lonely person looking at night city lights rooftop 35mm"
+        PEXELS/PIXABAY QUERY:
+        Crie queries cinemáticas no tema SOLIDÃO URBANA CONTEMPORÂNEA À NOITE.
+        Exemplos: "thoughtful person night city lights warm glow 35mm cinematic" ou "introspective figure rooftop urban night golden light film"
 
         LEGENDA (3 a 4 linhas):
-        - Benefício direto e prático de ler o material.
-        - Termine pedindo para comentar 'SABEDORIA' para receber no direct.
-        - NÃO use hashtags.
+        - Benefício direto e concreto de receber o material.
+        - Tom de mentor próximo — sem hype, sem urgência artificial.
+        - Termine com variação natural do CTA. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
+        - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter 5 ou 6 itens):
+        Responda APENAS em formato JSON válido (o array 'slides' DEVE ter 5 ou 6 itens, o último com \\n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
-            "Slide 1 — Gancho de atenção",
-            "Slide 2 — Contexto ou necessidade",
-            "Slide 3 — Aprofundamento do contexto",
-            "Slide 4 — Se você persegue crescimento real e quer evoluir na prática, o {sinonimo_modulo} desta semana foi criado pra isso. {titulo_pdf_tarde}.",
-            "Slide 5 (CTA) — Comente 'SABEDORIA' e eu te envio o {sinonimo_modulo} desta semana direto no seu direct. \\n Receba o material de direcionamento prático direto no seu direct."
+            "Slide 1 — Frase que faz o seguidor parar e reconhecer algo sobre si mesmo.",
+            "Slide 2 — Nomeia a frustração silenciosa. Remove a culpa. Revela o real obstáculo.",
+            "Slide 3 — Abre o horizonte: como é quando essa percepção existe.",
+            "Slide 4 — Ponte natural para o material: reuni isso no {sinonimo_modulo} desta semana. {titulo_pdf_tarde}.",
+            "Slide 5 (CTA) — Comente 'SABEDORIA' que te envio direto no Direct. \\n Você vai perceber [promessa do resultado real após ler]."
           ],
           "pexels_queries": [
-            "thoughtful person warm night lighting 35mm",
-            "minimalist library warm lamp light night"
+            "thoughtful person night city lights warm glow 35mm cinematic",
+            "introspective figure rooftop urban night golden light film"
           ],
-          "legenda": "Legenda curta focada no crescimento pessoal. Comente 'SABEDORIA' que te envio o link direto no Direct 👇"
+          "legenda": "Legenda próxima e direta sobre o que o material revela. Comente 'SABEDORIA' que te envio no Direct 👇"
         }}
         """
     elif tipo == "carousel":
@@ -900,114 +920,152 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         logger.info(f"🎨 [REELS_LEADS] Pilar visual #{idx_pilar+1} forçado: {pilar_nome.upper()}")
         # ─────────────────────────────────────────────────────────────────────
 
+        # ── Sorteio declarado do mecanismo persuasivo ─────────────────────────
+        MECANISMOS_PERSUASIVOS = [
+            {
+                "nome": "IDENTIDADE",
+                "descricao": "Desperta a consciência de status. Faz a pessoa perceber a distância entre quem ela é e quem ela sabe que poderia ser. Usa tensão interna, não acusação.",
+                "exemplo_gancho": "Você não quer uma vida maior. Quer uma vida que finalmente pareça sua.",
+            },
+            {
+                "nome": "CONTRASTE",
+                "descricao": "Coloca dois mundos lado a lado. Mostra que pessoas em situação similar chegaram a destinos opostos — e que a diferença estava em uma percepção, não em esforço.",
+                "exemplo_gancho": "Duas pessoas podem trabalhar 10 horas por dia. Uma constrói liberdade. A outra apenas acumula cansaço.",
+            },
+            {
+                "nome": "CURIOSIDADE",
+                "descricao": "Abre uma lacuna de informação. Apresenta uma pergunta ou dado surpreendente que a pessoa não consegue ignorar sem saber a resposta. Cria tração para continuar lendo.",
+                "exemplo_gancho": "Existe uma pergunta simples que pode revelar por que seus planos continuam sendo adiados.",
+            },
+            {
+                "nome": "REVELAÇÃO",
+                "descricao": "Remove a culpa da pessoa e revela que o obstáculo real é externo — um padrão oculto, uma crença instalada, uma ausência de método. A pessoa sente alívio e abertura.",
+                "exemplo_gancho": "O problema talvez não seja falta de disciplina. É tentar organizar uma vida que nunca foi planejada para você.",
+            },
+            {
+                "nome": "DESAFIO",
+                "descricao": "Convoca a pessoa a se posicionar. Faz uma pergunta que ela deveria saber responder — mas provavelmente não sabe. Ativa o desejo de provar algo para si mesma.",
+                "exemplo_gancho": "Se você tivesse que eliminar 80% do que ocupa seu dia, saberia quais 20% merecem permanecer?",
+            },
+            {
+                "nome": "AUTORIDADE",
+                "descricao": "Posiciona quem fala como alguém que estudou algo que a maioria ignora. Cria curiosidade sobre o que essa pessoa sabe — e que o seguidor ainda não aprendeu.",
+                "exemplo_gancho": "Passei a estudar uma coisa que quase ninguém ensina: como transformar intenção em execução real.",
+            },
+        ]
+        idx_mecanismo = estado_leads.get("index_mecanismo_reels_leads", 0) % len(MECANISMOS_PERSUASIVOS)
+        mecanismo_atual = MECANISMOS_PERSUASIVOS[idx_mecanismo]
+        estado_leads["index_mecanismo_reels_leads"] = (idx_mecanismo + 1) % len(MECANISMOS_PERSUASIVOS)
+        salvar_estado(estado_leads)
+        mecanismo_nome = mecanismo_atual["nome"]
+        mecanismo_descricao = mecanismo_atual["descricao"]
+        mecanismo_gancho = mecanismo_atual["exemplo_gancho"]
+        logger.info(f"🧠 [REELS_LEADS] Mecanismo persuasivo #{idx_mecanismo+1}: {mecanismo_nome}")
+        # ─────────────────────────────────────────────────────────────────────
+
         prompt = f"""
-        Você é uma IA especialista em psicologia do consumidor, persuasão, copywriting, comportamento humano, marketing de conteúdo e conversão.
-        Sua função é criar conteúdos para REELS LEADS cujo público principal é formado por pessoas que ainda NÃO seguem o perfil @codigo.da.sabedoria_.
+        Você é um estrategista de conversão de elite, especialista em comportamento humano, funis de decisão e copywriting de alta performance.
+        Sua função é criar um REEL de slides de texto para o perfil @codigo.da.sabedoria_ voltado a PÚBLICO FRIO — pessoas que ainda não seguem o perfil e estão consumindo conteúdo rapidamente.
 
-        IMPORTANTE: Este Reel NÃO existe apenas para gerar visualizações ou seguidores.
-        Ele possui uma função de CONVERSÃO. O objetivo é fazer a pessoa:
-        PARAR → SE IDENTIFICAR → ENTENDER → PERCEBER UMA NECESSIDADE → DESEJAR UMA SOLUÇÃO → PERCEBER VALOR → COMENTAR → RECEBER A SOLUÇÃO NO DIRECT.
-        O CTA principal é: "Comente 'SABEDORIA' que eu te envio no Direct."
+        ═══════════════════════════════════════════════════
+        MECANISMO PERSUASIVO DESTA GERAÇÃO: {mecanismo_nome}
+        {mecanismo_descricao}
+        Exemplo de gancho para este mecanismo: "{mecanismo_gancho}"
+        VOCÊ DEVE CONSTRUIR TODA A SEQUÊNCIA USANDO EXCLUSIVAMENTE ESTE MECANISMO.
+        ═══════════════════════════════════════════════════
 
-        FILOSOFIA BASE (injete sutilmente na narrativa, sem citar diretamente):
-        - A verdadeira liberdade vem de viver de forma autêntica, recusando submissão e permitindo que outros também sejam livres.
-        - A ausência de ambição e propósito equivale à estagnação espiritual; é a busca constante por um sonho que dá significado à vida.
-        - Enquanto os valores e sonhos de uma pessoa inspirarem outros, sua essência permanece viva através do tempo.
-        - O preconceito e ressentimento só se quebram com diálogo, empatia e disposição para a convivência.
-        - A existência ganha significado quando há coragem para manter vivas as aspirações mais profundas, independente das adversidades.
-
-        ARQUITETURA DE CONVERSÃO (estrutura mental — não precisa aparecer literalmente):
-        ATENÇÃO → IDENTIFICAÇÃO → PROBLEMA → CONSEQUÊNCIA → NOVA PERCEPÇÃO → POSSIBILIDADE → DESEJO → VALOR → CURIOSIDADE SOBRE A SOLUÇÃO → CTA → COMENTÁRIO → DIRECT
-
-        PRINCÍPIOS DE PERSUASÃO A APLICAR (de forma invisível e natural):
-        Robert Cialdini, Dale Carnegie, Chris Voss, Alex Hormozi, Daniel Kahneman, Jonah Berger.
-        Use: reciprocidade, autoridade, prova social, curiosidade, contraste, especificidade, pertencimento, identidade, antecipação, percepção de valor, aversão à perda.
-        NUNCA transforme o texto em uma coleção óbvia de gatilhos mentais.
-
-        PÚBLICO FRIO — Considere que a pessoa:
-        - Não conhece profundamente a marca;
-        - Pode nunca ter visto o perfil;
-        - Está consumindo conteúdo rapidamente;
-        - Não entrou necessariamente procurando comprar.
-        Por isso, construa a crença progressivamente. Não presuma que a pessoa já deseja o produto.
+        MATERIAL DA SEMANA (ENTREGA AO FINAL DO FUNIL):
+        - Título: "{titulo_pdf_limpo}"
+        - Solução Prática: "{solucao_pdf_limpo}"
+        - Contexto: {resumo_pdf[:300]}
 
         {evitar_repeticao_leads}
 
-        ==== MATERIAL DA SEMANA (BASE DA NARRATIVA) ====
-        Título do Material: "{titulo_pdf_limpo}"
-        Solução Prática: "{solucao_pdf_limpo}"
-        Contexto: {resumo_pdf[:300]}
-        ================================================
+        ═══════════════════════════════════════════════════
+        FILOSOFIA DO CONTEÚDO (injete de forma invisível — nunca cite diretamente):
+        - Liberdade real vem de viver de forma autêntica, recusando padrões que nunca foram seus.
+        - A ausência de propósito é a única forma de morte em vida.
+        - Trabalhar muito na direção errada é a forma mais sofisticada de ficar parado.
+        - A mudança não exige mais esforço. Exige uma percepção que você ainda não teve.
+        ═══════════════════════════════════════════════════
 
-        ANTES DE ESCREVER QUALQUER SLIDE, execute obrigatoriamente estas 3 etapas:
+        ANTES DE ESCREVER, DEFINA INTERNAMENTE (não precisa aparecer no JSON):
+        1. A única ideia que este Reel vai comunicar (uma frase).
+        2. O comportamento específico que cada slide precisa provocar.
+        3. Se a sequência toda conduz logicamente ao PDF como próxima peça natural da conversa.
 
-        ► ETAPA 1 — IDEIA CENTRAL (apenas uma):
-        Defina em UMA frase a única ideia que este Reels vai comunicar.
-        Exemplo: "A maioria das pessoas gasta energia no lugar errado e chama isso de produtividade."
+        ═══════════════════════════════════════════════════
+        ESTRUTURA OBRIGATÓRIA DOS SLIDES (6 OU 7 SLIDES):
+        ═══════════════════════════════════════════════════
 
-        ► ETAPA 2 — FLUXO LÓGICO:
-        A → B → C → D → E → F (CTA). Cada slide deve levar naturalmente ao próximo.
-        Se um slide puder ser removido sem prejuízo, reescreva a sequência inteira.
+        SLIDE 1 — PARAR O SCROLL (MÁXIMO 8 a 10 palavras):
+        OBJETIVO COMPORTAMENTAL: fazer o polegar parar.
+        Use o mecanismo {mecanismo_nome} desde a primeira palavra.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras. DEVE caber em exatamente 2 ou 3 linhas na tela.
+        PROIBIDO: frases motivacionais genéricas, clichês de autoajuda, frases longas.
 
-        ► ETAPA 3 — INTENÇÃO NARRATIVA:
-        Escolha UMA: REFLEXÃO | INSPIRAÇÃO | MUDANÇA DE PERSPECTIVA | ENSINO PRÁTICO | EXERCÍCIO.
+        SLIDES 2 e 3 — CRIAR IDENTIFICAÇÃO E REVELAR A DOR (MÁXIMO 8 a 10 palavras por slide):
+        OBJETIVO COMPORTAMENTAL: fazer a pessoa pensar "ele descreveu exatamente o que vivo".
+        Descreva situações concretas e específicas. REVELE o que a pessoa já sente.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide. Escreva pensamentos curtos e diretos.
+        JAMAIS faça a pessoa se sentir inferior ou culpada.
 
-        ESTRUTURA DOS SLIDES (6 OU 7 SLIDES — adapte conforme o espaço narrativo):
+        SLIDE 4 — VIRADA: A NOVA PERCEPÇÃO (MÁXIMO 8 a 10 palavras):
+        OBJETIVO COMPORTAMENTAL: criar o desejo de saber mais.
+        Apresente a ideia central como uma revelação. Abra a porta com uma frase sintética de 8 a 10 palavras.
 
-        SLIDE 1 — GANCHO (4 a 8 palavras):
-        Para o scroll. Use contradição, quebra de crença, pergunta específica ou afirmação inesperada.
-        NUNCA use clickbait vazio. O gancho deve estar conectado ao restante.
+        SLIDE 5 — PONTE PARA O MATERIAL:
+        OBJETIVO COMPORTAMENTAL: fazer o PDF parecer a próxima peça lógica da conversa.
+        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Exemplo: "Para evoluir na prática, veja o material da semana."
+        Apresente o nome EXATO do material: "{titulo_pdf_limpo}".
+        Se ultrapassar 12 palavras no total: OBRIGATÓRIO dividir em 2 slides (Slide 5 = convite curto, Slide 6 = Título do PDF).
 
-        SLIDES 2 a 4 — IDENTIFICAÇÃO E DESENVOLVIMENTO:
-        Descreva situações concretas do dia a dia. A pessoa deve pensar: "Isso acontece comigo."
-        Mostre o problema, por que ele acontece, o que causa, o que a pessoa perde ao continuar assim.
-        Entregue valor real antes de pedir o comentário (ensine, revele, corrija, apresente nova perspectiva).
-        PROIBIDO: 2 slides negativos consecutivos sem abrir horizonte de clareza.
-        Limite: máximo 15 palavras por slide.
+        SLIDE FINAL — CTA DE BAIXO ATRITO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
+        OBJETIVO COMPORTAMENTAL: tornar o ato de comentar simples e de baixo custo.
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'SABEDORIA' pra receber no Direct."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Descubra o método prático da semana."
+        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total. Isso garante EXATAMENTE 2 (ou no máximo 3) linhas na tela.
 
-        SLIDE 5 — TRANSIÇÃO PARA O MATERIAL (frase de convite + título do PDF):
-        Inicie com uma variação criativa de: "Se você [sinônimo de 'busca'] [sinônimo de 'conhecimento prático'], e quer [sinônimo de 'transformar sua rotina'], [sinônimo de 'veja'] o [sinônimo de 'material/módulo/recurso'] desta semana."
-        Em seguida, apresente o NOME EXATO E COMPLETO do material: "{titulo_pdf_limpo}" (sem alterar nenhuma palavra do título).
-        Sinônimos para 'busca': persegue, quer, abraca, valoriza, prioriza.
-        Sinônimos para 'transformar rotina': mudar de patamar, evoluir na prática, crescer de verdade, avançar com intenção.
-        Sinônimos para 'material/módulo': recurso, conteúdo, acervo, edição, kit, coletânea, método.
-        SE o slide 5 ultrapassar 15 palavras: divida em DOIS slides — slide 5 com a frase de convite, slide 6 com o título do PDF. O total passará a ser 7 slides.
+        ═══════════════════════════════════════════════════
+        REGRAS ABSOLUTAS DE QUALIDADE:
+        ═══════════════════════════════════════════════════
+        - Cada palavra deve contribuir para: parar, identificar, despertar desejo ou conduzir à ação. Se não faz nenhuma das 4 coisas, corte.
+        - Nunca escreva para parecer bonito ou profundo. Escreva para provocar um comportamento específico.
+        - Proibido frases motivacionais genéricas: "acredite em você", "nunca desista", "você é capaz", "foco e determinação".
+        - Proibido acusações que façam o usuário se sentir inferior, incapaz ou burro.
+        - Fale com alguém inteligente que está prestes a perceber algo que ainda não enxergou.
+        - Não use ponto de exclamação. Não use "..." mais de uma vez na sequência inteira.
+        - O PDF nunca é apresentado como "grátis", "bônus" ou "recompensa". Ele é a próxima etapa natural.
 
-        SLIDE FINAL (6 ou 7) — CTA E PROMESSA (use \\n para separar as duas partes):
-        Parte 1 (ANTES de \\n): instrucão direta EXIGINDO aspas simples ao redor da palavra chave.
-        Modelo obrigatório: "Comente 'SABEDORIA' e eu te envio o [sinônimo de módulo] desta semana direto no seu direct."
-        VARIE o sinônimo de módulo a cada geração: módulo, recurso, conteúdo, acervo, edição, kit, coletânea, método, material.
-        Parte 2 (DEPOIS de \\n): promessa positiva e concreta do que a pessoa vai descobrir ou receber ao baixar o material.
-        PROIBIDO CTA seco. O convidado deve sentir que está recebendo algo de valor real.
-
-        PEXELS QUERY — PILAR OBRIGATÓRIO: "{pilar_nome}"
+        PEXELS QUERY — PILAR VISUAL OBRIGATÓRIO: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
         As demais complementam o mesmo universo visual: {pilar_descricao}.
-        PROIBIDO: vídeos de dor, chuva, depressão, isolamento, escuridão. Toda query DEVE evocar poder, luz, movimento ou multidão vibrando.
+        PROIBIDO: vídeos de dor, chuva, depressão, isolamento, escuridão. Toda query DEVE evocar poder, luz, movimento, liderança ou conquista.
 
         LEGENDA (3 a 4 linhas):
-        - Benefício direto e concreto, sem jargões.
-        - DEVE terminar com variação criativa do CTA 'SABEDORIA'. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
+        - Benefício direto e concreto, sem jargões, sem hype.
+        - Tom de conversa próxima, como alguém que descobriu algo e está compartilhando.
+        - DEVE terminar com variação natural do CTA. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido (o array 'slides' DEVE conter 6 OU 7 frases, a última com \\n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
-            "Gancho de atenção aqui.",
-            "Identificação empática concreta.",
-            "Desenvolvimento: por que isso acontece.",
-            "Nova perspectiva sobre o problema.",
-            "Se você persegue crescimento real e quer evoluir na prática, veja o recurso desta semana.",
+            "Gancho com mecanismo {mecanismo_nome} — faz o scroll parar.",
+            "Identificação concreta: a pessoa pensa 'isso acontece comigo'.",
+            "Aprofundamento da dor — revela, não acusa. Remove a culpa da pessoa.",
+            "Virada: a nova percepção que muda tudo. Abre a porta, não entrega a solução.",
+            "Ponte natural para o material, sem parecer venda.",
             "{titulo_pdf_limpo}.",
-            "Comente 'SABEDORIA' e eu te envio o módulo desta semana direto no seu direct. \\n Descubra como viver com autenticidade, propósito e liberdade real."
+            "Comente 'SABEDORIA' e eu te envio direto no Direct. \\n Você vai descobrir [promessa concreta do benefício real do PDF]."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
-            "luxury lifestyle modern city sunset cinematic",
-            "leader walking fast confident successful"
+            "successful confident person walking modern city golden light cinematic",
+            "leader standing high building looking horizon sunrise epic"
           ],
-          "legenda": "Legenda criativa baseada no material desta semana. Comente 'SABEDORIA' que te envio no Direct 👇"
+          "legenda": "Legenda próxima e direta baseada no material desta semana. Comente 'SABEDORIA' que te envio no Direct 👇"
         }}
         """
     else:

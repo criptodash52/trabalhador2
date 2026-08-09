@@ -330,7 +330,7 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         alturas_baixo.append(bb[3] - bb[1])
         larguras_baixo.append(bb[2] - bb[0])
 
-    espaco_entre = 6
+    espaco_entre = 12
     divisor_espaco = 24
     padding_v = 30
 
