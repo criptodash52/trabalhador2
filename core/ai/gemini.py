@@ -136,17 +136,39 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
         if isinstance(slides_val, list):
             slides_normalizados = []
             ultimo_idx = len(slides_val) - 1
+            penultimo_idx = ultimo_idx - 1
             for idx, s in enumerate(slides_val):
                 # Converte \\n literal → \n real (vem assim do JSON do Gemini)
                 s_norm = str(s).replace("\\n", "\n").strip()
-                # NUNCA trunca o último slide (CTA) — ele contém a chamada completa
-                if idx == ultimo_idx:
+                # NUNCA trunca o último slide (CTA) nem o penúltimo (Título PDF)
+                if idx >= penultimo_idx:
                     slides_normalizados.append(s_norm)
                     continue
                 palavras = s_norm.replace("\n", " ").split()
-                if len(palavras) > 18:
-                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 18.")
-                    s_norm = " ".join(palavras[:18]) + "..."
+                if len(palavras) > 15:
+                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 15.")
+                    s_norm = " ".join(palavras[:15]) + "..."
+                slides_normalizados.append(s_norm)
+            dados["slides"] = slides_normalizados
+
+    # ── Truncador + normalizador para slides do reels_leads ──
+    # Limita cada slide de corpo (não o CTA nem o Título PDF) a 15 palavras máximas.
+    if tipo == "reels_leads" and "slides" in dados:
+        slides_val = dados["slides"]
+        if isinstance(slides_val, list):
+            slides_normalizados = []
+            ultimo_idx = len(slides_val) - 1
+            penultimo_idx = ultimo_idx - 1
+            for idx, s in enumerate(slides_val):
+                s_norm = str(s).replace("\\n", "\n").strip()
+                # NUNCA trunca o último slide (CTA) nem o penúltimo (Título PDF)
+                if idx >= penultimo_idx:
+                    slides_normalizados.append(s_norm)
+                    continue
+                palavras = s_norm.replace("\n", " ").split()
+                if len(palavras) > 15:
+                    logger.warning(f"⚠️ [IA] Slide do reels_leads com {len(palavras)} palavras. Truncando para 15.")
+                    s_norm = " ".join(palavras[:15]) + "..."
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
@@ -476,14 +498,19 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         SLIDES INTERMEDIÁRIOS — CONTEXTO, NECESSIDADE E DESEJO:
         Construa a necessidade de forma natural — não invente, REVELE.
         Mostre por que o problema existe, o que ele causa e o que muda quando resolvido.
-        Conecte ao material da semana "{titulo_pdf_tarde}" como a solução natural.
-        Após o meio da sequência, apresente o material com uma frase do tipo: "Esse {sinonimo_modulo} desta semana foi criado exatamente para isso."
+        Após o meio da sequência, faça a transição para o material com uma frase iniciada por uma variação de:
+        "Se você [sinônimo de 'busca'] [sinônimo de 'crescimento/conhecimento prático'], e quer [sinônimo de 'evoluir/transformar sua rotina'], o [sinônimo de 'módulo/material/recurso'] desta semana foi criado pra isso."
+        Em seguida, apresente o título exato do material: "{titulo_pdf_tarde}".
+        Sinônimos para 'busca': persegue, quer, valoriza, abraca, prioriza.
+        Sinônimos para 'evoluir': mudar de patamar, crescer de verdade, avançar com intenção, transformar sua rotina.
+        Sinônimos para 'módulo/material': {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
+        Se não couber em um slide (mais de 15 palavras), divida: slide de transição + slide com o título separado. O total pode ir a {num_slides_story + 1} slides.
         Use tom empático, nunca acusatório.
 
         SLIDE FINAL — CTA COM ENTREGA (use \\n para separar):
-        Parte 1 (ANTES de \\n): instrução direta comentando 'SABEDORIA'.
+        Parte 1 (ANTES de \\n): instrucão direta comentando 'SABEDORIA'. Modelo: "Comente 'SABEDORIA' e eu te envio o [sinônimo de módulo] desta semana direto no seu direct."
+        VARIE o sinônimo a cada geração: {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
         Parte 2 (DEPOIS de \\n): promessa do que a pessoa vai receber no direct.
-        Use como referência de tom: {cta_tarde}
         PROIBIDO CTA seco ou abrupto. O seguidor deve sentir que está sendo convidado, não pressionado.
 
         REGRAS ABSOLUTAS:
@@ -502,13 +529,14 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Termine pedindo para comentar 'SABEDORIA' para receber no direct.
         - NÃO use hashtags.
 
-        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter EXATAMENTE {num_slides_story} itens):
+        Responda APENAS em formato JSON válido assim (o array 'slides' DEVE ter {num_slides_story} ou {num_slides_story + 1} itens se necessário dividir a transição):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
             "Slide 1 — Gancho de atenção",
             "Slide 2 — Contexto ou necessidade",
-            "Slide {num_slides_story} (CTA) — Comente 'SABEDORIA' que te envio o link. \\n Receba o material de direcionamento prático direto no seu direct."
+            "Slide N-1 — Se você persegue crescimento real e quer evoluir na prática, o {sinonimo_modulo} desta semana foi criado pra isso. {titulo_pdf_tarde}.",
+            "Slide {num_slides_story} (CTA) — Comente 'SABEDORIA' e eu te envio o {sinonimo_modulo} desta semana direto no seu direct. \\n Receba o material de direcionamento prático direto no seu direct."
           ],
           "pexels_queries": [
             "thoughtful person warm night lighting 35mm",
@@ -927,7 +955,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         ► ETAPA 3 — INTENÇÃO NARRATIVA:
         Escolha UMA: REFLEXÃO | INSPIRAÇÃO | MUDANÇA DE PERSPECTIVA | ENSINO PRÁTICO | EXERCÍCIO.
 
-        ESTRUTURA DOS SLIDES (EXATAMENTE 6 SLIDES):
+        ESTRUTURA DOS SLIDES (6 OU 7 SLIDES — adapte conforme o espaço narrativo):
 
         SLIDE 1 — GANCHO (4 a 8 palavras):
         Para o scroll. Use contradição, quebra de crença, pergunta específica ou afirmação inesperada.
@@ -938,15 +966,22 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Mostre o problema, por que ele acontece, o que causa, o que a pessoa perde ao continuar assim.
         Entregue valor real antes de pedir o comentário (ensine, revele, corrija, apresente nova perspectiva).
         PROIBIDO: 2 slides negativos consecutivos sem abrir horizonte de clareza.
+        Limite: máximo 15 palavras por slide.
 
-        SLIDE 5 — O MATERIAL COMO SOLUÇÃO NATURAL:
-        Apresente o NOME EXATO E COMPLETO do material: "{titulo_pdf_limpo}" (sem alterar nenhuma palavra do título), seguido por uma frase mostrando como ele resolve o problema construído.
-        Exemplo: "{titulo_pdf_limpo}. O método direto para alinhar sua fé e seu verdadeiro sentido."
+        SLIDE 5 — TRANSIÇÃO PARA O MATERIAL (frase de convite + título do PDF):
+        Inicie com uma variação criativa de: "Se você [sinônimo de 'busca'] [sinônimo de 'conhecimento prático'], e quer [sinônimo de 'transformar sua rotina'], [sinônimo de 'veja'] o [sinônimo de 'material/módulo/recurso'] desta semana."
+        Em seguida, apresente o NOME EXATO E COMPLETO do material: "{titulo_pdf_limpo}" (sem alterar nenhuma palavra do título).
+        Sinônimos para 'busca': persegue, quer, abraca, valoriza, prioriza.
+        Sinônimos para 'transformar rotina': mudar de patamar, evoluir na prática, crescer de verdade, avançar com intenção.
+        Sinônimos para 'material/módulo': recurso, conteúdo, acervo, edição, kit, coletânea, método.
+        SE o slide 5 ultrapassar 15 palavras: divida em DOIS slides — slide 5 com a frase de convite, slide 6 com o título do PDF. O total passará a ser 7 slides.
 
-        SLIDE 6 — CTA FINAL E PROMESSA (use \\n para separar as duas partes):
-        Parte 1 (ANTES de \\n): instrução direta EXIGINDO aspas simples ao redor da palavra chave. Exemplo: Comente 'SABEDORIA'. (O uso das aspas simples garante que a palavra fique dourada no vídeo final).
-        VARIE O VOCABULÁRIO: Em vez de usar a palavra "guia" repetidamente, utilize sinônimos como: "o acesso", "o material", "a coletânea", "o sistema", "o método".
-        Parte 2 (DEPOIS de \\n): promessa positiva e concreta do que a pessoa vai descobrir ou receber.
+        SLIDE FINAL (6 ou 7) — CTA E PROMESSA (use \\n para separar as duas partes):
+        Parte 1 (ANTES de \\n): instrucão direta EXIGINDO aspas simples ao redor da palavra chave.
+        Modelo obrigatório: "Comente 'SABEDORIA' e eu te envio o [sinônimo de módulo] desta semana direto no seu direct."
+        VARIE o sinônimo de módulo a cada geração: módulo, recurso, conteúdo, acervo, edição, kit, coletânea, método, material.
+        Parte 2 (DEPOIS de \\n): promessa positiva e concreta do que a pessoa vai descobrir ou receber ao baixar o material.
+        PROIBIDO CTA seco. O convidado deve sentir que está recebendo algo de valor real.
 
         PEXELS QUERY — PILAR OBRIGATÓRIO: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
@@ -958,7 +993,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - DEVE terminar com variação criativa do CTA 'SABEDORIA'. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
         - NÃO inclua hashtags.
 
-        Responda APENAS em formato JSON válido (o array 'slides' DEVE conter EXATAMENTE 6 frases, a última com \\n):
+        Responda APENAS em formato JSON válido (o array 'slides' DEVE conter 6 OU 7 frases, a última com \\n):
         {{
           "cta_keyword": "SABEDORIA",
           "slides": [
@@ -966,8 +1001,9 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             "Identificação empática concreta.",
             "Desenvolvimento: por que isso acontece.",
             "Nova perspectiva sobre o problema.",
-            "{titulo_pdf_limpo}. O caminho que muda isso.",
-            "Comente 'SABEDORIA' e receba o material no Direct. \\n Descubra como viver com autenticidade, propósito e liberdade real."
+            "Se você persegue crescimento real e quer evoluir na prática, veja o recurso desta semana.",
+            "{titulo_pdf_limpo}.",
+            "Comente 'SABEDORIA' e eu te envio o módulo desta semana direto no seu direct. \\n Descubra como viver com autenticidade, propósito e liberdade real."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",

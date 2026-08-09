@@ -313,11 +313,11 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
 
     by0 = (h - total_h) // 2
     y_inicial_bloco = by0 + padding_v + deslocamento_y
-    y = y_inicial_bloco
 
-    # --- Modo Degradê (Reels Leads com paleta_override) ---
+    # --- Modo Degradê (Reels Leads e Story da Tarde com paleta_override) ---
     # Quando paleta_override é fornecida, aplicamos degradê colorido nas letras
     # usando a mesma técnica de máscara de _adicionar_texto_degrade.
+    # Após o degradê, a palavra SABEDORIA é sobrescrita em dourado para manter o destaque.
     if paleta_override:
         # Camada de sombra/contorno separada da camada de texto
         shadow_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
@@ -328,8 +328,8 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         todas_linhas = list(zip(linhas_topo, alturas_topo, larguras_topo)) + \
                        list(zip(linhas_baixo, alturas_baixo, larguras_baixo))
 
-        y_texto_min = y
-        y_texto_max = y
+        y_texto_min = y_inicial_bloco
+        y_texto_max = y_inicial_bloco
         for linha, alt, lw in todas_linhas:
             y_texto_max += alt + espaco_entre
         if linhas_topo:
@@ -356,6 +356,10 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             gradient_arr[row, :, :] = c.astype(np.uint8)
         grad_img = Image.fromarray(gradient_arr, 'RGB')
 
+        # Registra posições y de cada linha para sobrescrever SABEDORIA depois
+        posicoes_linhas_topo = []
+        posicoes_linhas_baixo = []
+
         y = y_inicial_bloco
         if linhas_topo:
             for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
@@ -364,6 +368,7 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
                 shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
                                  stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
                 mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+                posicoes_linhas_topo.append((linha, x, y, alt, lw))
                 y += alt + espaco_entre
             y += divisor_espaco - espaco_entre
         for linha, alt, lw in zip(linhas_baixo, alturas_baixo, larguras_baixo):
@@ -372,6 +377,7 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
             shadow_draw.text((x, y), linha, font=fonte_cta, fill=(0, 0, 0, 0),
                              stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
             mask_draw.text((x, y), linha, font=fonte_cta, fill=(255, 255, 255, int(255 * fade_alpha)))
+            posicoes_linhas_baixo.append((linha, x, y, alt, lw))
             y += alt + espaco_entre
 
         mask = txt_mask_layer.split()[3]
@@ -379,11 +385,53 @@ def _adicionar_texto_cta(frame_array, texto, fonte_cta, chars_to_show=None, fade
         final_txt_layer.paste(grad_img, (0, 0), mask=mask)
         img = Image.alpha_composite(img.convert("RGBA"), shadow_layer)
         img = Image.alpha_composite(img, final_txt_layer).convert("RGB")
+
+        # ── Sobrescreve SABEDORIA em Dourado por cima do degradê ──
+        # Percorre todas as linhas renderizadas e sobrescreve palavra a palavra
+        if keyword_destaque:
+            sabedoria_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+            sabedoria_draw = ImageDraw.Draw(sabedoria_layer)
+            espaco_w = sabedoria_draw.textbbox((0, 0), " ", font=fonte_cta)[2] - \
+                       sabedoria_draw.textbbox((0, 0), " ", font=fonte_cta)[0]
+
+            for (linha, x_linha, y_linha, alt_linha, lw_linha) in (posicoes_linhas_topo + posicoes_linhas_baixo):
+                linha_upper = linha.upper()
+                if keyword_destaque not in linha_upper:
+                    continue
+                # Recalcula posição palavra a palavra para achar o SABEDORIA
+                palavras = linha.split(" ")
+                larguras_palavras = []
+                for p in palavras:
+                    p_clean = p.upper().replace("'", "").replace("\u2018", "").replace("\u2019", "").replace('"', '').replace(',', '').replace('.', '').replace('!', '').strip()
+                    f_usar = fonte_keyword if p_clean == keyword_destaque else fonte_cta
+                    pw = sabedoria_draw.textbbox((0, 0), p, font=f_usar)[2] - sabedoria_draw.textbbox((0, 0), p, font=f_usar)[0]
+                    larguras_palavras.append((pw, f_usar, p_clean))
+
+                largura_total_linha = sum(pw for pw, _, _ in larguras_palavras) + espaco_w * (len(palavras) - 1)
+                cur_x = (w - largura_total_linha) // 2
+
+                for p, (pw, f_usar, p_clean) in zip(palavras, larguras_palavras):
+                    if p_clean == keyword_destaque:
+                        cor_ouro = (255, 215, 0, int(255 * fade_alpha))
+                        bb_k = sabedoria_draw.textbbox((0, 0), p, font=f_usar)
+                        alt_k = bb_k[3] - bb_k[1]
+                        y_offset = (alt_linha - alt_k) // 2
+                        # Sombra
+                        sabedoria_draw.text((cur_x + 3, y_linha + y_offset + 3), p, font=f_usar,
+                                            fill=(0, 0, 0, int(150 * fade_alpha)))
+                        # Texto dourado com contorno preto
+                        sabedoria_draw.text((cur_x, y_linha + y_offset), p, font=f_usar, fill=cor_ouro,
+                                            stroke_width=3, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
+                    cur_x += pw + espaco_w
+
+            img = Image.alpha_composite(img.convert("RGBA"), sabedoria_layer).convert("RGB")
+
         return np.array(img)
 
     # --- Modo Padrão (branco + destaque dourado na keyword) ---
     # 1. Renderiza as linhas do Topo (CTA direto) com destaque dourado na keyword entre aspas
     #    Ex: "COMENTE 'SABEDORIA' QUE EU TE ENVIO NO DIRECT." → 'SABEDORIA' fica dourada
+    y = y_inicial_bloco
     if linhas_topo:
         for linha, alt, lw in zip(linhas_topo, alturas_topo, larguras_topo):
             x = (w - lw) // 2
@@ -1007,12 +1055,14 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 frame = _aplicar_efeito_cinematico(frame, efeito_escolhido)
 
                 if idx == idx_cta and (is_reels_leads or is_story_tarde):
-                    # Reels Leads & Story Tarde: Texto em Branco Puro + palavra entre aspas em Dourado Brilhante
+                    # Reels Leads & Story Tarde: Degradê colorido nas letras + SABEDORIA em Dourado por cima
                     # Normaliza \\n literal → \n real (segunda camada de segurança, caso o gemini.py não tenha normalizado)
                     texto_cta_norm = texto_completo.replace("\\n", "\n")
+                    paleta_cta = paleta_reels_leads if is_reels_leads else PALETA_PADRAO_MARCA
                     frame = _adicionar_texto_cta(
                         frame, texto_cta_norm, fonte_cta,
-                        chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y
+                        chars_to_show=chars_to_show, fade_alpha=fade_alpha, deslocamento_y=deslocamento_y,
+                        paleta_override=paleta_cta
                     )
                 elif idx == idx_cta:
                     # Pexels Story e Conquistador: Mantém o degradê da marca até o último frame do vídeo
