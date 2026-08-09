@@ -1,116 +1,121 @@
 {
-  "titulo_pdf": "A Bússola da Alma: O Código da Reconexão Ativa",
-  "subtitulo_pdf": "O método para reencontrar seu propósito e agir com fé inabalável",
-  "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
+  "titulo_pdf": "O Protocolo Antidrift: Mentalidade Financeira Inabalável",
+  "subtitulo_pdf": "O método passo a passo para assumir o controle do seu destino financeiro.",
+  "prompt_imagem_capa": "Cinematic dark moody photography of a man standing at a crossroads, one path lit by a golden light, the other shrouded in mist, 8k, hyperrealistic.",
   "capa_cards": [
     {
-      "titulo": "Sua Alma Desconectada?",
-      "texto": "A rotina te engoliu? Você se move, mas não sente. Uma vida sem bússola, sem norte, sem saber o porquê. Isso cansa, não é?",
-      "pergunta_destaque": "Perdeu o sentido da vida?"
+      "titulo": "A Corrida Vazia",
+      "texto": "Você corre sem parar, trabalhando exausto, mas a linha de chegada nunca aparece? Sente que seu esforço não te tira do lugar?",
+      "pergunta_destaque": "Quando você vai parar de aceitar isso?"
     },
     {
-      "titulo": "O Mapa dos Evangelhos",
-      "texto": "Reconecte-se à fonte da sabedoria e transforme a fé em ação prática e diária."
+      "titulo": "Desperte do Transe",
+      "texto": "Liberte-se do hábito da 'deriva' e assuma o comando da sua mente para conquistar a prosperidade."
     },
     {
-      "titulo": "Destino Reescrito",
-      "texto": "Liberte-se do automático e viva uma vida de propósito genuíno."
+      "titulo": "Resultados Reais Hoje",
+      "texto": "Transforme esforço em progresso visível e tangível, semana após semana."
     },
     {
-      "titulo": "A Fé em Movimento",
-      "texto": "Não espere. Crie. Aja. A vida é um verbo.",
-      "citacao_destaque": "A fé, se não tiver obras, é morta em si mesma. Código da Sabedoria."
+      "titulo": "Mente Mestra do Dinheiro",
+      "texto": "Seu destino é moldado por suas decisões, não pelas circunstâncias.",
+      "citacao_destaque": "A mente humana é a arma mais poderosa. Código da Sabedoria."
     }
   ],
   "capitulos": [
     {
       "numero": 1,
-      "titulo": "O Despertar: A Farsa da Vida no Piloto Automático",
-      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
+      "titulo": "A Maldição do 'Mais Tarde': Por Que Você Não Chega Lá",
+      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a blurred future reflection in a cracked mirror, 8k, hyperrealistic.",
       "paragrafos": [
-        "Não é irônico? Estamos mais conectados do que nunca, mas nos sentimos mais sozinhos e vazios. Rolamos feeds infinitos, mas a alma rola no vazio. Acordar e fazer a mesma coisa, dia após dia, esperando um milagre que nunca vem, é a definição de... bem, você sabe o quê. É como o helicóptero que cai: em um instante, a ilusão de controle se desfaz e a gravidade da falta de propósito te puxa para baixo. Você sente que está apenas existindo, e não vivendo, não é? A verdade é que a vida tem um sentido, você só o perdeu de vista.",
-        "Nos Evangelhos, vemos a história de Zaqueu, um cobrador de impostos odiado e isolado. Sua vida era uma rotina de ganância e desprezo. Mas quando Jesus passa, ele não hesita. Sobe numa figueira para ver além da multidão, rompe com o 'normal' e, ao ser notado, decide mudar radicalmente. Não esperou o convite formal, ele agiu para ver e ser visto.",
-        "Pare de justificar a inércia. O primeiro passo para reencontrar o sentido não é uma revelação cósmica, é uma observação brutalmente honesta de onde você está e o que você realmente quer. Faça uma lista de 3 coisas que você faz por obrigação e não por propósito. Hoje, escolha uma delas e pergunte: 'Posso fazer isso de um jeito diferente, com mais intenção, ou posso simplesmente parar de fazê-lo?' A resposta está na sua ação."
+        "É irônico como nos orgulhamos de estar ocupados, mas raramente nos questionamos: ocupados com o quê, exatamente? Você trabalha exausto, empurra com a barriga a decisão de olhar para suas finanças, e no fim do mês, sente o mesmo vazio, a mesma frustração de não ter chegado a lugar algum. Este é o preço invisível da vida no automático: você paga com seu tempo, sua energia e sua paz, sem receber o retorno que merece. Parece que você está em uma esteira de alta velocidade, suando, mas o cenário ao redor não muda.",
+        "Napoleão Hill, em 'Mais Esperto que o Diabo', expõe a 'deriva' como o maior inimigo da humanidade. Ele descreve a maioria das pessoas como 'derivares', que se deixam levar pelas circunstâncias, sem um propósito definido, sem um plano. Como um navio sem leme, eles navegam para onde o vento os leva, acabando em portos que nunca desejaram. Muitos, ao invés de enfrentar a tempestade e assumir o controle do leme, preferem culpar o mar, o vento ou a falta de sorte. A verdade é que o 'Diabo' prospera na sua indecisão, na sua inércia.",
+        "O primeiro passo para quebrar a maldição do 'mais tarde' é a clareza brutal. Pegue um papel e anote agora: Quais são as três maiores desculpas que você usa para não cuidar da sua mentalidade financeira? O que você realmente faria hoje se soubesse que não pode falhar? Perceba que a inércia não é falta de tempo, é falta de decisão. Escolha uma dessas desculpas e comprometa-se a desmascará-la, começando com uma ação mínima, mas concreta, nos próximos 30 minutos. Não é sobre o tamanho da ação, é sobre a quebra do padrão."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_72c9e8.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_dd562a.jpg"
     },
     {
       "numero": 2,
-      "titulo": "A Guerra Interna: Reclamar ou Reconstruir?",
-      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
+      "titulo": "O Seu Cérebro é um Traidor: Como Reverter o Jogo da Deriva",
+      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword casting a long shadow, indicating a mental battle, 8k, hyperrealistic.",
       "paragrafos": [
-        "Ah, a doce ilusão do sofrimento conhecido! Nosso cérebro é um mestre em nos convencer de que é melhor ficar na jaula familiar do que arriscar a liberdade. É a mesma lógica de quem prefere se endividar com apostas na esperança de um milagre, em vez de construir um plano financeiro sólido. A distração é a nossa droga preferida, e o 'medo de agir' é o nosso vício mais caro. Você se pega rolando o feed quando deveria estar construindo algo, não é? Somos mestres em adiar a própria felicidade. A grande mentira é que você precisa de motivação para começar. A verdade é que você precisa começar para ter motivação.",
-        "Jesus, após quarenta dias no deserto, foi tentado. Não se tratava apenas de comida, mas de poder, glória e desvio de propósito. Ele poderia ter cedido aos impulsos mais primários, mas escolheu a disciplina e a verdade. Com cada tentação, Ele respondeu com sabedoria e foco, mostrando que o domínio começa na mente e na palavra.",
-        "Sua mente não é seu inimigo, é seu músculo mais fraco. Para dominar a atenção, adote a 'Regra dos 5 Minutos de Silêncio'. Ao acordar, antes de qualquer tela, sente-se em silêncio por 5 minutos. Apenas observe seus pensamentos sem julgamento. Depois, escolha uma única 'verdade' (um valor, uma meta, uma frase dos Evangelhos) e repita-a intencionalmente por 60 segundos. Isso não é mágica, é treino. É a sua espada contra o caos mental."
+        "A gente adora a ideia de mudar, mas detesta o processo de mudança. É quase patético, não? Seu cérebro, essa máquina incrível, muitas vezes prefere o sofrimento conhecido da dívida ou da estagnação financeira à incerteza libertadora de um novo caminho. Ele te sabota com pensamentos como 'é muito difícil', 'não tenho tempo', 'não sou bom com números'. Essa é a voz do seu 'diabo' particular, sussurrando padrões de derrota para te manter na zona de conforto miserável. É uma contradição humana gritante: desejamos a riqueza, mas evitamos o trabalho mental necessário para criá-la.",
+        "O 'Mais Esperto que o Diabo' revela que a chave para dominar a deriva é dominar sua própria mente. O Diabo confessa que seu maior poder reside em controlar as frequências de pensamento dos humanos, induzindo-os a hábitos de indecisão e procrastinação. Ele usa o medo e a dúvida como suas ferramentas mais eficazes. Mas há uma 'arma' contra isso: a sua mente, quando treinada para um 'propósito definido'. Pense nos grandes mestres financeiros. Eles não são mais inteligentes, são mais focados e deliberados na forma como usam sua atenção.",
+        "A técnica exata para dominar sua atenção é o 'Foco Deliberado de 15 Minutos'. Escolha uma tarefa financeira que você está procrastinando (ex: organizar uma planilha, pesquisar um investimento, revisar um gasto). Defina um timer de 15 minutos e comprometa-se a focar APENAS nisso, sem distrações. Ao final, faça uma pausa. Repita este ciclo duas vezes ao dia. Isso reprograma seu cérebro para associar foco a resultados e quebra o ciclo de procrastinação. É um treinamento de disciplina mental que, com o tempo, te dará um controle absoluto sobre seus impulsos e, consequentemente, sobre suas finanças."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_3b2b08.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_9f6edd.jpg"
     },
     {
       "numero": 3,
-      "titulo": "O Plano Impecável: Mapeando Sua Jornada Essencial",
-      "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
+      "titulo": "O Mapa da Riqueza: Como Sair da Deriva e Navegar para a Abundância",
+      "prompt_imagem": "Cinematic dark moody photography of a glowing compass guiding the way through a stormy, misty landscape at dawn, 8k, hyperrealistic.",
       "paragrafos": [
-        "A gente se mata de trabalhar, e no final da semana, a sensação é de que empurramos uma pedra morro acima só para vê-la rolar de novo. É o paradoxo da vida moderna: muito esforço, pouco impacto. É como correr sem bússola no meio de uma tempestade, como as vidas perdidas em um acidente súbito. A exaustão não é sinal de produtividade, é sintoma de falta de direção. Você sente que a vida te arrasta, em vez de você arrastar a vida? A pior parte não é não ter um plano, é ter um plano e não executá-lo. A ironia? Você já sabe o que fazer. Só não está fazendo.",
-        "Jesus, antes de iniciar seu ministério, passou tempo em preparação. Suas parábolas, como a do construtor que calcula o custo da torre antes de iniciá-la (Lucas 14:28-30), ou a do rei que avalia suas forças antes de ir à guerra, mostram a importância de um planejamento consciente e da clareza de propósito. Não era sobre 'fazer mais', mas 'fazer o certo'.",
-        "Chega de planos genéricos. Seu plano da semana precisa ser um 'Protocolo de Intenção Divina'. No domingo à noite, ou na segunda de manhã, dedique 30 minutos. 1. Liste 3 resultados cruciais (não tarefas) que você deve alcançar. 2. Para cada resultado, defina a 'primeira ação irreversível' que você fará na segunda-feira. 3. Bloqueie tempo na sua agenda como se fosse um compromisso médico para estas ações. Não é sobre motivação, é sobre compromisso. Faça isso e observe a mágica da clareza."
+        "A sensação de trabalhar exausto sem nunca sentir que está chegando a algum lugar não é falta de esforço, é falta de direção. É como remar um barco em círculos, gastando energia e tempo, mas voltando sempre para o mesmo ponto. A raiva que surge dessa percepção deve ser o combustível para a sua revolução. Chega de aceitar uma vida financeira que não te honra. Você merece mais do que a frustração diária. Você merece um plano, uma bússola que realmente te guie.",
+        "Hill nos ensina que o 'Diabo' teme o propósito definido. Aqueles que sabem exatamente o que querem e têm um plano para alcançá-lo são imunes à deriva. Ele cita exemplos de pessoas que, contra todas as probabilidades, conquistaram fortunas porque tinham um 'objetivo principal definido' e uma fé inabalável. Não se trata de sorte, mas de uma orquestração deliberada da mente e das ações. Sem um mapa claro, qualquer caminho serve, e é aí que o Diabo te pega, mantendo-o ocupado, mas improdutivo.",
+        "Para desenhar um plano à prova de desculpas, adote a 'Estratégia dos Três Pilares da Riqueza Consciente'. Primeiro, defina seu 'Propósito Financeiro Principal' para os próximos 90 dias (ex: 'Economizar R$X para Y', 'Pagar a dívida Z'). Segundo, divida este propósito em três metas menores e semanais. Terceiro, escolha um 'Bloqueio de Tempo Inegociável' de 30 minutos por dia na sua agenda, dedicado EXCLUSIVAMENTE a uma ação relacionada a uma dessas metas. Este bloqueio é sagrado. Trate-o como um compromisso inadiável. Este é o seu mapa e sua bússola. Comece hoje, com a primeira ação do seu bloqueio de tempo. A abundância não é um acaso, é uma consequência do seu plano."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_28778b.jpg"
+      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_3074ec.jpg"
     }
   ],
-  "citacao_destaque": "Quem tem ouvidos para ouvir, ouça. Mas quem tem sabedoria, aja.",
+  "citacao_destaque": "O propósito definido é o ponto de partida de toda a realização.",
   "titulo_citacao": "A Regra de Ouro",
-  "verso_base": "A fé sem obras é morta. A verdadeira conexão se manifesta na ação.",
-  "referencia_verso": "Tiago 2:17 - Código da Sabedoria.",
+  "verso_base": "O homem que não tem um propósito definido na vida é como um navio sem leme: o tempo o leva para onde não quer ir.",
+  "referencia_verso": "Filosofia Estoica",
   "plano_acao": {
-    "titulo_secao": "O Protocolo da Reconexão Ativa: 7 Dias para Agir com Propósito",
-    "prompt_imagem": "Cinematic dark moody photography of a person standing at a crossroads, a single beam of light illuminating a path, with ancient symbols subtly integrated, 8k",
-    "subtitulo": "Um guia prático e inadiável para alinhar sua alma, sua mente e suas mãos com o seu verdadeiro chamado.",
+    "titulo_secao": "O Protocolo Antidrift 7x7: Seu Plano de 7 Dias para a Liberdade Financeira",
+    "prompt_imagem": "Cinematic dark moody photography of a person drawing a complex map with a glowing pen, surrounded by ancient scrolls and a focused expression, hyperrealistic, 8k.",
+    "subtitulo": "Aplique estas 7 regras pelos próximos 7 dias e sinta a mentalidade financeira do 'Diabo' perder o controle sobre você. Disciplina é a nova sorte.",
     "passos": [
       {
         "numero": 1,
-        "titulo": "O Dia Zero: Deserto da Reflexão",
-        "descricao": "Antes de tudo, passe 15 minutos em completo silêncio. Sem celular, sem ruído. Pergunte: 'Onde perdi o sentido? O que realmente importa para mim agora?' Anote as 3 primeiras respostas. É seu deserto pessoal de autoconfronto."
+        "titulo": "Desmascare a Mentira",
+        "descricao": "Hoje, identifique sua maior desculpa financeira e escreva-a em um papel. Ao lado, anote a ação MINIMA que você PODE fazer para refutá-la. Faça essa ação agora. Não amanhã, AGORA."
       },
       {
         "numero": 2,
-        "titulo": "A Palavra Viva: Semente Diária",
-        "descricao": "Escolha um trecho curto dos Evangelhos ou um provérbio por dia (ex: 5 versículos). Leia-o pela manhã e reflita: 'Como isso se aplica à minha vida HOJE?' Deixe que essa 'palavra' seja sua bússola para o dia."
+        "titulo": "O Foco Imbatível de 15",
+        "descricao": "Duas vezes ao dia, escolha uma tarefa financeira e dedique 15 minutos de foco absoluto. Sem celular, sem abas abertas. Apenas você e a tarefa. Relate o progresso."
       },
       {
         "numero": 3,
-        "titulo": "Ação do Mestre: Servir e Agir",
-        "descricao": "Inspirado pelos ensinamentos de serviço, encontre uma pequena ação de 'serviço' por dia. Pode ser ajudar um colega, ouvir alguém, fazer uma tarefa doméstica com mais intenção. Não espere a 'grande missão', comece com o próximo."
+        "titulo": "O Propósito Inegociável",
+        "descricao": "Defina seu 'Propósito Financeiro Principal' para os próximos 90 dias. Precisa ser claro, mensurável e inspirador. Escreva-o em um lugar visível."
       },
       {
         "numero": 4,
-        "titulo": "A Gratidão Inegociável: Olhar Transformador",
-        "descricao": "Ao final do dia, antes de dormir, liste 3 coisas pelas quais você é genuinamente grato. Não as óbvias. Force-se a encontrar a beleza nas pequenas coisas e nos desafios superados. A gratidão reprograma sua perspectiva."
+        "titulo": "O Bloqueio Sagrado",
+        "descricao": "Escolha um horário fixo de 30 minutos para seu 'Bloqueio de Tempo Inegociável' diário. Dedique-o à sua meta financeira. Este é um compromisso com você mesmo, inquebrável."
       },
       {
         "numero": 5,
-        "titulo": "O Desapego Consciente: Liberte-se",
-        "descricao": "Identifique uma 'âncora' que te prende (medo, ressentimento, um objeto que você não usa). Faça um movimento para se desapegar dela. Perdoe alguém, descarte algo, pare de procrastinar uma ligação. A libertação é um ato de fé."
+        "titulo": "A Auditoria da Distração",
+        "descricao": "Monitore por um dia onde seu dinheiro e sua atenção estão realmente indo. Identifique um gasto ou um hábito de distração que está te desviando do seu propósito e corte-o na raiz."
       },
       {
         "numero": 6,
-        "titulo": "A Visão Clara: Onde Você Vai?",
-        "descricao": "No sexto dia, revisite suas anotações do 'Dia Zero'. Com as novas perspectivas, reescreva seu 'propósito central' em uma frase. Crie uma meta prática para a próxima semana que te aproxime desse propósito. Seja específico."
+        "titulo": "A Visualização do Sucesso",
+        "descricao": "Todos os dias, por 5 minutos, visualize-se vivendo seu propósito financeiro. Sinta a emoção, a liberdade. Isso reforça sua mentalidade e atrai o que você deseja."
+      },
+      {
+        "numero": 7,
+        "titulo": "O Relatório de Bordo",
+        "descricao": "No final do 7º dia, revise seu progresso. O que mudou? O que você aprendeu? Planeje os próximos 7 dias com base nesses aprendizados. Repita o ciclo. A consistência é a chave."
       }
     ],
-    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_f4fd40.jpg"
+    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_5af7d1.jpg"
   },
   "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
   "titulo_fechamento": "SABEDORIA EM AÇÃO",
   "rodape": "Código da Sabedoria - Conhecimento que Transforma Destinos.",
   "landing_page": {
-    "promessa_clara": "7 DIAS PARA REENCONTRAR SEU PROPÓSITO E AGIR.",
+    "promessa_clara": "7 DIAS PARA REPROGRAMAR SUA MENTE FINANCEIRA E AGIR.",
     "beneficios": [
-      "Reconecte-se com sua essência e o sentido da vida.",
-      "Liberte-se da inércia e da rotina vazia.",
-      "Desenvolva uma mente focada e resistente a distrações.",
-      "Crie um plano de ação prático e à prova de desculpas.",
-      "Transforme fé em resultados reais e diários."
+      "Em 7 dias você identifica e quebra os padrões de estagnação financeira.",
+      "Assuma o controle total da sua atenção e pare de procrastinar de vez.",
+      "Construa um plano de ação à prova de desculpas para suas finanças.",
+      "Desperte a mentalidade de prosperidade que estava adormecida em você.",
+      "Transforme frustração em progresso real e visível, dia após dia."
     ]
   },
-  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_f7f06d.jpg"
+  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_738f91.jpg"
 }
