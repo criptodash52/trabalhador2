@@ -37,49 +37,58 @@ def garantir_audio_reels(pastas=None):
         else:
             pastas = [os.path.join(root_dir, p) if not os.path.isabs(p) else p for p in pastas]
             
-        mp3_files = []
+        mp3_map = {}
         pasta_principal = "padrao"
         for pasta in pastas:
             if os.path.exists(pasta):
                 pasta_principal = os.path.basename(pasta)
                 for f in os.listdir(pasta):
                     if f.lower().endswith(".mp3") and os.path.isfile(os.path.join(pasta, f)):
-                        mp3_files.append(os.path.join(pasta, f))
+                        mp3_map[f] = os.path.join(pasta, f)
         
-        if mp3_files:
+        if mp3_map:
             chave_estado = f"fila_musicas_{pasta_principal}"
             
-            # Se a chave antiga existir (migração), usa e depois deleta
+            # Pega a fila gravada no estado (pode conter caminhos antigos ou apenas nomes de arquivos)
+            fila_bruta = estado.get(chave_estado, [])
             if pasta_principal == "musicas" and "fila_musicas" in estado:
-                fila_musicas = estado.pop("fila_musicas")
-            else:
-                fila_musicas = estado.get(chave_estado, [])
-            
-            # Filtra a fila para remover arquivos que não existem mais ou que não pertencem a estas pastas
-            fila_musicas = [f for f in fila_musicas if os.path.exists(f) and f in mp3_files]
-            
-            # Se a fila acabou ou está vazia, cria uma nova com todas as músicas encontradas
-            if not fila_musicas:
-                logger.info(f"🎶 Fila '{chave_estado}' esgotada. Criando nova fila com {len(mp3_files)} músicas...")
-                nova_fila = mp3_files.copy()
-                random.shuffle(nova_fila)
-                fila_musicas = nova_fila
-            
-            # Pega a próxima música da fila
-            escolhido = fila_musicas.pop(0)
-            logger.info(f"🎵 Próxima música ({pasta_principal}): '{os.path.basename(escolhido)}' | Restam {len(fila_musicas)} na fila.")
-            
+                fila_bruta = estado.pop("fila_musicas")
+
+            # Extrai apenas o nome do arquivo para garantir compatibilidade entre ambientes (Windows/Linux)
+            fila_nomes = [os.path.basename(f) for f in fila_bruta if isinstance(f, str)]
+            # Mantém na fila apenas os nomes de arquivos que realmente existem na pasta física
+            fila_nomes = [nome for nome in fila_nomes if nome in mp3_map]
+
+            # Detecta músicas novas que estão na pasta mas não constam na fila salva
+            nomes_novos = [nome for nome in mp3_map.keys() if nome not in fila_nomes]
+            if nomes_novos:
+                logger.info(f"🎶 [{pasta_principal}] Encontrada(s) {len(nomes_novos)} nova(s) música(s) na pasta! Adicionando à fila...")
+                random.shuffle(nomes_novos)
+                fila_nomes.extend(nomes_novos)
+
+            # Se a fila ficou vazia (todas tocaram), recria a fila embaralhada com todas as músicas da pasta
+            if not fila_nomes:
+                logger.info(f"🎶 Fila '{chave_estado}' concluída. Reiniciando ciclo com {len(mp3_map)} músicas embaralhadas...")
+                todos_nomes = list(mp3_map.keys())
+                random.shuffle(todos_nomes)
+                fila_nomes = todos_nomes
+
+            # Pega o próximo nome de música da fila
+            nome_escolhido = fila_nomes.pop(0)
+            caminho_escolhido = mp3_map[nome_escolhido]
+            logger.info(f"🎵 Próxima música ({pasta_principal}): '{nome_escolhido}' | Restam {len(fila_nomes)} no ciclo.")
+
             try:
                 from core.utils.contexto import registrar_contexto
-                registrar_contexto("musica_real", os.path.basename(escolhido))
+                registrar_contexto("musica_real", nome_escolhido)
             except Exception as context_err:
                 logger.debug(f"Erro ao registrar contexto de música: {context_err}")
-            
-            # Salva a fila atualizada no estado
-            estado[chave_estado] = fila_musicas
+
+            # Salva a fila contendo apenas nomes de arquivos no estado
+            estado[chave_estado] = fila_nomes
             salvar_estado(estado)
-            
-            return escolhido
+
+            return caminho_escolhido
 
     except Exception as e:
         logger.warning(f"⚠️ Erro ao listar arquivos de audio: {e}")
