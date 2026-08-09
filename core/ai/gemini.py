@@ -505,10 +505,9 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Se não couber em um slide (mais de 15 palavras), divida: slide de transição (Slide 4) + slide com o título separado (Slide 5). O total passará a ser 6 slides.
 
         SLIDE FINAL (5 ou 6) — CTA COM ENTREGA (use \\n para separar):
-        Parte 1 (ANTES de \\n): instrucão direta comentando 'SABEDORIA'. Modelo: "Comente 'SABEDORIA' e eu te envio o [sinônimo de módulo] desta semana direto no seu direct."
-        VARIE o sinônimo a cada geração: {sinonimo_modulo}, recurso, conteúdo, acervo, edição, kit.
-        Parte 2 (DEPOIS de \\n): promessa do que a pessoa vai receber no direct.
-        PROIBIDO CTA seco ou abrupto. O seguidor deve sentir que está sendo convidado, não pressionado.
+        Parte 1 (ANTES de \\n): instrução direta extremamente curta e objetiva para caber em 2 linhas. Modelo: "Comente 'SABEDORIA' que te envio o material no direct."
+        Parte 2 (DEPOIS de \\n): promessa curta em 1 única linha do benefício principal do PDF.
+        OBRIGATÓRIO: O CTA completo (parte 1 + parte 2) DEVE ser super conciso para que o texto final tenha no máximo 3 linhas na tela.
 
         REGRAS ABSOLUTAS:
         - Tom: sereno, firme, maduro. Nunca carrancudo, nunca vitimista.
