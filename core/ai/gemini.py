@@ -121,10 +121,8 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
             frase_limpa = frase_val.replace("\n", " ").replace("\r", " ").strip()
             palavras = frase_limpa.split()
             if len(palavras) > 20:
-                logger.warning(f"⚠️ [IA] Frase do {tipo} com {len(palavras)} palavras. Truncando para 20.")
-                dados["frase"] = " ".join(palavras[:20]) + "..."
-            else:
-                dados["frase"] = frase_limpa
+                logger.warning(f"⚠️ [IA] Frase do {tipo} com {len(palavras)} palavras. AVISO: Ultrapassou o limite recomendado de 20.")
+            dados["frase"] = frase_limpa
 
     # ── Truncador + normalizador para slides do story_tarde ──
     # O story_tarde usa o campo 'slides' (lista), não 'frase'.
@@ -146,8 +144,7 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
                     continue
                 palavras = s_norm.replace("\n", " ").split()
                 if len(palavras) > 10:
-                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 10.")
-                    s_norm = " ".join(palavras[:10]) + "..."
+                    logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. AVISO: Ultrapassou o limite de 10 palavras.")
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
@@ -167,8 +164,7 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
                     continue
                 palavras = s_norm.replace("\n", " ").split()
                 if len(palavras) > 10:
-                    logger.warning(f"⚠️ [IA] Slide do reels_leads com {len(palavras)} palavras. Truncando para 10.")
-                    s_norm = " ".join(palavras[:10]) + "..."
+                    logger.warning(f"⚠️ [IA] Slide do reels_leads com {len(palavras)} palavras. AVISO: Ultrapassou o limite de 10 palavras.")
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
