@@ -549,11 +549,12 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     # Para pexels_story (dia e noite): 1 único vídeo de fundo contínuo (sem cortes entre vídeos).
     # Assume ~5s por slide (leitura confortável) e ~20s por vídeo de fundo (estimativa conservadora).
     if is_reels_leads or is_story_tarde:
-        # NOVO: 1 único vídeo com 30 segundos ou mais (para não repetir fundo)
+        # Calcula a duração exata do vídeo: 5 segundos por slide
         num_slides_estimado = len(slides) if slides else 5
-        duracao_necessaria_reels = 30  # Necessário 30s
+        duracao_necessaria_reels = num_slides_estimado * 5  # 5s por slide
+        duracao_minima_download = 30  # Baixa vídeo de 30s+ para evitar loop
         num_videos_necessarios = 1  # ← Único vídeo de fundo
-        logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides | 1 vídeo único de 30s ou mais")
+        logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides × 5s = {duracao_necessaria_reels}s | 1 vídeo único de {duracao_minima_download}s+")
     elif (not is_noite) and (not is_conquistador):
         # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
@@ -606,7 +607,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos com 30s ou mais
                         if is_reels_leads or is_story_tarde:
                             duracao_hit = hit.get("duration", 0)
-                            if duracao_hit < 30:
+                            if duracao_hit < duracao_minima_download:
                                 continue
                         if not verificar_midia_recente(vid_id):
                             videos_dict = hit.get("videos", {})
@@ -665,7 +666,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         # Filtro de duração exclusivo para reels_leads/story_tarde: aceita apenas vídeos com 30s ou mais
                         if is_reels_leads or is_story_tarde:
                             duracao_v = v.get("duration", 0)
-                            if duracao_v < 30:
+                            if duracao_v < duracao_minima_download:
                                 continue
                         if not verificar_midia_recente(vid_id):
                             video_files = v.get("video_files", [])
@@ -929,7 +930,6 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         aspect_ratio = logo_img.height / logo_img.width
                         altura_desejada = int(largura_desejada * aspect_ratio)
                         logo_redimensionado = logo_img.resize((largura_desejada, altura_desejada), Image.Resampling.LANCZOS)
-
                         x_pos = int((w - largura_desejada) / 2)
                         y_pos = h - altura_desejada - int(55 * fator_escala)
 

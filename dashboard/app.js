@@ -966,6 +966,49 @@ function filtrar(tipo, btn) {
 
 function renderPosts(tipo) {
     const grid  = document.getElementById('posts-grid');
+
+    // ── FILTRO ESPECIAL: Acima da Média ──────────────────────────────────────
+    if (tipo === 'acima_media') {
+        // Calcula um growth_score simplificado para cada post usando as métricas do Instagram
+        const postsComScore = postsData.map(p => {
+            const m = metricasIG[p.post_id] || {};
+            const views  = m.reach || m.plays || m.video_views || 0;
+            const saves  = m.saved || 0;
+            const shares = m.shares || 0;
+            const follows= m.follows || 0;
+            const gs = views + (saves * 5) + (shares * 3) + (follows * 10);
+            return { ...p, _gs: gs };
+        }).filter(p => p._gs > 0); // apenas posts com alguma métrica
+
+        if (!postsComScore.length) {
+            grid.innerHTML = '<div class="empty-state"><i data-lucide="bar-chart-2"></i><span>Sem métricas disponíveis para calcular desempenho. Aguarde a próxima coleta de analytics.</span></div>';
+            lucide.createIcons(); return;
+        }
+
+        const mediaGs = postsComScore.reduce((s, p) => s + p._gs, 0) / postsComScore.length;
+        const limiteViral = mediaGs * 2.0;
+
+        const bombaram  = postsComScore.filter(p => p._gs >= limiteViral).sort((a,b) => b._gs - a._gs);
+        const acimaMedia= postsComScore.filter(p => p._gs >= mediaGs && p._gs < limiteViral).sort((a,b) => b._gs - a._gs);
+
+        if (!bombaram.length && !acimaMedia.length) {
+            grid.innerHTML = '<div class="empty-state"><i data-lucide="inbox"></i><span>Nenhuma postagem acima da média ainda.</span></div>';
+            lucide.createIcons(); return;
+        }
+
+        let html = '';
+        if (bombaram.length) {
+            html += `<div class="perf-section-title">🔥 Postagens que Bombaram <span>(acima de 2× a média — score médio: ${Math.round(mediaGs).toLocaleString('pt-BR')})</span></div>`;
+            html += `<div class="post-row-container">${bombaram.map(p => renderPostCard(p, '🔥 VIRAL')).join('')}</div>`;
+        }
+        if (acimaMedia.length) {
+            html += `<div class="perf-section-title" style="margin-top:2rem;">⭐ Acima da Média <span>(entre 1× e 2× a média)</span></div>`;
+            html += `<div class="post-row-container">${acimaMedia.map(p => renderPostCard(p, '⭐ DESTAQUE')).join('')}</div>`;
+        }
+        grid.innerHTML = html;
+        lucide.createIcons(); return;
+    }
+
     const lista = postsData.filter(p => {
         if (tipo==='todos') return true;
         const t = (p.tipo||'').toLowerCase();
@@ -982,8 +1025,14 @@ function renderPosts(tipo) {
     }
 
     let html = `<div class="post-row-container">`;
+    html += lista.map(p => renderPostCard(p)).join('');
+    html += `</div>`;
+    grid.innerHTML = html;
+    lucide.createIcons();
+}
 
-    html += lista.map(p => {
+// ── Renderiza o card de um post (extraído de renderPosts para reuso) ──────────
+function renderPostCard(p, forcedTag) {
         const m      = metricasIG[p.post_id] || {};
         const reach  = fmt(m.reach || 0);
         const likes  = fmt(m.likes || m.like_count || 0);
@@ -992,41 +1041,28 @@ function renderPosts(tipo) {
         
         // Determina a tag legível baseada no tipo e hora da postagem
         const tipoBruto = (p.tipo || 'post').toLowerCase();
-        let tag = tipoBruto.toUpperCase().replace('_', ' ');
-        
-        if (tipoBruto === 'reels') {
-            try {
-                // p.data está no formato "YYYY-MM-DD HH:MM:SS"
-                const dt = new Date(p.data);
-                const hora = dt.getHours();
-                if (hora < 11) {
-                    tag = 'REELS MANHÃ';
-                } else if (hora >= 11 && hora < 16) {
-                    tag = 'REELS TARDE';
-                } else {
-                    tag = 'REELS NOITE';
-                }
-            } catch (e) {
-                tag = 'REELS';
-            }
-        } else if (tipoBruto === 'story_manha') {
-            tag = 'STORY MANHÃ';
-        } else if (tipoBruto === 'story_tarde') {
-            tag = 'STORY TARDE';
-        } else if (tipoBruto === 'pexels_story') {
-            tag = 'PEXELS STORY MANHÃ';
-        } else if (tipoBruto === 'pexels_story_noite') {
-            tag = 'PEXELS STORY NOITE';
-        } else if (tipoBruto === 'reels_noite') {
-            tag = 'REELS NOITE';
-        } else if (tipoBruto === 'reels_conquistador') {
-            tag = 'REELS CONQUISTADOR';
-        } else if (tipoBruto === 'reels_leads') {
-            tag = 'REELS LEADS';
+        // Se uma tag forçada for passada (ex: '🔥 VIRAL'), usa ela. Senão, calcula a normal.
+        let tag = forcedTag || tipoBruto.toUpperCase().replace(/_/g, ' ');
+        if (!forcedTag) {
+            if (tipoBruto === 'reels') {
+                try {
+                    const dt = new Date(p.data);
+                    const hora = dt.getHours();
+                    if (hora < 11)                tag = 'REELS MANHÃ';
+                    else if (hora >= 11 && hora < 16) tag = 'REELS TARDE';
+                    else                           tag = 'REELS NOITE';
+                } catch (e) { tag = 'REELS'; }
+            } else if (tipoBruto === 'story_manha')        tag = 'STORY MANHÃ';
+              else if (tipoBruto === 'story_tarde')        tag = 'STORY TARDE';
+              else if (tipoBruto === 'pexels_story')       tag = 'PEXELS STORY MANHÃ';
+              else if (tipoBruto === 'pexels_story_noite') tag = 'PEXELS STORY NOITE';
+              else if (tipoBruto === 'reels_noite')        tag = 'REELS NOITE';
+              else if (tipoBruto === 'reels_conquistador') tag = 'REELS CONQUISTADOR';
+              else if (tipoBruto === 'reels_leads')        tag = 'REELS LEADS';
         }
 
-        const tagLower = tag.toLowerCase();
-        const badgeClass = tagLower.includes('reel') ? 'reels' : tagLower.includes('story') ? 'story' : tagLower.includes('carousel') ? 'carousel' : 'default';
+        const tagLower = (forcedTag || tag).toLowerCase();
+        const badgeClass = tagLower.includes('viral') ? 'reels' : tagLower.includes('destaque') ? 'especiais' : tagLower.includes('reel') ? 'reels' : tagLower.includes('story') ? 'story' : tagLower.includes('carousel') ? 'carousel' : 'default';
 
         // Extração e sanitização dos campos de DNA da postagem
         const objetivoVal  = p.objetivo || 'Engajamento';
@@ -1168,11 +1204,6 @@ function renderPosts(tipo) {
             </div>
         </article>
         `;
-    }).join('');
-
-    html += `</div>`;
-    grid.innerHTML = html;
-    lucide.createIcons();
 }
 
 // ── MODAL DETALHES DO POST ────────────────────────────────

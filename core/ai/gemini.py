@@ -135,19 +135,18 @@ def _pos_processar_dados(dados, tipo, tema_escolhido, detalhes_tema, gancho_cate
         slides_val = dados["slides"]
         if isinstance(slides_val, list):
             slides_normalizados = []
-            for s in slides_val:
+            ultimo_idx = len(slides_val) - 1
+            for idx, s in enumerate(slides_val):
                 # Converte \\n literal → \n real (vem assim do JSON do Gemini)
                 s_norm = str(s).replace("\\n", "\n").strip()
-                palavras = s_norm.split()
+                # NUNCA trunca o último slide (CTA) — ele contém a chamada completa
+                if idx == ultimo_idx:
+                    slides_normalizados.append(s_norm)
+                    continue
+                palavras = s_norm.replace("\n", " ").split()
                 if len(palavras) > 18:
                     logger.warning(f"⚠️ [IA] Slide do story_tarde com {len(palavras)} palavras. Truncando para 18.")
-                    # Preserva a quebra de linha se existir, truncando apenas a parte longa
-                    if "\n" in s_norm:
-                        partes = s_norm.split("\n", 1)
-                        palavras_topo = partes[0].strip().split()
-                        s_norm = " ".join(palavras_topo[:12]) + "\n" + partes[1].strip()
-                    else:
-                        s_norm = " ".join(palavras[:18]) + "..."
+                    s_norm = " ".join(palavras[:18]) + "..."
                 slides_normalizados.append(s_norm)
             dados["slides"] = slides_normalizados
 
