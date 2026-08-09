@@ -1,9 +1,33 @@
 {
-    "ultimos_temas": [],
+    "indice_gancho_conquistador": 31,
+    "fila_musicas_musicas": [
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Radioactive.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-cinematic-trailer-music-562026.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/the_mountain-background-music-159125.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Alan Walker - Faded.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-vocal-background-music-562024.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/kontraa-no-sleep-hiphop-music-473847.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/atlasaudio-background-inspiring-519617.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-background-no-copyright-562320.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/alex-morgan-background-music-545525.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/ronaldoreyz-legends-will-rise-cinematic-background-series-541179.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/grand_project-wonders-of-the-earth-550792.mp3",
+        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/the_mountain-background-music-159125 (1).mp3"
+    ],
+    "indice_cta": 35,
     "index_animacao_conquistador": 2,
+    "index_palette_conquistador": 1,
     "ultimo_carousel": 3,
-    "index_plataforma_conquistador": 0,
+    "historico_angulos": [
+        "A Relatividade da Justiça e a Crítica ao Autoritarismo",
+        "Malcolm X / Nelson Mandela"
+    ],
+    "index_tema_diario": 6,
+    "indice_gancho": 49,
     "historico_midia": [
+        "4728119",
         "29806335",
         "19449385",
         "8273660",
@@ -502,18 +526,28 @@
         "17533271",
         "15439747",
         "8111769",
-        "7168436",
-        "11818869"
+        "7168436"
+    ],
+    "index_conquistador": 6,
+    "data_tema_do_dia": "2026-08-08",
+    "sentimento_do_dia": "raiva",
+    "historico_sentimentos": [
+        "esperanca",
+        "curiosidade",
+        "carinho",
+        "prazer",
+        "poder",
+        "sensualidade",
+        "luxuria",
+        "desafio",
+        "ousadia",
+        "raiva"
     ],
     "index_palette_leads": 0,
-    "indice_gancho_conquistador": 31,
-    "historico_angulos": [
-        "A Relatividade da Justiça e a Crítica ao Autoritarismo"
-    ],
-    "index_pilar_reels_leads": 1,
-    "indice_cta": 35,
-    "data_tema_do_dia": "2026-08-08",
-    "index_palette_conquistador": 1,
+    "indice_arquitetura": 2,
+    "data_sentimento_do_dia": "2026-08-02",
+    "tema_do_dia": "Provérbios de Salomão",
+    "ultimos_temas": [],
     "fila_musicas_musicas-youtube": [
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/A Kiss For Amanda - DJ Williams.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/In The Morning - Blue Beat Review.mp3",
@@ -526,42 +560,9 @@
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Paradise - Anno Domini Beats.mp3",
         "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas-youtube/Town This Small - Anno Domini Beats.mp3"
     ],
-    "index_conquistador": 6,
-    "indice_gancho": 48,
-    "data_sentimento_do_dia": "2026-08-02",
-    "fila_musicas_musicas": [
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Música-tema-principal-da-série-La-casa-de-papel-_-NETFLIX-_.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Radioactive.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-cinematic-trailer-music-562026.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/the_mountain-background-music-159125.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-sad-piano-music-3-528953.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/Alan Walker - Faded.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-vocal-background-music-562024.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/solarflex-travel-558250.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/kontraa-no-sleep-hiphop-music-473847.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/atlasaudio-background-inspiring-519617.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/absolutesound-epic-background-no-copyright-562320.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/alex-morgan-background-music-545525.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/ronaldoreyz-legends-will-rise-cinematic-background-series-541179.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/grand_project-wonders-of-the-earth-550792.mp3",
-        "/home/runner/work/trabalhador1/trabalhador1/biblioteca_local/musicas/the_mountain-background-music-159125 (1).mp3"
-    ],
-    "historico_sentimentos": [
-        "escassez",
-        "esperanca",
-        "curiosidade",
-        "carinho",
-        "prazer",
-        "poder",
-        "sensualidade",
-        "luxuria",
-        "desafio",
-        "ousadia"
-    ],
-    "index_tema_diario": 6,
-    "sentimento_do_dia": "ousadia",
+    "index_pilar_reels_leads": 1,
+    "index_plataforma_conquistador": 0,
     "historico_estilos": [
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
@@ -585,8 +586,7 @@
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
-    ],
-    "indice_arquitetura": 2,
-    "tema_do_dia": "Provérbios de Salomão"
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
+    ]
 }
