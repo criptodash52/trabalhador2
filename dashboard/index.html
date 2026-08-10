@@ -39,6 +39,9 @@
             <div class="nav-item" id="nav-caminho" onclick="goTab('caminho')">
                 <i data-lucide="footprints"></i> Caminho do Visitante
             </div>
+            <div class="nav-item" id="nav-pdfs" onclick="goTab('pdfs')">
+                <i data-lucide="file-text"></i> Biblioteca de PDFs
+            </div>
         </nav>
     </aside>
 
@@ -618,6 +621,25 @@
                     <i data-lucide="footprints" style="width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 1rem;"></i>
                     <p style="color: var(--text-muted);">Carregando histórico do caminho dos visitantes...</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- ═══════ TAB: BIBLIOTECA DE PDFS ═══════ -->
+        <div class="tab" id="tab-pdfs">
+            <div class="platform-header">
+                <span class="platform-badge" style="background:rgba(255,214,0,0.08); color:var(--neon-gold); border:1px solid rgba(255,214,0,0.2);">
+                    <i data-lucide="file-text"></i> PDFs Gerados &amp; Campanhas
+                </span>
+                <hr>
+            </div>
+
+            <div id="pdfs-loading" style="text-align: center; padding: 3rem; color: var(--text-sec);">
+                <i data-lucide="loader" class="spin" style="width: 32px; height: 32px; margin-bottom: 1rem;"></i>
+                <p>Carregando histórico de PDFs...</p>
+            </div>
+
+            <div id="pdfs-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; display: none;">
+                <!-- Cards de PDFs inseridos via JS -->
             </div>
         </div>
     </main>

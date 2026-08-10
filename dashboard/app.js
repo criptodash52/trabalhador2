@@ -49,7 +49,8 @@ const TABS = {
     cientista: ['Cientista de Dados', 'Recomendações e hipóteses do motor de análise'],
     leads: ['Leads Capturados', 'Histórico e análise dos leads captados pela landing page'],
     posts: ['Histórico de Postagens', 'Todos os conteúdos gerados e publicados recentemente'],
-    caminho: ['Caminho do Visitante', 'Histórico em tempo real da jornada e respostas de cada visitante']
+    caminho: ['Caminho do Visitante', 'Histórico em tempo real da jornada e respostas de cada visitante'],
+    pdfs: ['Biblioteca de PDFs & Campanhas', 'Histórico completo de e-books gerados e campanhas de captura de leads']
 };
 
 function goTab(name) {
@@ -67,6 +68,8 @@ function goTab(name) {
         carregarSolicitacoes();
     } else if (name === 'caminho') {
         carregarCaminhoVisitantes();
+    } else if (name === 'pdfs') {
+        renderizarHistoricoPDFs();
     }
 }
 
@@ -1753,6 +1756,105 @@ function filtrarCaminhoCategoria(categoria, btn) {
 
 function filtrarCaminhosVisitantes() {
     renderizarCaminhoVisitantes();
+}
+
+// ── HISTÓRICO DE PDFS E CAMPANHAS ───────────────────────
+async function renderizarHistoricoPDFs() {
+    const loadingEl = document.getElementById('pdfs-loading');
+    const gridEl = document.getElementById('pdfs-grid');
+    if (!gridEl) return;
+
+    loadingEl.style.display = 'block';
+    gridEl.style.display = 'none';
+
+    try {
+        // Busca coleções campanhas e historico_pdfs em paralelo
+        const [campanhasSnap, histSnap] = await Promise.all([
+            db.collection('campanhas').get(),
+            db.collection('historico_pdfs').get()
+        ]);
+
+        const historicoMap = {};
+        histSnap.forEach(doc => {
+            historicoMap[doc.id] = doc.data();
+        });
+
+        const listaCampanhas = [];
+        campanhasSnap.forEach(doc => {
+            listaCampanhas.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Ordena por criada_em decrescente
+        listaCampanhas.sort((a, b) => {
+            const tA = a.criada_em ? (a.criada_em.seconds || new Date(a.criada_em).getTime() / 1000) : 0;
+            const tB = b.criada_em ? (b.criada_em.seconds || new Date(b.criada_em).getTime() / 1000) : 0;
+            return tB - tA;
+        });
+
+        if (listaCampanhas.length === 0) {
+            loadingEl.style.display = 'none';
+            gridEl.style.display = 'block';
+            gridEl.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-sec); padding: 2rem;">Nenhum PDF ou campanha encontrado.</div>';
+            return;
+        }
+
+        let html = '';
+        listaCampanhas.forEach(c => {
+            const histInfo = historicoMap[c.semana] || {};
+            const dataFmt = c.criada_em && c.criada_em.seconds 
+                ? new Date(c.criada_em.seconds * 1000).toLocaleString('pt-BR')
+                : (c.criada_em || '--');
+
+            const beneficios = (c.landing_page && c.landing_page.beneficios) ? c.landing_page.beneficios : [];
+            const isAtiva = c.ativa === true;
+
+            html += `
+                <div class="pdf-card ${isAtiva ? 'ativa' : ''}">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+                        <span class="pdf-badge-semana"><i data-lucide="calendar"></i> ${c.semana || 'Semana N/A'}</span>
+                        ${isAtiva ? '<span class="pdf-badge-ativa"><i data-lucide="check-circle-2"></i> Campanha Ativa</span>' : ''}
+                    </div>
+
+                    <h3 class="pdf-titulo">${c.titulo || 'PDF Sem Título'}</h3>
+
+                    <div class="pdf-meta-grid">
+                        <div class="pdf-meta-item"><i data-lucide="book-open"></i> <strong>Livro Base:</strong> ${c.livro_base || 'N/A'}</div>
+                        <div class="pdf-meta-item"><i data-lucide="compass"></i> <strong>Tema:</strong> ${c.tema || 'N/A'}</div>
+                        ${histInfo.dor_principal ? `<div class="pdf-meta-item full"><i data-lucide="heart-pulse"></i> <strong>Dor Alvo:</strong> ${histInfo.dor_principal}</div>` : ''}
+                    </div>
+
+                    ${beneficios.length > 0 ? `
+                        <div class="pdf-beneficios">
+                            <div class="pdf-beneficios-title"><i data-lucide="sparkles"></i> Benefícios da Landing Page:</div>
+                            <ul>
+                                ${beneficios.map(b => `<li>${b}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    <div class="pdf-card-footer">
+                        <span style="font-size: 0.78rem; color: var(--text-muted);">${dataFmt}</span>
+                        ${c.pdf_url ? `
+                            <a href="${c.pdf_url}" target="_blank" class="pdf-btn-link">
+                                <i data-lucide="external-link"></i> Abrir PDF
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        });
+
+        loadingEl.style.display = 'none';
+        gridEl.style.display = 'grid';
+        gridEl.innerHTML = html;
+
+        if (window.lucide) lucide.createIcons();
+    } catch (err) {
+        console.error('Erro ao buscar histórico de PDFs:', err);
+        loadingEl.style.display = 'none';
+        gridEl.style.display = 'block';
+        gridEl.innerHTML = `<div style="grid-column: 1/-1; color: #ff5252; text-align: center; padding: 2rem;">Erro ao carregar os dados de PDFs: ${err.message}</div>`;
+    }
 }
 
 // ── TOGGLE SIDEBAR ───────────────────────────────────────

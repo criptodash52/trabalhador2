@@ -780,6 +780,132 @@ tr:last-child td { border-bottom:none; }
     flex-wrap: wrap;
     gap: 0.8rem;
 }
+
+/* ── CARDS DE PDFS & CAMPANHAS ── */
+.pdf-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.25s ease;
+}
+.pdf-card:hover {
+    border-color: rgba(255, 214, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+.pdf-card.ativa {
+    border-color: rgba(0, 230, 118, 0.4);
+    background: linear-gradient(180deg, rgba(0, 230, 118, 0.03) 0%, var(--bg-card) 100%);
+}
+
+.pdf-badge-semana {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--neon-gold);
+    background: rgba(255, 214, 0, 0.08);
+    border: 1px solid rgba(255, 214, 0, 0.2);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pdf-badge-ativa {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--neon-green);
+    background: rgba(0, 230, 118, 0.1);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pdf-titulo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.35;
+}
+
+.pdf-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.83rem;
+    color: var(--text-sec);
+}
+.pdf-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.pdf-meta-item i, .pdf-meta-item svg {
+    width: 15px;
+    height: 15px;
+    color: var(--neon-blue);
+    flex-shrink: 0;
+}
+
+.pdf-beneficios {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+.pdf-beneficios-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--neon-purple);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.pdf-beneficios ul {
+    margin-left: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--text-sec);
+    line-height: 1.5;
+}
+
+.pdf-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.9rem;
+}
+
+.pdf-btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 214, 0, 0.1);
+    color: var(--neon-gold);
+    border: 1px solid rgba(255, 214, 0, 0.3);
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.pdf-btn-link:hover {
+    background: var(--neon-gold);
+    color: #000;
+}
 .post-row-stats {
     display: flex;
     gap: 1.1rem;
