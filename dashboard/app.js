@@ -1799,49 +1799,68 @@ async function renderizarHistoricoPDFs() {
         }
 
         let html = '';
-        listaCampanhas.forEach(c => {
+        listaCampanhas.forEach((c, idx) => {
             const histInfo = historicoMap[c.semana] || {};
             const dataFmt = c.criada_em && c.criada_em.seconds 
                 ? new Date(c.criada_em.seconds * 1000).toLocaleString('pt-BR')
                 : (c.criada_em || '--');
 
             const beneficios = (c.landing_page && c.landing_page.beneficios) ? c.landing_page.beneficios : [];
-            const isAtiva = c.ativa === true;
+            // Apenas a campanha mais recente (primeiro elemento da lista ordenada por data) recebe a tag de Ativa
+            const isAtiva = (idx === 0);
 
-            html += `
-                <div class="pdf-card ${isAtiva ? 'ativa' : ''}">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
-                        <span class="pdf-badge-semana"><i data-lucide="calendar"></i> ${c.semana || 'Semana N/A'}</span>
-                        ${isAtiva ? '<span class="pdf-badge-ativa"><i data-lucide="check-circle-2"></i> Campanha Ativa</span>' : ''}
-                    </div>
+                    const dorAlvo = c.dor_central || histInfo.dor_principal || '';
+                    const contexto = c.contexto_semana || '';
+                    const perfIA = c.dados_performance_perfil || '';
 
-                    <h3 class="pdf-titulo">${c.titulo || 'PDF Sem Título'}</h3>
+                    html += `
+                        <div class="pdf-card ${isAtiva ? 'ativa' : ''}">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+                                <span class="pdf-badge-semana"><i data-lucide="calendar"></i> ${c.semana || 'Semana N/A'}</span>
+                                ${isAtiva ? '<span class="pdf-badge-ativa"><i data-lucide="check-circle-2"></i> Campanha Ativa</span>' : ''}
+                            </div>
 
-                    <div class="pdf-meta-grid">
-                        <div class="pdf-meta-item"><i data-lucide="book-open"></i> <strong>Livro Base:</strong> ${c.livro_base || 'N/A'}</div>
-                        <div class="pdf-meta-item"><i data-lucide="compass"></i> <strong>Tema:</strong> ${c.tema || 'N/A'}</div>
-                        ${histInfo.dor_principal ? `<div class="pdf-meta-item full"><i data-lucide="heart-pulse"></i> <strong>Dor Alvo:</strong> ${histInfo.dor_principal}</div>` : ''}
-                    </div>
+                            <h3 class="pdf-titulo">${c.titulo || 'PDF Sem Título'}</h3>
 
-                    ${beneficios.length > 0 ? `
-                        <div class="pdf-beneficios">
-                            <div class="pdf-beneficios-title"><i data-lucide="sparkles"></i> Benefícios da Landing Page:</div>
-                            <ul>
-                                ${beneficios.map(b => `<li>${b}</li>`).join('')}
-                            </ul>
+                            <div class="pdf-meta-grid">
+                                <div class="pdf-meta-item"><i data-lucide="book-open"></i> <strong>Livro Base:</strong> ${c.livro_base || 'N/A'}</div>
+                                <div class="pdf-meta-item"><i data-lucide="compass"></i> <strong>Tema:</strong> ${c.tema || 'N/A'}</div>
+                                ${dorAlvo ? `<div class="pdf-meta-item full"><i data-lucide="heart-pulse"></i> <strong>Dor Alvo:</strong> ${dorAlvo}</div>` : ''}
+                            </div>
+
+                            ${contexto ? `
+                                <div class="pdf-intel-box">
+                                    <div class="pdf-intel-title"><i data-lucide="globe"></i> Olhos da Rede (Tendências):</div>
+                                    <p>${contexto}</p>
+                                </div>
+                            ` : ''}
+
+                            ${perfIA ? `
+                                <div class="pdf-intel-box">
+                                    <div class="pdf-intel-title"><i data-lucide="brain-circuit"></i> Recomendação de Inteligência:</div>
+                                    <pre style="white-space: pre-wrap; font-family: inherit; font-size: 0.78rem; margin: 0; color: var(--text-sec);">${perfIA}</pre>
+                                </div>
+                            ` : ''}
+
+                            ${beneficios.length > 0 ? `
+                                <div class="pdf-beneficios">
+                                    <div class="pdf-beneficios-title"><i data-lucide="sparkles"></i> Benefícios da Landing Page:</div>
+                                    <ul>
+                                        ${beneficios.map(b => `<li>${b}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+
+                            <div class="pdf-card-footer">
+                                <span style="font-size: 0.78rem; color: var(--text-muted);">${dataFmt}</span>
+                                ${c.pdf_url ? `
+                                    <a href="${c.pdf_url}" target="_blank" class="pdf-btn-link">
+                                        <i data-lucide="external-link"></i> Abrir PDF
+                                    </a>
+                                ` : ''}
+                            </div>
                         </div>
-                    ` : ''}
-
-                    <div class="pdf-card-footer">
-                        <span style="font-size: 0.78rem; color: var(--text-muted);">${dataFmt}</span>
-                        ${c.pdf_url ? `
-                            <a href="${c.pdf_url}" target="_blank" class="pdf-btn-link">
-                                <i data-lucide="external-link"></i> Abrir PDF
-                            </a>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
+                    `;
         });
 
         loadingEl.style.display = 'none';
