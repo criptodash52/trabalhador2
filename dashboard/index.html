@@ -36,6 +36,9 @@
             <div class="nav-item" id="nav-posts" onclick="goTab('posts')">
                 <i data-lucide="images"></i> Postagens
             </div>
+            <div class="nav-item" id="nav-caminho" onclick="goTab('caminho')">
+                <i data-lucide="footprints"></i> Caminho do Visitante
+            </div>
         </nav>
         <div class="status-box">
             <div class="status-row"><span class="dot"></span> Status do Sistema</div>
@@ -559,6 +562,63 @@
                             <span>Nenhuma solicitação enviada ainda.</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        <!-- ═══════ TAB: CAMINHO DO VISITANTE ═══════ -->
+        <div class="tab" id="tab-caminho">
+            <!-- CARDS DE METRICAS DO FUNIL DE NAVEGAÇÃO -->
+            <div class="funnel-grid" style="margin-bottom: 2rem;">
+                <div class="fcard purple-theme">
+                    <div class="ficon purple"><i data-lucide="footprints"></i></div>
+                    <div>
+                        <div class="flabel">Total de Visitantes</div>
+                        <div class="fvalue" id="caminho-metric-total">--</div>
+                    </div>
+                </div>
+                <div class="fcard blue-theme">
+                    <div class="ficon blue"><i data-lucide="help-circle"></i></div>
+                    <div>
+                        <div class="flabel">Iniciaram o Quiz</div>
+                        <div class="fvalue" id="caminho-metric-iniciou">--</div>
+                    </div>
+                </div>
+                <div class="fcard green-theme">
+                    <div class="ficon green"><i data-lucide="check-circle-2"></i></div>
+                    <div>
+                        <div class="flabel">Concluíram o Quiz</div>
+                        <div class="fvalue" id="caminho-metric-concluiu">--</div>
+                    </div>
+                </div>
+                <div class="fcard gold">
+                    <div class="ficon gold"><i data-lucide="shopping-cart"></i></div>
+                    <div>
+                        <div class="flabel">Clicaram no Checkout</div>
+                        <div class="fvalue" id="caminho-metric-checkout">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARRA DE PESQUISA E FILTROS DO FUNIL -->
+            <div class="leads-toolbar" style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.2rem;">
+                <div style="display: flex; gap: 0.8rem; align-items: center; flex: 1; min-width: 280px;">
+                    <div style="position: relative; width: 100%;">
+                        <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted);"></i>
+                        <input type="text" id="caminho-search-input" placeholder="Buscar por e-mail ou ID de sessão..." oninput="filtrarCaminhosVisitantes()" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.8rem 0.6rem 2.4rem; color: #fff; font-size: 0.9rem;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn-filter active" id="filter-caminho-todos" onclick="filtrarCaminhoCategoria('todos', this)">Todos</button>
+                    <button class="btn-filter" id="filter-caminho-oferta" onclick="filtrarCaminhoCategoria('oferta', this)">⚡ Oferta</button>
+                    <button class="btn-filter" id="filter-caminho-checkout" onclick="filtrarCaminhoCategoria('checkout', this)">🛒 Checkout</button>
+                    <button class="btn-filter" id="filter-caminho-comprou" onclick="filtrarCaminhoCategoria('comprou', this)">✅ Comprou</button>
+                </div>
+            </div>
+
+            <!-- CONTAINER DA LISTA DE FICHAS DOS VISITANTES -->
+            <div id="caminhos-list-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="empty-state" style="text-align: center; padding: 3rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;">
+                    <i data-lucide="footprints" style="width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                    <p style="color: var(--text-muted);">Carregando histórico do caminho dos visitantes...</p>
                 </div>
             </div>
         </div>

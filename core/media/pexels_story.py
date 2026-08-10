@@ -607,6 +607,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
     # --- Rotação de paletas exclusivas do Reels Leads ---
     paleta_reels_leads = None
+    _path_cta_do_dia = None  # Inicializado aqui para ser acessível em toda a função
     if is_reels_leads:
         estado_leads = carregar_estado()
         idx_pal_leads = estado_leads.get("index_palette_leads", 0) % len(PALETAS_LEADS)
@@ -615,6 +616,35 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         salvar_estado(estado_leads)
         nome_pal = "Visão Profética (Roxo/Azul)" if idx_pal_leads == 0 else "Paixão & Força (Rosa/Vermelho)"
         logger.info(f"🟣 [REELS_LEADS] Paleta exclusiva ativada: #{idx_pal_leads + 1} - {nome_pal}")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # ROLETA DIÁRIA DE CTA (exclusiva para reels_leads e story_tarde)
+    # Funciona como uma roleta: cta00 → cta01 → cta02 → cta03 → cta00 ...
+    # A roleta avança 1x por dia (data do sistema). O mesmo CTA do dia é
+    # compartilhado entre reels_leads e story_tarde (postados uma vez por dia).
+    # ─────────────────────────────────────────────────────────────────────────
+    if is_reels_leads or is_story_tarde:
+        import datetime
+        _logo_dir_cta = os.path.join("biblioteca_local", "logo")
+        _nomes_cta = [f"cta0{i}.png" for i in range(4)]  # cta00, cta01, cta02, cta03
+        _ctas_disponiveis = [os.path.join(_logo_dir_cta, n) for n in _nomes_cta
+                             if os.path.exists(os.path.join(_logo_dir_cta, n))]
+        if _ctas_disponiveis:
+            _estado_cta = carregar_estado()
+            _hoje = datetime.date.today().isoformat()  # ex: "2026-08-10"
+            _ultimo_dia_cta = _estado_cta.get("ultimo_dia_cta", "")
+            _idx_cta_dia = _estado_cta.get("index_cta_dia", 0)
+            # Avança a roleta apenas se for um novo dia
+            if _ultimo_dia_cta != _hoje:
+                if _ultimo_dia_cta != "":  # Não avança na primeira execução (sem dia anterior)
+                    _idx_cta_dia = (_idx_cta_dia + 1) % len(_ctas_disponiveis)
+                _estado_cta["index_cta_dia"] = _idx_cta_dia
+                _estado_cta["ultimo_dia_cta"] = _hoje
+                salvar_estado(_estado_cta)
+            _path_cta_do_dia = _ctas_disponiveis[_idx_cta_dia % len(_ctas_disponiveis)]
+            logger.info(f"🎯 [CTA DO DIA] Índice {_idx_cta_dia} → {os.path.basename(_path_cta_do_dia)} (dia: {_hoje})")
+        else:
+            logger.warning("⚠️ Nenhum arquivo cta0X.png encontrado em biblioteca_local/logo. Usando marca d'água padrão.")
 
     # Define quantos vídeos baixar de forma adaptativa:
     # Para reels_leads, calcula com base no número de slides para evitar repetição visual.
@@ -979,38 +1009,93 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
 
 
-            def _desenhar_elementos_marca(frame_array, fator_escala=1.0, is_cta=False, t_slide=0.0):
-                """Desenha o logo PNG no rodapé e aplica o brilho pulsante no CTA. [EMBLEMA REMOVIDO DO TOPO]"""
+            def _desenhar_elementos_marca(frame_array, fator_escala=1.0, is_cta=False, t_slide=0.0, idx_slide_atual=0):
+                """
+                Desenha a marca d'água ou o CTA do dia no rodapé do frame.
+
+                Regras para reels_leads e story_tarde:
+                  - Slide 0 (1º slide): exibe a marca d'água normal.
+                  - Slide 1+ (2º slide em diante): exibe o CTA do dia com animação de transição.
+                    A transição ocorre nos primeiros 0.5s do slide:
+                      * Marca d'água faz fade-out (opacidade 100% → 0%).
+                      * CTA faz fade-in  (opacidade 0%   → 100%).
+                    Após 0.5s o CTA fica fixo pelo restante do slide.
+
+                Todos os outros formatos: comportamento original (marca d'água sempre).
+                """
                 img = Image.fromarray(frame_array).convert("RGBA")
                 w, h = img.size
                 logo_dir = os.path.join("biblioteca_local", "logo")
 
-                # --- 1. [EMBLEMA REMOVIDO] Apenas marca d'água no rodapé é exibida ---
+                # ── Duração da animação de transição (em segundos) ──────────────
+                DURACAO_TRANSICAO = 0.5
 
-                # --- 2. MARCA D'ÁGUA NO RODAPÉ ---
+                # ── Decide se usamos o CTA do dia ou a marca d'água ─────────────
+                usar_cta = (
+                    (is_reels_leads or is_story_tarde)
+                    and _path_cta_do_dia is not None
+                    and idx_slide_atual >= 1          # A partir do 2º slide
+                )
+
+                # ── Calcula opacidades da transição ─────────────────────────────
+                # Nos primeiros DURACAO_TRANSICAO segundos do slide:
+                #   marca d'água vai de 255 → 0   (fade-out)
+                #   CTA          vai de 0   → 255 (fade-in)
+                # Depois disso CTA fica opaco e marca d'água some.
+                progresso_transicao = min(1.0, t_slide / DURACAO_TRANSICAO) if DURACAO_TRANSICAO > 0 else 1.0
+
+                if usar_cta:
+                    # fade-out da marca / fade-in do CTA
+                    alpha_marca = int(255 * (1.0 - progresso_transicao))
+                    alpha_cta   = int(255 * progresso_transicao)
+                else:
+                    # Slide 0 ou formatos não-CTA: apenas marca d'água em opacidade total
+                    alpha_marca = 255
+                    alpha_cta   = 0
+
+                # ── Helper: aplica logo com opacidade customizada ────────────────
+                def _colar_logo(path_img, largura_px, y_offset_px, alpha_override):
+                    """Carrega, redimensiona e cola uma imagem PNG com alpha_override (0-255)."""
+                    if not path_img or not os.path.exists(path_img):
+                        return False
+                    try:
+                        logo_img = Image.open(path_img).convert("RGBA")
+                        aspect = logo_img.height / logo_img.width
+                        altura_px = int(largura_px * aspect)
+                        logo_res = logo_img.resize((largura_px, altura_px), Image.Resampling.LANCZOS)
+                        # Aplica alpha_override multiplicando o canal alpha de cada pixel
+                        r, g, b, a = logo_res.split()
+                        a = a.point(lambda px: int(px * alpha_override / 255))
+                        logo_res = Image.merge("RGBA", (r, g, b, a))
+                        x_pos = int((w - largura_px) / 2)
+                        y_pos = h - altura_px - y_offset_px
+                        img.paste(logo_res, (x_pos, y_pos), logo_res)
+                        return True
+                    except Exception as e:
+                        logger.warning(f"⚠️ Erro ao colar imagem '{path_img}': {e}")
+                        return False
+
+                # ── 1. Marca d'água (sempre visível no Slide 0; fade-out nos slides seguintes) ──
                 path_logo_rodape = ""
-                logo_aplicado = False
                 if os.path.exists(logo_dir):
-                    for f in os.listdir(logo_dir):
-                        if f.lower().endswith(".png") and f != "foto_perfil.png":
+                    for f in sorted(os.listdir(logo_dir)):  # sorted para ordem determinística
+                        nome_lower = f.lower()
+                        # Ignora: foto_perfil, cta0X e video.mp4
+                        if (nome_lower.endswith(".png")
+                                and nome_lower != "foto_perfil.png"
+                                and not nome_lower.startswith("cta")):
                             path_logo_rodape = os.path.join(logo_dir, f)
                             break
-                if os.path.exists(path_logo_rodape):
-                    try:
-                        logo_img = Image.open(path_logo_rodape).convert("RGBA")
-                        largura_desejada = max(140, int(280 * fator_escala))
-                        aspect_ratio = logo_img.height / logo_img.width
-                        altura_desejada = int(largura_desejada * aspect_ratio)
-                        logo_redimensionado = logo_img.resize((largura_desejada, altura_desejada), Image.Resampling.LANCZOS)
-                        x_pos = int((w - largura_desejada) / 2)
-                        y_pos = h - altura_desejada - int(55 * fator_escala)
 
-                        img.paste(logo_redimensionado, (x_pos, y_pos), logo_redimensionado)
-                        logo_aplicado = True
-                    except Exception as e:
-                        logger.warning(f"⚠️ Erro ao aplicar marca no rodapé: {e}")
+                largura_marca = max(140, int(280 * fator_escala))
+                y_offset_marca = int(55 * fator_escala)
+                marca_aplicada = False
 
-                if not logo_aplicado:
+                if alpha_marca > 0:
+                    marca_aplicada = _colar_logo(path_logo_rodape, largura_marca, y_offset_marca, alpha_marca)
+
+                # Fallback textual se a imagem da marca não estiver disponível
+                if not marca_aplicada and alpha_marca > 0:
                     draw = ImageDraw.Draw(img)
                     tamanho_marca = max(22, int(36 * fator_escala))
                     fonte_rodape = _carregar_fonte(tamanho_marca, "Montserrat")
@@ -1019,16 +1104,23 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     tw = bb[2] - bb[0]
                     x_marca = (w - tw) // 2
                     y_marca = h - int(60 * fator_escala)
-                    cor_brilho = (235, 160, 40, 50)
+                    cor_brilho = (235, 160, 40, min(50, alpha_marca))
+                    cor_sombra = (0, 0, 0, min(200, alpha_marca))
+                    cor_texto  = (250, 185, 55, alpha_marca)
                     for ox in [-2, -1, 0, 1, 2]:
                         for oy in [-2, -1, 0, 1, 2]:
                             if ox != 0 or oy != 0:
                                 draw.text((x_marca + ox, y_marca + oy), texto_marca, font=fonte_rodape, fill=cor_brilho)
-                    draw.text((x_marca + 2, y_marca + 2), texto_marca, font=fonte_rodape, fill=(0, 0, 0, 200))
-                    draw.text((x_marca, y_marca), texto_marca, font=fonte_rodape, fill=(250, 185, 55))
+                    draw.text((x_marca + 2, y_marca + 2), texto_marca, font=fonte_rodape, fill=cor_sombra)
+                    draw.text((x_marca, y_marca), texto_marca, font=fonte_rodape, fill=cor_texto)
 
-                # --- 3. CTA LIMPO E SEM EFEITO DE BRILHO PULSANTE ---
-                # Efeito de aura pulsante removido permanentemente para evitar oscilações de luz/pisca-pisca
+                # ── 2. CTA do dia (fade-in a partir do Slide 2 em reels_leads/story_tarde) ──
+                if usar_cta and alpha_cta > 0:
+                    largura_cta = max(120, int(250 * fator_escala))  # 250px — levemente menor que a marca (280px)
+                    _colar_logo(_path_cta_do_dia, largura_cta, y_offset_marca, alpha_cta)
+
+                # ── 3. CTA LIMPO — sem efeito de brilho pulsante ────────────────
+                # Removido permanentemente para evitar oscilações de luz/pisca-pisca
 
                 return np.array(img.convert("RGB"))
 
@@ -1106,7 +1198,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                     )
                 
                 # Desenha o Selo foto_perfil.png no topo, a Marca d'água no rodapé e o efeito de brilho no CTA
-                frame = _desenhar_elementos_marca(frame, fator_escala, is_cta=(idx == idx_cta), t_slide=t_slide)
+                frame = _desenhar_elementos_marca(frame, fator_escala, is_cta=(idx == idx_cta), t_slide=t_slide, idx_slide_atual=idx)
                 # Garante que o frame retornado e sempre uint8 (evita erro 'Cannot handle this data type: <i8')
                 if isinstance(frame, np.ndarray) and frame.dtype != np.uint8:
                     frame = np.clip(frame, 0, 255).astype(np.uint8)

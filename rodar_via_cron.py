@@ -12,20 +12,31 @@ def rodar_agora():
     utc_now = datetime.datetime.utcnow()
     brt_now = utc_now - datetime.timedelta(hours=3)
     hora = brt_now.hour
+    minuto = brt_now.minute
     dia_semana = brt_now.weekday()  # 0 = Segunda-feira
+    dia_mes = brt_now.day
+    mes = brt_now.month
 
     print(f"🕒 Hora atual no Brasil: {brt_now.strftime('%Y-%m-%d %H:%M:%S')} (Dia da semana: {dia_semana})")
 
-    if hora == 4:
-        dia_mes = brt_now.day
-        mes = brt_now.month
+    # ─────────────────────────────────────────────────────────────────────────
+    # PROTEÇÃO CRÍTICA: o schedule interno do GitHub NUNCA posta conteúdo.
+    # Postagens são feitas EXCLUSIVAMENTE pelo cron-job.org via --manual.
+    #
+    # Usamos JANELAS DE TOLERÂNCIA ao invés de horas fixas:
+    #   - Analytics diário (04h BRT): aceita atraso até as 07h59 BRT (3h59 de tolerância)
+    #   - Relatório de segunda (08h-08h30 BRT): aceita atraso até as 10h59 BRT
+    #   - Qualquer outra hora: nenhuma tarefa de analytics → apenas encerra silenciosamente
+    #
+    # Isso garante: atraso do GitHub não perde analytics, mas NUNCA aciona postagem.
+    # ─────────────────────────────────────────────────────────────────────────
 
-        # --- INGESTÃO DIÁRIA (todo dia) ---
-        # Coleta métricas do Instagram e salva no Firebase. Não altera recomendações.
-        print("📥 Executando: Ingestão Diária de Métricas (coleta pura)")
+    # ── JANELA 1: Analytics diário (04h BRT, tolerância até 07h59) ──────────
+    if 4 <= hora <= 7:
+        print(f"📥 [ANALYTICS] Executando coleta diária (hora atual: {hora}h BRT)")
         subprocess.run(["python", "core/analytics/rodar_analytics.py", "--only-collect"])
 
-        # Fechamento semanal (relatório) continua no Domingo
+        # Fechamento semanal e relatório: só no Domingo
         if dia_semana == 6:  # Domingo
             print("🚀 [DOMINGO] Executando: Fechamento Semanal, Relatório")
             subprocess.run(["python", "-c", "import sys, io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'); from core.analytics.analisador_semanal import analisar_semana; analisar_semana()"])
@@ -33,77 +44,43 @@ def rodar_agora():
             print("🔬 [DOMINGO] Executando: Cientista de Dados + Formulador de Hipóteses")
             subprocess.run(["python", "core/analytics/rodar_analytics.py", "--ciclo", "semanal"])
 
-
-    elif hora == 5:
-        if dia_semana == 6:  # Domingo
+        # PDF semanal: só Domingo (gerado na janela das 4h-7h, substituindo a lógica das 5h)
+        if dia_semana == 6 and hora in (5, 6, 7):
             print("🚀 [DOMINGO] Executando: Geração do PDF da Semana")
-            # Roda o gerador de PDF
             subprocess.run(["python", "gerador_pdf/gerador.py"])
 
-    elif hora == 6:
-        if dia_semana == 6:  # Domingo
-            print("🚀 [DOMINGO] Executando: Reels Leads (Captura de Leads com base no PDF gerado às 4h)")
-            subprocess.run(["python", "main.py", "--type", "reels_leads"])
+    # ── JANELA 2: Relatórios de segunda-feira (08h BRT, tolerância até 10h59) ──
+    elif 8 <= hora <= 10 and dia_semana == 0:  # Segunda-feira
+        print(f"📊 [SEGUNDA] Executando relatório semanal (hora atual: {hora}h BRT)")
+        # Olhos da Rede (08h00-08h19 ou atrasado mas ainda segunda)
+        if hora == 8 and minuto < 20:
+            print("🚀 [SEGUNDA] Executando: Olhos da Rede Semanal")
+            subprocess.run(["python", "-c", "import sys, io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'); from core.ai.olhos_da_rede import coletar_e_salvar_semanal; coletar_e_salvar_semanal()"])
         else:
-            print("🚀 Executando: Reels e Story da Manhã")
-            subprocess.run(["python", "main.py", "--type", "reels"])
-            time.sleep(10)
-            subprocess.run(["python", "main.py", "--type", "story_manha"])
+            # 08h20+ ou atrasado para 9h/10h: roda o Analisador (evita perder o relatório)
+            print("🧠 [SEGUNDA] Executando: Analisador Semanal + IA Estrategista")
+            subprocess.run(["python", "core/analytics/rodar_analytics.py", "--ciclo", "semanal"])
 
-    elif hora == 7:
-        print("🚀 Executando: Pexels Story")
-        subprocess.run(["python", "main.py", "--type", "pexels_story"])
+    # ── QUALQUER OUTRA HORA: encerra silenciosamente (sem postagem) ──────────
+    else:
+        print(f"💤 [SCHEDULE] Hora {hora}h BRT — nenhuma tarefa de analytics neste horário. Encerrando.")
 
-    elif hora == 8:
-        if dia_semana == 0:  # Segunda-feira
-            minuto = brt_now.minute
-            if minuto < 20:  # ~08:00
-                print("🚀 [SEGUNDA] Executando: Olhos da Rede Semanal")
-                subprocess.run(["python", "-c", "import sys, io; sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8'); from core.ai.olhos_da_rede import coletar_e_salvar_semanal; coletar_e_salvar_semanal()"])
-            elif minuto >= 20:  # ~08:30
-                print("🧠 [SEGUNDA] Executando: Analisador Semanal + IA Estrategista")
-                subprocess.run(["python", "core/analytics/rodar_analytics.py", "--ciclo", "semanal"])
-        else:
-            print("💤 Nenhuma tarefa específica agendada para as 8:00 BRT nos outros dias.")
-
-    elif hora == 9:
-        print("🚀 Executando: Carousel")
-        subprocess.run(["python", "main.py", "--type", "carousel"])
-
-    elif hora == 12:
-        print("🚀 Executando: Reels do almoço")
-        subprocess.run(["python", "main.py", "--type", "reels"])
-
-    elif hora == 17:
-        print("🚀 Executando: Story da Tarde")
-        subprocess.run(["python", "main.py", "--type", "story_tarde"])
-
-    elif hora == 18:
-        print("🚀 Executando: Reels da noite (narrativo)")
-        subprocess.run(["python", "main.py", "--type", "reels_noite"])
-
-    elif hora == 19:
-        print("🚀 Executando: Pexels Story da noite (cinematógrafico)")
-        subprocess.run(["python", "main.py", "--type", "pexels_story_noite"])
-
-    elif hora == 22:
-        print("🚀 Executando: Reels Conquistador (Atração de Público)")
-        subprocess.run(["python", "main.py", "--type", "reels_conquistador"])
-
-    # Sempre verifica e processa pedidos pendentes do Studio de Criação (Dashboard)
-    # Roda a cada hora para não deixar nenhuma solicitação esperando
+    # ── Sempre: verifica solicitações pendentes do Studio de Criação ─────────
+    # Roda a cada ciclo do schedule para não deixar nenhuma solicitação esperando
     try:
         print("📥 Verificando solicitações pendentes do Studio de Criação (Dashboard)...")
         subprocess.run(["python", "core/publisher/executor_usuario.py"])
     except Exception as e_req:
         print(f"⚠️ Aviso no processador do Studio de Criação: {e_req}")
 
-    # Sempre executa o monitor de comentários ao final de qualquer ciclo agendado
+    # ── Sempre: monitor de comentários ───────────────────────────────────────
     try:
         print("💬 Executando verificação e resposta automática de comentários...")
         subprocess.run(["python", "core/publisher/gerenciador_comentarios.py"])
     except Exception as e_comm:
         print(f"⚠️ Aviso no monitor de comentários: {e_comm}")
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--manual":
