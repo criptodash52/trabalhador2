@@ -1076,16 +1076,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         return False
 
                 # ── 1. Marca d'água (sempre visível no Slide 0; fade-out nos slides seguintes) ──
-                path_logo_rodape = ""
-                if os.path.exists(logo_dir):
-                    for f in sorted(os.listdir(logo_dir)):  # sorted para ordem determinística
-                        nome_lower = f.lower()
-                        # Ignora: foto_perfil, cta0X e video.mp4
-                        if (nome_lower.endswith(".png")
-                                and nome_lower != "foto_perfil.png"
-                                and not nome_lower.startswith("cta")):
-                            path_logo_rodape = os.path.join(logo_dir, f)
-                            break
+                path_logo_rodape = os.path.join(logo_dir, "foto_perfil.png")
 
                 largura_marca = max(140, int(280 * fator_escala))
                 y_offset_marca = int(55 * fator_escala)
