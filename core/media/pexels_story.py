@@ -547,11 +547,44 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     import urllib.parse
     import random
 
-    # --- Normaliza query: aceita string ou lista (suporte a múltiplas queries) ---
+    # --- Normaliza e enriquece queries com alternância temática profunda ---
+    QUERIES_VIDEO_VARIADAS = [
+        # Metrô / Transporte
+        "subway passenger sitting night window cinematic",
+        "london tube underground platform empty night",
+        "subway escalator long perspective night moody",
+        "metro train interior lonely passenger looking out",
+        "subway window reflection night motion dark",
+
+        # Multidão / Chuva / Faixa de Pedestres
+        "london rain crowd street crosswalk night 35mm",
+        "top down crosswalk pedestrians umbrellas night rain",
+        "wet street reflections pedestrians walking night city",
+        "london red bus rain night crosswalk motion",
+        "crowded city intersection night rain street light",
+
+        # Praças / Ruas Históricas (Paris/Londres)
+        "paris plaza night couple bench ambient light",
+        "london park bench night fog street lamp",
+        "paris river seine bridge night lights reflection",
+        "cobblestone street night alley walking warm lamp",
+        "paris cafe terrace night rain solitude",
+
+        # Vidro / Chuva / Bokeh
+        "rain drops on window glass night city bokeh",
+        "taxi window rain night city lights motion blur",
+        "rainy window blurry lights dark aesthetic",
+        "car window rain night street lights reflection",
+
+        # Geral Urban Solitude
+        "night urban solitude city street golden light 35mm",
+        "person walking night city crowd moody",
+    ]
+
     if isinstance(query, str):
-        queries_lista = [query]
+        queries_lista = [query, random.choice(QUERIES_VIDEO_VARIADAS)]
     else:
-        queries_lista = list(query)
+        queries_lista = list(query) + [random.choice(QUERIES_VIDEO_VARIADAS)]
 
     # --- HIGIENIZAÇÃO E PADRONIZAÇÃO DE QUERIES (Filtro Estrito: Solidão Urbana Contemporânea Noturna) ---
     # Elimina vídeos claros, academias, natureza diurna, praias e escritórios iluminados.
@@ -562,7 +595,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         "flower", "flowers", "garden", "nature daylight", "sunny", "landscape green",
         "trees daylight", "mountain sunrise", "bright day", "sun",
         "gym", "boxing", "workout", "training", "fitness", "ring", "boxing ring", "athlete daylight",
-        "stadium", "soccer", "football", "crowd", "party", "drinking", "alcohol", "bar", "wine", "beer"
+        "stadium", "soccer", "football", "crowd party", "drinking", "alcohol", "bar", "wine", "beer"
     ]
     queries_higienizadas = []
     for q in queries_lista:
@@ -570,7 +603,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         for term in TERMOS_PROIBIDOS_VIDEO:
             q_clean = q_clean.replace(term, "").strip()
         if len(q_clean) < 4:
-            q_clean = "contemporary urban solitude night city street golden amber light 35mm"
+            q_clean = random.choice(QUERIES_VIDEO_VARIADAS)
         if "night" not in q_clean:
             q_clean += " night urban solitude 35mm cinematic"
         queries_higienizadas.append(q_clean)

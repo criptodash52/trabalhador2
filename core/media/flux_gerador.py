@@ -79,65 +79,90 @@ _ANGULOS = [
 # Tupla: (subtema, descricao_da_cena)
 # ============================================================
 _MATRIZ_PROMPTS = [
+    # ── 1. FAIXAS DE PEDESTRES E MULTIDÃO NA CHUVA ──
     (
-        "a person isolated in the middle of a crowd",
-        "A busy urban avenue at night, hundreds of people walking in different directions, and only one person completely still, watching the crowd pass by.",
+        "crowded rainy crosswalk in London top-down",
+        "A wet street crosswalk in London at night, high angle top-down view. Dozens of black umbrellas crossing under streetlamps, rain puddle reflections of headlights.",
     ),
     (
-        "isolation inside public transportation",
-        "A crowded subway car at night. Everyone is physically close but each person is absorbed in their own world. One passenger stares out the window, distant from the others.",
+        "pedestrian shoes on wet crosswalk low angle",
+        "Low angle ground view of shoes walking across a wet city crosswalk at night. Puddles reflecting glowing neon and amber streetlights.",
     ),
     (
-        "solitude caused by technology",
-        "A busy cafe at night. Every table has at least one person, but all of them are staring at screens. No one talks. One person in the background looks around, searching for real connection.",
+        "motion blur crowd around motionless person",
+        "A busy urban street crosswalk at night. One person stands completely still in sharp focus while the surrounding crowd passes by in motion blur.",
     ),
     (
-        "solitude in a nocturnal work environment",
-        "A glass corporate office at night. Only one person remains working, illuminated by a computer screen. The other floors of the building in the background are dark.",
+        "oxford street london red bus rain night",
+        "A rainy night at a London intersection. A classic red double-decker bus moving in the background, wet asphalt reflecting red and gold city lights.",
+    ),
+
+    # ── 2. METRÔ NOTURNO (SUBWAY / TUBE) ──
+    (
+        "subway car passenger looking out window",
+        "Inside a dark metro subway car at night. A young thoughtful man in a dark coat sits near the window, looking out at dark tunnel wall reflections. Soft moody interior light.",
     ),
     (
-        "isolation surrounded by skyscrapers",
-        "A person standing alone in the middle of an empty street between illuminated skyscrapers at night. The buildings rise in perspective toward the cloudy sky. The person stands motionless looking up.",
+        "empty london underground tube platform",
+        "An empty curved London Underground subway platform at night. Soft warm vintage lighting, a single figure in a long coat waiting for the train.",
     ),
     (
-        "solitude in urban relationships",
-        "A couple at a sophisticated restaurant at night. Sitting face to face, but each one looking in opposite directions, lost in their own thoughts. The table is elegantly set, but the silence is palpable.",
+        "deep subway escalator perspective",
+        "Deep perspective view going down a long metallic escalator into a dark underground metro station at night. Cold shadows and warm highlights.",
     ),
     (
-        "solitude in hyperconnectivity",
-        "An urban bedroom at midnight. A person lying in bed, illuminated only by the glow of a phone screen. The window in the background shows the city that never sleeps, but the room is completely lonely.",
+        "metro car door window glass face reflection",
+        "Close detail shot of a person's face reflected on the glass window of a subway train door as it moves through the dark tunnel at night.",
+    ),
+
+    # ── 3. PRAÇAS E RUA HISTÓRICAS (PARIS / LONDRES) ──
+    (
+        "couple in a foggy Paris plaza bench",
+        "A historic stone plaza in Paris at night under soft fog. A couple sitting on a wooden bench illuminated by a warm gas streetlight.",
     ),
     (
-        "urban anonymity at the subway station",
-        "A crowded metro station at night. Hundreds of people move in different directions but none looks at another. One figure stands still, watching the human flow.",
+        "person leaning on stone bridge river seine",
+        "A lonely figure leaning on the stone railing of a bridge over the Seine River in Paris at night. City palace lights reflecting on dark water.",
+    ),
+    (
+        "paris cafe outdoor terrace rainy night",
+        "A cozy outdoor terrace of a Parisian cafe at night under a drizzle. A solitary person sitting at a small round table under warm canopy lights.",
+    ),
+    (
+        "cobblestone alley night walking away",
+        "A narrow historic cobblestone street at night. A single person in a dark coat walking away into the distance under warm wall-mounted street lanterns.",
+    ),
+
+    # ── 4. VIDRO MOLHADO & EFEITO BOKEH ──
+    (
+        "looking through rain-streaked window at city lights",
+        "Intimate indoor view looking out a rain-covered window glass at night. Outside, blurred golden and amber city lights create a bokeh effect while a silhouette of a person looks outside.",
+    ),
+    (
+        "view from back of rainy taxi cab at night",
+        "View from the back seat of a taxi cab driving through city rain at night. Raindrops streaks on the window pane with blurred red taillights ahead.",
+    ),
+    (
+        "blurry cafe window rainy night bokeh",
+        "Macro detail of water droplets on a warm cafe glass window at night. Golden bokeh light circles from the city traffic outside.",
+    ),
+
+    # ── 5. OUTROS NÚCLEOS DA SOLIDÃO URBANA ──
+    (
+        "solitude inside public transportation",
+        "A crowded subway car at night. Everyone is physically close but each person is absorbed in their screen. One passenger stares out into space.",
     ),
     (
         "solitude facing the speed of the city",
-        "A busy street at night captured with long exposure. Cars form trails of light in motion, people have become blurred shadows. Only one figure remains sharp, standing still in the middle of the chaos.",
+        "A busy street at night captured with long exposure. Cars form trails of light in motion, people blurred shadows, one central figure standing sharp.",
     ),
     (
-        "contrast between nature and urban solitude",
-        "An urban park at night. Ancient trees line a stone path illuminated by lampposts. A person walks alone, small among the trees, while towering skyscrapers dominate the background skyline.",
+        "isolation surrounded by skyscrapers",
+        "A person standing alone in the middle of an empty street between towering illuminated skyscrapers at night, looking up into cloudy skies.",
     ),
     (
-        "solitude in the rain on an empty bridge",
-        "A pedestrian bridge over an urban river at night, pouring rain. A single figure leans on the railing looking at the city lights reflected in the water below. No one else is around.",
-    ),
-    (
-        "watching the sleeping city from above",
-        "A person standing alone on a rooftop terrace at night, looking out over an endless sea of city lights stretching to the horizon. Wind moves their clothes. The city is alive but indifferent.",
-    ),
-    (
-        "solitude in a luxury hotel room",
-        "A person standing at a floor-to-ceiling window of a high-rise hotel room at night, looking down at the illuminated city below. The room behind them is dark. They are surrounded by comfort but utterly alone.",
-    ),
-    (
-        "the last one awake in the city",
-        "A 24-hour diner at night, completely empty except for one customer sitting at the counter nursing a coffee. Through the window, the wet street reflects neon signs. The city outside is silent.",
-    ),
-    (
-        "solitude in a night market",
-        "A vibrant night market with colorful lanterns and food stalls. One person walks slowly through it alone, surrounded by strangers and noise, completely absorbed in their own thoughts.",
+        "the last one awake in the city diner",
+        "A 24-hour diner at night, empty except for one customer sitting at the counter nursing a coffee. Wet street reflecting neon signs outside.",
     ),
 ]
 
@@ -166,10 +191,8 @@ def gerar_imagem_flux(tipo: str, tema_escolhido: str = None, nome_arquivo: str =
     else:  # reels, reels_noite, story_manha
         width, height = 1080, 1920
 
-    # Seleciona subtema pelo dia do ano (rotacao automatica)
-    dia_do_ano = datetime.now().timetuple().tm_yday
-    idx_matriz = dia_do_ano % len(_MATRIZ_PROMPTS)
-    subtema, cena = _MATRIZ_PROMPTS[idx_matriz]
+    # Seleciona subtema aleatoriamente a cada postagem (evita repeticao no mesmo dia)
+    subtema, cena = random.choice(_MATRIZ_PROMPTS)
 
     # Seleciona cidade, efeito atmosferico e angulo aleatoriamente (variacao por postagem)
     cidade = random.choice(_CIDADES)
