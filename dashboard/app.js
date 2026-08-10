@@ -60,6 +60,9 @@ function goTab(name) {
     document.getElementById('page-title').innerText = TABS[name][0];
     document.getElementById('page-sub').innerText = TABS[name][1];
 
+    // Persiste a aba ativa para sobreviver ao reload da página
+    localStorage.setItem('dashboard_aba_ativa', name);
+
     if (name === 'criador') {
         carregarSolicitacoes();
     } else if (name === 'caminho') {
@@ -101,32 +104,19 @@ function alterarZoomYT(delta) {
 
 // ── BOTÃO ATUALIZAR ──────────────────────────────────────
 async function acaoAtualizarBotao() {
-    goTab('overview');
-    igMetricaAtiva = 'reach';
-    ytMetricaAtiva = 'views';
-    igZoomCount = 15;
-    ytZoomCount = 15;
+    // Atualiza os dados da aba ATUAL sem forçar volta para 'Visão Geral'
+    const abaAtual = localStorage.getItem('dashboard_aba_ativa') || 'overview';
 
-    document.querySelectorAll('#ig-metrics .mcard').forEach(c => c.classList.remove('active-ig'));
-    const r = document.getElementById('card-ig-reach');
-    if (r) r.classList.add('active-ig');
-    document.getElementById('ig-chart-title').innerText = '📈 Alcance por postagem (Instagram)';
+    if (abaAtual === 'caminho') {
+        await carregarCaminhoVisitantes();
+        return;
+    }
+    if (abaAtual === 'criador') {
+        await carregarSolicitacoes();
+        return;
+    }
 
-    document.querySelectorAll('#yt-metrics .mcard').forEach(c => c.classList.remove('active-yt'));
-    const v = document.getElementById('card-yt-views');
-    if (v) v.classList.add('active-yt');
-    document.getElementById('yt-chart-title').innerText = '📈 Views por vídeo (YouTube)';
-
-    const lblIg = document.getElementById('lbl-zoom-ig');
-    if (lblIg) lblIg.innerText = 'Exibindo 15 posts';
-    const lblYt = document.getElementById('lbl-zoom-yt');
-    if (lblYt) lblYt.innerText = 'Exibindo 15 vídeos';
-
-    filtroAtivo = 'todos';
-    document.querySelectorAll('.filter-bar .fbtn').forEach(b => b.classList.remove('active'));
-    const first = document.querySelector('.filter-bar .fbtn:first-child');
-    if (first) first.classList.add('active');
-
+    // Para as outras abas, recarrega todos os dados mantendo a aba atual
     await carregarTudo();
 }
 
@@ -1723,4 +1713,19 @@ function filtrarCaminhosVisitantes() {
 
 // ── INIT ─────────────────────────────────────────────────
 lucide.createIcons();
-carregarTudo();
+// Restaura a última aba ativa salva (sobrevive ao reload da página)
+(async () => {
+    const abaRestaurada = localStorage.getItem('dashboard_aba_ativa') || 'overview';
+    if (abaRestaurada !== 'overview' && TABS[abaRestaurada]) {
+        // Ativa visualmente a aba salva sem chamar goTab (evita double-load)
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const tabEl = document.getElementById('tab-' + abaRestaurada);
+        const navEl = document.getElementById('nav-' + abaRestaurada);
+        if (tabEl) tabEl.classList.add('active');
+        if (navEl) navEl.classList.add('active');
+        document.getElementById('page-title').innerText = TABS[abaRestaurada][0];
+        document.getElementById('page-sub').innerText = TABS[abaRestaurada][1];
+    }
+    await carregarTudo();
+})();
