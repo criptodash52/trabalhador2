@@ -223,8 +223,19 @@ async function carregarTudo() {
         renderPosts(filtroAtivo);
         renderLeads();
 
-        // 7. Cientista (async isolado)
-        await carregarCientista();
+        // 7. Caminho do Visitante
+        try {
+            await carregarCaminhoVisitantes();
+        } catch (e) {
+            console.warn('Erro ao carregar caminho dos visitantes:', e);
+        }
+
+        // 8. Cientista (async isolado)
+        try {
+            await carregarCientista();
+        } catch (e) {
+            console.warn('Erro ao carregar dados do cientista:', e);
+        }
 
     } catch (err) {
         console.error('[Dashboard] Erro:', err);
