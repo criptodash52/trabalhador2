@@ -1038,16 +1038,16 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                 )
 
                 # ── Calcula opacidades da transição ─────────────────────────────
-                # Nos primeiros DURACAO_TRANSICAO segundos do slide:
-                #   marca d'água vai de 255 → 0   (fade-out)
-                #   CTA          vai de 0   → 255 (fade-in)
-                # Depois disso CTA fica opaco e marca d'água some.
-                progresso_transicao = min(1.0, t_slide / DURACAO_TRANSICAO) if DURACAO_TRANSICAO > 0 else 1.0
-
                 if usar_cta:
-                    # fade-out da marca / fade-in do CTA
-                    alpha_marca = int(255 * (1.0 - progresso_transicao))
-                    alpha_cta   = int(255 * progresso_transicao)
+                    if idx_slide_atual == 1:
+                        # Transição suave apenas na passagem do Slide 0 para o Slide 1
+                        progresso_transicao = min(1.0, t_slide / DURACAO_TRANSICAO) if DURACAO_TRANSICAO > 0 else 1.0
+                        alpha_marca = int(255 * (1.0 - progresso_transicao))
+                        alpha_cta   = int(255 * progresso_transicao)
+                    else:
+                        # Do Slide 2 em diante, o CTA fica fixo e a marca d'água 100% oculta
+                        alpha_marca = 0
+                        alpha_cta   = 255
                 else:
                     # Slide 0 ou formatos não-CTA: apenas marca d'água em opacidade total
                     alpha_marca = 255
@@ -1116,7 +1116,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
                 # ── 2. CTA do dia (fade-in a partir do Slide 2 em reels_leads/story_tarde) ──
                 if usar_cta and alpha_cta > 0:
-                    largura_cta = max(120, int(250 * fator_escala))  # 250px — levemente menor que a marca (280px)
+                    largura_cta = max(140, int(280 * fator_escala))  # Ajustado para 280px igual à marca d'água
                     _colar_logo(_path_cta_do_dia, largura_cta, y_offset_marca, alpha_cta)
 
                 # ── 3. CTA LIMPO — sem efeito de brilho pulsante ────────────────
