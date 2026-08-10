@@ -729,16 +729,16 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - "Familia nao e o que voce encontra. E o que voce decide proteger todos os dias."
 
         UNIVERSO VISUAL OBRIGATÓRIO:
-        Queries em inglês evocando a estética Rockstar: grandeza, shows lotados, luxo moderno, luzes intensas, amanhecer épico.
-        PROIBIDO: cenas escuras, depressivas, chuva, isolamento, tristeza.
-        (ex: stadium concert crowd lights, modern luxury penthouse sunrise, high energy stage performance, successful leader walking fast, luxury car driving bright city)
+        Queries em inglês evocando a estética de Solidão Urbana Contemporânea: cidades grandes à noite, arranha-céus, luzes urbanas vibrantes, iluminação dourada/âmbar, atmosfera 35mm.
+        PROIBIDO: cenas de estádio de futebol, lutas, festas com bebidas, deserto ou praia diurna.
+        (ex: contemporary urban solitude night city lights 35mm, modern skyscraper rooftop night golden light, city lights reflections wet street 4k)
 
         Responda APENAS em formato JSON valido assim:
         {{
           "pexels_queries": [
-            "stadium concert crowd lights 35mm",
-            "modern luxury penthouse sunrise cinematic",
-            "high energy stage performance crowd"
+            "contemporary urban solitude night city lights 35mm",
+            "modern skyscraper rooftop night golden light cinematic",
+            "city lights reflections wet street 4k"
           ],
           "slides": [
             "Texto do Slide 1 (Declaracao de identidade)",

@@ -561,7 +561,8 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         "field", "grass", "green grass", "farm", "hay", "beach", "ocean daylight",
         "flower", "flowers", "garden", "nature daylight", "sunny", "landscape green",
         "trees daylight", "mountain sunrise", "bright day", "sun",
-        "gym", "boxing", "workout", "training", "fitness", "ring", "boxing ring", "athlete daylight"
+        "gym", "boxing", "workout", "training", "fitness", "ring", "boxing ring", "athlete daylight",
+        "stadium", "soccer", "football", "crowd", "party", "drinking", "alcohol", "bar", "wine", "beer"
     ]
     queries_higienizadas = []
     for q in queries_lista:
