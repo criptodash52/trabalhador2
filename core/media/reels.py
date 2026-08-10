@@ -477,9 +477,9 @@ def gerar_video_reels(caminhos_imagens, caminho_audio, caminho_saida="reels_pron
                 pass
 
         try:
-            video_clip.write_videofile(caminho_saida, fps=FPS, codec="libx264", audio_codec="aac", logger=None)
+            video_clip.write_videofile(caminho_saida, fps=FPS, codec="libx264", audio_codec="aac", logger=None, threads=4, preset="ultrafast")
         except TypeError:
-            video_clip.write_videofile(caminho_saida, fps=FPS, codec="libx264", audio_codec="aac")
+            video_clip.write_videofile(caminho_saida, fps=FPS, codec="libx264", audio_codec="aac", threads=4, preset="ultrafast")
 
         logger.success(f"✅ Vídeo gerado com sucesso como {caminho_saida}")
         return caminho_saida
@@ -556,14 +556,18 @@ def gerar_video_story_individual(caminho_imagem, caminho_audio, caminho_saida="s
                 fps=24,
                 codec="libx264",
                 audio_codec="aac",
-                logger=None
+                logger=None,
+                threads=4,
+                preset="ultrafast"
             )
         except TypeError:
             video_clip.write_videofile(
                 caminho_saida,
                 fps=24,
                 codec="libx264",
-                audio_codec="aac"
+                audio_codec="aac",
+                threads=4,
+                preset="ultrafast"
             )
         logger.success(f"✅ Vídeo Story gerado com sucesso como {caminho_saida}")
         return caminho_saida
