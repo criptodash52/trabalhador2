@@ -1583,6 +1583,22 @@ async function carregarCaminhoVisitantes() {
     }
 }
 
+const NOMES_EVENTOS_PT = {
+    "page_view": "👁️ Entrou na página da Coletânea",
+    "cta_click": "⚡ Clicou no botão 'Começar Desafio'",
+    "quiz_start": "🚀 Iniciou o Quiz",
+    "quiz_answer": "📝 Respondeu a Pergunta",
+    "quiz_complete_click": "🎯 Clicou em Ver Resultado",
+    "quiz_complete": "✅ Concluiu o Quiz",
+    "offer_view": "⚡ Visualizou a Oferta Especial",
+    "google_login": "🔑 Fez Login com Conta Google",
+    "download_area": "📥 Acessou a Área de Download",
+    "collection_click": "📚 Clicou em Acessar Material da Coletânea",
+    "checkout_click": "🛒 Clicou para ir ao Checkout",
+    "chatbot_open": "🤖 Abriu o Chatbot de Ajuda",
+    "chatbot_option": "💬 Interagiu com o Chatbot"
+};
+
 function renderizarCaminhoVisitantes() {
     const container = document.getElementById('caminhos-list-container');
     if (!container) return;
@@ -1590,13 +1606,11 @@ function renderizarCaminhoVisitantes() {
     const termoBusca = (document.getElementById('caminho-search-input')?.value || '').toLowerCase().trim();
 
     const filtrados = caminhosData.filter(c => {
-        // Filtro por busca (email ou id)
         const matchEmail = (c.usuario?.email || '').toLowerCase().includes(termoBusca);
         const matchNome = (c.usuario?.nome || '').toLowerCase().includes(termoBusca);
         const matchId = c.sessao_id.toLowerCase().includes(termoBusca);
         const bateBusca = matchEmail || matchNome || matchId;
 
-        // Filtro por categoria
         if (filtroCaminhoCategoriaAtivo === 'oferta') return bateBusca && c.funil?.chegou_oferta;
         if (filtroCaminhoCategoriaAtivo === 'checkout') return bateBusca && c.funil?.clicou_checkout;
         if (filtroCaminhoCategoriaAtivo === 'comprou') return bateBusca && c.funil?.comprou;
@@ -1615,9 +1629,14 @@ function renderizarCaminhoVisitantes() {
     }
 
     let html = '';
-    filtrados.forEach(c => {
+    filtrados.forEach((c, index) => {
+        const numVisitante = filtrados.length - index; // Numeração inversa para manter #1 no mais antigo ou sequencial
         const dataStr = c.data_chegada ? new Date(c.data_chegada).toLocaleString('pt-BR') : 'Desconhecido';
-        const emailStr = c.usuario?.email ? `<strong style="color:var(--cyan);">${c.usuario.email}</strong>` : '<span style="color:var(--text-muted);">Visitante Anônimo</span>';
+        
+        const tituloVisitante = c.usuario?.email 
+            ? `<strong style="color:var(--cyan); font-size:1.05rem;">${c.usuario.email}</strong> <span style="font-size:0.85rem; color:var(--text-muted);">(Visitante #${numVisitante})</span>`
+            : `<strong style="color:var(--text-main); font-size:1.05rem;">👤 Visitante #${numVisitante}</strong> <span style="color:var(--text-muted); font-size:0.85rem;">(Anônimo)</span>`;
+
         const dispIcon = c.dispositivo?.tipo === 'mobile' ? '📱 Mobile' : '💻 Desktop';
         const inAppBadge = c.dispositivo?.embutido_instagram ? ' • <span style="color:var(--neon-pink);">Instagram Browser</span>' : '';
 
@@ -1642,13 +1661,18 @@ function renderizarCaminhoVisitantes() {
             <div class="caminho-card" style="background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:1.2rem; display:flex; flex-direction:column; gap:1rem; transition:all 0.2s;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                     <div>
-                        <div style="font-size:1.05rem; margin-bottom:0.2rem;">${emailStr}</div>
+                        <div style="margin-bottom:0.2rem;">${tituloVisitante}</div>
                         <div style="font-size:0.82rem; color:var(--text-muted);">ID: <code>${c.sessao_id}</code> • ${dispIcon}${inAppBadge}</div>
                     </div>
-                    <div>${statusBadge}</div>
+                    <div style="display:flex; align-items:center; gap:0.8rem;">
+                        ${statusBadge}
+                        <button onclick="removerCaminhoVisitante('${c.sessao_id}')" title="Excluir ficha deste visitante" style="background:rgba(255,0,85,0.1); border:1px solid rgba(255,0,85,0.3); color:#ff0055; padding:0.4rem 0.6rem; border-radius:8px; cursor:pointer; font-size:0.85rem; transition:all 0.2s;">
+                            🗑️ Excluir
+                        </button>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.8rem 1rem; border-radius:8px; font-size:0.88rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.8rem 1rem; border-radius:8px; font-size:0.88rem; flex-wrap:wrap; gap:0.5rem;">
                     <div>
                         <span style="color:var(--text-sec);">Entrou em:</span> <strong>${dataStr}</strong>
                     </div>
@@ -1680,9 +1704,12 @@ function renderizarCaminhoVisitantes() {
                     </h4>
                     <div style="display:flex; flex-direction:column; gap:0.5rem; background:rgba(0,0,0,0.2); padding:1rem; border-radius:10px;">
                         ${(c.eventos || []).map(ev => {
-            const hora = ev.timestamp ? new Date(ev.timestamp).toLocaleTimeString('pt-BR') : '--:--';
-            return `<div style="font-size:0.85rem;"><span style="color:var(--text-muted); font-family:monospace;">[${hora}]</span> <strong>${ev.tipo}</strong> ${ev.numPergunta ? `(P${ev.numPergunta})` : ''} ${ev.opcao ? `- "${ev.opcao}"` : ''}</div>`;
-        }).join('')}
+                            const hora = ev.timestamp ? new Date(ev.timestamp).toLocaleTimeString('pt-BR') : '--:--';
+                            const nomeEventoPt = NOMES_EVENTOS_PT[ev.tipo] || ev.tipo;
+                            const detalheQuest = ev.numPergunta ? `(Pergunta ${ev.numPergunta})` : '';
+                            const detalheOpcao = ev.opcao ? `- "${ev.opcao}"` : '';
+                            return `<div style="font-size:0.88rem; display:flex; gap:8px; align-items:center;"><span style="color:var(--text-muted); font-family:monospace; font-size:0.8rem;">[${hora}]</span> <strong>${nomeEventoPt}</strong> <span style="color:var(--text-sec); font-size:0.82rem;">${detalheQuest} ${detalheOpcao}</span></div>`;
+                        }).join('')}
                     </div>
                 </div>
             </div>
@@ -1691,6 +1718,18 @@ function renderizarCaminhoVisitantes() {
 
     container.innerHTML = html;
     lucide.createIcons();
+}
+
+async function removerCaminhoVisitante(sessaoId) {
+    if (!confirm("Tem certeza que deseja remover esta ficha de visitante do sistema?")) return;
+    try {
+        await db.collection('caminho_do_visitante').doc(sessaoId).delete();
+        caminhosData = caminhosData.filter(c => c.sessao_id !== sessaoId);
+        renderizarCaminhoVisitantes();
+    } catch (err) {
+        console.error("Erro ao remover ficha do visitante:", err);
+        alert("Erro ao remover a ficha do visitante do Firebase.");
+    }
 }
 
 function alternarDetalhesCaminho(sessaoId) {
