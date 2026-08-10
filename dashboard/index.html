@@ -40,22 +40,19 @@
                 <i data-lucide="footprints"></i> Caminho do Visitante
             </div>
         </nav>
-        <div class="status-box">
-            <div class="status-row"><span class="dot"></span> Status do Sistema</div>
-            <p class="tema">Tema: <span id="val-tema">--</span></p>
-            <div class="idx-row">
-                <span>Gancho: <strong id="val-gancho">--</strong></span>
-                <span>CTA: <strong id="val-cta">--</strong></span>
-            </div>
-        </div>
     </aside>
 
     <!-- ── CONTEÚDO ── -->
     <main class="main">
         <div class="header">
-            <div>
-                <h1 id="page-title">Visão Geral</h1>
-                <p id="page-sub">Performance do robô separada por plataforma</p>
+            <div style="display: flex; align-items: center; gap: 1.2rem;">
+                <button id="btn-toggle-sidebar" class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher/Expandir Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div>
+                    <h1 id="page-title">Visão Geral</h1>
+                    <p id="page-sub">Performance do robô separada por plataforma</p>
+                </div>
             </div>
             <button class="btn-refresh" onclick="acaoAtualizarBotao()">
                 <i data-lucide="rotate-cw"></i> Atualizar

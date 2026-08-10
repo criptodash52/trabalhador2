@@ -144,9 +144,12 @@ async function carregarTudo() {
             const cfg = await db.collection('bot_config').doc('app_state').get();
             if (cfg.exists) {
                 const d = cfg.data();
-                document.getElementById('val-tema').innerText = d.tema_do_dia || '--';
-                document.getElementById('val-gancho').innerText = d.indice_gancho ?? '--';
-                document.getElementById('val-cta').innerText = d.indice_cta ?? '--';
+                const elTema = document.getElementById('val-tema');
+                const elGancho = document.getElementById('val-gancho');
+                const elCta = document.getElementById('val-cta');
+                if (elTema) elTema.innerText = d.tema_do_dia || '--';
+                if (elGancho) elGancho.innerText = d.indice_gancho ?? '--';
+                if (elCta) elCta.innerText = d.indice_cta ?? '--';
             }
         } catch (e) { console.warn('Estado bot:', e); }
 
@@ -1152,9 +1155,11 @@ function renderPostCard(p, forcedTag) {
 
             <!-- Tags de DNA Estratégico -->
             <div class="post-row-dna">
+                <div class="post-row-dna-chip tema-chip" title="Tema da Postagem" style="border: 1px solid rgba(255,214,0,0.3); color: var(--neon-gold);"><i data-lucide="book-open"></i> Tema: ${p.tema || 'Geral'}</div>
                 <div class="post-row-dna-chip" title="Objetivo da Postagem"><i data-lucide="target"></i> Objetivo: ${objetivoVal}</div>
                 <div class="post-row-dna-chip" title="Estilo de Copy / Persona"><i data-lucide="cpu"></i> Persona: ${personaVal.split('(')[0].trim()}</div>
-                <div class="post-row-dna-chip" title="Gatilho de Gancho"><i data-lucide="magnet"></i> Gancho: ${ganchoVal}</div>
+                <div class="post-row-dna-chip gancho-chip" title="Gatilho de Gancho" style="border: 1px solid rgba(0,229,255,0.3); color: var(--neon-blue);"><i data-lucide="magnet"></i> Gancho: ${ganchoVal}</div>
+                <div class="post-row-dna-chip cta-chip" title="Chamada para Ação (CTA)" style="border: 1px solid rgba(124,77,255,0.3); color: var(--neon-purple);"><i data-lucide="megaphone"></i> CTA: ${p.tipo_cta || 'Nenhum'}</div>
                 <div class="post-row-dna-chip" title="Tom Emocional"><i data-lucide="theater"></i> Tom: ${tomVal}</div>
                 <div class="post-row-dna-chip" title="Estrutura Narrativa"><i data-lucide="align-left"></i> Estrutura: ${estruturaVal}</div>
                 <div class="post-row-dna-chip" title="Complexidade"><i data-lucide="bar-chart-2"></i> Nível: ${complexVal}</div>
@@ -1749,6 +1754,36 @@ function filtrarCaminhoCategoria(categoria, btn) {
 function filtrarCaminhosVisitantes() {
     renderizarCaminhoVisitantes();
 }
+
+// ── TOGGLE SIDEBAR ───────────────────────────────────────
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main');
+    const btn = document.getElementById('btn-toggle-sidebar');
+    
+    sidebar.classList.toggle('collapsed');
+    main.classList.toggle('collapsed-sidebar');
+    
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    
+    if (btn) btn.classList.toggle('active', isCollapsed);
+}
+
+// Lógica de restauração inicial da sidebar
+(() => {
+    const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+    if (isCollapsed) {
+        setTimeout(() => {
+            const sidebar = document.querySelector('.sidebar');
+            const main = document.querySelector('.main');
+            const btn = document.getElementById('btn-toggle-sidebar');
+            if (sidebar) sidebar.classList.add('collapsed');
+            if (main) main.classList.add('collapsed-sidebar');
+            if (btn) btn.classList.add('active');
+        }, 50);
+    }
+})();
 
 // ── INIT ─────────────────────────────────────────────────
 lucide.createIcons();

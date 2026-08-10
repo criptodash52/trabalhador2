@@ -26,6 +26,7 @@ body { font-family:'Outfit',sans-serif; background:var(--bg-main); color:var(--t
     width:250px; background:var(--bg-card); border-right:1px solid var(--border);
     padding:2rem 1.4rem; display:flex; flex-direction:column;
     position:fixed; height:100vh; z-index:10; overflow-y:auto;
+    transition: width 0.3s ease, padding 0.3s ease, border 0.3s ease;
 }
 .logo { display:flex; align-items:center; gap:.75rem; margin-bottom:2.2rem; }
 .logo-icon { width:28px; height:28px; color:var(--neon-blue); }
@@ -62,8 +63,41 @@ nav { display:flex; flex-direction:column; gap:.35rem; flex-grow:1; }
 .idx-row { display:flex; justify-content:space-between; font-size:.76rem; color:var(--text-muted); }
 .idx-row strong { color:var(--text); }
 
+/* Sidebar recolhida */
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    border-right: none;
+}
+
 /* ── MAIN ── */
-.main { margin-left:250px; flex:1; padding:2.2rem 2.8rem; }
+.main { margin-left:250px; flex:1; padding:2.2rem 2.8rem; transition: margin-left 0.3s ease; }
+.main.collapsed-sidebar { margin-left: 0; }
+
+.btn-toggle-sidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-sec);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.22s;
+    flex-shrink: 0;
+}
+.btn-toggle-sidebar:hover, .btn-toggle-sidebar.active {
+    border-color: var(--neon-blue);
+    color: var(--neon-blue);
+    background: var(--bg-card-hover);
+}
+.btn-toggle-sidebar i {
+    width: 20px;
+    height: 20px;
+}
 .header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2rem; }
 .header h1 { font-size:1.9rem; font-weight:800; letter-spacing:-.5px; }
 .header p { color:var(--text-sec); font-size:.9rem; margin-top:.25rem; }
