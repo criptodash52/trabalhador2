@@ -26,7 +26,7 @@ def autenticar():
         f"?client_key={TIKTOK_CLIENT_KEY}"
         f"&scope={urllib.parse.quote(scopes)}"
         f"&response_type=code"
-        f"&redirect_uri={urllib.parse.quote(REDIRECT_URI)}"
+        f"&redirect_uri={urllib.parse.quote(REDIRECT_URI, safe='')}"
         f"&state={csrf_state}"
     )
 
