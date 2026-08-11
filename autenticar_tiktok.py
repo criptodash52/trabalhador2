@@ -6,7 +6,7 @@ import webbrowser
 import requests
 from core.config.settings import TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET
 
-REDIRECT_URI = "https://github.com/gustavocapichoni/trabalhador1"
+REDIRECT_URI = "https://sistema-op-marketing.vercel.app/"
 
 
 def autenticar():
@@ -70,10 +70,22 @@ def autenticar():
 
     res = requests.post(token_url, data=payload, headers=headers, timeout=15)
 
+    print(f"\nResposta da API TikTok (status {res.status_code}):")
+    print(res.text)
+
+
     if res.status_code == 200:
         data = res.json()
+        access_token = data.get("access_token")
+
+        if not access_token:
+            print("\nERRO: O TikTok retornou status 200 mas o access_token esta vazio!")
+            print("Isso geralmente significa que o codigo de autorizacao expirou.")
+            print("Por favor, rode o script novamente e use o codigo IMEDIATAMENTE apos autorizar.")
+            return
+
         token_info = {
-            "access_token": data.get("access_token"),
+            "access_token": access_token,
             "refresh_token": data.get("refresh_token"),
             "open_id": data.get("open_id"),
             "scope": data.get("scope"),
@@ -83,7 +95,8 @@ def autenticar():
         with open("token_tiktok.json", "w", encoding="utf-8") as f:
             json.dump(token_info, f, indent=2)
 
-        print("\nSUCESSO! O arquivo 'token_tiktok.json' foi criado!")
+        print("\nSUCESSO! O arquivo 'token_tiktok.json' foi criado com token valido!")
+        print(f"open_id: {data.get('open_id')}")
         print("O Trabalhador1 ja pode postar no TikTok automaticamente.")
     else:
         print(f"\nERRO ao obter token: Status {res.status_code}")
