@@ -4,83 +4,65 @@ import time
 import urllib.parse
 import webbrowser
 import requests
-from http.server import HTTPServer, BaseHTTPRequestHandler
 from core.config.settings import TIKTOK_CLIENT_KEY, TIKTOK_CLIENT_SECRET
 
-PORT = 8080
-REDIRECT_URI = f"http://localhost:{PORT}/callback"
-AUTH_CODE = None
-
-class OAuthHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        global AUTH_CODE
-        parsed = urllib.parse.urlparse(self.path)
-        params = urllib.parse.parse_qs(parsed.query)
-
-        if "code" in params:
-            AUTH_CODE = params["code"][0]
-            self.send_response(200)
-            self.send_header("Content-type", "text/html; charset=utf-8")
-            self.end_headers()
-            html = """
-            <html>
-            <body style="font-family: Arial; text-align: center; padding-top: 50px; background: #121212; color: #fff;">
-                <h1 style="color: #00f2fe;">✅ Autenticação do TikTok Concluída!</h1>
-                <p>O arquivo <strong>token_tiktok.json</strong> foi gerado. Você pode fechar esta aba.</p>
-            </body>
-            </html>
-            """
-            self.wfile.write(html.encode("utf-8"))
-        else:
-            self.send_response(400)
-            self.end_headers()
-            self.wfile.write("Erro na autenticacao.".encode("utf-8"))
-
-    def log_message(self, format, *args):
-        return  # Silencia logs padrão do HTTP Server
+REDIRECT_URI = "https://github.com/gustavocapichoni/trabalhador1"
 
 
 def autenticar():
     print("==========================================")
-    print(" 🎵 FLUXO DE AUTENTICAÇÃO DO TIKTOK")
+    print(" 🎵 FLUXO DE AUTENTICACAO DO TIKTOK")
     print("==========================================")
 
     if not TIKTOK_CLIENT_KEY or not TIKTOK_CLIENT_SECRET:
-        print("❌ TIKTOK_CLIENT_KEY ou TIKTOK_CLIENT_SECRET não estão configurados no arquivo .env!")
-        print("Por favor, preencha essas variáveis no seu arquivo .env antes de continuar.")
+        print("ERRO: TIKTOK_CLIENT_KEY ou TIKTOK_CLIENT_SECRET nao estao configurados no .env!")
         return
 
     csrf_state = "tiktok_auth_" + str(int(time.time()))
-    scopes = "user.info.basic,video.upload,video.publish"
+    scopes = "user.info.basic,video.upload"
 
     auth_url = (
         f"https://www.tiktok.com/v2/auth/authorize/"
         f"?client_key={TIKTOK_CLIENT_KEY}"
-        f"&scope={scopes}"
+        f"&scope={urllib.parse.quote(scopes)}"
         f"&response_type=code"
         f"&redirect_uri={urllib.parse.quote(REDIRECT_URI)}"
         f"&state={csrf_state}"
     )
 
-    print(f"\n1. Abrindo navegador para autorização do TikTok...")
-    print(f"URL: {auth_url}\n")
+    print("\n1. Abrindo navegador para voce autorizar o TikTok...")
+    print(f"   URL: {auth_url}\n")
     webbrowser.open(auth_url)
 
-    # Inicia servidor local temporário para escutar o callback
-    server = HTTPServer(("localhost", PORT), OAuthHandler)
-    print("⏳ Aguardando confirmação no navegador...")
+    print("=" * 60)
+    print("INSTRUCAO IMPORTANTE:")
+    print("Apos clicar em 'Permitir/Authorize' no navegador,")
+    print("o TikTok vai te redirecionar para a pagina do GitHub.")
+    print("Olhe para a BARRA DE ENDERECOS do navegador.")
+    print("Ela vai parecer com isso:")
+    print("  https://github.com/gustavocapichoni/trabalhador1?code=XXXXX&state=YYY")
+    print("")
+    print("Copie APENAS o valor que vem depois de '?code='")
+    print("(tudo antes do '&state')")
+    print("=" * 60)
 
-    while AUTH_CODE is None:
-        server.handle_request()
+    auth_code = input("\nCole aqui o codigo copiado da URL e pressione ENTER: ").strip()
 
-    print("\n✅ Código de autorização recebido! Trocando por Token de Acesso...")
+    # Remove qualquer parte extra caso o usuario cole a URL inteira
+    if "code=" in auth_code:
+        auth_code = auth_code.split("code=")[1].split("&")[0]
 
-    # Troca o código por access_token e refresh_token
+    if not auth_code:
+        print("\nERRO: Codigo vazio! Tente novamente.")
+        return
+
+    print("\n Trocando codigo por Token de Acesso...")
+
     token_url = "https://open.tiktokapis.com/v2/oauth/token/"
     payload = {
         "client_key": TIKTOK_CLIENT_KEY,
         "client_secret": TIKTOK_CLIENT_SECRET,
-        "code": AUTH_CODE,
+        "code": auth_code,
         "grant_type": "authorization_code",
         "redirect_uri": REDIRECT_URI
     }
@@ -101,12 +83,13 @@ def autenticar():
         with open("token_tiktok.json", "w", encoding="utf-8") as f:
             json.dump(token_info, f, indent=2)
 
-        print("\n🎉 SUCESSO! O arquivo 'token_tiktok.json' foi criado na raiz do projeto!")
-        print("O Trabalhador1 já pode postar no TikTok automaticamente.")
+        print("\nSUCESSO! O arquivo 'token_tiktok.json' foi criado!")
+        print("O Trabalhador1 ja pode postar no TikTok automaticamente.")
     else:
-        print(f"\n❌ Erro ao obter token do TikTok: Status {res.status_code}")
+        print(f"\nERRO ao obter token: Status {res.status_code}")
         print(res.text)
 
 
 if __name__ == "__main__":
     autenticar()
+
