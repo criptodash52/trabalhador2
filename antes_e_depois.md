@@ -110,3 +110,20 @@ Este documento detalha o que acontecia antes das modificações e como o sistema
 - **Filtro Estrito Ampliado (Blacklist)**: Adicionamos os termos `"stadium"`, `"soccer"`, `"football"`, `"crowd"`, `"party"`, `"drinking"`, `"alcohol"`, `"bar"`, `"wine"`, `"beer"` à lista `TERMOS_PROIBIDOS_VIDEO` em `pexels_story.py`.
 - **Harmonia Visual Mantida**: A alternância rica de degradês (Dourado Âmbar e Visão Profética Roxo/Azul) e a liberdade de enquadramentos urbanos noturnos foram preservadas, garantindo que 100% dos vídeos de fundo sejam cinematográficos, elegantes e perfeitamente integrados à identidade visual da marca.
 
+---
+
+## 9. Otimização de Conversão e Capas Limpas (Palavra-Chave 'SABEDORIA')
+**Contexto**: Estratégia de engajamento, legendas e legibilidade visual dos títulos das postagens.
+
+### ANTES ❌
+- **Capas Poluídas**: Textos e parágrafos longos ocupavam mais de 60% da tela do vídeo na capa, criando um "muro de texto" e dificultando a leitura rápida.
+- **Frases Abstratas**: Textos poéticos/filosóficos desconectados de problemas concretos do cotidiano, gerando baixo índice de comentários.
+- **Falta de Chamada Específica**: Não havia uma palavra-chave padronizada para induzir o público a comentar e receber materiais no Direct.
+
+### DEPOIS ✅
+- **Regra da Capa Limpa (Máximo 5 Palavras)**: A frase do primeiro slide/capa do vídeo foi limitada a no máximo 5 palavras curtas e cortantes. O visual fica limpo e o foco vai para o impacto do gancho.
+- **Dores Reais e Concretas**: Os prompts da IA foram instruídos a focar em conflitos práticos da rotina (dinheiro, foco, procrastinação, ansiedade, escolhas).
+- **Palavra-Chave 'SABEDORIA'**: Chamadas de ação padronizadas convidando o leitor a comentar "SABEDORIA" para desbloquear e-books e materiais diretamente no Direct.
+- **Perguntas Provocativas na Legenda**: Legendas terminando obrigatoriamente com perguntas de opinião para forçar interação ativa nos comentários.
+
+
