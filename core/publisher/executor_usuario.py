@@ -6,7 +6,13 @@ import subprocess
 from datetime import datetime, timezone
 
 # Forçar UTF-8 no Windows para suportar emojis no print
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+try:
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+except AttributeError:
+    pass  # Já está configurado ou em ambiente que não precisa
+
+# Usa o mesmo executável Python que está rodando este script (garante compatibilidade na nuvem)
+PYTHON_EXE = sys.executable
 
 BOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, BOT_PATH)
@@ -63,14 +69,15 @@ def processar_solicitacoes_pendentes():
             print(f"   💬 Mensagem:       {mensagem[:100]}...")
 
             # Executa o main.py para gerar e publicar o post com as preferências do usuário
-            cmd = ["python", "main.py", "--type", tipo_main]
+            # IMPORTANTE: usa sys.executable para garantir o Python correto na nuvem (GitHub Actions)
+            cmd = [PYTHON_EXE, "main.py", "--type", tipo_main]
             if tema and tema != "Geral":
                 cmd.extend(["--custom-tema", tema])
             if mensagem and mensagem.strip():
                 cmd.extend(["--custom-mensagem", mensagem.strip()])
 
-            print(f"🎬 Executando comando: {' '.join(cmd)}")
-            res = subprocess.run(cmd, cwd=BOT_PATH)
+            print(f"🎬 Executando comando: {PYTHON_EXE} main.py --type {tipo_main} (tema: {tema})")
+            res = subprocess.run(cmd, cwd=BOT_PATH, capture_output=False)
 
             if res.returncode == 0:
                 print(f"✅ [Studio de Criação] Postagem do pedido '{tema}' concluída com sucesso!")
@@ -89,11 +96,12 @@ def processar_solicitacoes_pendentes():
                 except Exception as e_mail:
                     print(f"⚠️ Aviso ao enviar e-mail de notificação: {e_mail}")
             else:
-                print(f"❌ [Studio de Criação] Falha ao processar a postagem para o pedido '{doc_id}'.")
-                # Atualiza status no Firebase para erro
+                print(f"❌ [Studio de Criação] Falha ao processar a postagem para o pedido '{doc_id}' (código de saída: {res.returncode}).")
+                # Atualiza status no Firebase para erro com detalhes
                 db.collection("solicitacoes_postagem").document(doc_id).update({
                     "status": "erro",
-                    "processado_em": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+                    "processado_em": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                    "erro_codigo": res.returncode
                 })
 
         return True

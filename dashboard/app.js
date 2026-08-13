@@ -566,6 +566,9 @@ async function carregarCientista() {
             renderEstrategiaDonut(d.peso_final_temas || {});
             renderCopyRankings(d.ganchos_growth_score || {}, d.ctas_growth_score || {});
             renderRecomendacoes(d);
+
+            // ── Novos painéis de Analytics ──
+            renderOlhosDaRede(d);
         }
     } catch (e) {
         console.warn('Cientista de Dados erro:', e);
@@ -596,6 +599,17 @@ async function carregarCientista() {
                 <tr><td>CTA de salvamento converte melhor em Carrosséis</td><td><span class="badge validando">VALIDANDO</span></td><td>Alta</td></tr>`;
         }
     } catch (e) { console.warn('Hipóteses:', e); }
+
+    // Heatmap de dias da semana (lê histórico de postagens do Firebase)
+    try {
+        const snapPosts = await db.collection('historico_postagens').orderBy('data', 'desc').limit(120).get();
+        const postsArr = [];
+        snapPosts.forEach(doc => postsArr.push(doc.data()));
+        renderHeatmapDias(postsArr);
+    } catch (e) {
+        console.warn('Heatmap dias:', e);
+        renderHeatmapDias([]);
+    }
 }
 
 // Growth Score — gauge visual
@@ -656,6 +670,89 @@ function renderICCRanking(icc) {
             </div>
         </div>`;
     }).join('');
+}
+
+// ── Olhos da Rede — Tendências e Manchetes da Semana ──────────────────────
+function renderOlhosDaRede(d) {
+    const el = document.getElementById('olhos-rede-grid');
+    if (!el) return;
+
+    // Pega dados de tendências salvos nas recomendações do motor estratégico
+    const trends = d?.tendencias_semana || d?.trends_semana || [];
+    const manchetes = d?.manchetes_semana || d?.noticias_semana || [];
+    const vibeTexto = d?.vibe_foco_semana || d?.vibe_semana || '';
+    const tudo = [];
+
+    if (vibeTexto) {
+        tudo.push({ tipo: '🧭 Vibe da Semana', texto: vibeTexto, cor: '#7c4dff' });
+    }
+    manchetes.forEach(m => tudo.push({ tipo: '📰 Notícia', texto: m, cor: '#ff6464' }));
+    trends.forEach(t => tudo.push({ tipo: '🔥 Google Trends', texto: t, cor: '#ffd600' }));
+
+    if (!tudo.length) {
+        el.innerHTML = '<div class="rec-item empty">Nenhuma tendência registrada ainda. O radar atualiza toda segunda-feira.</div>';
+        return;
+    }
+
+    el.innerHTML = tudo.map(item => `
+        <div class="olhos-rede-card" style="border-left: 3px solid ${item.cor};">
+            <span class="olhos-rede-tipo" style="color:${item.cor};">${item.tipo}</span>
+            <p class="olhos-rede-texto">${item.texto}</p>
+        </div>
+    `).join('');
+}
+
+// ── Heatmap de Melhores Dias da Semana ────────────────────────────────────
+function renderHeatmapDias(posts) {
+    const el = document.getElementById('heatmap-dias');
+    if (!el) return;
+
+    const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const acum = Array(7).fill(0);
+    const count = Array(7).fill(0);
+
+    posts.forEach(p => {
+        try {
+            const dt = p.data ? new Date(p.data) : null;
+            const gs = parseFloat(p.growth_score || p.metricas?.growth_score || 0);
+            if (dt && !isNaN(dt) && gs > 0) {
+                const dw = dt.getDay(); // 0=Dom .. 6=Sáb
+                acum[dw] += gs;
+                count[dw]++;
+            }
+        } catch (_) {}
+    });
+
+    const medias = acum.map((v, i) => count[i] > 0 ? v / count[i] : 0);
+    const maxMedia = Math.max(...medias) || 1;
+
+    if (maxMedia === 0 || medias.every(v => v === 0)) {
+        el.innerHTML = '<div class="rec-item empty">Ainda não há posts suficientes com Growth Score registrado para montar o mapa de horários.</div>';
+        return;
+    }
+
+    el.innerHTML = `
+        <div class="heatmap-bars">
+            ${dias.map((dia, i) => {
+                const pct = ((medias[i] / maxMedia) * 100).toFixed(1);
+                const isBest = medias[i] === maxMedia && medias[i] > 0;
+                const cor = isBest ? 'var(--neon-green)' : medias[i] > maxMedia * 0.6 ? 'var(--neon-purple)' : 'rgba(255,255,255,0.15)';
+                return `
+                    <div class="heatmap-col">
+                        <div class="heatmap-bar-track">
+                            <div class="heatmap-bar-fill" style="height:${pct}%;background:${cor};box-shadow:${isBest ? '0 0 10px var(--neon-green)' : 'none'};"></div>
+                        </div>
+                        <div class="heatmap-day-label ${isBest ? 'best' : ''}">${dia}</div>
+                        <div class="heatmap-gs-label">${medias[i] > 0 ? (medias[i] * 100).toFixed(2) + '%' : '—'}</div>
+                        ${isBest ? '<div class="heatmap-best-badge">⭐ Melhor</div>' : ''}
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        <p style="font-size:.75rem;color:var(--text-sec);margin-top:1rem;text-align:center;">
+            Baseado em ${posts.filter(p => p.growth_score || p.metricas?.growth_score).length} posts com GS registrado.
+        </p>
+    `;
 }
 
 // Donut de Estratégia do Bot
@@ -1421,11 +1518,11 @@ async function dispararGitHubActions() {
         const configDoc = await db.collection('config').doc('sistema').get();
         const pat = configDoc.exists ? configDoc.data().github_pat : null;
         if (!pat) {
-            console.warn("⚠️ Token do GitHub não encontrado no Firebase.");
-            return;
+            console.error("❌ [Studio de Criação] Token do GitHub (github_pat) NÃO encontrado no Firebase (config/sistema). O robô não será ativado na nuvem. Configure o PAT no Firebase para que as postagens funcionem.");
+            return false;
         }
 
-        fetch('https://api.github.com/repos/gustavocapichoni/trabalhador1/actions/workflows/instagram_bot.yml/dispatches', {
+        const res = await fetch('https://api.github.com/repos/gustavocapichoni/trabalhador1/actions/workflows/instagram_bot.yml/dispatches', {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
@@ -1438,15 +1535,21 @@ async function dispararGitHubActions() {
                     tipo_post: 'user_requests'
                 }
             })
-        }).then(res => {
-            if (res.status === 204) {
-                console.log("✅ GitHub Actions disparado com sucesso!");
-            } else {
-                console.warn("⚠️ Resposta inesperada do GitHub Actions:", res.status);
-            }
-        }).catch(err => console.warn("Aviso ao chamar API do GitHub:", err));
+        });
+
+        if (res.status === 204) {
+            console.log("✅ [Studio de Criação] GitHub Actions disparado com sucesso! (HTTP 204)");
+            return true;
+        } else {
+            // Tenta ler o corpo do erro para diagnóstico
+            let errBody = '';
+            try { errBody = await res.text(); } catch(_) {}
+            console.error(`❌ [Studio de Criação] Falha ao disparar GitHub Actions. Status: ${res.status}. Resposta: ${errBody}`);
+            return false;
+        }
     } catch (e) {
-        console.warn("Aviso ao disparar GitHub Actions:", e);
+        console.error("❌ [Studio de Criação] Erro ao chamar API do GitHub:", e);
+        return false;
     }
 }
 
@@ -1468,10 +1571,14 @@ async function confirmarPublicacao() {
             solicitado_em: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        // Dispara o acionamento no GitHub Actions
-        dispararGitHubActions();
+        // Dispara o acionamento no GitHub Actions e verifica se funcionou
+        const disparouOk = await dispararGitHubActions();
 
-        alert("🚀 Sucesso! Sua postagem foi solicitada e o robô foi ativado na nuvem!");
+        if (disparouOk) {
+            alert("🚀 Sucesso! Sua postagem foi solicitada e o robô foi ativado na nuvem! Aguarde alguns minutos para a publicação.");
+        } else {
+            alert("⚠️ Postagem registrada com sucesso, porém não foi possível acionar o robô na nuvem automaticamente. Verifique o console do navegador para detalhes. Você pode acionar o workflow 'user_requests' manualmente no GitHub Actions.");
+        }
         resetarFormularioCriador();
         await carregarSolicitacoes();
     } catch (e) {

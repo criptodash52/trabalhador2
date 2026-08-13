@@ -347,7 +347,33 @@
                     </table>
                 </div>
             </div>
+
+            <!-- ── RADAR OLHOS DA REDE ── -->
+            <div class="ci-grid-bottom" style="margin-top:1.5rem;">
+                <div class="ci-box" style="grid-column: 1 / -1;">
+                    <div class="ci-box-tag" style="background:rgba(255,100,100,0.12);color:#ff6464;border:1px solid rgba(255,100,100,0.25);">📰 Radar da Internet — Tendências da Semana</div>
+                    <h3>Olhos da Rede <span style="font-size:.7rem;font-weight:400;color:var(--text-sec);">— O que o robô leu e usou de contexto</span></h3>
+                    <p style="font-size:.8rem;color:var(--text-sec);margin-bottom:1.2rem;">Manchetes e buscas em alta no Brasil que alimentaram os roteiros desta semana. O robô cruza isso com o histórico da conta para criar posts no momento certo.</p>
+                    <div class="olhos-rede-grid" id="olhos-rede-grid">
+                        <div class="rec-item empty">Aguardando dados do Firebase...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── MAPA DE MELHORES HORÁRIOS ── -->
+            <div class="ci-grid-bottom" style="margin-top:1.5rem;">
+                <div class="ci-box" style="grid-column: 1 / -1;">
+                    <div class="ci-box-tag" style="background:rgba(0,255,200,0.08);color:var(--neon-green);border:1px solid rgba(0,255,200,0.2);">⏰ Mapa de Melhores Horários e Dias</div>
+                    <h3>Performance por Dia da Semana</h3>
+                    <p style="font-size:.8rem;color:var(--text-sec);margin-bottom:1.2rem;">Média de Growth Score dos posts publicados por dia da semana. Quanto maior a barra, melhor aquele dia performa na conta.</p>
+                    <div class="heatmap-wrap" id="heatmap-dias">
+                        <div class="rec-item empty">Aguardando histórico de postagens...</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
         <!-- ═══════ TAB: LEADS ═══════ -->
         <div class="tab" id="tab-leads">
