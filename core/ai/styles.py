@@ -248,6 +248,7 @@ def proxima_arquitetura(indice_atual=0):
 # ==========================================
 # REGRAS DE COPY (compartilhadas por todos os prompts)
 # ==========================================
+REGRAS_COPY_BASE = """
 REGRAS ABSOLUTAS DE COPY (violá-las é inaceitável):
 
 🎯 CAPAS E TÍTULOS DE IMPACTO (REGRA DA CAPA LIMPA):
