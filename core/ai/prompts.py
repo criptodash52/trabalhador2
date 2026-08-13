@@ -298,12 +298,12 @@ def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_
     Frase de referência de tom (use APENAS como bússola de intenção e sentimento — NÃO copie esta frase no roteiro ou na legenda):
     Referência: "{referencia_cta}"
 
-    REGRAS ABSOLUTAS DO CTA:
-    1. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como 'Siga.', 'Comente.', 'Salve.' ou 'Compartilhe.' no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
-    2. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou — deve sentir que a própria mensagem está o convidando para a próxima ação.
-    3. Varie a estrutura a cada post: ora use uma pergunta que provoca reflexo, ora uma observação que justifica a ação, ora um desafio, ora um convite. Nunca repita a mesma estrutura de CTA em posts seguidos.
-    4. O CTA na legenda deve fluir em continuidade direta com o texto anterior — como se fosse o último parágrafo da mensagem, não um apêndice.
-    5. O CTA no slide final do vídeo/carrossel deve ser conciso (1 a 2 frases) e funcionar como uma conclusão provocadora, não como uma chamada para ação clássica de marketing.
+    REGRAS ABSOLUTAS DO CTA E DA CAPA:
+    1. PALAVRA-CHAVE OFICIAL DO PERFIL: Para chamadas de engajamento, comentários e envio de e-book/materiais, use sempre a palavra-chave "SABEDORIA" (ex: "Comente 'SABEDORIA' que te entrego no Direct 👇").
+    2. CAPA LIMPA DE ALTO IMPACTO: A frase do primeiro slide (capa) DEVE ter no MÁXIMO 5 PALAVRAS. Nunca use parágrafos longos na capa.
+    3. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como 'Siga.', 'Comente.', 'Salve.' ou 'Compartilhe.' no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
+    4. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou.
+    5. Termine a legenda SEMPRE com uma pergunta provocativa de opinião para obrigar o leitor a comentar.
     ==============================================================
 
     ESTRUTURA DE ESCRITA DE SUCESSO (Feedback do Analytics):

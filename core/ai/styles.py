@@ -248,8 +248,16 @@ def proxima_arquitetura(indice_atual=0):
 # ==========================================
 # REGRAS DE COPY (compartilhadas por todos os prompts)
 # ==========================================
-REGRAS_COPY_BASE = """
 REGRAS ABSOLUTAS DE COPY (violá-las é inaceitável):
+
+🎯 CAPAS E TÍTULOS DE IMPACTO (REGRA DA CAPA LIMPA):
+- A frase da capa ou primeiro slide DEVE ter no MÁXIMO 5 PALAVRAS. Proibido colocar parágrafos ou frases longas cobrindo a tela do vídeo. Use um gancho curto, provocador e cortante.
+
+🔥 DORES REAIS E CONCRETAS (CHEGA DE ABSTRAÇÃO):
+- Proibido usar frases poéticas abstratas e vazias que não dizem nada ao leitor. Foque em conflitos e dores reais da rotina: dinheiro, procrastinação, falta de foco, ansiedade com o futuro, decisões difíceis, acordar sem propósito.
+
+💬 PALAVRA-CHAVE DE ENGAJAMENTO (SABEDORIA):
+- Para posts de atração, conversão e entrega de e-books/materiais, a palavra-chave oficial do perfil é "SABEDORIA". Instrua o leitor a comentar "SABEDORIA" para receber o acesso/material direto no Direct.
 
 ❌ PROIBIDO — NUNCA use estas frases de autoajuda vazia:
 - "Acredite em você", "Você é capaz", "Nunca desista", "Foco e determinação"
