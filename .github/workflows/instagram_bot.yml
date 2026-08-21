@@ -46,6 +46,13 @@ jobs:
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
+      - name: Checkout do Repositório de PDFs (Valores do PAI)
+        uses: actions/checkout@v4
+        with:
+          repository: criptodash52/pdf_trabalhador2
+          token: ${{ secrets.GH_PAT_PDF_UPLOAD }}
+          path: gerador_pdf/repositorio_pdfs
+
       - name: Checkout do Repositório de PDFs (gustavo_8k)
         uses: actions/checkout@v4
         with:

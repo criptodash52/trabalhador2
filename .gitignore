@@ -45,3 +45,10 @@ gerador_pdf/output/*.pdf
 # Dados de métricas gerados em runtime
 analytics/dados/metricas.json
 analytics/dados/metricas_youtube.json
+
+# Firebase credentials
+*.json
+!requirements.txt
+!client_secrets.json
+!token_youtube.json
+!estado_migrado.json
