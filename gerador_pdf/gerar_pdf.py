@@ -635,7 +635,7 @@ def draw_cover_image_page(canvas, doc):
     canvas.setLineWidth(0.6)
     canvas.rect(m_in, m_in, page_width - 2 * m_in, page_height - 2 * m_in)
 
-    # Cantos ornamentados nos 4 vÃ©rtices
+    # Cantos ornamentados nos 4 vértices
     c_len = 12
     for x, y, dx, dy in [
         (m_in, m_in, 1, 1),
@@ -649,7 +649,31 @@ def draw_cover_image_page(canvas, doc):
 
     canvas.restoreState()
 
-    # 3. Emblema da Marca (foto_perfil.png) centralizado harmonicamente
+    # 3. Versículo âncora do tema no TOPO da capa (acima do logo)
+    canvas.saveState()
+    margin_h = 50
+    text_width = page_width - 2 * margin_h
+
+    verso_base = conteudo.get("verso_base", "\"Tudo o que fizerem, façam de todo o coração, como para o Senhor.\"\nColossenses 3:23")
+
+    verso_style = ParagraphStyle(
+        name="cover_verso",
+        fontName=font_map_e.get("sans-italic", font_map_e["sans"]),  # EB Garamond Italic
+        fontSize=13.5,
+        leading=18,
+        textColor=get_color("rgba(255,215,100,0.85)"),
+        alignment=TA_CENTER,
+        spaceBefore=0,
+        spaceAfter=0,
+    )
+    p_verso = Paragraph(verso_base, verso_style)
+    vw, vh = p_verso.wrap(text_width, 80)
+    # Posiciona o versículo no topo da moldura interna (página - topo)
+    verso_y = page_height - 85
+    p_verso.drawOn(canvas, margin_h, verso_y - vh)
+    canvas.restoreState()
+
+    # 4. Emblema da Marca (foto_perfil.png) centralizado harmonicamente
     if os.path.exists(logo_path):
         try:
             canvas.saveState()
@@ -659,11 +683,11 @@ def draw_cover_image_page(canvas, doc):
             canvas.drawImage(logo_path, logo_x, logo_y, width=logo_size, height=logo_size, mask='auto', preserveAspectRatio=True)
             canvas.restoreState()
         except Exception as e_capa:
-            print(f"âš ï¸  Aviso: NÃ£o foi possÃ­vel renderizar a capa com foto_perfil.png: {e_capa}")
+            print(f"⚠️  Aviso: Não foi possível renderizar a capa com foto_perfil.png: {e_capa}")
     else:
-        print(f"âš ï¸  Aviso: foto_perfil.png nÃ£o encontrada em: {logo_path}")
+        print(f"⚠️  Aviso: foto_perfil.png não encontrada em: {logo_path}")
 
-    # 4. Selo da Marca abaixo do Emblema (sem duplicar o tÃ­tulo do PDF que jÃ¡ fica na PÃ¡gina 2)
+    # 5. Tagline da Marca na BASE da capa
     canvas.saveState()
     margin_h = 50
     text_width = page_width - 2 * margin_h
@@ -677,7 +701,7 @@ def draw_cover_image_page(canvas, doc):
         alignment=TA_CENTER
     )
 
-    p_tagline = Paragraph("CODIGO DA SABEDORIA * EDICAO SEMANAL", tagline_style)
+    p_tagline = Paragraph("VALORES DO PAI  ✦  EDIÇÃO SEMANAL", tagline_style)
     gw, gh = p_tagline.wrap(text_width, 40)
     p_tagline.drawOn(canvas, margin_h, 110)
 
@@ -1144,7 +1168,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         PageTemplate(id='Bento', frames=frame, onPage=draw_bg_bento),
         PageTemplate(id='Fechamento', frames=frame, onPage=draw_bg_fechamento),
         PageTemplate(id='PlanoAcao', frames=frame, onPage=draw_bg_plano),
-        PageTemplate(id='Oferta', frames=frame, onPage=draw_bg_oferta),
+        # Página de Oferta removida — produto ainda não disponível
     ]
     
     caps = conteudo.get("capitulos", []) if conteudo else []
@@ -1766,10 +1790,7 @@ def gerar_pdf(filename="O_Fio_de_Ouro_Restauracao.pdf", conteudo=None):
         )
         story.append(Paragraph("PRODUZIDO COM ZELO, FE E PROPOSITO.", footer_style))
         
-    # ==================== PAGINA FINAL: OFERTA / CTA (sempre presente) ====================
-    story.append(NextPageTemplate('Oferta'))
-    story.append(PageBreak())
-    story.append(Spacer(1, 1))
+    # Página de Oferta/CTA removida — produto ainda não disponível para @valoresdopai
 
     # --- Compilacao final usando BaseDocTemplate (PageTemplates) ---
     doc.build(story)

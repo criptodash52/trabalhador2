@@ -6,103 +6,45 @@ from core.ai.styles import REGRAS_COPY_BASE, proximo_gancho, proximo_gancho_conq
 # ==========================================
 FONTES_SABEDORIA = [
     {
-        "nome": "O Poder do Hábito (Charles Duhigg)",
-        "essencia": "A quebra de padrões automáticos. Como criar rotinas de campeões e dominar a execução impecável no dia a dia."
+        "nome": "Provérbios de Salomão (Sabedoria & Decisões)",
+        "essencia": "A sabedoria prática para governar a vida, honrar a palavra, dominar impulsos e construir prosperidade com justiça e integridade."
     },
     {
-        "nome": "Blink (Malcolm Gladwell)",
-        "essencia": "O poder do instinto e da decisão rápida. Como pessoas de alto nível tomam decisões precisas em milissegundos confiando na própria mente."
+        "nome": "Salmos de Davi (Oração & Blindagem Espiritual)",
+        "essencia": "A intimidade com Deus no secreto, o refúgio na angústia, a fé inabalável em meio às batalhas e o poder do louvor e da oração sincera."
     },
     {
-        "nome": "Pai Rico, Pai Pobre (Robert Kiyosaki)",
-        "essencia": "A mentalidade de dono e investidor. Como o dinheiro trabalha para quem tem coragem e visão, e como a maioria foge do risco para viver no aperto."
+        "nome": "Eclesiastes & Propósito Eterno",
+        "essencia": "A futilidade de correr atrás do vento e a busca pelo sentido verdadeiro. O valor de temer a Deus, desfrutar do fruto do trabalho com gratidão e discernir o tempo certo para cada propósito."
     },
     {
-        "nome": "Mais Esperto que o Diabo (Napoleon Hill)",
-        "essencia": "A fuga do ritmo hipnótico e da alienação. Como assumir o controle absoluto do próprio destino e rejeitar a mediocridade das massas."
+        "nome": "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
+        "essencia": "O discernimento de que a luta não é contra carne e sangue. A firmeza inegociável na verdade, couraça da justiça, escudo da fé e a espada do Espírito."
     },
     {
-        "nome": "O Poder da Ação (Paulo Vieira)",
-        "essencia": "Acorda para a vida que você merece. A responsabilidade inegociável de sair da passividade e executar com intensidade agora."
+        "nome": "Os Evangelhos & A Graça de Cristo",
+        "essencia": "O amor sacrificial, a autoridade pela mansidão, o perdão que liberta, o serviço ao próximo e a redenção que transforma corações e destinos."
     },
     {
-        "nome": "Provérbios de Salomão",
-        "essencia": "A sabedoria milenar do homem mais rico e sábio. Princípios eternos de riqueza, prudência, domínio próprio e excelência."
+        "nome": "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+        "essencia": "Caminhar pelo invisível, suportar a fornalha da provação e os desertos da vida com a certeza de que as promessas de Deus jamais falham."
     },
     {
-        "nome": "Malcolm X / Nelson Mandela",
-        "essencia": "O poder da autodeterminação, liderança implacável e a coragem de não aceitar a realidade imposta pelo sistema."
+        "nome": "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
+        "essencia": "A paz que excede todo o entendimento humano. Entregar todas as ansiedades em oração, guardar o coração e focar no que é puro, justo e amável."
     },
     {
-        "nome": "Marianne Williamson",
-        "essencia": "Nosso maior medo é a nossa própria luz. O poder brilhante e magnífico que existe dentro de nós. Parar de se encolher para agradar os outros."
-    },
-    {
-        "nome": "A Arte da Guerra (Sun Tzu)",
-        "essencia": "O planejamento frio e a execução tática cirúrgica. Vencer antes mesmo de entrar no campo de batalha."
-    },
-    {
-        "nome": "Meditações (Marco Aurélio)",
-        "essencia": "O estoicismo dos imperadores. Imunidade emocional inabalável diante do caos, paz de espírito e domínio absoluto da mente."
-    },
-    {
-        "nome": "Hábitos Atômicos (James Clear)",
-        "essencia": "A ciência dos micro-avanços. Como melhorar 1% todos os dias cria um abismo intransponível entre você e a concorrência."
-    },
-    {
-        "nome": "Trabalho Focado (Cal Newport)",
-        "essencia": "O hiperfoco estratégico. Como produzir resultados extraordinários em um mundo viciado em distrações e superficialidade."
-    },
-    {
-        "nome": "Essencialismo (Greg McKeown)",
-        "essencia": "A busca disciplinada por menos. Eliminar o desnecessário para investir energia máxima apenas no que realmente move a agulha."
-    },
-    {
-        "nome": "Princípios (Ray Dalio)",
-        "essencia": "Tomada de decisão fria e hiper-realista. Aceitar a realidade como ela é e construir sistemas infalíveis de execução."
-    },
-    {
-        "nome": "Os Segredos da Mente Milionária (T. Harv Eker)",
-        "essencia": "A reprogramação dos arquivos mentais sobre riqueza. Como quebrar crenças limitantes sobre dinheiro e faturamento."
-    },
-    {
-        "nome": "O Conceito de Liberdade Existencial",
-        "essencia": "A verdadeira liberdade não consiste em dominar o mundo, acumular riquezas ou exercer poder sobre os outros, mas sim na capacidade de viver de forma autêntica. A busca por autonomia opõe-se ao controle e à ordem impostos a qualquer custo. Além disso, recusa-se tanto a submissão à autoridade quanto a imposição sobre o próximo: a liberdade individual só é plena quando respeita e permite que os outros também sejam livres."
-    },
-    {
-        "nome": "A Vontade Herdada e a Imortalidade",
-        "essencia": "A morte física não representa o fim definitivo de um indivíduo. O verdadeiro encerramento de uma vida ocorre apenas quando os ideais, sonhos e memórias de alguém são esquecidos. Enquanto os valores e propósitos de uma pessoa continuarem a inspirar e ser carregados por gerações futuras, sua essência permanece viva, atravessando o tempo."
-    },
-    {
-        "nome": "Os Sonhos e a Ambição como Sentido da Vida",
-        "essencia": "O sentido da existência é impulsionado pela busca por ideais, independentemente de quão inalcançáveis ou incompreendidos possam parecer para a sociedade. A ausência de ambição e de propósitos equivale a uma estagnação espiritual. É a constante busca por um sonho que confere significado e movimento à vida humana."
-    },
-    {
-        "nome": "A Relatividade da Justiça e a Crítica ao Autoritarismo",
-        "essencia": "A moralidade e a justiça não são conceitos absolutos nem binários. Frequentemente, a ideia de 'justiça' é moldada por aqueles que detêm o poder, sendo utilizada para mascarar o autoritarismo, a censura e a preservação de privilégios. Estruturas que buscam manter a ordem a qualquer custo correm o risco de cometer violência em nome do bem comum. A verdadeira ética exige o questionamento crítico das leis e o entendimento de que a visão sobre o que é 'certo' varia conforme a vivência de cada indivíduo."
-    },
-    {
-        "nome": "Preconceito e os Ciclos de Ódio",
-        "essencia": "O preconceito e a discriminação não são naturais, mas sim comportamentos aprendidos e perpetuados culturalmente. O trauma e a opressão do passado podem gerar um ressentimento que é transmitido até mesmo para gerações que nunca vivenciaram a violência diretamente. Esse ciclo destrutivo só pode ser quebrado por meio do diálogo, da empatia, da educação e da disposição para a convivência pacífica."
-    },
-    {
-        "nome": "Pertencimento e Laços Afetivos",
-        "essencia": "Os laços humanos mais profundos não são determinados exclusivamente pelo parentesco de sangue. O verdadeiro senso de família é construído pela escolha, pelo afeto sincero, pelo respeito mútuo e por propósitos compartilhados. A convivência e a lealdade transformam indivíduos em um porto seguro uns para os outros."
-    },
-    {
-        "nome": "Resumo Filosófico (Princípio da Existência)",
-        "essencia": "A existência ganha significado quando há coragem para buscar a própria liberdade, proteger os semelhantes, questionar estruturas opressivas e manter vivas as aspirações mais profundas, independentemente das adversidades do mundo."
+        "nome": "Família, Honra e Legado Bíblico (Josué & Neemias)",
+        "essencia": "O sacerdócio no lar, a reconstrução dos muros destruídos, a proteção da família, a lealdade inegociável e a responsabilidade de deixar um legado de fé para as próximas gerações."
     }
 ]
 
 PERSONAS_MAPEADAS = {
-    "O LÍDER CARISMÁTICO": "Tom de quem puxa a multidão. Fala sobre ambição, aproveitar a vida como se não houvesse amanhã, viver em êxtase e conquistar o topo. Eletrizante, apaixonado, contagiante.",
-    "O VISIONÁRIO": "Comunicações que inspiram ação e grandeza. Estilo magnético de quem constrói o futuro, desafia o status quo e recusa o básico.",
-    "O SÁBIO REI": "Traz verdades atemporais sobre riqueza, prosperidade e como governar a própria vida com majestade e domínio emocional inabalável.",
-    "A ESTRELA (O ÍMÃ)": "Foca em autoconfiança absurda, luz própria brilhante e atração magnética. Tem a certeza absoluta do próprio valor e convida os outros a brilharem também.",
-    "O ESTRATEGISTA FRIO": "Focado em paciência tática, observação silenciosa e planejamento sem alarde. Fala sobre vencer sem precisar fazer barulho.",
-    "O MESTRE ESTOICO": "Sereno e inabalável. Ensina imunidade emocional absoluta contra críticas, inveja ou julgamentos do mundo.",
-    "O EXECUTIVO DE ELITE": "Comunicação cirúrgica focada em alta performance, gestão impecável de tempo e eliminação total de distrações."
+    "O PASTOR & MENTOR ESPIRITUAL": "Tom acolhedor, firme e pastoral. Traz consolo nas tribulações, aponta para as Escrituras e direciona o coração para a soberania de Deus.",
+    "O DEFENSOR DA FÉ (GUERREIRO)": "Comunicação firme, disciplinada e vigilante. Alerta contra o conformismo espiritual, exorta à oração contínua e à blindagem da mente e da família.",
+    "O SÁBIO CONSELHEIRO": "Focado em sabedoria bíblica prática. Ensina a aplicar Provérbios nos negócios, finanças, relacionamentos e decisões com serenidade e temor a Deus.",
+    "O MESTRE DEVOCIONAL": "Profundo, sereno e reflexivo. Guia o leitor a momentos de silêncio, oração e renovação espiritual no início da manhã ou no fim da noite.",
+    "O LÍDER DE PRINCÍPIOS E HONRA": "Focado em caráter cristão, fidelidade nos pequenos começos, honra à família e responsabilidade no trabalho como adoração."
 }
 
 def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_gancho=0, indice_cta=0, indice_arquitetura=0, is_conquistador=False, sentimento_escolhido=None):
@@ -279,17 +221,17 @@ def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_
     Formato: {arquitetura['nome']}
     Diretriz: {arquitetura['descricao']}
 
-    2. MANTER A PERSONA DE ALTA FREQUÊNCIA:
+    2. MANTER A PERSONA DE FÉ E AUTORIDADE CRISTÃ:
     NOME DA PERSONA: {nome_persona}
     DIRETRIZ DA PERSONA: {desc_persona}
-    Você NÃO é um coach de autoajuda genérico que fala de dor, trauma ou sofrimento. Você é um polo de magnetismo, sabedoria e poder.
-    Seu objetivo é incendiar a ambição e elevar a energia do leitor. Fale com a certeza de quem vive no topo.
+    Você NÃO é um coach de autoajuda genérico nem usa chavões rasos. Você é um mentor cristão de profunda reverência, discernimento e autoridade moral.
+    Seu objetivo é despertar a fé genuína, fortalecer o espírito e direcionar a conduta do leitor aos princípios inegociáveis de Deus.
     EXTENSÃO DOS SLIDES: Use entre 10 e 15 palavras por slide. Esse é o espaço exato para completar uma ideia com sentido narrativo. Evite frases excessivamente curtas.
 
-    3. EXTRAIR A GENIALIDADE DA OBRA E TORNÁ-LA SUA:
-    FONTE DE INSPIRAÇÃO DO POST DE HOJE: {nome_fonte}
-    ESSÊNCIA DA FONTE: {essencia_fonte}
-    PROIBIDO citar o nome do livro, do autor ou dar créditos. Pegue a genialidade da obra e passe como conteúdo original e magnético do nosso perfil.
+    3. EXTRAIR A PROFUNDIDADE BÍBLICA E APLICÁ-LA COM SABEDORIA:
+    PILAR DE INSPIRAÇÃO DO POST DE HOJE: {nome_fonte}
+    ESSÊNCIA ESPIRITUAL: {essencia_fonte}
+    Utilize traduções bíblicas sólidas (NAA, NVI, ARC). Quando citar passagens ou versículos, contextualize a aplicação prática para a vida diária com reverência e impacto.
 
     {INSTRUCAO_BASE_RACIOCINIO}
 
@@ -299,11 +241,11 @@ def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_
     Referência: "{referencia_cta}"
 
     REGRAS ABSOLUTAS DO CTA E DA CAPA:
-    1. PALAVRA-CHAVE OFICIAL DO PERFIL: Para chamadas de engajamento, comentários e envio de e-book/materiais, use sempre a palavra-chave "SABEDORIA" (ex: "Comente 'SABEDORIA' que te entrego no Direct 👇").
+    1. PALAVRA-CHAVE OFICIAL DO PERFIL: Para chamadas de engajamento, comentários e envio de guias/devocionais, use sempre a palavra-chave "ORACAO" ou "SABEDORIA" (ex: "Comente 'ORACAO' para receber o Guia Devocional no Direct 👇").
     2. CAPA LIMPA DE ALTO IMPACTO: A frase do primeiro slide (capa) DEVE ter no MÁXIMO 5 PALAVRAS. Nunca use parágrafos longos na capa.
     3. PROIBIDO CTA SECO: Nunca coloque um comando solto e abrupto como 'Siga.', 'Comente.', 'Salve.' ou 'Compartilhe.' no final de uma mensagem. Isso quebra o ritmo e soa como publicidade barata.
     4. O CTA deve nascer como extensão natural da última ideia entregue. O leitor não deve sentir que o conteúdo terminou e um aviso começou.
-    5. Termine a legenda SEMPRE com uma pergunta provocativa de opinião para obrigar o leitor a comentar.
+    5. Termine a legenda SEMPRE com uma pergunta reflexiva ou convite de oração para engajar o leitor nos comentários.
     ==============================================================
 
     ESTRUTURA DE ESCRITA DE SUCESSO (Feedback do Analytics):

@@ -453,30 +453,29 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             except Exception as _e:
                 logger.warning(f"Erro ao carregar PDF para story_tarde: {_e}")
 
-        SINONIMOS_MODULO = ["guia", "material", "conteúdo", "edição", "acervo", "manual", "recurso", "kit"]
+        SINONIMOS_MODULO = ["guia devocional", "estudo bíblico", "mapa de oração", "manual de sabedoria", "devocional", "caderno de reflexão"]
         sinonimo_modulo = random.choice(SINONIMOS_MODULO)
 
         VARIACOES_CTA_TARDE = [
-            f"Se você ainda não pegou o seu dessa semana, comenta 'SABEDORIA' que te envio o link direto no Direct. \\n Receba o seu {sinonimo_modulo} de crescimento e evolução.",
-            f"Essa semana tem um {sinonimo_modulo} novo disponível. Comenta 'SABEDORIA' e recebe no Direct. \\n Receba o material de direcionamento prático no seu bolso.",
-            f"Conhecimento deve ser compartilhado. Comenta 'SABEDORIA' e pega o seu {sinonimo_modulo} desta semana. \\n Comece hoje mesmo sua evolução prática.",
-            f"Toda semana um {sinonimo_modulo} novo para quem quer crescer. É só comentar 'SABEDORIA'. \\n Pegue seu material inédito direto no Direct.",
-            f"Se ainda não garantiu o {sinonimo_modulo} desta semana, é só comentar 'SABEDORIA'. \\n Receba o link do material completo agora.",
+            f"Se você ainda não pegou o seu devocional desta semana, comente 'ORACAO' que te envio no Direct. \\n Receba o seu {sinonimo_modulo} para blindar sua fé.",
+            f"Liberamos um {sinonimo_modulo} inédito para você. Comente 'ORACAO' para receber no Direct. \\n Fortaleça sua caminhada e seu propósito diário.",
+            f"Sabedoria bíblica para aplicar no seu dia a dia. Comente 'SABEDORIA' e receba o {sinonimo_modulo}. \\n Edifique a sua casa e a sua mente com a Palavra.",
+            f"Toda semana preparamos um {sinonimo_modulo} para enriquecer seu devocional. Comente 'ORACAO'. \\n Receba o material completo diretamente no seu Direct.",
+            f"Para aprofundar seu momento com Deus hoje, comente 'ORACAO'. \\n Receba o seu {sinonimo_modulo} em instantes no Direct.",
         ]
         cta_tarde = random.choice(VARIACOES_CTA_TARDE)
 
         prompt = f"""
-        Você é um estrategista de conversão, especialista em comportamento humano e copywriting de alta performance.
-        Sua função é criar uma sequência de STORIES em vídeo para AUDIÊNCIA QUENTE — pessoas que JÁ SEGUEM o perfil @codigo.da.sabedoria_.
-        Elas te conhecem. Confiam em você. Mas ainda não pediram o PDF desta semana.
-        Seu trabalho é criar a mensagem que vai fazer elas reconhecerem que precisam desse material agora.
+        Você é um mentor cristão e estrategista de conteúdo do perfil @valoresdopai.
+        Sua função é criar uma sequência de STORIES em vídeo para sua comunidade — pessoas que buscam crescimento espiritual, oração e sabedoria bíblica.
+        Elas te acompanham e confiam no seu ministério. Seu trabalho é criar uma mensagem que toque o coração e apresente o devocional desta semana como bênção para a caminhada delas.
 
         ═══════════════════════════════════════════════════
         DIFERENÇA FUNDAMENTAL DE AUDIÊNCIA:
         Esta NÃO é uma audiência fria. A pessoa já te acompanha.
-        Portanto: menos contexto, mais profundidade. Menos apresentação, mais revelação.
-        Fale como um mentor próximo que identificou algo específico e quer compartilhar.
-        A confiança já existe — use-a para ir direto ao ponto com elegância.
+        Portanto: tom acolhedor, bíblico e direto ao ponto.
+        Fale como um pastor ou conselheiro sábio que traz uma palavra de encorajamento e direção.
+        A confiança já existe — use-a para edificar vidas e direcionar à oração.
         ═══════════════════════════════════════════════════
 
         MATERIAL DA SEMANA (CENTRO DE TODA A NARRATIVA):
@@ -484,82 +483,77 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         - Conteúdo resumido: {resumo_pdf_tarde[:350]}
 
         ═══════════════════════════════════════════════════
-        FILOSOFIA BASE (injete de forma invisível — nunca cite diretamente):
-        - Liberdade real vem de viver de forma autêntica, recusando padrões que nunca foram seus.
-        - A ausência de propósito é a única forma de morte em vida.
-        - O conhecimento compartilhado é o que mantém vivos os ideais além do tempo.
-        - A existência ganha significado quando há coragem de manter as aspirações mais profundas.
+        DIRETRIZ ESPIRITUAL (injete com reverência):
+        - A paz duradoura nasce da entrega a Deus e da obediência à Sua Palavra.
+        - Não há batalha que resista à constância da oração no secreto.
+        - Princípios bíblicos trazem clareza para decisões difíceis e guardam o coração.
         ═══════════════════════════════════════════════════
 
         ANTES DE ESCREVER, DEFINA INTERNAMENTE (não precisa aparecer no JSON):
-        1. Qual é a frustração silenciosa que este material resolve?
-        2. O que muda na vida da pessoa quando ela lê este PDF — não o que o PDF ensina, mas o que ela SENTE ou PERCEBE?
-        3. Por que agora? O que torna este material relevante no momento em que ela vê o story?
+        1. Qual é a dor ou dilema espiritual que este material acolhe?
+        2. Qual promessa bíblica traz alívio e firmeza para o leitor?
+        3. Por que este guia devocional é essencial para o momento que ele vive hoje?
 
         ═══════════════════════════════════════════════════
         ESTRUTURA OBRIGATÓRIA DA SEQUÊNCIA (5 OU 6 SLIDES):
         ═══════════════════════════════════════════════════
 
         SLIDE 1 — PARAR E RECONHECER (MÁXIMO 8 a 10 palavras):
-        OBJETIVO COMPORTAMENTAL: fazer o seguidor pausar e pensar "isso é sobre algo que conheço bem".
-        Abra com uma frase que revela algo sobre a realidade da pessoa — observação específica e verdadeira.
+        OBJETIVO COMPORTAMENTAL: fazer o seguidor pausar e sentir a relevância espiritual para a sua vida.
+        Abra com uma reflexão bíblica ou observação de fé profunda.
         LIMITE ESTRITO: No máximo 8 a 10 palavras. DEVE caber em exatamente 2 ou 3 linhas na tela.
-        Sem exclamação. Sem clichê. Sem autoajuda vazia.
+        Sem exclamação. Sem clichê vazio.
 
         SLIDES 2 e 3 — REVELAR E APROFUNDAR (MÁXIMO 8 a 10 palavras por slide):
-        OBJETIVO COMPORTAMENTAL: criar identificação profunda e despertar o desejo de resolver algo.
-        Nomeie a frustração silenciosa que a pessoa sente mas raramente nomeia.
-        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide. Escreva a ideia de forma sintética e completa.
-        PROIBIDO: tom acusatório, vitimismo, frases longas ou explicativas.
+        OBJETIVO COMPORTAMENTAL: trazer discernimento espiritual sobre cansaço, ansiedade, família ou decisões.
+        Aponte o princípio das Escrituras que traz refúgio e clareza.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide.
+        PROIBIDO: tom acusatório, legalismo ou superficialidade.
 
         SLIDE 4 — A PONTE PARA O MATERIAL:
-        OBJETIVO COMPORTAMENTAL: fazer o PDF parecer a resposta natural para o que foi revelado.
-        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Modelo: "Para evoluir na prática, veja o material da semana."
+        OBJETIVO COMPORTAMENTAL: apresentar o estudo ou guia devocional como apoio para a vida devocional do seguidor.
+        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Modelo: "Para aprofundar sua oração, acesse o guia da semana."
         Em seguida, o título exato do material: "{titulo_pdf_tarde}".
         Se a frase + título ultrapassar 12 palavras: OBRIGATÓRIO dividir em 2 slides (Slide 4 = convite curto, Slide 5 = Título do PDF).
 
         SLIDE FINAL — CTA DIRETO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
         OBJETIVO COMPORTAMENTAL: tornar a ação simples e imediata.
-        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'SABEDORIA' pra receber no Direct."
-        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia de evolução da semana."
-        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total. Isso garante EXATAMENTE 2 (ou no máximo 3) linhas na tela.
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'ORACAO' para receber no Direct."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia devocional desta semana."
+        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total.
 
         ═══════════════════════════════════════════════════
         REGRAS ABSOLUTAS:
         ═══════════════════════════════════════════════════
-        - Tom: sereno, firme, próximo. Como um mentor que fala de igual para igual.
-        - Cada palavra deve contribuir para: reconhecimento, desejo ou ação. Se não faz nenhuma das 3, corte.
-        - PROIBIDO: "acredite em você", "nunca desista", "foco e determinação", "você é capaz", exclamações.
-        - PROIBIDO: o PDF parecer uma isca, um brinde ou uma recompensa vazia.
-        - PROIBIDO: apresentar o material como algo "grátis" ou "exclusivo" — ele é valioso porque resolve algo real.
+        - Tom: sereno, pastoral, acolhedor e firme.
+        - Foco em edificar a fé, a família e a oração.
+        - PROIBIDO: chavões vazios ou tom mercadológico apelativo.
         - Não use "..." mais de uma vez na sequência inteira.
-        - Fale com uma pessoa inteligente que está prestes a perceber algo que ainda não enxergou.
 
         PEXELS/PIXABAY QUERY:
-        Crie queries cinemáticas no tema SOLIDÃO URBANA CONTEMPORÂNEA À NOITE.
-        Exemplos: "thoughtful person night city lights warm glow 35mm cinematic" ou "introspective figure rooftop urban night golden light film"
+        Crie queries cinemáticas no tema CONTEMPLAÇÃO, PAZ E NATUREZA BÍBLICA.
+        Exemplos: "peaceful sunrise mountains golden hour cinematic" ou "ancient candle lighting open bible warm light"
 
         LEGENDA (3 a 4 linhas):
-        - Benefício direto e concreto de receber o material.
-        - Tom de mentor próximo — sem hype, sem urgência artificial.
-        - Termine com variação natural do CTA. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
+        - Reflexão edificante e breve sobre o estudo da semana.
+        - Termine com variação natural do CTA. Exemplo: "Comente 'ORACAO' que te envio o devocional no Direct 👇"
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido (o array 'slides' DEVE ter 5 ou 6 itens, o último com \\n):
         {{
-          "cta_keyword": "SABEDORIA",
+          "cta_keyword": "ORACAO",
           "slides": [
-            "Slide 1 — Frase que faz o seguidor parar e reconhecer algo sobre si mesmo.",
-            "Slide 2 — Nomeia a frustração silenciosa. Remove a culpa. Revela o real obstáculo.",
-            "Slide 3 — Abre o horizonte: como é quando essa percepção existe.",
-            "Slide 4 — Ponte natural para o material: reuni isso no {sinonimo_modulo} desta semana. {titulo_pdf_tarde}.",
-            "Slide 5 (CTA) — Comente 'SABEDORIA' que te envio direto no Direct. \\n Você vai perceber [promessa do resultado real após ler]."
+            "Slide 1 — Reflexão bíblica que faz o seguidor pausar e refletir.",
+            "Slide 2 — Traz clareza espiritual e descanso para a alma.",
+            "Slide 3 — Revela a promessa e a direção de Deus para o momento.",
+            "Slide 4 — Preparei um estudo completo sobre isso no {sinonimo_modulo} desta semana: {titulo_pdf_tarde}.",
+            "Slide 5 (CTA) — Comente 'ORACAO' para receber direto no Direct. \\n Edifique a sua fé e seu momento devocional."
           ],
           "pexels_queries": [
-            "thoughtful person night city lights warm glow 35mm cinematic",
-            "introspective figure rooftop urban night golden light film"
+            "peaceful sunrise mountains golden hour cinematic",
+            "ancient candle lighting open bible warm light"
           ],
-          "legenda": "Legenda próxima e direta sobre o que o material revela. Comente 'SABEDORIA' que te envio no Direct 👇"
+          "legenda": "Uma palavra de paz e direcionamento para sua semana. Comente 'ORACAO' que te envio o devocional no Direct 👇"
         }}
         """
     elif tipo == "carousel":
@@ -881,32 +875,32 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             except Exception as e:
                 logger.warning(f"Erro ao obter titulo e solucao do PDF: {e}")
 
-        # ── Rotação sequencial dos 5 pilares visuais ──────────────────────────
+        # ── Rotação sequencial dos 5 pilares visuais cristãos ────────────────
         PILARES_VISUAIS_LEADS = [
             {
-                "nome": "Show e Multidão em Êxtase",
-                "exemplo_query": "stadium concert crowd cheering stage lights high energy cinematic",
-                "descricao": "shows lotados, multidões em êxtase, luzes de palco vibrantes, atmosfera de rockstar e grandeza",
+                "nome": "Oração & Blindagem Espiritual",
+                "exemplo_query": "peaceful sunrise mountains praying hands light through clouds cinematic",
+                "descricao": "amanhecer com luz dourada, mãos em oração, montanhas serenas, céu bíblico majestoso",
             },
             {
-                "nome": "Luxo e Poder",
-                "exemplo_query": "luxury sports car driving bright modern city successful lifestyle 4k",
-                "descricao": "carros de luxo, penthouses, ambientes premium, estilo de vida de altíssimo padrão, sol brilhando",
+                "nome": "Sabedoria Bíblica & Antiguidade",
+                "exemplo_query": "ancient library vintage scripture candle glowing light warm atmosphere 4k",
+                "descricao": "escrituras antigas, pergaminhos, velas, arquitetura clássica, ambiente de sabedoria e estudo",
             },
             {
-                "nome": "Amanhecer Épico e Visão",
-                "exemplo_query": "successful person standing mountain top or modern building looking at epic sunrise",
-                "descricao": "amanhecer glorioso, luz dourada da manhã, líderes olhando para o horizonte com visão de futuro",
+                "nome": "Guerra Espiritual & Superação",
+                "exemplo_query": "dramatic storm warrior shield fire light breaking through darkness cinematic",
+                "descricao": "tempestade imponente, fogo na forja, passos firmes no deserto, guerreiro revestido da armadura de Deus",
             },
             {
-                "nome": "Palco e Liderança",
-                "exemplo_query": "charismatic leader speaking on stage spotlights audience applause",
-                "descricao": "líderes palestrando, palcos iluminados, aplausos, carisma e magnetismo",
+                "nome": "Paz & Alívio da Tempestade",
+                "exemplo_query": "calm lake after storm warm sunset light reflection peaceful nature 4k",
+                "descricao": "mar calmo após a tempestade, luz suave do entardecer, descanso e tranquilidade da alma",
             },
             {
-                "nome": "Celebração e Pertencimento",
-                "exemplo_query": "exclusive party people celebrating cheering champagne luxury event",
-                "descricao": "pessoas celebrando o topo, festas exclusivas, alegria, alta energia, ambiente festivo premium",
+                "nome": "Família, Honra e Legado",
+                "exemplo_query": "father embracing family golden hour field olive tree warm sunlight",
+                "descricao": "família unida, campos de oliveiras, abraço protetor, pôr do sol dourado, sacerdócio no lar",
             },
         ]
         estado_leads = carregar_estado()
@@ -923,34 +917,29 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         # ── Sorteio declarado do mecanismo persuasivo ─────────────────────────
         MECANISMOS_PERSUASIVOS = [
             {
-                "nome": "IDENTIDADE",
-                "descricao": "Desperta a consciência de status. Faz a pessoa perceber a distância entre quem ela é e quem ela sabe que poderia ser. Usa tensão interna, não acusação.",
-                "exemplo_gancho": "Você não quer uma vida maior. Quer uma vida que finalmente pareça sua.",
+                "nome": "IDENTIDADE EM CRISTO",
+                "descricao": "Desperta a consciência de filho de Deus e sacerdote do lar. Mostra a diferença entre viver pelo padrão do mundo e viver segundo o propósito do Reino.",
+                "exemplo_gancho": "Você não foi chamado para se conformar com este mundo.",
             },
             {
-                "nome": "CONTRASTE",
-                "descricao": "Coloca dois mundos lado a lado. Mostra que pessoas em situação similar chegaram a destinos opostos — e que a diferença estava em uma percepção, não em esforço.",
-                "exemplo_gancho": "Duas pessoas podem trabalhar 10 horas por dia. Uma constrói liberdade. A outra apenas acumula cansaço.",
+                "nome": "CONTRASTE ESPIRITUAL",
+                "descricao": "Coloca dois caminhos lado a lado. Mostra que o esforço humano sem a bênção de Deus é apenas cansaço, mas com Deus há descanso e vitória.",
+                "exemplo_gancho": "Dois homens podem enfrentar o mesmo deserto. Um murmura; o outro é forjado.",
             },
             {
-                "nome": "CURIOSIDADE",
-                "descricao": "Abre uma lacuna de informação. Apresenta uma pergunta ou dado surpreendente que a pessoa não consegue ignorar sem saber a resposta. Cria tração para continuar lendo.",
-                "exemplo_gancho": "Existe uma pergunta simples que pode revelar por que seus planos continuam sendo adiados.",
+                "nome": "SABEDORIA OCULTA",
+                "descricao": "Apresenta um princípio bíblico profundo que a maioria ignora na correria do dia a dia, gerando fome por revelação.",
+                "exemplo_gancho": "Existe um princípio em Provérbios que guarda a sua casa de ruínas.",
             },
             {
-                "nome": "REVELAÇÃO",
-                "descricao": "Remove a culpa da pessoa e revela que o obstáculo real é externo — um padrão oculto, uma crença instalada, uma ausência de método. A pessoa sente alívio e abertura.",
-                "exemplo_gancho": "O problema talvez não seja falta de disciplina. É tentar organizar uma vida que nunca foi planejada para você.",
+                "nome": "REFÚGIO & ALÍVIO",
+                "descricao": "Remove o peso da culpa e convida o leitor a entregar as cargas nas mãos de Deus em oração sincera.",
+                "exemplo_gancho": "O seu cansaço não é falta de força física; é sobrecarga na alma.",
             },
             {
-                "nome": "DESAFIO",
-                "descricao": "Convoca a pessoa a se posicionar. Faz uma pergunta que ela deveria saber responder — mas provavelmente não sabe. Ativa o desejo de provar algo para si mesma.",
-                "exemplo_gancho": "Se você tivesse que eliminar 80% do que ocupa seu dia, saberia quais 20% merecem permanecer?",
-            },
-            {
-                "nome": "AUTORIDADE",
-                "descricao": "Posiciona quem fala como alguém que estudou algo que a maioria ignora. Cria curiosidade sobre o que essa pessoa sabe — e que o seguidor ainda não aprendeu.",
-                "exemplo_gancho": "Passei a estudar uma coisa que quase ninguém ensina: como transformar intenção em execução real.",
+                "nome": "VIGILÂNCIA & GUERRA",
+                "descricao": "Convoca o homem/mulher de fé a guardar as portas do lar e revestir-se da armadura de Deus contra as armadilhas espirituais.",
+                "exemplo_gancho": "Se você não blindar a sua mente no secreto, o mundo roubará a sua paz.",
             },
         ]
         idx_mecanismo = estado_leads.get("index_mecanismo_reels_leads", 0) % len(MECANISMOS_PERSUASIVOS)
@@ -964,8 +953,8 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         # ─────────────────────────────────────────────────────────────────────
 
         prompt = f"""
-        Você é um estrategista de conversão de elite, especialista em comportamento humano, funis de decisão e copywriting de alta performance.
-        Sua função é criar um REEL de slides de texto para o perfil @codigo.da.sabedoria_ voltado a PÚBLICO FRIO — pessoas que ainda não seguem o perfil e estão consumindo conteúdo rapidamente.
+        Você é um mentor cristão e comunicador bíblico de alta autoridade para o perfil @valoresdopai.
+        Sua função é criar um REEL em vídeo de alta retenção voltado a pessoas que buscam fortalecimento espiritual, sabedoria bíblica e direção em oração.
 
         ═══════════════════════════════════════════════════
         MECANISMO PERSUASIVO DESTA GERAÇÃO: {mecanismo_nome}
@@ -974,7 +963,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         VOCÊ DEVE CONSTRUIR TODA A SEQUÊNCIA USANDO EXCLUSIVAMENTE ESTE MECANISMO.
         ═══════════════════════════════════════════════════
 
-        MATERIAL DA SEMANA (ENTREGA AO FINAL DO FUNIL):
+        MATERIAL DA SEMANA (ESTUDO DEVOCIONAL / GUIA BÍBLICO):
         - Título: "{titulo_pdf_limpo}"
         - Solução Prática: "{solucao_pdf_limpo}"
         - Contexto: {resumo_pdf[:300]}
@@ -982,90 +971,79 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         {evitar_repeticao_leads}
 
         ═══════════════════════════════════════════════════
-        FILOSOFIA DO CONTEÚDO (injete de forma invisível — nunca cite diretamente):
-        - Liberdade real vem de viver de forma autêntica, recusando padrões que nunca foram seus.
-        - A ausência de propósito é a única forma de morte em vida.
-        - Trabalhar muito na direção errada é a forma mais sofisticada de ficar parado.
-        - A mudança não exige mais esforço. Exige uma percepção que você ainda não teve.
+        FILOSOFIA BÍBLICA:
+        - A verdadeira autoridade nasce da oração e da submissão a Deus.
+        - As tempestades da vida refinam o caráter dos justos.
+        - Quem edifica sua casa sobre a Rocha não é abalado pelos ventos.
         ═══════════════════════════════════════════════════
 
         ANTES DE ESCREVER, DEFINA INTERNAMENTE (não precisa aparecer no JSON):
-        1. A única ideia que este Reel vai comunicar (uma frase).
-        2. O comportamento específico que cada slide precisa provocar.
-        3. Se a sequência toda conduz logicamente ao PDF como próxima peça natural da conversa.
+        1. A única verdade bíblica que este Reel vai proclamar (uma frase).
+        2. A reflexão ou convicção de fé que cada slide precisa provocar.
+        3. A condução lógica ao guia devocional da semana como ferramenta de oração.
 
         ═══════════════════════════════════════════════════
         ESTRUTURA OBRIGATÓRIA DOS SLIDES (6 OU 7 SLIDES):
         ═══════════════════════════════════════════════════
 
         SLIDE 1 — PARAR O SCROLL (MÁXIMO 8 a 10 palavras):
-        OBJETIVO COMPORTAMENTAL: fazer o polegar parar.
-        Use o mecanismo {mecanismo_nome} desde a primeira palavra.
-        LIMITE ESTRITO: No máximo 8 a 10 palavras. DEVE caber em exatamente 2 ou 3 linhas na tela.
-        PROIBIDO: frases motivacionais genéricas, clichês de autoajuda, frases longas.
+        OBJETIVO: prender a atenção com verdade bíblica incisiva.
+        Use o mecanismo {mecanismo_nome} desde o início.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras. DEVE caber em exatamente 2 ou 3 linhas.
 
-        SLIDES 2 e 3 — CRIAR IDENTIFICAÇÃO E REVELAR A DOR (MÁXIMO 8 a 10 palavras por slide):
-        OBJETIVO COMPORTAMENTAL: fazer a pessoa pensar "ele descreveu exatamente o que vivo".
-        Descreva situações concretas e específicas. REVELE o que a pessoa já sente.
-        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide. Escreva pensamentos curtos e diretos.
-        JAMAIS faça a pessoa se sentir inferior ou culpada.
+        SLIDES 2 e 3 — IDENTIFICAÇÃO ESPIRITUAL (MÁXIMO 8 a 10 palavras por slide):
+        OBJETIVO: tocar na dor, no deserto ou no dilema de fé com acolhimento.
+        Descreva situações reais do dia a dia da pessoa.
+        LIMITE ESTRITO: No máximo 8 a 10 palavras por slide.
 
-        SLIDE 4 — VIRADA: A NOVA PERCEPÇÃO (MÁXIMO 8 a 10 palavras):
-        OBJETIVO COMPORTAMENTAL: criar o desejo de saber mais.
-        Apresente a ideia central como uma revelação. Abra a porta com uma frase sintética de 8 a 10 palavras.
+        SLIDE 4 — DIREÇÃO BÍBLICA: A REVELAÇÃO (MÁXIMO 8 a 10 palavras):
+        OBJETIVO: apontar para a soberania, a graça ou o princípio bíblico que resolve a questão.
 
-        SLIDE 5 — PONTE PARA O MATERIAL:
-        OBJETIVO COMPORTAMENTAL: fazer o PDF parecer a próxima peça lógica da conversa.
-        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Exemplo: "Para evoluir na prática, veja o material da semana."
+        SLIDE 5 — CONVITE AO ESTUDO DEVOCIONAL:
+        OBJETIVO: apresentar o guia da semana como bênção.
+        Frase de convite super enxuta (MÁXIMO 6 a 8 palavras). Exemplo: "Preparei um estudo profundo sobre isso:"
         Apresente o nome EXATO do material: "{titulo_pdf_limpo}".
-        Se ultrapassar 12 palavras no total: OBRIGATÓRIO dividir em 2 slides (Slide 5 = convite curto, Slide 6 = Título do PDF).
+        Se ultrapassar 12 palavras no total: OBRIGATÓRIO dividir em 2 slides (Slide 5 = convite, Slide 6 = Título).
 
-        SLIDE FINAL — CTA DE BAIXO ATRITO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
-        OBJETIVO COMPORTAMENTAL: tornar o ato de comentar simples e de baixo custo.
-        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'SABEDORIA' pra receber no Direct."
-        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Descubra o método prático da semana."
-        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total. Isso garante EXATAMENTE 2 (ou no máximo 3) linhas na tela.
+        SLIDE FINAL — CTA DE ORAÇÃO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'ORACAO' para receber no Direct."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia devocional completo."
+        REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras.
 
         ═══════════════════════════════════════════════════
-        REGRAS ABSOLUTAS DE QUALIDADE:
+        REGRAS ABSOLUTAS:
         ═══════════════════════════════════════════════════
-        - Cada palavra deve contribuir para: parar, identificar, despertar desejo ou conduzir à ação. Se não faz nenhuma das 4 coisas, corte.
-        - Nunca escreva para parecer bonito ou profundo. Escreva para provocar um comportamento específico.
-        - Proibido frases motivacionais genéricas: "acredite em você", "nunca desista", "você é capaz", "foco e determinação".
-        - Proibido acusações que façam o usuário se sentir inferior, incapaz ou burro.
-        - Fale com alguém inteligente que está prestes a perceber algo que ainda não enxergou.
-        - Não use ponto de exclamação. Não use "..." mais de uma vez na sequência inteira.
-        - O PDF nunca é apresentado como "grátis", "bônus" ou "recompensa". Ele é a próxima etapa natural.
+        - Tom: sóbrio, pastoral, firme, de profunda autoridade cristã.
+        - PROIBIDO: chavões mercadológicos, promessas vazias ou sensacionalismo.
+        - Use ponto final ou interrogação. Não use exclamações.
 
         PEXELS QUERY — PILAR VISUAL OBRIGATÓRIO: "{pilar_nome}"
         A PRIMEIRA query do array pexels_queries DEVE ser: '{pilar_exemplo}'
         As demais complementam o mesmo universo visual: {pilar_descricao}.
-        PROIBIDO: vídeos de dor, chuva, depressão, isolamento, escuridão. Toda query DEVE evocar poder, luz, movimento, liderança ou conquista.
 
         LEGENDA (3 a 4 linhas):
-        - Benefício direto e concreto, sem jargões, sem hype.
-        - Tom de conversa próxima, como alguém que descobriu algo e está compartilhando.
-        - DEVE terminar com variação natural do CTA. Exemplo: "Comente 'SABEDORIA' que te envio no Direct 👇"
+        - Breve reflexão pastoral sobre o tema.
+        - Termine com variação do CTA. Exemplo: "Comente 'ORACAO' que te envio o devocional no Direct 👇"
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido (o array 'slides' DEVE conter 6 OU 7 frases, a última com \\n):
         {{
-          "cta_keyword": "SABEDORIA",
+          "cta_keyword": "ORACAO",
           "slides": [
-            "Gancho com mecanismo {mecanismo_nome} — faz o scroll parar.",
-            "Identificação concreta: a pessoa pensa 'isso acontece comigo'.",
-            "Aprofundamento da dor — revela, não acusa. Remove a culpa da pessoa.",
-            "Virada: a nova percepção que muda tudo. Abre a porta, não entrega a solução.",
-            "Ponte natural para o material, sem parecer venda.",
+            "Gancho bíblico com mecanismo {mecanismo_nome}.",
+            "Identificação da batalha de fé que o leitor enfrenta.",
+            "Aprofundamento com acolhimento pastoral e clareza.",
+            "Princípio da Palavra que traz luz e direção.",
+            "Preparei um estudo completo sobre isso:",
             "{titulo_pdf_limpo}.",
-            "Comente 'SABEDORIA' e eu te envio direto no Direct. \\n Você vai descobrir [promessa concreta do benefício real do PDF]."
+            "Comente 'ORACAO' para receber no Direct. \\n Fortaleça sua vida devocional e sua fé."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
-            "successful confident person walking modern city golden light cinematic",
-            "leader standing high building looking horizon sunrise epic"
+            "praying hands morning light mountains biblical landscape cinematic",
+            "ancient scriptures vintage book light dust particles 4k"
           ],
-          "legenda": "Legenda próxima e direta baseada no material desta semana. Comente 'SABEDORIA' que te envio no Direct 👇"
+          "legenda": "Uma palavra de sabedoria e fé para edificar sua caminhada. Comente 'ORACAO' que te envio o devocional no Direct 👇"
         }}
         """
     else:
@@ -1102,7 +1080,14 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         
         for tentativa in range(max_tentativas_por_chave):
             try:
-                resposta = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+                # Tenta modelo gemini-2.5-flash ou gemini-3.6-flash (para novas contas do Google AI Studio)
+                try:
+                    resposta = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+                except Exception as e_mod:
+                    if "not found" in str(e_mod).lower() or "404" in str(e_mod):
+                        resposta = client.models.generate_content(model="gemini-3.6-flash", contents=prompt)
+                    else:
+                        raise e_mod
                 
                 # Extração e parse robusto
                 try:

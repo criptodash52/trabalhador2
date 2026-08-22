@@ -1,121 +1,118 @@
 {
-  "titulo_pdf": "O Protocolo Antidrift: Mentalidade Financeira Inabalável",
-  "subtitulo_pdf": "O método passo a passo para assumir o controle do seu destino financeiro.",
-  "prompt_imagem_capa": "Cinematic dark moody photography of a man standing at a crossroads, one path lit by a golden light, the other shrouded in mist, 8k, hyperrealistic.",
+  "titulo_pdf": "Desbloqueie o Perdão: O Caminho da Graça Libertadora",
+  "subtitulo_pdf": "O método prático para libertar-se da culpa e perdoar de verdade.",
+  "prompt_imagem_capa": "Cinematic dark moody photography of a glowing hourglass in the dark, 8k",
   "capa_cards": [
     {
-      "titulo": "A Corrida Vazia",
-      "texto": "Você corre sem parar, trabalhando exausto, mas a linha de chegada nunca aparece? Sente que seu esforço não te tira do lugar?",
-      "pergunta_destaque": "Quando você vai parar de aceitar isso?"
+      "titulo": "A Corrente Invisível",
+      "texto": "O peso da culpa do passado e a dificuldade de perdoar a si mesmo e aos outros roubam sua paz e travam seu futuro. Você merece ser livre.",
+      "pergunta_destaque": "Cansado de arrastar o ontem?"
     },
     {
-      "titulo": "Desperte do Transe",
-      "texto": "Liberte-se do hábito da 'deriva' e assuma o comando da sua mente para conquistar a prosperidade."
+      "titulo": "A Chave da Graça",
+      "texto": "Descubra o poder transformador do perdão e da redenção através dos Evangelhos.",
+      "pergunta_destaque": "null"
     },
     {
-      "titulo": "Resultados Reais Hoje",
-      "texto": "Transforme esforço em progresso visível e tangível, semana após semana."
+      "titulo": "Paz Restaurada",
+      "texto": "Recupere sua serenidade e viva com leveza, livre do peso.",
+      "pergunta_destaque": "null"
     },
     {
-      "titulo": "Mente Mestra do Dinheiro",
-      "texto": "Seu destino é moldado por suas decisões, não pelas circunstâncias.",
-      "citacao_destaque": "A mente humana é a arma mais poderosa. Código da Sabedoria."
+      "titulo": "Redenção é Escolha",
+      "texto": "Escolha a liberdade que Jesus oferece.",
+      "citacao_destaque": "O perdão é a ponte para a nova vida. Código da Sabedoria."
     }
   ],
   "capitulos": [
     {
       "numero": 1,
-      "titulo": "A Maldição do 'Mais Tarde': Por Que Você Não Chega Lá",
-      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a blurred future reflection in a cracked mirror, 8k, hyperrealistic.",
+      "titulo": "A Ilusão da Culpa: Por Que Você Insiste em Carregar o Desnecessário",
+      "prompt_imagem": "Cinematic moody dark photography of a tired man looking at a mirror, 8k",
       "paragrafos": [
-        "É irônico como nos orgulhamos de estar ocupados, mas raramente nos questionamos: ocupados com o quê, exatamente? Você trabalha exausto, empurra com a barriga a decisão de olhar para suas finanças, e no fim do mês, sente o mesmo vazio, a mesma frustração de não ter chegado a lugar algum. Este é o preço invisível da vida no automático: você paga com seu tempo, sua energia e sua paz, sem receber o retorno que merece. Parece que você está em uma esteira de alta velocidade, suando, mas o cenário ao redor não muda.",
-        "Napoleão Hill, em 'Mais Esperto que o Diabo', expõe a 'deriva' como o maior inimigo da humanidade. Ele descreve a maioria das pessoas como 'derivares', que se deixam levar pelas circunstâncias, sem um propósito definido, sem um plano. Como um navio sem leme, eles navegam para onde o vento os leva, acabando em portos que nunca desejaram. Muitos, ao invés de enfrentar a tempestade e assumir o controle do leme, preferem culpar o mar, o vento ou a falta de sorte. A verdade é que o 'Diabo' prospera na sua indecisão, na sua inércia.",
-        "O primeiro passo para quebrar a maldição do 'mais tarde' é a clareza brutal. Pegue um papel e anote agora: Quais são as três maiores desculpas que você usa para não cuidar da sua mentalidade financeira? O que você realmente faria hoje se soubesse que não pode falhar? Perceba que a inércia não é falta de tempo, é falta de decisão. Escolha uma dessas desculpas e comprometa-se a desmascará-la, começando com uma ação mínima, mas concreta, nos próximos 30 minutos. Não é sobre o tamanho da ação, é sobre a quebra do padrão."
+        "É curioso como a gente, por vezes, se apega à culpa como se fosse um distintivo de honra, não é? Aquele peso do passado, a dificuldade de estender a graça a si mesmo, ou até aos outros, transforma o que deveria ser um aprendizado em uma prisão invisível. Você acorda, cumpre a rotina, mas por dentro, aquela voz antiga cochicha 'você não é bom o suficiente', ou 'lembra daquilo que você fez?'. E o custo invisível disso é a paz, a clareza mental, a liberdade de ser quem Deus te chamou para ser hoje. É como tentar correr uma maratona com uma mochila cheia de pedras.",
+        "Nos Evangelhos, vemos Pedro. Após negar Jesus três vezes, ele poderia ter se afundado na culpa. Mas a graça de Cristo o alcançou. Ele não ficou paralisado pelo erro, mas foi restaurado e usado poderosamente. Essa é a essência do poder do perdão: não é ignorar o erro, mas permitir que a graça o transforme em um degrau, não em uma cova.",
+        "O primeiro passo é simples, mas revolucionário: reconheça a pedra que você carrega. Qual é a culpa que você insiste em abraçar? Qual mágoa não liberada está drenando sua energia? Identificar é tirar a força do invisível. Peça a Deus para revelar, e então, com a mesma ousadia de quem se recusa a ser escravo, declare: 'Hoje, eu começo a largar essa pedra'. Não é sobre esquecer, mas sobre entregar."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_1_dd562a.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\my_ecosystem_importante\\trabalhador2\\gerador_pdf\\output\\imagens_temp\\capitulo_1_a3205f.jpg"
     },
     {
       "numero": 2,
-      "titulo": "O Seu Cérebro é um Traidor: Como Reverter o Jogo da Deriva",
-      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword casting a long shadow, indicating a mental battle, 8k, hyperrealistic.",
+      "titulo": "A Escolha Inesperada: Quando Seu Cérebro Prefere a Prisão Conhecida",
+      "prompt_imagem": "Cinematic dark moody photography of a glowing book and a sharp sword, 8k",
       "paragrafos": [
-        "A gente adora a ideia de mudar, mas detesta o processo de mudança. É quase patético, não? Seu cérebro, essa máquina incrível, muitas vezes prefere o sofrimento conhecido da dívida ou da estagnação financeira à incerteza libertadora de um novo caminho. Ele te sabota com pensamentos como 'é muito difícil', 'não tenho tempo', 'não sou bom com números'. Essa é a voz do seu 'diabo' particular, sussurrando padrões de derrota para te manter na zona de conforto miserável. É uma contradição humana gritante: desejamos a riqueza, mas evitamos o trabalho mental necessário para criá-la.",
-        "O 'Mais Esperto que o Diabo' revela que a chave para dominar a deriva é dominar sua própria mente. O Diabo confessa que seu maior poder reside em controlar as frequências de pensamento dos humanos, induzindo-os a hábitos de indecisão e procrastinação. Ele usa o medo e a dúvida como suas ferramentas mais eficazes. Mas há uma 'arma' contra isso: a sua mente, quando treinada para um 'propósito definido'. Pense nos grandes mestres financeiros. Eles não são mais inteligentes, são mais focados e deliberados na forma como usam sua atenção.",
-        "A técnica exata para dominar sua atenção é o 'Foco Deliberado de 15 Minutos'. Escolha uma tarefa financeira que você está procrastinando (ex: organizar uma planilha, pesquisar um investimento, revisar um gasto). Defina um timer de 15 minutos e comprometa-se a focar APENAS nisso, sem distrações. Ao final, faça uma pausa. Repita este ciclo duas vezes ao dia. Isso reprograma seu cérebro para associar foco a resultados e quebra o ciclo de procrastinação. É um treinamento de disciplina mental que, com o tempo, te dará um controle absoluto sobre seus impulsos e, consequentemente, sobre suas finanças."
+        "É fascinante como nossa mente, por vezes, se agarra ao sofrimento familiar, não é? Como se a dor conhecida fosse mais confortável que a incerteza da liberdade. O inimigo da alma adora essa zona de conforto negativa. Ele sussurra que perdoar a si mesmo é fraqueza, que perdoar o outro é injustiça. E assim, você se vê repetindo padrões, refém de pensamentos que você sabe que te fazem mal, mas que parecem ter um imã para sua atenção. A dificuldade de manter o foco em coisas boas, quando a narrativa interna é tão negativa, é real.",
+        "Jesus, confrontado pelos fariseus sobre a mulher pega em adultério, não se deixou levar pela fúria da multidão ou pela lei seca. Ele olhou para dentro, escreveu na areia, e depois proferiu uma frase que desarmou todos: 'Quem não tem pecado, atire a primeira pedra'. Ele controlou a narrativa, não com força bruta, mas com sabedoria e um convite ao autoexame, mudando o foco da acusação para a própria condição humana.",
+        "A técnica é simples e poderosa, extraída dos Evangelhos: observe seus pensamentos como quem observa nuvens no céu. Não se apegue a eles, não os julgue, apenas observe. Quando a culpa do passado ou a mágoa do outro surgir, não lute. Apenas diga: 'Eu reconheço este pensamento, mas ele não me define mais. Eu escolho a graça de Cristo'. Em seguida, ativamente, substitua-o por uma verdade bíblica sobre seu valor em Deus ou sobre o perdão. Isso reprograma sua mente, dia após dia. É como um músculo que se fortalece com a repetição consciente."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_2_9f6edd.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\my_ecosystem_importante\\trabalhador2\\gerador_pdf\\output\\imagens_temp\\capitulo_2_78f41b.jpg"
     },
     {
       "numero": 3,
-      "titulo": "O Mapa da Riqueza: Como Sair da Deriva e Navegar para a Abundância",
-      "prompt_imagem": "Cinematic dark moody photography of a glowing compass guiding the way through a stormy, misty landscape at dawn, 8k, hyperrealistic.",
+      "titulo": "O Plano Divino de Libertação: Como Mapear Sua Rota da Redenção",
+      "prompt_imagem": "Cinematic dark moody photography of a compass guiding the way in a storm, 8k",
       "paragrafos": [
-        "A sensação de trabalhar exausto sem nunca sentir que está chegando a algum lugar não é falta de esforço, é falta de direção. É como remar um barco em círculos, gastando energia e tempo, mas voltando sempre para o mesmo ponto. A raiva que surge dessa percepção deve ser o combustível para a sua revolução. Chega de aceitar uma vida financeira que não te honra. Você merece mais do que a frustração diária. Você merece um plano, uma bússola que realmente te guie.",
-        "Hill nos ensina que o 'Diabo' teme o propósito definido. Aqueles que sabem exatamente o que querem e têm um plano para alcançá-lo são imunes à deriva. Ele cita exemplos de pessoas que, contra todas as probabilidades, conquistaram fortunas porque tinham um 'objetivo principal definido' e uma fé inabalável. Não se trata de sorte, mas de uma orquestração deliberada da mente e das ações. Sem um mapa claro, qualquer caminho serve, e é aí que o Diabo te pega, mantendo-o ocupado, mas improdutivo.",
-        "Para desenhar um plano à prova de desculpas, adote a 'Estratégia dos Três Pilares da Riqueza Consciente'. Primeiro, defina seu 'Propósito Financeiro Principal' para os próximos 90 dias (ex: 'Economizar R$X para Y', 'Pagar a dívida Z'). Segundo, divida este propósito em três metas menores e semanais. Terceiro, escolha um 'Bloqueio de Tempo Inegociável' de 30 minutos por dia na sua agenda, dedicado EXCLUSIVAMENTE a uma ação relacionada a uma dessas metas. Este bloqueio é sagrado. Trate-o como um compromisso inadiável. Este é o seu mapa e sua bússola. Comece hoje, com a primeira ação do seu bloqueio de tempo. A abundância não é um acaso, é uma consequência do seu plano."
+        "A sensação de trabalhar duro, exausto, mas sem nunca sentir que você realmente está avançando, é desanimadora. Especialmente quando a luta interna do perdão e da culpa parece um labirinto sem fim. Você tenta, mas a falta de um plano claro te faz dar voltas nos mesmos pensamentos e sentimentos, como um hamster na roda. A energia se esvai, e a frustração cresce, te fazendo questionar se a liberdade é realmente para você.",
+        "Quando Jesus falou sobre a construção de uma torre, Ele questionou: 'Qual de vocês, se quiser construir uma torre, primeiro não se assenta e calcula o custo, para ver se tem dinheiro suficiente para completá-la?' (Lucas 14:28). Isso não é apenas sobre dinheiro, mas sobre planejamento espiritual. O perdão e a redenção não acontecem por osmose; eles exigem uma decisão e um plano de ação, uma antecipação das 'obras' do Espírito em nossa vida.",
+        "Para desenhar um plano à prova de desculpas, comece com pequenos atos diários de perdão. Primeiro, a si mesmo. Olhe-se no espelho e declare: 'Eu me perdoo por... e aceito a graça de Cristo'. Segundo, liste uma pessoa que você precisa perdoar ou pedir perdão, mesmo que seja apenas em oração, e defina um dia na semana para fazer isso. Terceiro, escolha um versículo sobre perdão para meditar pela manhã. Este não é um plano de tarefas, é um plano de cura e libertação. Cada pequeno passo é uma escolha consciente de deixar o peso para trás e abraçar a leveza da graça. Comece hoje, não espere a 'condição ideal'."
       ],
-      "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capitulo_3_3074ec.jpg"
+      "img_local": "C:\\Users\\kali\\Desktop\\my_ecosystem_importante\\trabalhador2\\gerador_pdf\\output\\imagens_temp\\capitulo_3_18b231.jpg"
     }
   ],
-  "citacao_destaque": "O propósito definido é o ponto de partida de toda a realização.",
-  "titulo_citacao": "A Regra de Ouro",
-  "verso_base": "O homem que não tem um propósito definido na vida é como um navio sem leme: o tempo o leva para onde não quer ir.",
-  "referencia_verso": "Filosofia Estoica",
+  "citacao_destaque": "A verdadeira força não está em nunca cair, mas em levantar-se com a graça do perdão.",
+  "titulo_citacao": "Princípio Eterno",
+  "verso_base": "Porque, se perdoardes aos homens as suas ofensas, também vosso Pai celestial vos perdoará a vós.",
+  "referencia_verso": "Mateus 6:14",
   "plano_acao": {
-    "titulo_secao": "O Protocolo Antidrift 7x7: Seu Plano de 7 Dias para a Liberdade Financeira",
-    "prompt_imagem": "Cinematic dark moody photography of a person drawing a complex map with a glowing pen, surrounded by ancient scrolls and a focused expression, hyperrealistic, 8k.",
-    "subtitulo": "Aplique estas 7 regras pelos próximos 7 dias e sinta a mentalidade financeira do 'Diabo' perder o controle sobre você. Disciplina é a nova sorte.",
+    "titulo_secao": "Jornada de Cura: 7 Dias para Abraçar a Liberdade do Perdão",
+    "prompt_imagem": "Cinematic hyper-realistic photography of hands holding a ancient worn bible open to a glowing passage, sacred chiaroscuro lighting, 8k, serene, hopeful atmosphere, a single tear of joy reflecting the light",
+    "subtitulo": "Um devocional prático para desvendar as correntes da culpa e experimentar a leveza da graça divina, dia após dia.",
     "passos": [
       {
         "numero": 1,
-        "titulo": "Desmascare a Mentira",
-        "descricao": "Hoje, identifique sua maior desculpa financeira e escreva-a em um papel. Ao lado, anote a ação MINIMA que você PODE fazer para refutá-la. Faça essa ação agora. Não amanhã, AGORA."
+        "titulo": "Desmascarando a Culpa",
+        "descricao": "Comece o dia confessando a Deus o peso que você carrega. Peça ao Espírito Santo para revelar as áreas onde a culpa ainda o aprisiona e a incapacidade de perdoar a si mesmo ou aos outros. Medite em Romanos 8:1 - 'Portanto, agora já não há condenação para os que estão em Cristo Jesus'."
       },
       {
         "numero": 2,
-        "titulo": "O Foco Imbatível de 15",
-        "descricao": "Duas vezes ao dia, escolha uma tarefa financeira e dedique 15 minutos de foco absoluto. Sem celular, sem abas abertas. Apenas você e a tarefa. Relate o progresso."
+        "titulo": "A Graça que Liberta",
+        "descricao": "Reflita sobre o sacrifício de Jesus na cruz. Ele pagou o preço por todos os seus erros. Receba o perdão de Deus. Ore: 'Pai, eu aceito o perdão de Cristo e me liberto da condenação'. Leia Efésios 1:7."
       },
       {
         "numero": 3,
-        "titulo": "O Propósito Inegociável",
-        "descricao": "Defina seu 'Propósito Financeiro Principal' para os próximos 90 dias. Precisa ser claro, mensurável e inspirador. Escreva-o em um lugar visível."
+        "titulo": "Perdoando a Si Mesmo",
+        "descricao": "Olhe-se no espelho ou escreva uma carta para si mesmo. Declare o perdão por seus próprios erros, falhas e imperfeições. Diga em voz alta: 'Eu me perdoo e recebo a graça de Deus para recomeçar'. Medite em Filipenses 3:13-14."
       },
       {
         "numero": 4,
-        "titulo": "O Bloqueio Sagrado",
-        "descricao": "Escolha um horário fixo de 30 minutos para seu 'Bloqueio de Tempo Inegociável' diário. Dedique-o à sua meta financeira. Este é um compromisso com você mesmo, inquebrável."
+        "titulo": "Estendendo o Perdão",
+        "descricao": "Identifique uma pessoa que você precisa perdoar. Ore por ela, pedindo a Deus que a abençoe. Libere o rancor e a mágoa em seu coração. Lembre-se que perdoar não é esquecer, mas liberar o outro da dívida emocional. Leia Colossenses 3:13."
       },
       {
         "numero": 5,
-        "titulo": "A Auditoria da Distração",
-        "descricao": "Monitore por um dia onde seu dinheiro e sua atenção estão realmente indo. Identifique um gasto ou um hábito de distração que está te desviando do seu propósito e corte-o na raiz."
+        "titulo": "Pedindo Perdão",
+        "descricao": "Se houver alguém que você precisa pedir perdão, ore por sabedoria e coragem para dar esse passo. Às vezes, o maior ato de amor é humilhar-se. Se não for possível diretamente, peça perdão a Deus pela ofensa. Medite em Mateus 5:23-24."
       },
       {
         "numero": 6,
-        "titulo": "A Visualização do Sucesso",
-        "descricao": "Todos os dias, por 5 minutos, visualize-se vivendo seu propósito financeiro. Sinta a emoção, a liberdade. Isso reforça sua mentalidade e atrai o que você deseja."
-      },
-      {
-        "numero": 7,
-        "titulo": "O Relatório de Bordo",
-        "descricao": "No final do 7º dia, revise seu progresso. O que mudou? O que você aprendeu? Planeje os próximos 7 dias com base nesses aprendizados. Repita o ciclo. A consistência é a chave."
+        "titulo": "Vivendo em Novidade de Vida",
+        "descricao": "A cada dia, escolha viver na liberdade do perdão. Não permita que pensamentos de culpa voltem a aprisionar você. Proclame a palavra de Deus sobre sua vida. 'As coisas antigas já passaram; eis que tudo se fez novo'. (2 Coríntios 5:17). Abrace a vida que a graça te deu."
       }
     ],
-    "img_local": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/plano_acao_5af7d1.jpg"
+    "img_local": "C:\\Users\\kali\\Desktop\\my_ecosystem_importante\\trabalhador2\\gerador_pdf\\output\\imagens_temp\\plano_acao_1b4d0a.jpg"
   },
-  "fechamento": "Seus resultados mudam quando suas atitudes mudam. O primeiro passo começa agora.",
-  "titulo_fechamento": "SABEDORIA EM AÇÃO",
-  "rodape": "Código da Sabedoria - Conhecimento que Transforma Destinos.",
+  "fechamento": "A sua vitória não começa no barulho do mundo, mas na fidelidade e na oração no secreto. Permaneça firme na Rocha.",
+  "titulo_fechamento": "VALORES DO PAI",
+  "rodape": "Valores do Pai - Fé, Honra e Sabedoria em Ação.",
   "landing_page": {
-    "promessa_clara": "7 DIAS PARA REPROGRAMAR SUA MENTE FINANCEIRA E AGIR.",
+    "promessa_clara": "Liberte-se da Culpa: Sua Jornada de Perdão e Paz.",
     "beneficios": [
-      "Em 7 dias você identifica e quebra os padrões de estagnação financeira.",
-      "Assuma o controle total da sua atenção e pare de procrastinar de vez.",
-      "Construa um plano de ação à prova de desculpas para suas finanças.",
-      "Desperte a mentalidade de prosperidade que estava adormecida em você.",
-      "Transforme frustração em progresso real e visível, dia após dia."
+      "Encontre paz real e vença as noites de ansiedade pela oração e perdão.",
+      "Restaure relacionamentos quebrados e construa novas pontes de amor.",
+      "Desenvolva uma mente blindada contra a autocrítica e o passado.",
+      "Experimente a leveza da graça e a alegria de um novo começo.",
+      "Fortaleça sua fé e sua família com os princípios eternos dos Evangelhos."
     ]
   },
-  "img_local_capa": "/home/runner/work/trabalhador1/trabalhador1/gerador_pdf/output/imagens_temp/capa_738f91.jpg"
+  "img_local_capa": "C:\\Users\\kali\\Desktop\\my_ecosystem_importante\\trabalhador2\\gerador_pdf\\output\\imagens_temp\\capa_adce16.jpg"
 }

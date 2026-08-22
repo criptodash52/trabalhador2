@@ -109,59 +109,59 @@ LISTA_GANCHOS_SEQUENCIAL = [
 
 
 # ==========================================
-# GANCHOS CONQUISTADOR — ganchos diretos de altíssimo impacto visual e emocional
+# GANCHOS CONQUISTADOR — ganchos de fé, superação e autoridade cristã
 # ==========================================
 LISTA_GANCHOS_CONQUISTADOR = [
-    "Nunca se esqueça de quem esteve lá nos seus piores dias.",
-    "O homem que passou pelo inferno não se assusta com fumaça.",
-    "Não absorva a pressa do mundo. Viva no seu próprio ritmo.",
-    "A paz de espírito é a maior riqueza que você pode construir.",
-    "Ficar sozinho quando você precisa de apoio te transforma para sempre.",
-    "Sem fazer barulho, sem se gabar: no silêncio, a vida flui melhor.",
-    "Não prolongue ciclos falidos por causa de boas memórias passadas.",
-    "Sua paciência não é fraqueza — é controle absoluto da sua mente.",
-    "Busque sua paz e deixe os outros ficarem com a razão.",
-    "A resposta mais elegante para quem te desrespeita é a sua ausência.",
-    "Quando você aprende a ficar em paz sozinho, o básico já não te atrai.",
-    "Se você não é o 'sim' de alguém, jamais se submeta a ser o 'talvez'.",
-    "Você muda o mundo ao seu redor no dia em que muda sua mente.",
-    "Não prometa nada na empolgação e não tome decisões na raiva.",
-    "A disciplina é a ponte entre quem você é hoje e quem quer se tornar.",
-    "Quem tem propósito forte não perde tempo tentando provar nada.",
-    "Honre a sua palavra e cuide de quem corre ao seu lado no escuro.",
-    "Você não precisa de mais tempo — precisa de mais foco e menos distrações.",
-    "Deixe que os resultados falem por você. Trabalhe em silêncio.",
-    "O respeito se constrói com atitudes constantes, não com discursos bonitos.",
-    "Coragem não é ausência de medo, é agir mesmo com o coração acelerado.",
-    "Proteja seu lar, sua família e sua mente de influências tóxicas.",
-    "Quem se perdoa pelo passado consegue finalmente construir o futuro.",
-    "A verdadeira força é sereno por fora e inabalável por dentro.",
-    "Não venda sua liberdade por uma ilusão de conforto temporário.",
-    "A maturidade chega quando você para de reagir a tudo que te irrita.",
-    "Pare de tentar salvar quem não quer ser salvo. Salve a si mesmo.",
-    "A constância diária vence o talento sem disciplina todas as vezes.",
-    "Construa uma vida da qual você não precise tirar férias para escapar.",
-    "A gratidão em dias difíceis é o maior ato de fé que existe.",
-    "Seja leal aos seus princípios, mesmo quando ninguém estiver olhando.",
-    "Sua mente é seu maior aliado ou seu pior algoz: você escolhe o que alimenta.",
-    "Não perca energia discutindo com quem só quer vencer o argumento.",
-    "A verdadeira coragem é ser honesto consigo mesmo sobre suas falhas.",
-    "Crie hábitos que sua versão do futuro vai te agradecer por ter mantido.",
-    "O medo do julgamento alheio é a gaiola de quem vive para impressionar.",
-    "Nada substitui o valor de deitar na cama com a consciência limpa.",
-    "Crie o hábito de focar na solução enquanto os fracos reclamam do problema.",
-    "A vida não fica mais fácil, é você que se torna mais forte e sábio.",
-    "Aprenda a valorizar quem te apoia no anonimato e nos momentos difíceis.",
-    "Trate sua atenção como o recurso mais caro da sua vida — porque ele é.",
-    "Quem domina a própria raiva domina qualquer situação no caos.",
-    "Não confunda paciência com acomodação: saiba a hora exata de agir.",
-    "Seja a referência de serenidade e firmeza para as pessoas que você ama.",
-    "O segredo da mudança é focar toda a energia na construção do novo.",
-    "A verdadeira liberdade é poder dizer 'não' sem sentir culpa.",
-    "Sua história só começa a mudar quando você assume 100% da responsabilidade.",
-    "Valorize a simplicidade das coisas reais em um mundo cheio de aparências.",
-    "Mantenha os pés no chão, a mente afiada e o coração em paz.",
-    "O tempo revela quem é de verdade. Confie no processo e siga firme."
+    "Nunca se esqueça de quem orou por você quando ninguém estava vendo.",
+    "O deserto não é o seu túmulo; é a escola onde Deus forja o seu caráter.",
+    "Não absorva o desespero do mundo. A sua paz vem da soberania de Deus.",
+    "A comunhão no secreto é a maior fortaleza que um homem pode construir.",
+    "Permanecer fiel no silêncio de Deus te prepara para o cumprimento da promessa.",
+    "Sem alarde, sem vaidade: na dependência de Deus, sua vitória é certa.",
+    "Não confunda a demora de Deus com ausência. Ele trabalha no invisível.",
+    "Sua mansidão não é fraqueza — é o domínio próprio concedido pelo Espírito.",
+    "Guarde o seu coração das ofensas e deixe a justiça nas mãos do Senhor.",
+    "A resposta mais sábia diante da provocação é a oração e a obediência.",
+    "Quando você descobre quem você é em Cristo, o aplauso do mundo perde o valor.",
+    "Seja íntegro nos pequenos começos, pois é na fidelidade que Deus te confia muito.",
+    "Você transforma o seu lar no dia em que decide ser o sacerdote da sua casa.",
+    "Não tome decisões guiado pelo medo; posicione-se alicerçado nas promessas da Palavra.",
+    "A disciplina espiritual é a ponte entre a oração e a resposta manifestada.",
+    "Quem tem um chamado eterno não perde tempo disputando espaço no palco dos homens.",
+    "Honre a sua aliança e proteja sua família como sentinela na brecha.",
+    "Você não precisa de validação humana — o seu chamado foi selado na cruz.",
+    "Deixe que o fruto do Espírito fale por você. Viva o Evangelho em atitudes.",
+    "A autoridade espiritual se constrói com oração no secreto, não com palavras vãs.",
+    "Coragem cristã não é ausência de tempestade, é confiar Naquele que acalma o mar.",
+    "Proteja o seu lar e seus filhos da mentalidade corrompida deste século.",
+    "Quem recebe o perdão de Cristo é livre para recomeçar sem o peso da culpa.",
+    "A verdadeira força é ser manso com as pessoas e implacável contra o pecado.",
+    "Não negocie os princípios de Deus em troca de aplausos passageiros.",
+    "A maturidade espiritual chega quando você para de murmurar e começa a interceder.",
+    "Edifique o seu altar diário antes de tentar vencer as batalhas do mundo exterior.",
+    "A constância na oração e na Palavra vence todas as ciladas do inimigo.",
+    "Construa uma herança eterna que o tempo e a traça jamais possam corroer.",
+    "A gratidão em meio à prova é o maior ato de confiança que você pode oferecer.",
+    "Seja leal aos mandamentos de Deus, mesmo quando a cultura exigir que você se dobre.",
+    "Alimente a sua fé diariamente, ou as dúvidas do mundo consumirão sua coragem.",
+    "Não gaste energia discutindo com escarnecedores; ore por eles e permaneça firme.",
+    "A verdadeira honra diante de Deus começa com a sinceridade do arrependimento.",
+    "Cultive hábitos devocionais que sustentarão sua fé nas tempestades que virão.",
+    "O temor dos homens é um laço, mas quem confia no Senhor está protegido e seguro.",
+    "Nada se compara à paz de deitar a cabeça no travesseiro sabendo que agradou a Deus.",
+    "Olhe para as provações como ferramentas de Deus para refinar sua perseverança.",
+    "A fé não torna as batalhas fáceis, torna a vitória garantida em Cristo.",
+    "Aprenda a valorizar e interceder por quem caminha contigo nas horas escuras.",
+    "Consagre o seu tempo e seus talentos a Deus — Ele multiplicará os seus frutos.",
+    "Quem vence a si mesmo em oração não é derrotado por gigante algum.",
+    "Não confunda paciência com negligência: cumpra o seu dever com excelência para o Senhor.",
+    "Seja o modelo de integridade, oração e amor sacrificial para as pessoas que você ama.",
+    "A renovação da mente pela Palavra é a única chave para experimentar a boa vontade de Deus.",
+    "A verdadeira liberdade é viver como servo de Cristo, livre das amarras do mundo.",
+    "Sua família é o seu primeiro ministério; cuide dela com zelo, amor e proteção espiritual.",
+    "Valorize a simplicidade da presença de Deus mais do que qualquer glória terrena.",
+    "Mantenha a fé inabalável, a armadura vestida e o coração blindado pela graça.",
+    "O tempo de Deus é perfeito. Descanse o coração, permaneça firme e confie."
 ]
 
 
@@ -249,47 +249,40 @@ def proxima_arquitetura(indice_atual=0):
 # REGRAS DE COPY (compartilhadas por todos os prompts)
 # ==========================================
 REGRAS_COPY_BASE = """
-REGRAS ABSOLUTAS DE COPY (violá-las é inaceitável):
+REGRAS ABSOLUTAS DE COPY (Nicho Cristão — @valoresdopai):
 
 🎯 CAPAS E TÍTULOS DE IMPACTO (REGRA DA CAPA LIMPA):
 - A frase da capa ou primeiro slide DEVE ter no MÁXIMO 5 PALAVRAS. Proibido colocar parágrafos ou frases longas cobrindo a tela do vídeo. Use um gancho curto, provocador e cortante.
 
-🔥 DORES REAIS E CONCRETAS (CHEGA DE ABSTRAÇÃO):
-- Proibido usar frases poéticas abstratas e vazias que não dizem nada ao leitor. Foque em conflitos e dores reais da rotina: dinheiro, procrastinação, falta de foco, ansiedade com o futuro, decisões difíceis, acordar sem propósito.
+🔥 DORES REAIS E CONCRETAS (FÉ & REALIDADE):
+- Proibido usar clichês religiosos rasos ("Deus tem uma bênção pra você", "Receba"). Foque em conflitos e dores reais da vida: ansiedade, cansaço mental, liderança no lar, dilemas no trabalho, tentações, falta de constância na oração, medo do futuro.
 
-💬 PALAVRA-CHAVE DE ENGAJAMENTO (SABEDORIA):
-- Para posts de atração, conversão e entrega de e-books/materiais, a palavra-chave oficial do perfil é "SABEDORIA". Instrua o leitor a comentar "SABEDORIA" para receber o acesso/material direto no Direct.
+💬 PALAVRAS-CHAVE DE ENGAJAMENTO (ORACAO / SABEDORIA):
+- Para posts de atração, conversão e entrega de guias devocionais, use sempre as palavras-chave "ORACAO" ou "SABEDORIA". Instrua o leitor a comentar para receber o material devocional direto no Direct.
 
-❌ PROIBIDO — NUNCA use estas frases de autoajuda vazia:
-- "Acredite em você", "Você é capaz", "Nunca desista", "Foco e determinação"
-- "Seja a melhor versão de si mesmo", "Saia da zona de conforto"
-- "O sucesso é para quem corre atrás", "A vida é uma jornada"
-- "Faça acontecer", "Você tem o poder", "Hoje é o dia"
-- NUNCA use tom professoral, arrogante ou palavras artificiais de auto-promoção (ex: "Poucos sabem disso..."). Fale de igual para igual.
-- Você tem total liberdade para citar livros, filósofos, teorias e autores para dar peso de autoridade à mensagem.
+❌ PROIBIDO — NUNCA use estas frases genéricas e vazias:
+- "Acredite em você", "Você é o cara", "Foco, força e fé", "O universo conspira"
+- "Seja a sua melhor versão", "Saia da zona de conforto"
+- "Faça acontecer pelo seu próprio braço", "O poder está dentro de você" (A nossa força e justiça vêm de Deus)
+- NUNCA use tom professoral, arrogante ou legalista. Fale com amor fraternal, humildade e autoridade bíblica.
 
-✅ OBRIGATÓRIO — o tom cirúrgico e atraente:
-- O primeiro slide deve ser um gancho cliffhanger curto e cortante. Ele DEVE quebrar o padrão e parar o scroll.
-- Use linguagem direta, falada e visceral (coloquial do Brasil).
-- Use sentenças curtas e parágrafos de uma linha. Textos longos matam a retenção.
+✅ OBRIGATÓRIO — o tom pastoral, firme e maduro:
+- O primeiro slide deve ser um gancho de retenção curto e profundo que faça o leitor parar o feed e refletir.
+- Use linguagem direta, respeitosa e edificante (português claro e acessível).
+- Apresente princípios das Escrituras com aplicações práticas e diretas para a rotina diária.
+- Baseie os ensinamentos em traduções fiéis (NAA, NVI, ARC).
 
-🧠 PERCEPÇÃO DE VALOR (DO INÍCIO AO FIM DA MENSAGEM):
-Todo conteúdo deve fazer o leitor sentir que acabou de receber um insight difícil de encontrar.
-- Evite frases motivacionais genéricas, conselhos óbvios, listas superficiais e clichês.
-- Prefira: revelar o mecanismo psicológico por trás do comportamento, explicar o motivo invisível que gera o problema, apresentar uma mudança de perspectiva que aumente a clareza do leitor, entregar um princípio aplicável imediatamente.
+🧠 PERCEPÇÃO DE VALOR E EDIFICAÇÃO ESPIRITUAL:
+Todo conteúdo deve fazer o seguidor sentir que recebeu sabedoria bíblica e clareza espiritual:
+- Mostre a causa espiritual/emocional antes da solução prática.
+- Revele os princípios de Provérbios, Salmos e dos Evangelhos aplicados a decisões reais.
+- Conduza o leitor da ansiedade para a oração, da fraqueza para a dependência da graça de Deus.
 
-🛡️ AUTORIDADE MORAL:
-Nunca tente convencer o leitor de que você tem autoridade. Faça com que ele conclua isso sozinho pela qualidade da explicação:
-- Explique causas antes de soluções.
-- Revele mecanismos antes de recomendações.
-- Mostre princípios antes de técnicas.
-
-🎯 O CONCEITO CENTRAL (Filtro de Qualidade):
-Toda postagem gerada deve aumentar ativamente uma destas três percepções no leitor:
-1. "Nunca tinha pensado por esse ângulo."
-2. "Agora entendi por que isso acontece."
-3. "Isso vale muito mais do que o tempo que levei para consumir."
-Se nenhuma dessas sensações estiver presente do início ao fim, a postagem está superficial e deve ser reescrita.
+🛡️ AUTORIDADE MORAL E TESTEMUNHO:
+A autoridade do perfil decorre da firmeza nas Escrituras e do testemunho sincero de fidelidade a Deus:
+- Explique o princípio bíblico com profundidade.
+- Aponte sempre para a soberania e o amor de Deus.
+- Desafie o leitor a uma postura de integridade, oração e honra.
 """
 
 
@@ -404,84 +397,50 @@ def proximo_cta(indice_atual=0):
 # e subpasta de áudio para criar sinestesia pura.
 # =====================================================================
 SENTIMENTOS_CONFIG = {
-    # ── Família 1: Desejo & Aspiração (Ideal para inspirar e gerar conexão de alta qualidade)
+    # ── Família 1: Fé, Soberania & Firmeza (Devocional e Guerra Espiritual)
     "poder": {
-        "tom": "Transmita autoridade incansável, magnetismo e domínio. Use frases firmes. Fale de auto-maestria e de viver no topo.",
-        "busca_imagem": ["concert crowd cheering stadium lights glowing cinematic 35mm", "determined male leader walking fast city lights power", "luxury car driving fast night city neon blur", "powerful stance person standing on top of mountain sunrise"],
+        "tom": "Transmita a soberania inabalável de Deus, a autoridade espiritual pela oração e a firmeza diante das tempestades.",
+        "busca_imagem": ["ancient mountains golden sunrise dramatic sky biblical", "praying hands light shining through clouds cinematic", "resilient man standing in storm dramatic lighting", "powerful sunrise biblical landscape high resolution"],
         "pasta_audio": "desejo_poder"
-    },
-    "luxuria": {
-        "tom": "Desperte o desejo pelo extraordinário, pelo acesso restrito e pela vida que a maioria apenas sonha em ter.",
-        "busca_imagem": ["luxury lifestyle elegant person night city lights golden bokeh", "high end party celebration champagne flashing lights 35mm", "stadium concert lasers smoke excitement crowd", "exclusive VIP event warm lighting luxury cinematic"],
-        "pasta_audio": "desejo_poder"
-    },
-    "sensualidade": {
-        "tom": "Trabalhe com o magnetismo do mistério, da autoconfiança inabalável e da atração fatal que a clareza gera.",
-        "busca_imagem": ["charismatic speaker stage spotlight crowd watching 35mm", "confident person smiling bright city lights night glowing", "magnetic portrait warm stage lighting cinematic", "elegant confident walk night city street neon"],
-        "pasta_audio": "desejo_poder"
-    },
-    "prazer": {
-        "tom": "Conecte com a satisfação genuína da vitória, o êxtase de viver nos seus próprios termos. Celebração pura.",
-        "busca_imagem": ["joyful crowd concert hands up laser lights 35mm", "person celebrating victory arms raised sunrise mountain", "ecstatic group of friends laughing luxury rooftop night", "triumph celebration confetti lights cinematic"],
-        "pasta_audio": "desejo_poder"
-    },
-    "plenitude": {
-        "tom": "Foque na sensação de governo absoluto sobre a própria vida. O alívio poderoso de saber exatamente quem você é.",
-        "busca_imagem": ["majestic sunrise over ocean person looking far 35mm", "peaceful but powerful stance grand canyon morning light", "serene leader looking over bright city skyline", "calm confidence person bright morning sunlight cinematic"],
-        "pasta_audio": "conexao_lealdade"
-    },
-
-    # ── Família 2: Tensão & Ação (Ganchos de velocidade, despertar, virada de jogo)
-    "escassez": {
-        "tom": "Gere senso de urgência para a grandeza. O tempo não está acabando para sofrer, está passando enquanto o topo te espera.",
-        "busca_imagem": ["fast motion blur sports car night city lights cinematic", "sprinter running fast stadium lights track 35mm", "dynamic movement crowd concert jumping energy", "urgent action fast pace city life neon blur"],
-        "pasta_audio": "tensao_acao"
-    },
-    "raiva": {
-        "tom": "Manifeste uma indignação eletrizante contra a mediocridade. Uma energia de revolta que impulsiona para a ação extrema.",
-        "busca_imagem": ["intense rock concert guitarist stage lights 35mm", "athlete screaming victory intense stadium lights", "powerful dynamic sports action bright lights cinematic", "fierce determined look person running fast"],
-        "pasta_audio": "tensao_acao"
     },
     "ousadia": {
-        "tom": "Toque no perigo de viver uma vida morna e esquecível. Provoque a coragem e a fome de arriscar alto.",
-        "busca_imagem": ["person standing edge of cliff looking at sunrise cinematic", "base jumper jumping off mountain extreme wide angle 35mm", "daring action sports bright sky intense light", "fearless leader addressing massive crowd stadium"],
+        "tom": "Desperte a coragem santa de enfrentar gigantes e desertos com a certeza de que Deus é contigo.",
+        "busca_imagem": ["person standing on mountain edge looking at dramatic sunrise", "warrior shield and light in darkness biblical cinematic", "stormy sea with beam of light shining from above", "walking through desert with sunrise on horizon"],
+        "pasta_audio": "tensao_acao"
+    },
+    "plenitude": {
+        "tom": "Conecte com a paz que excede o entendimento. O alívio de descansar nos braços do Pai.",
+        "busca_imagem": ["peaceful sunrise over calm lake mist 35mm", "morning light streaming through ancient forest trees", "quiet library ancient bible glowing light", "serene valley bathed in warm morning sun"],
+        "pasta_audio": "conexao_lealdade"
+    },
+    "escassez": {
+        "tom": "Gere senso de vigília e vigilância espiritual. O tempo presente é precioso para edificar sua família e sua fé.",
+        "busca_imagem": ["ancient hourglass with golden sand in darkness", "lantern glowing in dark forest path at night", "clock tower historic sunset dramatic sky", "candlelight in darkness soft glow"],
         "pasta_audio": "tensao_acao"
     },
     "desafio": {
-        "tom": "Faça perguntas provocadoras de alto nível. Desafie o leitor a subir o próprio sarrafo e parar de aceitar o básico.",
-        "busca_imagem": ["athlete staring down opponent intense stadium lighting 35mm", "confident smile looking directly at camera bright light", "challenging confident posture city skyline background", "leader standing tall among crowd cinematic lighting"],
+        "tom": "Exorte o seguidor à autoavaliação sincera, ao abandono do pecado e à busca pela santidade e retidão.",
+        "busca_imagem": ["man deep in prayer contemplative face dramatic shadow", "ancient stones path leading to light fog", "intense thoughtful look reflection mirror chiaroscuro", "solitary cross on mountain hill dramatic sky"],
         "pasta_audio": "tensao_acao"
     },
     "curiosidade": {
-        "tom": "Abra loops mentais com o 'segredo dos que chegam lá'. O magnetismo do que a elite sabe e a massa ignora.",
-        "busca_imagem": ["stage curtain opening bright light shining through 35mm", "mystery silhouette walking into bright glowing doorway", "illuminated book glowing magical light knowledge", "discover hidden treasure glowing golden light cinematic"],
+        "tom": "Abra reflexões profundas sobre as verdades ocultas e a sabedoria eterna de Provérbios e das Escrituras.",
+        "busca_imagem": ["ancient sacred scripture glowing light dust particles", "candle on wooden desk with open vintage bible", "old scrolls library warm atmosphere", "magnificent historic cathedral interior light rays"],
         "pasta_audio": "tensao_acao"
     },
-
-    # ── Família 3: Conexão & Lealdade (Ideal para Stories e aquecimento de base de seguidores)
     "amor": {
-        "tom": "Aborde a força imbatível de quem constrói algo para quem ama. A paixão que levanta impérios.",
-        "busca_imagem": ["passionate crowd singing together concert lights 35mm", "joyful family running on bright sunny beach cinematic", "warm powerful embrace golden hour sunlight", "loyal team celebrating victory trophy lights"],
+        "tom": "Manifeste o amor sacrificial de Cristo, a graça que perdoa e a aliança inquebrável no seio da família.",
+        "busca_imagem": ["father embracing family warm golden hour field", "hands holding together light from above", "joyful family walking sunrise meadow cinematic", "open arms silhouette sunrise horizon"],
         "pasta_audio": "conexao_lealdade"
     },
     "carinho": {
-        "tom": "Fale com o magnetismo de um líder que cuida da sua tribo. Uma voz forte, mas que eleva quem está perto.",
-        "busca_imagem": ["leader shaking hands smiling crowd bright lights 35mm", "mentor clapping for student success bright stage", "warm genuine smile connection bright sunlight", "loyal fans reaching out to stage concert cinematic"],
-        "pasta_audio": "conexao_lealdade"
-    },
-    "afeto": {
-        "tom": "Celebre a irmandade de quem corre pelo mesmo objetivo. A energia de um time imbatível.",
-        "busca_imagem": ["team huddle sports stadium bright lights intense 35mm", "friends laughing throwing hands in air sunset beach", "tribe celebrating around massive bonfire night", "loyal crew walking together confident slow motion"],
-        "pasta_audio": "conexao_lealdade"
-    },
-    "alegria": {
-        "tom": "Celebre vitórias de forma barulhenta e eufórica. A felicidade extrema de viver no pico de performance.",
-        "busca_imagem": ["euphoric crowd jumping concert confetti lasers 35mm", "champagne pop celebration luxury yacht sunny day", "radiant laughter group of winners stadium lights", "pure joy dancing neon lights club cinematic"],
+        "tom": "Fale como um pastor que cuida das ovelhas com zelo, consolo e paciência.",
+        "busca_imagem": ["shepherd walking with sheep peaceful green pasture", "warm tea by window morning sun cozy room", "gentle embrace in soft natural light", "hands resting on open book serene morning"],
         "pasta_audio": "conexao_lealdade"
     },
     "esperanca": {
-        "tom": "Mostre que a glória é inevitável para quem não para. Uma visão épica e grandiosa do futuro.",
-        "busca_imagem": ["epic sunrise over futuristic city bright golden light 35mm", "person raising flag on mountain peak sun shining", "triumphant orchestra playing bright stage lights", "soaring eagle flying into bright sun cinematic"],
+        "tom": "Mostre que o choro pode durar uma noite, mas a alegria vem pela manhã. Uma visão gloriosa do agir de Deus.",
+        "busca_imagem": ["spectacular sunrise breaking through storm clouds", "person looking up at starry night sky with hope", "blooming flower in cracked desert earth sunlight", "sunbeams penetrating dark clouds over ocean"],
         "pasta_audio": "conexao_lealdade"
     }
 }

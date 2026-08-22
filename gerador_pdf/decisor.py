@@ -33,47 +33,47 @@ def buscar_historico_pdfs_recentes(limite=4):
 
 sys.path.insert(0, BOT_PATH)
 
-# Mapeamento de temas para livros (espelhado do prompts.py do bot)
+# Mapeamento de temas para estudos e livros bíblicos (@valoresdopai)
 LIVROS_POR_TEMA = {
-    "espiritualidade": {
-        "nome_display": "Espiritualidade e Fé",
-        "livros": ["Os Evangelhos", "Provérbios de Salomão", "O Homem Mais Inteligente da História"],
-        "dor_central": "sentir que a vida perdeu o sentido e a conexão com algo maior"
+    "oracao_e_fe": {
+        "nome_display": "Oração & Blindagem Espiritual",
+        "livros": ["Salmos de Davi", "Guia de 21 Dias de Oração", "Oração e Jejum no Secreto"],
+        "dor_central": "cansaço na alma, falta de constância devocional e ataques da ansiedade"
     },
-    "filosofia": {
-        "nome_display": "Filosofia e Autoconhecimento",
-        "livros": ["A Arte da Guerra", "O Vendedor de Sonhos"],
-        "dor_central": "tentar agradar a todos enquanto se perde de si mesmo"
+    "sabedoria_pratica": {
+        "nome_display": "Sabedoria Bíblica & Provérbios",
+        "livros": ["Provérbios de Salomão", "Eclesiastes e o Sentido da Vida", "O Manual de Decisões Sábias"],
+        "dor_central": "tomar decisões precipitadas, confusão mental e falta de discernimento no trabalho"
     },
-    "psicologia": {
-        "nome_display": "Psicologia e Comportamento Humano",
-        "livros": ["Rápido e Devagar", "Blink", "Armadilhas da Mente"],
-        "dor_central": "o cérebro que sabota e prefere o sofrimento conhecido à mudança"
+    "guerra_espiritual": {
+        "nome_display": "Guerra Espiritual & Superação",
+        "livros": ["A Armadura de Deus (Efésios 6)", "7 Salmos de Guerra Espiritual", "Vencendo os Gigantes e Desertos"],
+        "dor_central": "sentir-se sob constante opressão, desânimo espiritual e batalhas na mente"
     },
-    "financas": {
-        "nome_display": "Mentalidade Financeira",
-        "livros": ["Pai Rico Pai Pobre", "Mais Esperto que o Diabo"],
-        "dor_central": "trabalhar exausto sem nunca sentir que está chegando a algum lugar"
+    "financas_e_trabalho": {
+        "nome_display": "Mordomia & Prosperidade Bíblica",
+        "livros": ["Princípios Bíblicos de Finanças", "A Sabedoria Financeira de Salomão", "Trabalho, Honra e Mordomia"],
+        "dor_central": "trabalhar sem frutos, desorganização material e medo da escassez"
     },
-    "liberdade": {
-        "nome_display": "Liberdade e Coragem",
-        "livros": ["O Vendedor de Sonhos", "O Poder da Ação", "Mais Esperto que o Diabo"],
-        "dor_central": "adiar os próprios sonhos para construir a meta de outra pessoa"
+    "familia_e_legado": {
+        "nome_display": "Família, Honra & Sacerdócio",
+        "livros": ["O Sacerdote do Lar", "Edificando a Casa sobre a Rocha", "Legado de Honra para os Filhos"],
+        "dor_central": "desconexão no casamento, falta de autoridade espiritual no lar e conflitos familiares"
     },
-    "conexoes": {
-        "nome_display": "Relacionamentos e IE",
-        "livros": ["Como Fazer Amigos e Influenciar Pessoas", "A Arte da Persuasão"],
-        "dor_central": "a solidão dentro de relacionamentos que já não se comunicam de verdade"
+    "ansiedade_e_paz": {
+        "nome_display": "Paz na Tempestade & Vitória sobre a Ansiedade",
+        "livros": ["A Paz que Excede o Entendimento (Filipenses)", "Descanso na Soberania de Deus", "Entregando as Preocupações no Altar"],
+        "dor_central": "insônia, noites agitadas, aperto no peito e medo do futuro"
     },
-    "superacao": {
-        "nome_display": "Superação e Hábitos",
-        "livros": ["O Poder do Hábito", "O Poder da Ação", "A Arte da Guerra"],
-        "dor_central": "a voz interna que manda desistir toda vez que a mudança começa a doer"
+    "graca_e_transformacao": {
+        "nome_display": "Os Evangelhos & A Graça Transformadora",
+        "livros": ["O Sermão da Montanha", "As Parábolas de Jesus", "O Poder do Perdão e da Redenção"],
+        "dor_central": "o peso da culpa do passado e a dificuldade de perdoar a si mesmo e aos outros"
     },
-    "proposito": {
-        "nome_display": "Propósito e Legado",
-        "livros": ["Eclesiastes", "Provérbios de Salomão", "Mais Esperto que o Diabo"],
-        "dor_central": "conquistar tudo materialmente mas sentir um vazio inexplicável por dentro"
+    "carater_e_integridade": {
+        "nome_display": "Caráter Cristão & Fidelidade",
+        "livros": ["A Vida de José do Egito", "A Firmeza de Daniel na Babilônia", "Integridade nos Pequenos Começos"],
+        "dor_central": "ceder a tentações e pressões do mundo, perdendo a integridade e a paz com Deus"
     }
 }
 

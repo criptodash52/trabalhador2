@@ -49,8 +49,8 @@ def _inicializar_firebase():
 
 def fazer_upload_pdf(caminho_local: str, titulo_pdf: str) -> str:
     """
-    Copia o PDF para o repositório 'gustavo_8k' clonado localmente e faz o git push.
-    Retorna a URL Raw do GitHub.
+    Copia o PDF para o repositório 'pdf_trabalhador2' clonado localmente e faz o git push.
+    Retorna a URL Raw do GitHub (via jsDelivr CDN).
     """
     semana_str = datetime.now().strftime("%Y-W%W")
     timestamp_str = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -62,21 +62,21 @@ def fazer_upload_pdf(caminho_local: str, titulo_pdf: str) -> str:
     caminho_destino = os.path.join(REPOSITORIO_PDFS, nome_no_git)
     shutil.copy2(caminho_local, caminho_destino)
 
-    print(f"🐙 [Uploader] Subindo para o GitHub (gustavo_8k)...")
+    print(f"🐙 [Uploader] Subindo para o GitHub (criptodash52/pdf_trabalhador2)...")
     
     try:
         # 2. Executa os comandos do git dentro da pasta repositorio_pdfs
         subprocess.run(["git", "config", "--local", "user.email", "github-actions[bot]@users.noreply.github.com"], cwd=REPOSITORIO_PDFS, check=True)
         subprocess.run(["git", "config", "--local", "user.name", "github-actions[bot]"], cwd=REPOSITORIO_PDFS, check=True)
         subprocess.run(["git", "add", nome_no_git], cwd=REPOSITORIO_PDFS, check=True)
-        subprocess.run(["git", "commit", "-m", f"Adiciona PDF da semana {semana_str}: {titulo_pdf}"], cwd=REPOSITORIO_PDFS, check=True)
+        subprocess.run(["git", "commit", "-m", f"Adiciona Guia Devocional da semana {semana_str}: {titulo_pdf}"], cwd=REPOSITORIO_PDFS, check=True)
         # Tenta criar a branch main e dar push (importante se for repositório vazio)
         subprocess.run(["git", "branch", "-M", "main"], cwd=REPOSITORIO_PDFS, check=False)
         subprocess.run(["git", "push", "-u", "origin", "main"], cwd=REPOSITORIO_PDFS, check=True)
         
         # 3. Pega o hash único do commit para quebrar o cache do jsDelivr
         commit_hash = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPOSITORIO_PDFS).decode().strip()
-        url_publica = f"https://cdn.jsdelivr.net/gh/gustavocapichoni/gustavo_8k@{commit_hash}/{nome_no_git}"
+        url_publica = f"https://cdn.jsdelivr.net/gh/criptodash52/pdf_trabalhador2@{commit_hash}/{nome_no_git}"
         print(f"✅ [Uploader] Upload para o GitHub concluído! URL: {url_publica}")
         return url_publica
         

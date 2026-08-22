@@ -115,18 +115,19 @@ def _adicionar_texto_frame(frame_array, texto, fonte, chars_to_show=None, fade_a
 
     return np.array(img)
 
-# Paleta fixa da marca: Sábado — Abundância & Ouro (Dourado Âmbar → Branco → Bronze)
-# Esta é a identidade visual permanente de todas as postagens do perfil.
-PALETA_PADRAO_MARCA = ([255, 215, 0], [255, 255, 255], [139, 90, 43])
+# Cor sólida oficial da marca: Prata Metálico Clássico (#D8DCE3)
+# Cor única e elegante para todo o texto das postagens — sem degradê.
+COR_TEXTO_MARCA = (216, 220, 227, 255)  # Prata Metálico Clássico
 
-# Paletas exclusivas do Reels Leads — alternam a cada geração para diferenciar esse formato
+# Mantido por compatibilidade com chamadas existentes (não mais usado para degradê)
+PALETA_PADRAO_MARCA = ([216, 220, 227], [216, 220, 227], [216, 220, 227])
 PALETAS_LEADS = [
-    ([176, 38, 255], [255, 255, 255], [0, 51, 255]),   # Visão Profética (Roxo → Branco → Azul)
-    ([255, 20, 147], [255, 255, 255], [180, 0, 30]),    # Paixão & Força (Rosa → Branco → Vermelho Escuro)
+    ([216, 220, 227], [216, 220, 227], [216, 220, 227]),
+    ([216, 220, 227], [216, 220, 227], [216, 220, 227]),
 ]
 
 def obter_paleta_do_dia():
-    """Retorna a paleta fixa da marca: Dourado Âmbar → Branco → Bronze."""
+    """Retorna a paleta da marca (compatibilidade). Cor real: COR_TEXTO_MARCA."""
     return PALETA_PADRAO_MARCA
 
 def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade_alpha=1.0, deslocamento_y=0, paleta=None):
@@ -181,54 +182,18 @@ def _adicionar_texto_degrade(frame_array, texto, fonte, chars_to_show=None, fade
         else:
             linha_render = linha
             
-        # Desenha sombra macia e contorno rígido preto
-        shadow_draw.text((x + 3, y + 3), linha_render, font=fonte, fill=(0, 0, 0, int(150 * fade_alpha)))
+        # Desenha sombra macia e contorno rígido preto para destacar no fundo escuro
+        shadow_draw.text((x + 4, y + 4), linha_render, font=fonte, fill=(0, 0, 0, int(180 * fade_alpha)))
         shadow_draw.text((x, y), linha_render, font=fonte, fill=(0, 0, 0, 0), stroke_width=2, stroke_fill=(0, 0, 0, int(255 * fade_alpha)))
         
-        # Desenha o interior da letra puro para máscara alpha
-        draw.text((x, y), linha_render, font=fonte, fill=(255, 255, 255, int(255 * fade_alpha)))
+        # Texto em cor sólida Prata Metálico Clássico (#D8DCE3)
+        r_col, g_col, b_col, a_col = COR_TEXTO_MARCA
+        draw.text((x, y), linha_render, font=fonte, fill=(r_col, g_col, b_col, int(a_col * fade_alpha)))
         y += alt + espaco_entre
 
-    # Isola o recorte das letras
-    mask = txt_layer.split()[3]
-    
-    # Cria a matriz do degradê com a paleta selecionada (ou padrão Roxo→Branco→Azul)
-    gradient = np.zeros((h, w, 3), dtype=np.uint8)
-    if paleta:
-        color_top = np.array(paleta[0])
-        color_mid = np.array(paleta[1])
-        color_bot = np.array(paleta[2])
-    else:
-        color_top = np.array([176, 38, 255])
-        color_mid = np.array([255, 255, 255])
-        color_bot = np.array([0, 51, 255])
-    
-    y_min_texto = y_inicial
-    y_max_texto = y_inicial + h_texto
-    h_bloco = max(1, y_max_texto - y_min_texto)
-
-    for i in range(h):
-        if i < y_min_texto:
-            color = color_top
-        elif i > y_max_texto:
-            color = color_bot
-        else:
-            ratio = (i - y_min_texto) / float(h_bloco)
-            if ratio < 0.5:
-                r = (ratio / 0.5)
-                color = color_top * (1 - r) + color_mid * r
-            else:
-                r = ((ratio - 0.5) / 0.5)
-                color = color_mid * (1 - r) + color_bot * r
-        gradient[i, :, :] = color
-        
-    grad_img = Image.fromarray(gradient, 'RGB')
-    final_txt_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    final_txt_layer.paste(grad_img, (0,0), mask=mask)
-    
-    # Empilha as 3 camadas: Fundo (vídeo) + Contorno (Preto) + Texto (Degradê)
+    # Empilha as 2 camadas: Fundo (vídeo) + Contorno (Preto) + Texto Prata Sólido
     img = Image.alpha_composite(img.convert("RGBA"), shadow_layer)
-    img = Image.alpha_composite(img, final_txt_layer).convert("RGB")
+    img = Image.alpha_composite(img, txt_layer).convert("RGB")
 
     return np.array(img)
 
@@ -638,46 +603,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         salvar_estado(estado_conq)
         logger.info(f"🎨 [CONQUISTADOR] Animação: {animacao_conquistador.upper()} | Plataforma: {'Pixabay' if idx_plat == 0 else 'Pexels'}")
 
-    # --- Rotação de paletas exclusivas do Reels Leads ---
-    paleta_reels_leads = None
-    _path_cta_do_dia = None  # Inicializado aqui para ser acessível em toda a função
+    # --- Paleta unificada da marca para todos os formatos (Dourado Ouro Nobre) ---
+    paleta_reels_leads = PALETA_PADRAO_MARCA
     if is_reels_leads:
-        estado_leads = carregar_estado()
-        idx_pal_leads = estado_leads.get("index_palette_leads", 0) % len(PALETAS_LEADS)
-        paleta_reels_leads = PALETAS_LEADS[idx_pal_leads]
-        estado_leads["index_palette_leads"] = (idx_pal_leads + 1) % len(PALETAS_LEADS)
-        salvar_estado(estado_leads)
-        nome_pal = "Visão Profética (Roxo/Azul)" if idx_pal_leads == 0 else "Paixão & Força (Rosa/Vermelho)"
-        logger.info(f"🟣 [REELS_LEADS] Paleta exclusiva ativada: #{idx_pal_leads + 1} - {nome_pal}")
-
-    # ─────────────────────────────────────────────────────────────────────────
-    # ROLETA DIÁRIA DE CTA (exclusiva para reels_leads e story_tarde)
-    # Funciona como uma roleta: cta00 → cta01 → cta02 → cta03 → cta00 ...
-    # A roleta avança 1x por dia (data do sistema). O mesmo CTA do dia é
-    # compartilhado entre reels_leads e story_tarde (postados uma vez por dia).
-    # ─────────────────────────────────────────────────────────────────────────
-    if is_reels_leads or is_story_tarde:
-        import datetime
-        _logo_dir_cta = os.path.join("biblioteca_local", "logo")
-        _nomes_cta = [f"cta0{i}.png" for i in range(4)]  # cta00, cta01, cta02, cta03
-        _ctas_disponiveis = [os.path.join(_logo_dir_cta, n) for n in _nomes_cta
-                             if os.path.exists(os.path.join(_logo_dir_cta, n))]
-        if _ctas_disponiveis:
-            _estado_cta = carregar_estado()
-            _hoje = datetime.date.today().isoformat()  # ex: "2026-08-10"
-            _ultimo_dia_cta = _estado_cta.get("ultimo_dia_cta", "")
-            _idx_cta_dia = _estado_cta.get("index_cta_dia", 0)
-            # Avança a roleta apenas se for um novo dia
-            if _ultimo_dia_cta != _hoje:
-                if _ultimo_dia_cta != "":  # Não avança na primeira execução (sem dia anterior)
-                    _idx_cta_dia = (_idx_cta_dia + 1) % len(_ctas_disponiveis)
-                _estado_cta["index_cta_dia"] = _idx_cta_dia
-                _estado_cta["ultimo_dia_cta"] = _hoje
-                salvar_estado(_estado_cta)
-            _path_cta_do_dia = _ctas_disponiveis[_idx_cta_dia % len(_ctas_disponiveis)]
-            logger.info(f"🎯 [CTA DO DIA] Índice {_idx_cta_dia} → {os.path.basename(_path_cta_do_dia)} (dia: {_hoje})")
-        else:
-            logger.warning("⚠️ Nenhum arquivo cta0X.png encontrado em biblioteca_local/logo. Usando marca d'água padrão.")
+        logger.info("👑 [REELS_LEADS] Usando paleta oficial da marca: Dourado Ouro Nobre")
 
     # Define quantos vídeos baixar de forma adaptativa:
     # Para reels_leads, calcula com base no número de slides para evitar repetição visual.
@@ -1044,50 +973,15 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
 
             def _desenhar_elementos_marca(frame_array, fator_escala=1.0, is_cta=False, t_slide=0.0, idx_slide_atual=0):
                 """
-                Desenha a marca d'água ou o CTA do dia no rodapé do frame.
-
-                Regras para reels_leads e story_tarde:
-                  - Slide 0 (1º slide): exibe a marca d'água normal.
-                  - Slide 1+ (2º slide em diante): exibe o CTA do dia com animação de transição.
-                    A transição ocorre nos primeiros 0.5s do slide:
-                      * Marca d'água faz fade-out (opacidade 100% → 0%).
-                      * CTA faz fade-in  (opacidade 0%   → 100%).
-                    Após 0.5s o CTA fica fixo pelo restante do slide.
-
-                Todos os outros formatos: comportamento original (marca d'água sempre).
+                Desenha exclusivamente a marca d'água (foto_perfil.png) no rodapé do frame.
+                Mantém padrão contínuo e limpo em todos os vídeos e formatos.
                 """
                 img = Image.fromarray(frame_array).convert("RGBA")
                 w, h = img.size
                 logo_dir = os.path.join("biblioteca_local", "logo")
 
-                # ── Duração da animação de transição (em segundos) ──────────────
-                DURACAO_TRANSICAO = 0.5
-
-                # ── Decide se usamos o CTA do dia ou a marca d'água ─────────────
-                usar_cta = (
-                    (is_reels_leads or is_story_tarde)
-                    and _path_cta_do_dia is not None
-                    and idx_slide_atual >= 1          # A partir do 2º slide
-                )
-
-                # ── Calcula opacidades da transição ─────────────────────────────
-                if usar_cta:
-                    if idx_slide_atual == 1:
-                        # Transição suave apenas na passagem do Slide 0 para o Slide 1
-                        progresso_transicao = min(1.0, t_slide / DURACAO_TRANSICAO) if DURACAO_TRANSICAO > 0 else 1.0
-                        alpha_marca = int(255 * (1.0 - progresso_transicao))
-                        alpha_cta   = int(255 * progresso_transicao)
-                    else:
-                        # Do Slide 2 em diante, o CTA fica fixo e a marca d'água 100% oculta
-                        alpha_marca = 0
-                        alpha_cta   = 255
-                else:
-                    # Slide 0 ou formatos não-CTA: apenas marca d'água em opacidade total
-                    alpha_marca = 255
-                    alpha_cta   = 0
-
                 # ── Helper: aplica logo com opacidade customizada ────────────────
-                def _colar_logo(path_img, largura_px, y_offset_px, alpha_override):
+                def _colar_logo(path_img, largura_px, y_offset_px, alpha_override=255):
                     """Carrega, redimensiona e cola uma imagem PNG com alpha_override (0-255)."""
                     if not path_img or not os.path.exists(path_img):
                         return False
@@ -1096,10 +990,10 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         aspect = logo_img.height / logo_img.width
                         altura_px = int(largura_px * aspect)
                         logo_res = logo_img.resize((largura_px, altura_px), Image.Resampling.LANCZOS)
-                        # Aplica alpha_override multiplicando o canal alpha de cada pixel
-                        r, g, b, a = logo_res.split()
-                        a = a.point(lambda px: int(px * alpha_override / 255))
-                        logo_res = Image.merge("RGBA", (r, g, b, a))
+                        if alpha_override < 255:
+                            r, g, b, a = logo_res.split()
+                            a = a.point(lambda px: int(px * alpha_override / 255))
+                            logo_res = Image.merge("RGBA", (r, g, b, a))
                         x_pos = int((w - largura_px) / 2)
                         y_pos = h - altura_px - y_offset_px
                         img.paste(logo_res, (x_pos, y_pos), logo_res)
@@ -1108,43 +1002,24 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
                         logger.warning(f"⚠️ Erro ao colar imagem '{path_img}': {e}")
                         return False
 
-                # ── 1. Marca d'água (sempre visível no Slide 0; fade-out nos slides seguintes) ──
+                # ── 1. Marca d'água constante (foto_perfil.png) ──
                 path_logo_rodape = os.path.join(logo_dir, "foto_perfil.png")
-
                 largura_marca = max(140, int(280 * fator_escala))
                 y_offset_marca = int(55 * fator_escala)
-                marca_aplicada = False
+                marca_aplicada = _colar_logo(path_logo_rodape, largura_marca, y_offset_marca, 255)
 
-                if alpha_marca > 0:
-                    marca_aplicada = _colar_logo(path_logo_rodape, largura_marca, y_offset_marca, alpha_marca)
-
-                # Fallback textual se a imagem da marca não estiver disponível
-                if not marca_aplicada and alpha_marca > 0:
+                # Fallback textual apenas se a foto_perfil.png não existir
+                if not marca_aplicada:
                     draw = ImageDraw.Draw(img)
                     tamanho_marca = max(22, int(36 * fator_escala))
                     fonte_rodape = _carregar_fonte(tamanho_marca, "Montserrat")
-                    texto_marca = "GUSTAVO_8K_"
+                    texto_marca = "@valoresdopai"
                     bb = draw.textbbox((0, 0), texto_marca, font=fonte_rodape)
                     tw = bb[2] - bb[0]
                     x_marca = (w - tw) // 2
                     y_marca = h - int(60 * fator_escala)
-                    cor_brilho = (235, 160, 40, min(50, alpha_marca))
-                    cor_sombra = (0, 0, 0, min(200, alpha_marca))
-                    cor_texto  = (250, 185, 55, alpha_marca)
-                    for ox in [-2, -1, 0, 1, 2]:
-                        for oy in [-2, -1, 0, 1, 2]:
-                            if ox != 0 or oy != 0:
-                                draw.text((x_marca + ox, y_marca + oy), texto_marca, font=fonte_rodape, fill=cor_brilho)
-                    draw.text((x_marca + 2, y_marca + 2), texto_marca, font=fonte_rodape, fill=cor_sombra)
-                    draw.text((x_marca, y_marca), texto_marca, font=fonte_rodape, fill=cor_texto)
-
-                # ── 2. CTA do dia (fade-in a partir do Slide 2 em reels_leads/story_tarde) ──
-                if usar_cta and alpha_cta > 0:
-                    largura_cta = max(140, int(280 * fator_escala))  # Ajustado para 280px igual à marca d'água
-                    _colar_logo(_path_cta_do_dia, largura_cta, y_offset_marca, alpha_cta)
-
-                # ── 3. CTA LIMPO — sem efeito de brilho pulsante ────────────────
-                # Removido permanentemente para evitar oscilações de luz/pisca-pisca
+                    draw.text((x_marca + 2, y_marca + 2), texto_marca, font=fonte_rodape, fill=(0, 0, 0, 180))
+                    draw.text((x_marca, y_marca), texto_marca, font=fonte_rodape, fill=(235, 195, 85, 230))
 
                 return np.array(img.convert("RGB"))
 

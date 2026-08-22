@@ -21,11 +21,11 @@ from loguru import logger
 # TOKENS HF (5 contas em rodizio)
 # ============================================================
 HF_TOKENS = [
-    os.getenv("HF_TOKEN_1", "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"),   # conta 1
-    os.getenv("HF_TOKEN_2", "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"),   # conta 40
-    os.getenv("HF_TOKEN_3", "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"),   # conta 04
-    os.getenv("HF_TOKEN_4", "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"),   # conta 05
-    os.getenv("HF_TOKEN_5", "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"),   # conta 03
+    os.getenv("HF_TOKEN_1"),
+    os.getenv("HF_TOKEN_2"),
+    os.getenv("HF_TOKEN_3"),
+    os.getenv("HF_TOKEN_4"),
+    os.getenv("HF_TOKEN_5"),
 ]
 HF_TOKENS = [t for t in HF_TOKENS if t]
 
@@ -33,136 +33,102 @@ HF_TOKENS = [t for t in HF_TOKENS if t]
 COTA_EXCEDIDA_KEYWORDS = ["zerogpu quota", "quota", "exceeded"]
 
 # ============================================================
-# POOL DE CIDADES (variacao aleatoria a cada geracao)
+# POOL DE LOCAÇÕES BÍBLICAS E HISTÓRICAS
 # ============================================================
-_CIDADES = [
-    "Tokyo", "New York", "London", "Paris", "Shanghai",
-    "Seoul", "Sao Paulo", "Chicago", "Hong Kong", "Amsterdam",
-    "Berlin", "Bangkok", "Singapore", "Dubai", "Buenos Aires",
-    "Mexico City", "Istanbul", "Toronto", "Sydney", "Milan",
+_LOCACOES_BIBLICAS = [
+    "Mount Sinai desert", "ancient Judean wilderness", "Garden of Gethsemane olive grove",
+    "Sea of Galilee coast at dawn", "historic Jerusalem stone courtyard",
+    "ancient monastery library in Cappadocia", "peaceful valley of Jezreel at sunrise",
+    "mountaintop overlooking Jordan Valley", "ancient Roman stone aqueduct in Judea",
+    "historic biblical desert canyon under stars"
 ]
 
 # ============================================================
-# POOL DE EFEITOS ATMOSFERICOS (um selecionado aleatoriamente)
+# POOL DE EFEITOS ATMOSFÉRICOS (Iluminação Sagrada e Chiaroscuro)
 # ============================================================
 _EFEITOS_ATMOSFERICOS = [
-    "light drizzle with wet reflections on the pavement",
-    "heavy rain with water puddles reflecting neon lights",
-    "dense urban fog with glowing halos around streetlights",
-    "thin mist drifting between buildings",
-    "light snowfall with snowflakes visible under streetlamps",
-    "blizzard with snow swirling in the wind",
-    "freezing fog with ice crystals in the air",
-    "low-hanging storm clouds with distant lightning",
-    "wet streets after rain with mirror-like reflections",
-    "humid night air with visible condensation on glass surfaces",
+    "dramatic sunbeams penetrating through thick storm clouds, golden hour haze",
+    "soft morning mist over desert mountains with warm ambient glow",
+    "chiaroscuro lighting with deep warm candlelight and sharp realistic shadows",
+    "gentle sunrise light filtering through ancient olive branches",
+    "starry clear desert night sky with dramatic milky way and soft lantern glow",
+    "dramatic storm clouds breaking with golden light shining upon the valley",
+    "soft dust particles illuminated by divine light ray through stone arches",
+    "peaceful dawn with calm lake water reflections of mountain silhouettes"
 ]
 
 # ============================================================
-# POOL DE ANGULOS / PERSPECTIVAS (um selecionado aleatoriamente)
+# POOL DE ÂNGULOS / PERSPECTIVAS
 # ============================================================
 _ANGULOS = [
-    "shot from the rooftop of a skyscraper looking down at the streets below",
-    "aerial view from a high-rise building terrace, looking down diagonally",
-    "bird's-eye view from a drone hovering above the city",
-    "shot from a high-floor apartment window looking down at the street",
-    "top-down perspective from a pedestrian bridge above the scene",
-    "low angle looking up at towering buildings disappearing into the fog",
-    "eye-level shot on the street with deep perspective vanishing point",
-    "shot through a rain-covered floor-to-ceiling glass window from inside a high floor",
-    "counter-plunge angle from a fire escape high above the alley",
-    "wide establishing shot from a rooftop edge at night",
+    "wide establishing cinematic shot from a high mountain cliff at sunrise",
+    "dramatic low angle looking up at a solitary figure standing firm on ancient stone",
+    "intimate side profile chiaroscuro portrait with dramatic soft shadow",
+    "close-up detail shot of hands resting on an ancient worn leather Bible with golden light",
+    "atmospheric medium shot of a man deep in prayer in a quiet stone sanctuary",
+    "epic wide vista of a traveller walking through an expansive golden desert valley",
+    "eye-level respectful shot of a historic wooden table with candle and scripture scroll"
 ]
 
 # ============================================================
-# MATRIZ DE SUBTEMAS - todos 100% noturnos
+# MATRIZ DE SUBTEMAS CRISTÃOS — 100% CINEMATOGRÁFICO
 # Tupla: (subtema, descricao_da_cena)
 # ============================================================
 _MATRIZ_PROMPTS = [
-    # ── 1. FAIXAS DE PEDESTRES E MULTIDÃO NA CHUVA ──
+    # ── 1. ORAÇÃO & BLINDAGEM ESPIRITUAL NO SECRETO ──
     (
-        "crowded rainy crosswalk in London top-down",
-        "A wet street crosswalk in London at night, high angle top-down view. Dozens of black umbrellas crossing under streetlamps, rain puddle reflections of headlights.",
+        "solitary prayer at sunrise mountain peak",
+        "A devout man kneeling in prayer on an ancient rocky mountain summit at dawn. Golden sunbeams bursting through the horizon, creating a breathtaking spiritual atmosphere.",
     ),
     (
-        "pedestrian shoes on wet crosswalk low angle",
-        "Low angle ground view of shoes walking across a wet city crosswalk at night. Puddles reflecting glowing neon and amber streetlights.",
+        "hands in prayer with divine light rays",
+        "Close-up of weathered, strong praying hands holding an ancient wooden cross or resting on stone, illuminated by a single warm beam of heavenly light from above.",
     ),
     (
-        "motion blur crowd around motionless person",
-        "A busy urban street crosswalk at night. One person stands completely still in sharp focus while the surrounding crowd passes by in motion blur.",
-    ),
-    (
-        "oxford street london red bus rain night",
-        "A rainy night at a London intersection. A classic red double-decker bus moving in the background, wet asphalt reflecting red and gold city lights.",
+        "quiet prayer room with candlelight",
+        "A humble rustic stone room at night. A solitary person sitting quietly before a wooden table with a burning candle, deep in communion and peace.",
     ),
 
-    # ── 2. METRÔ NOTURNO (SUBWAY / TUBE) ──
+    # ── 2. SABEDORIA BÍBLICA & ESCRITURAS ANTIGAS ──
     (
-        "subway car passenger looking out window",
-        "Inside a dark metro subway car at night. A young thoughtful man in a dark coat sits near the window, looking out at dark tunnel wall reflections. Soft moody interior light.",
+        "ancient parchment scroll and vintage bible",
+        "A historic wooden desk illuminated by warm candlelight. An open vintage Bible with delicate aged pages, inkwell and an ancient scroll in sharp detail.",
     ),
     (
-        "empty london underground tube platform",
-        "An empty curved London Underground subway platform at night. Soft warm vintage lighting, a single figure in a long coat waiting for the train.",
+        "classical ancient monastery library with sunlight",
+        "A grand classical library with high stone archways, tall wooden bookshelves filled with ancient theological books, with morning sunbeams streaming across the stone floor.",
     ),
     (
-        "deep subway escalator perspective",
-        "Deep perspective view going down a long metallic escalator into a dark underground metro station at night. Cold shadows and warm highlights.",
-    ),
-    (
-        "metro car door window glass face reflection",
-        "Close detail shot of a person's face reflected on the glass window of a subway train door as it moves through the dark tunnel at night.",
+        "thoughtful sage studying ancient scripture",
+        "A wise, contemplative elder in traditional linen garments reading a holy scripture by soft oil lamp light, thoughtful facial expression, chiaroscuro lighting.",
     ),
 
-    # ── 3. PRAÇAS E RUA HISTÓRICAS (PARIS / LONDRES) ──
+    # ── 3. GUERRA ESPIRITUAL & SUPERAÇÃO NO DESERTO ──
     (
-        "couple in a foggy Paris plaza bench",
-        "A historic stone plaza in Paris at night under soft fog. A couple sitting on a wooden bench illuminated by a warm gas streetlight.",
+        "warrior standing firm in desert storm",
+        "A resilient man in humble armor standing immovable against a dramatic desert storm. Storm clouds swirling behind him as golden light breaks from heaven.",
     ),
     (
-        "person leaning on stone bridge river seine",
-        "A lonely figure leaning on the stone railing of a bridge over the Seine River in Paris at night. City palace lights reflecting on dark water.",
+        "walking through the valley of shadow into light",
+        "A lone figure walking with courage through a dramatic narrow stone canyon toward an intensely glowing sunrise at the end of the path.",
     ),
     (
-        "paris cafe outdoor terrace rainy night",
-        "A cozy outdoor terrace of a Parisian cafe at night under a drizzle. A solitary person sitting at a small round table under warm canopy lights.",
-    ),
-    (
-        "cobblestone alley night walking away",
-        "A narrow historic cobblestone street at night. A single person in a dark coat walking away into the distance under warm wall-mounted street lanterns.",
+        "ancient shield and sword beside glowing altar",
+        "An ancient weathered shield bearing a cross emblem resting against a stone altar, illuminated by sacred divine golden light.",
     ),
 
-    # ── 4. VIDRO MOLHADO & EFEITO BOKEH ──
+    # ── 4. PAZ, DESCANSO & NATUREZA CONTEMPLATIVA ──
     (
-        "looking through rain-streaked window at city lights",
-        "Intimate indoor view looking out a rain-covered window glass at night. Outside, blurred golden and amber city lights create a bokeh effect while a silhouette of a person looks outside.",
+        "peaceful olive grove at golden hour",
+        "An ancient grove of gnarled olive trees bathed in warm golden hour light. Serene, peaceful breeze with grass and mountain backdrop.",
     ),
     (
-        "view from back of rainy taxi cab at night",
-        "View from the back seat of a taxi cab driving through city rain at night. Raindrops streaks on the window pane with blurred red taillights ahead.",
+        "calm waters and green pastures biblical valley",
+        "A majestic calm river reflecting the morning sky, surrounded by green pastures and distant blue mountains, evoking the 23rd Psalm.",
     ),
     (
-        "blurry cafe window rainy night bokeh",
-        "Macro detail of water droplets on a warm cafe glass window at night. Golden bokeh light circles from the city traffic outside.",
-    ),
-
-    # ── 5. OUTROS NÚCLEOS DA SOLIDÃO URBANA ──
-    (
-        "solitude inside public transportation",
-        "A crowded subway car at night. Everyone is physically close but each person is absorbed in their screen. One passenger stares out into space.",
-    ),
-    (
-        "solitude facing the speed of the city",
-        "A busy street at night captured with long exposure. Cars form trails of light in motion, people blurred shadows, one central figure standing sharp.",
-    ),
-    (
-        "isolation surrounded by skyscrapers",
-        "A person standing alone in the middle of an empty street between towering illuminated skyscrapers at night, looking up into cloudy skies.",
-    ),
-    (
-        "the last one awake in the city diner",
-        "A 24-hour diner at night, empty except for one customer sitting at the counter nursing a coffee. Wet street reflecting neon signs outside.",
+        "lantern on stone bridge over calm waters at dusk",
+        "A glowing oil lantern resting on a historic stone arch bridge overlooking calm waters under a serene starry twilight sky.",
     ),
 ]
 
@@ -194,24 +160,24 @@ def gerar_imagem_flux(tipo: str, tema_escolhido: str = None, nome_arquivo: str =
     # Seleciona subtema aleatoriamente a cada postagem (evita repeticao no mesmo dia)
     subtema, cena = random.choice(_MATRIZ_PROMPTS)
 
-    # Seleciona cidade, efeito atmosferico e angulo aleatoriamente (variacao por postagem)
-    cidade = random.choice(_CIDADES)
+    # Seleciona locação bíblica, efeito atmosférico e ângulo aleatoriamente
+    locacao = random.choice(_LOCACOES_BIBLICAS)
     efeito = random.choice(_EFEITOS_ATMOSFERICOS)
     angulo = random.choice(_ANGULOS)
 
     prompt = (
-        f"Theme: contemporary urban solitude. City: {cidade}, at night.\n"
+        f"Theme: biblical cinematic spiritual fine art. Setting: {locacao}.\n"
         f"Subtheme: {subtema}.\n"
         f"{cena}\n"
         f"Atmospheric effect: {efeito}.\n"
         f"Camera angle: {angulo}.\n"
-        f"Style: cinematic photography, realistic, 35mm camera, deep depth of field, "
-        f"urban night lighting, golden and amber tones mixed with cool shadows, "
-        f"Kodak Portra aesthetic, professional photographic quality, highly detailed textures.\n"
-        f"No text, logos, watermarks or brands in the image."
+        f"Style: masterpiece fine art photography, realistic, 35mm film, chiaroscuro lighting, "
+        f"rich golden ambient warmth, deep dramatic shadows, sacred and solemn mood, "
+        f"highly detailed stone and textile textures, 8k resolution cinematic realism.\n"
+        f"No modern objects, no text, no logos, no watermarks."
     )
 
-    logger.info(f"[FLUX] Subtema: '{subtema}' | Cidade: {cidade} | Efeito: {efeito[:30]}... | Dimensoes: {width}x{height}")
+    logger.info(f"[FLUX] Subtema: '{subtema}' | Locação: {locacao} | Efeito: {efeito[:30]}... | Dimensões: {width}x{height}")
 
 
     # Carrega estado para saber qual token usar a seguir
@@ -237,7 +203,7 @@ def gerar_imagem_flux(tipo: str, tema_escolhido: str = None, nome_arquivo: str =
             try:
                 logger.info(f"[FLUX] Usando {token_label} (tentativa {tentativa}/{MAX_TENTATIVAS})...")
 
-                client = Client("black-forest-labs/FLUX.1-schnell")
+                client = Client("black-forest-labs/FLUX.1-schnell", token=token)
                 result = client.predict(
                     prompt=prompt,
                     seed=random.randint(0, 2147483647),
