@@ -492,7 +492,7 @@ def _gerar_reels(img, W, H, dados, tema_escolhido=None, tipo="reels"):
         if os.path.exists(path_logo):
             try:
                 logo_img = Image.open(path_logo)
-                largura_desejada = 320
+                largura_desejada = 280
                 aspect_ratio = logo_img.height / logo_img.width
                 altura_desejada = int(largura_desejada * aspect_ratio)
                 logo_redimensionado = logo_img.resize((largura_desejada, altura_desejada), Image.Resampling.LANCZOS).convert("RGBA")

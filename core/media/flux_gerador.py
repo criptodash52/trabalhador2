@@ -44,14 +44,14 @@ _LOCACOES_BIBLICAS = [
 ]
 
 # ============================================================
-# POOL DE EFEITOS ATMOSFÉRICOS (Iluminação Sagrada e Chiaroscuro)
+# POOL DE EFEITOS ATMOSFÉRICOS (Iluminação Sagrada e Luz Natural)
 # ============================================================
 _EFEITOS_ATMOSFERICOS = [
     "dramatic sunbeams penetrating through thick storm clouds, golden hour haze",
     "soft morning mist over desert mountains with warm ambient glow",
-    "chiaroscuro lighting with deep warm candlelight and sharp realistic shadows",
+    "chiaroscuro lighting with deep warm natural window light and sharp realistic shadows",
     "gentle sunrise light filtering through ancient olive branches",
-    "starry clear desert night sky with dramatic milky way and soft lantern glow",
+    "starry clear desert night sky with dramatic milky way and soft ambient twilight",
     "dramatic storm clouds breaking with golden light shining upon the valley",
     "soft dust particles illuminated by divine light ray through stone arches",
     "peaceful dawn with calm lake water reflections of mountain silhouettes"
@@ -64,10 +64,10 @@ _ANGULOS = [
     "wide establishing cinematic shot from a high mountain cliff at sunrise",
     "dramatic low angle looking up at a solitary figure standing firm on ancient stone",
     "intimate side profile chiaroscuro portrait with dramatic soft shadow",
-    "close-up detail shot of hands resting on an ancient worn leather Bible with golden light",
-    "atmospheric medium shot of a man deep in prayer in a quiet stone sanctuary",
+    "close-up detail shot of hands resting on an ancient worn leather Bible with golden morning light",
+    "atmospheric medium shot of a man deep in prayer in a quiet stone sanctuary illuminated by sunlight",
     "epic wide vista of a traveller walking through an expansive golden desert valley",
-    "eye-level respectful shot of a historic wooden table with candle and scripture scroll"
+    "eye-level respectful shot of a historic wooden table with scripture scroll and natural sunlight"
 ]
 
 # ============================================================
@@ -82,17 +82,17 @@ _MATRIZ_PROMPTS = [
     ),
     (
         "hands in prayer with divine light rays",
-        "Close-up of weathered, strong praying hands holding an ancient wooden cross or resting on stone, illuminated by a single warm beam of heavenly light from above.",
+        "Close-up of weathered, strong praying hands holding an ancient wooden cross or resting on stone, illuminated by a single warm beam of heavenly morning sunlight from above.",
     ),
     (
-        "quiet prayer room with candlelight",
-        "A humble rustic stone room at night. A solitary person sitting quietly before a wooden table with a burning candle, deep in communion and peace.",
+        "quiet prayer room with morning sunlight",
+        "A humble rustic stone room at dawn. A solitary person sitting quietly before a wooden table with morning sunbeams streaming through the stone window, deep in communion and peace.",
     ),
 
     # ── 2. SABEDORIA BÍBLICA & ESCRITURAS ANTIGAS ──
     (
         "ancient parchment scroll and vintage bible",
-        "A historic wooden desk illuminated by warm candlelight. An open vintage Bible with delicate aged pages, inkwell and an ancient scroll in sharp detail.",
+        "A historic wooden desk illuminated by warm natural morning light. An open vintage Bible with delicate aged pages, inkwell and an ancient scroll in sharp realistic detail.",
     ),
     (
         "classical ancient monastery library with sunlight",
@@ -100,7 +100,7 @@ _MATRIZ_PROMPTS = [
     ),
     (
         "thoughtful sage studying ancient scripture",
-        "A wise, contemplative elder in traditional linen garments reading a holy scripture by soft oil lamp light, thoughtful facial expression, chiaroscuro lighting.",
+        "A wise, contemplative elder in traditional linen garments reading a holy scripture by soft natural window light, thoughtful facial expression, chiaroscuro lighting.",
     ),
 
     # ── 3. GUERRA ESPIRITUAL & SUPERAÇÃO NO DESERTO ──
@@ -114,7 +114,7 @@ _MATRIZ_PROMPTS = [
     ),
     (
         "ancient shield and sword beside glowing altar",
-        "An ancient weathered shield bearing a cross emblem resting against a stone altar, illuminated by sacred divine golden light.",
+        "An ancient weathered shield bearing a cross emblem resting against a stone altar, illuminated by sacred divine golden sunlight.",
     ),
 
     # ── 4. PAZ, DESCANSO & NATUREZA CONTEMPLATIVA ──
@@ -127,8 +127,8 @@ _MATRIZ_PROMPTS = [
         "A majestic calm river reflecting the morning sky, surrounded by green pastures and distant blue mountains, evoking the 23rd Psalm.",
     ),
     (
-        "lantern on stone bridge over calm waters at dusk",
-        "A glowing oil lantern resting on a historic stone arch bridge overlooking calm waters under a serene starry twilight sky.",
+        "peaceful stone bridge over calm waters at dusk",
+        "A historic stone arch bridge overlooking calm waters under a serene starry twilight sky and distant mountains.",
     ),
 ]
 
@@ -166,15 +166,13 @@ def gerar_imagem_flux(tipo: str, tema_escolhido: str = None, nome_arquivo: str =
     angulo = random.choice(_ANGULOS)
 
     prompt = (
-        f"Theme: biblical cinematic spiritual fine art. Setting: {locacao}.\n"
-        f"Subtheme: {subtema}.\n"
+        f"Subject: authentic documentary scene, real human beings, {subtema}.\n"
+        f"Environment: {locacao}.\n"
         f"{cena}\n"
-        f"Atmospheric effect: {efeito}.\n"
-        f"Camera angle: {angulo}.\n"
-        f"Style: masterpiece fine art photography, realistic, 35mm film, chiaroscuro lighting, "
-        f"rich golden ambient warmth, deep dramatic shadows, sacred and solemn mood, "
-        f"highly detailed stone and textile textures, 8k resolution cinematic realism.\n"
-        f"No modern objects, no text, no logos, no watermarks."
+        f"Atmosphere & Lighting: {efeito}, cinematic natural light.\n"
+        f"Composition: {angulo}.\n"
+        f"Visual Style: raw unedited 35mm photograph, shot on Kodak Portra 400, real human skin texture, pores, fine wrinkles, authentic natural fabric weave, ultra-sharp focus, cinematic depth of field, National Geographic style documentary portrait.\n"
+        f"Negative constraints: candles, candlelight, wax candle, religious altar candles, no painting, no illustration, no drawing, no CGI, no 3D render, no cartoon, no anime, no smooth plastic skin, no digital art, no fake filters, no text, no watermark."
     )
 
     logger.info(f"[FLUX] Subtema: '{subtema}' | Locação: {locacao} | Efeito: {efeito[:30]}... | Dimensões: {width}x{height}")
