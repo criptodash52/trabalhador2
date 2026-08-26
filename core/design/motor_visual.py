@@ -16,6 +16,7 @@ from core.config.settings import PEXELS_API_KEY, PIXABAY_API_KEY, UNSPLASH_ACCES
 def buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=None):
     """
     Busca de imagem em Cascata:
+    Nível 0-A: img_carrocel local (EXCLUSIVO para carousel — sem IA, sem API)
     Nível 0: FLUX.1 via Hugging Face (IA Geradora - Prioridade Máxima)
     Nível 1: Unsplash API (Fotos Reais - Emergência)
     Nível 2: Pexels API (Fotos Reais - Emergência)
@@ -24,6 +25,39 @@ def buscar_imagem_fundo(tipo, tema_escolhido, prompt_imagem=None):
     Nível 5: Biblioteca Local (Modo Offline)
     Nível 6: Fundo Sólido Escuro (Emergência Catastrófica)
     """
+    # --- NÍVEL 0-A: img_carrocel LOCAL (apenas para carousel) ---
+    if tipo == "carousel":
+        pasta_carrocel = os.path.join("biblioteca_local", "img_carrocel")
+        if os.path.exists(pasta_carrocel):
+            extensoes_validas = (".jpg", ".jpeg", ".png", ".webp")
+            arquivos = [
+                f for f in os.listdir(pasta_carrocel)
+                if f.lower().endswith(extensoes_validas)
+            ]
+            if arquivos:
+                # Anti-repetição: evita repetir a mesma imagem recentemente usada
+                disponiveis = [
+                    f for f in arquivos
+                    if not verificar_midia_recente(f"imgcarrocel_{f}")
+                ]
+                if not disponiveis:
+                    # Todos já foram usados recentemente — reseta o ciclo
+                    disponiveis = arquivos
+
+                escolhida = random.choice(disponiveis)
+                registrar_midia_usada(f"imgcarrocel_{escolhida}")
+                caminho_completo = os.path.join(pasta_carrocel, escolhida)
+                try:
+                    img = Image.open(caminho_completo).convert("RGBA")
+                    print(f"🖼️ [NÍVEL 0-A] Imagem do carrossel carregada da biblioteca local: {escolhida}")
+                    # Carrossel usa 2160x1080 (landscape panorâmico)
+                    return img.resize((2160, 1080), Image.Resampling.LANCZOS), 2160, 1080
+                except Exception as e:
+                    print(f"⚠️ [NÍVEL 0-A] Erro ao abrir imagem '{escolhida}': {e}. Continuando para próximo nível...")
+            else:
+                print("⚠️ [NÍVEL 0-A] Pasta img_carrocel existe mas está vazia. Continuando para próximo nível...")
+        else:
+            print("⚠️ [NÍVEL 0-A] Pasta img_carrocel não encontrada. Continuando para próximo nível...")
     if tipo == "carousel":
         W, H = 2160, 1080
         orientation = "landscape"

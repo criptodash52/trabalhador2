@@ -198,24 +198,9 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
     agora = datetime.now(timezone.utc)
     dia_hoje_str = agora.strftime("%Y-%m-%d")
 
-    is_conquistador = (tipo == "reels_conquistador")
+    is_conquistador = False
     
-    if is_conquistador and not custom_tema:
-        # Loop Cego: Ignora o Analytics e roda pelos 8 temas em sequência
-        temas_lista = [f["nome"] for f in FONTES_SABEDORIA]
-        idx = estado.get("index_conquistador", 0)
-        if idx >= len(temas_lista): idx = 0
-            
-        tema_escolhido = temas_lista[idx]
-        
-        # Avança pro próximo dia
-        estado["index_conquistador"] = (idx + 1) % len(temas_lista)
-        salvar_estado(estado)
-        logger.info(f"🎯 [CONQUISTADOR] Tema forçado pelo ciclo: {tema_escolhido}")
-
-        # Busca histórico DESTE TEMA para evitar repetição de mensagens no Conquistador
-        evitar_repeticao_msg = buscar_historico_por_tema(tema_escolhido, tipo_post="reels_conquistador", limite=6)
-    elif not custom_tema:
+    if not custom_tema:
         # Se for o primeiro post do dia, rotaciona o tema sequencialmente
         if estado.get("data_tema_do_dia") == dia_hoje_str and estado.get("tema_do_dia"):
             tema_escolhido = estado["tema_do_dia"]
@@ -366,7 +351,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         estado["indice_gancho"] = novo_indice
 
     # Define se esta postagem consome e avança o índice de CTA e Arquitetura
-    tipos_com_cta = ["carousel", "reels", "reels_conquistador", "pexels_story", "reels_noite", "pexels_story_noite"]
+    tipos_com_cta = ["carousel", "reels", "pexels_story", "reels_noite", "pexels_story_noite"]
     if tipo in tipos_com_cta:
         estado["indice_cta"] = novo_indice_cta
         estado["indice_arquitetura"] = novo_indice_arquitetura
@@ -669,186 +654,6 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             "Slide 4 (Revelação)",
             "Slide 5 (Reflexão Memorável)",
             "Slide 6 (Convite Invisível)"
-          ],
-          "legenda": "Sua legenda aqui sem hashtags"
-        }}
-        """
-    elif tipo == "reels_conquistador":
-        prompt = f"""
-        Você é o porta-voz de uma identidade viva e real. Não tenta convencer ninguém.
-        Declara quem é — com densidade, coerência e autenticidade de quem viveu o que diz.
-        {evitar_repeticao_msg}
-
-        ===== PERSONA OBRIGATÓRIA: O CONQUISTADOR =====
-        Esta é a essência que deve atravessar cada palavra:
-
-        Fe profunda — nao como performance religiosa, mas como ancora interior e convicção de que ha proposito em tudo.
-        Foco inabalavel — quem sabe para onde vai, nao se distrai com o que nao constroi.
-        Iluminação — a busca continua por enxergar alem do obvio, do superficial e do imediato.
-        Sabedoria — nao acumulo de informação, mas discernimento conquistado com experiencia e silencio.
-        Espirito aventureiro — o conforto nunca foi o objetivo. A vida foi feita para ser vivida com ousadia.
-        Batalhador — nao ha vitoria sem construção. Nao ha construção sem disciplina silenciosa e diaria.
-        Sonhador — quem para de sonhar começa a encolher. O sonho e o combustivel da ação.
-        Amante da liberdade — liberdade real nao e ausencia de responsabilidade, e fidelidade aos proprios valores.
-        Valores familiares — familia e o fundamento. O que se conquista tem que ter raiz e legado.
-        Amoroso — força e afeto nao se contradizem. O homem que ama com profundidade e o que mais cresce.
-        Pensador — antes de agir, reflete. Antes de falar, pensa. A lentidao do raciocinio e virtude.
-        Criador — a existencia pede que se construa algo com as maos, com a mente, com a alma.
-        Conquistador — nao de pessoas, mas de versoes cada vez mais elevadas de si mesmo.
-        Culto e estudioso — o livro, o silencio e a observação sao os melhores professores.
-        Curioso — quem para de perguntar para de crescer.
-        Criterioso — nao aceita tudo. Filtra com inteligencia. Escolhe com principio.
-        Pontual e afetivo — respeito pelo tempo alheio e presença genuina nas relações.
-        Visionario — enxerga o que ainda nao existe, mas que pode ser construido.
-        ================================================
-
-        CRIE UMA SEQUÊNCIA NARRATIVA DE 6 SLIDES que seja um MANIFESTO DE IDENTIDADE.
-        Nao siga o modelo de curiosidade. Nao crie ganchos de suspense. Nao tente vender nada.
-        Declare. Afirme. Construa com palavras.
-
-        REGRAS DE ESTILO OBRIGATÓRIAS:
-        - Tom: denso, intimo, real — como uma conversa entre pessoas que se respeitam
-        - Cada slide deve parecer uma convicção vivida, nao uma frase motivacional generica
-        - PROIBIDO frases de autoajuda vazias (ex: "acredite em voce", "seja sua melhor versao")
-        - PROIBIDO qualquer CTA, convite para seguir, convite invisivel ou pergunta reflexiva
-        - PROIBIDO ponto de exclamação
-        - PROIBIDO "..." automatico — use no maximo 1 vez por sequencia, somente quando criar tensao real
-        - Os slides podem variar: alguns curtos (5 a 8 palavras), outros mais densos (ate 14 palavras)
-        - O arco narrativo deve ter coerencia: comeca com declaração, aprofunda com valor, termina com sentença firme
-
-        EXEMPLOS DE TOM (nao copie — inspire-se):
-        - "Nao persigo o sucesso. Construo quem precisa ser para merece-lo."
-        - "A liberdade que busco nao e ausencia de compromisso. E fidelidade a mim mesmo."
-        - "Fe nao e esperar que tudo de certo. E agir como se soubesse que dara."
-        - "Familia nao e o que voce encontra. E o que voce decide proteger todos os dias."
-
-        UNIVERSO VISUAL OBRIGATÓRIO:
-        Queries em inglês evocando a estética de Solidão Urbana Contemporânea: cidades grandes à noite, arranha-céus, luzes urbanas vibrantes, iluminação dourada/âmbar, atmosfera 35mm.
-        PROIBIDO: cenas de estádio de futebol, lutas, festas com bebidas, deserto ou praia diurna.
-        (ex: contemporary urban solitude night city lights 35mm, modern skyscraper rooftop night golden light, city lights reflections wet street 4k)
-
-        Responda APENAS em formato JSON valido assim:
-        {{
-          "pexels_queries": [
-            "contemporary urban solitude night city lights 35mm",
-            "modern skyscraper rooftop night golden light cinematic",
-            "city lights reflections wet street 4k"
-          ],
-          "slides": [
-            "Texto do Slide 1 (Declaracao de identidade)",
-            "Texto do Slide 2 (Valor vivido)",
-            "Texto do Slide 3 (Aprofundamento)",
-            "Texto do Slide 4 (Convicção central)",
-            "Texto do Slide 5 (Sentenca de sabedoria)",
-            "Texto do Slide 6 (Fechamento firme — sem CTA)"
-          ],
-          "legenda": "Maximo 2 linhas. Extensao natural do manifesto. Sem hashtags. Sem CTA."
-        }}
-        """
-
-    elif tipo == "pexels_story":
-        prompt = f"""
-        Você é a Máquina de Construção de Curiosidade adaptada para Stories com vídeo único e cinematográfico de fundo.
-        Sua missão é criar uma narrativa limpa, envolvente e de alto impacto em um vídeo de fundo contínuo.
-        Estilo obrigatório: {estilo_escolhido}
-
-        {instrucoes_copy}{instrucoes_livros}
-
-        CRIE UMA SEQUÊNCIA NARRATIVA DE 3 A 4 SLIDES que conduza o espectador por uma curva emocional completa:
-
-        - Slide 1 (Gancho de Parada no Feed): Frase curta e impactante que prende imediatamente. Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (entre 10 e 15 palavras)
-        - Slide 2 (Desenvolvimento do Raciocínio): Desenvolva a ideia iniciada no Slide 1 de forma lógica e progressiva. (entre 10 e 15 palavras)
-        - Slide 3 (Revelação ou Insight): Insight simples, prático e marcante de psicologia ou filosofia. (entre 10 e 15 palavras)
-        - Slide 4 (Encerramento — OPCIONAL): Frase de fechamento firme, sem CTA, sem convite para seguir. (entre 10 e 15 palavras)
-
-        PEXELS QUERY — UM ÚNICO VÍDEO DE FUNDO CONTÍNUO:
-        Crie UMA ÚNICA query em inglês de alta especificidade para encontrar o vídeo mais épico e de alta frequência possível:
-        - Iluminação brilhante, luzes de palco, shows, luxo moderno ou amanhecer épico (stadium lights, modern luxury, sunrise golden hour, high energy crowd)
-        - Estilo visual de altíssima qualidade (4k cinematic, premium lifestyle)
-        - Prefira: palcos, carros de luxo em movimento, líderes caminhando, multidões vibrando.
-
-        LEGENDA:
-        - Máximo 3 linhas. SEM HASHTAGS.
-
-        Responda APENAS em formato JSON válido assim:
-        {{
-          "slides": [
-            "Slide 1 (Gancho)",
-            "Slide 2 (Identificação)",
-            "Slide 3 (Revelação)"
-          ],
-          "pexels_queries": [
-            "stadium concert crowd lights cinematic 4k"
-          ],
-          "legenda": "Sua legenda aqui sem hashtags"
-        }}
-        """
-    elif tipo == "reels_noite":
-        prompt = f"""
-        Você é a Máquina de Construção de Curiosidade no horário noturno (18h). Seu objetivo é capturar a atenção de quem está exausto do dia.
-        Estilo obrigatório: {estilo_escolhido}
-
-        {instrucoes_copy}{instrucoes_livros}
-
-        CRIE UMA SEQUÊNCIA NARRATIVA EXATA DE 6 SLIDES seguindo rigorosamente a estrutura oficial de 6 Fases (Nicholas Boothman):
-
-        - Slide 1 / Fase 1 (Interrupção Mental - 0-2s): Gancho inicial noturno curioso (ex: "Existe uma mentira que te contaram sobre o cansaço..."). Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (entre 10 e 15 palavras)
-        - Slide 2 / Fase 2 (Identificação - 2-6s): Identificação imediata (ex: "Você chega em casa e sente que..."). Fale com "você". (entre 10 e 15 palavras)
-        - Slide 3 / Fase 3 (Desenvolvimento): Desenvolva o raciocínio. (entre 10 e 15 palavras)
-        - Slide 4 / Fase 4 (Explicação Lógica): Traga lucidez filosófica que responda ao conflito gerado. (entre 10 e 15 palavras)
-        - Slide 5 / Fase 5 (Reflexão - 25-35s): Frase marcante sobre governar a mente. (entre 10 e 15 palavras)
-        - Slide 6 / Fase 6 (Convite Invisível): Provocação silenciosa para a noite do leitor. (entre 10 e 15 palavras)
-
-        LEGENDA:
-        - Máximo 3 linhas.
-        - SEM HASHTAGS.
-
-        Responda APENAS em formato JSON válido assim:
-        {{
-          "slides": [
-            "Slide 1 (Gancho)",
-            "Slide 2 (Identificação)",
-            "Slide 3 (Quebra)",
-            "Slide 4 (Revelação)",
-            "Slide 5 (Reflexão)",
-            "Slide 6 (Convite)"
-          ],
-          "legenda": "Sua legenda aqui sem hashtags"
-        }}
-        """
-    elif tipo == "pexels_story_noite":
-        prompt = f"""
-        Você é a Máquina de Construção de Curiosidade noturna (19h-21h) para Stories com vídeo único de fundo.
-        Seu objetivo é criar um arco de descoberta mental e insight libertador em um vídeo de fundo elegante e contínuo.
-        Estilo obrigatório: {estilo_escolhido}
-
-        {instrucoes_copy}{instrucoes_livros}
-
-        CRIE UMA SEQUÊNCIA NARRATIVA DE 3 A 4 SLIDES para a noite — tom sereno, denso e reflexivo:
-
-        - Slide 1 (Gancho Noturno): Frase desafiadora e misteriosa que prende quem está no final do dia. Comece com: "Você acredita que...", "Existe uma mentira...", "Ninguém percebe que...", "O maior erro...", "Quase todo mundo...". (entre 10 e 15 palavras)
-        - Slide 2 (Identificação Íntima): Foco em "você", tom próximo e noturno. (entre 10 e 15 palavras)
-        - Slide 3 (Revelação ou Insight Noturno): Insight simples e profundo, ideal para refletir ao deitar. (entre 10 e 15 palavras)
-        - Slide 4 (Encerramento — OPCIONAL): Frase final serena e firme, sem CTA. (entre 10 e 15 palavras)
-
-        PEXELS QUERY — UM ÚNICO VÍDEO DE FUNDO NOTURNO (MAS DE ALTA FREQUÊNCIA):
-        Crie UMA ÚNICA query em inglês de alta especificidade para o melhor vídeo noturno premium e inspirador:
-        - Festas exclusivas, eventos noturnos, luzes de cidade vibrantes, celebrações de luxo (premium night event, luxury city lights, exclusive celebration, high end lifestyle night)
-        - Textura cinematográfica moderna (4k cinematic night, vibrant city lights)
-        - Prefira: luzes vibrantes de cidade moderna, celebrações, ambientes premium iluminados.
-
-        LEGENDA:
-        - Máximo 3 linhas. SEM HASHTAGS.
-
-        Responda APENAS em formato JSON válido assim:
-        {{
-          "slides": [
-            "Slide 1 (Gancho noturno)",
-            "Slide 2 (Identificação íntima)",
-            "Slide 3 (Revelação)"
-          ],
-          "pexels_queries": [
-            "luxury city night lights premium event 4k cinematic"
           ],
           "legenda": "Sua legenda aqui sem hashtags"
         }}
@@ -1191,7 +996,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
                 
             # Mapeia os tipos de postagens para as chaves principais do JSON (story, reels, carousel)
             tipo_key = "story"
-            if tipo in ["reels", "reels_noite", "reels_conquistador", "pexels_story", "pexels_story_noite", "reels_leads"]:
+            if tipo in ["reels", "reels_noite", "pexels_story", "pexels_story_noite", "reels_leads"]:
                 tipo_key = "reels"
             elif tipo == "carousel":
                 tipo_key = "carousel"

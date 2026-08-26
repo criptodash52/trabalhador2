@@ -119,7 +119,7 @@ def registrar_postagem(tipo, tema, post_id, estilo, frase_visual="", legenda="",
 def main():
     parser = argparse.ArgumentParser(description="Bot de Instagram Automático 2.0")
     parser.add_argument("--type", type=str, required=False, default=None,
-                        choices=["story", "story_manha", "story_tarde", "carousel", "reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads", "test"],
+                        choices=["story", "story_manha", "story_tarde", "carousel", "reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_leads", "test"],
                         help="Tipo de postagem a gerar")
     parser.add_argument("--dry-run", action="store_true", help="Executa todo o processo sem postar no Instagram")
     parser.add_argument("--reseed-db", action="store_true", help="Repovoa e reconstitui todas as coleções zeradas do Firebase Firestore")
@@ -157,7 +157,7 @@ def main():
         )
         if args.type == "carousel":
             print(f"✨ Título do Carrossel: \"{conteudo.get('titulo')}\"")
-        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads"]:
+        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_leads"]:
             slides = conteudo.get('slides', [])
             for i, s in enumerate(slides):
                 print(f"✨ Slide {i+1}: \"{s}\"")
@@ -165,7 +165,7 @@ def main():
             print(f"✨ Frase Gerada: \"{conteudo.get('frase')}\"")
             
         # Passo 2: Cria a mídia (imagem, sequência ou vídeo)
-        if args.type in ["pexels_story", "pexels_story_noite", "reels_conquistador", "reels_leads", "story_tarde"]:
+        if args.type in ["pexels_story", "pexels_story_noite", "reels_leads", "story_tarde"]:
             from core.media.pexels_story import gerar_pexels_story
             req_id = uuid.uuid4().hex
             _saida = f"pexels_story_{req_id}.mp4"
@@ -181,7 +181,7 @@ def main():
                         conteudo.get("slides", []),
                         caminho_saida=_saida,
                         tema=tema_escolhido,
-                        is_conquistador=(args.type == "reels_conquistador"),
+                        is_conquistador=False,
                         is_reels_leads=(args.type == "reels_leads"),
                         is_noite=(args.type == "pexels_story_noite"),
                         is_story_tarde=(args.type == "story_tarde")
@@ -198,7 +198,7 @@ def main():
                     conteudo.get("slides", []),
                     caminho_saida=_saida,
                     tema=tema_escolhido,
-                    is_conquistador=(args.type == "reels_conquistador"),
+                    is_conquistador=False,
                     is_reels_leads=(args.type == "reels_leads"),
                     is_noite=(args.type == "pexels_story_noite"),
                     is_story_tarde=(args.type == "story_tarde")
@@ -290,7 +290,7 @@ def main():
         frase_visual = ""
         if args.type == "carousel":
             frase_visual = conteudo.get("titulo", "")
-        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_conquistador", "reels_leads", "story_tarde"]:
+        elif args.type in ["reels", "pexels_story", "reels_noite", "pexels_story_noite", "reels_leads", "story_tarde"]:
             slides = conteudo.get('slides', [])
             frase_visual = " | ".join(slides) if isinstance(slides, list) else str(slides)
         else:

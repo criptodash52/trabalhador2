@@ -23,7 +23,7 @@ logger.add(
 def run_post(job_type):
     logger.info(f"🚀 Iniciando tarefa: {job_type}")
     try:
-        subprocess.run(["python", "main.py", "--type", job_type], check=True)
+        subprocess.run(["python", "main.py", "--type", job_type], check=True, timeout=3600)
         logger.success(f"✅ Tarefa {job_type} concluída.")
     except subprocess.CalledProcessError as e:
         logger.error(f"❌ Erro ao executar {job_type}: o script retornou erro {e.returncode}.")
@@ -114,7 +114,7 @@ schedule.every().day.at("12:00").do(run_post, "reels")
 schedule.every().day.at("17:00").do(run_post, "story_tarde")
 schedule.every().day.at("18:00").do(run_post, "reels_noite")
 schedule.every().day.at("19:00").do(run_post, "pexels_story_noite") # Storytelling cinematográfico noturno com B-roll
-schedule.every().day.at("22:00").do(run_post, "reels_conquistador") # Conquistador de Público (VSL)
+
 
 # ==========================================
 # TAREFAS DE MANUTENÇÃO (MADRUGADA/MANHÃ)

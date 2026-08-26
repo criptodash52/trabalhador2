@@ -589,7 +589,7 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
     animacao_conquistador = None
     plataforma_principal_conquistador = None  # None = usa a cascata padrão (Pixabay -> Pexels)
 
-    if is_conquistador:
+    if False:
         estado_conq = carregar_estado()
         animacoes_lista = ["typewriter", "fade", "reveal", "static"]
         idx_anim = estado_conq.get("index_animacao_conquistador", 0) % len(animacoes_lista)
@@ -619,13 +619,13 @@ def gerar_pexels_story(query, slides, caminho_saida="pexels_story.mp4", tema=Non
         duracao_minima_download = 30  # Baixa vídeo de 30s+ para evitar loop
         num_videos_necessarios = 1  # ← Único vídeo de fundo
         logger.info(f"📊 [{'REELS_LEADS' if is_reels_leads else 'STORY_TARDE'}] {num_slides_estimado} slides × 5s = {duracao_necessaria_reels}s | 1 vídeo único de {duracao_minima_download}s+")
-    elif (not is_noite) and (not is_conquistador):
+    elif not is_noite:
         # pexels_story da Manhã: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 6.5  # ~6.5s por slide para leitura calma
         num_videos_necessarios = 1  # ← ÚNICO VÍDEO DE FUNDO CONTÍNUO
         logger.info(f"📊 [PEXELS_STORY MANHÃ] {num_slides_estimado} slides → ~{duracao_necessaria_reels:.0f}s necessários | 1 vídeo de fundo contínuo")
-    elif is_noite and (not is_conquistador):
+    elif is_noite:
         # pexels_story_noite: 1 único vídeo de fundo contínuo + loop suave se necessário
         num_slides_estimado = len(slides) if slides else 4
         duracao_necessaria_reels = num_slides_estimado * 7.0  # ~7s por slide à noite

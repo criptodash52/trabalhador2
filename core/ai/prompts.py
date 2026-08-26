@@ -253,7 +253,7 @@ def montar_instrucoes_copy(contexto_analytics="", historico_fontes=None, indice_
 
     TENDÊNCIAS EM TEMPO REAL (Olhos da Rede):
     - Leia as notícias da semana, os vídeos mais vistos no YouTube deste tema e as buscas no Google Trends descritas no bloco abaixo.
-    - FUSÃO OBRIGATÓRIA: Não use a Fonte de forma literal e acadêmica. Junte a lição da obra com o estilo de vida, luxo, poder ou comportamento atual (trazido pelos Olhos da Rede). Use cenários de vitória, negócios, palcos e lifestyle magnético para ilustrar a lição.
+    - FUSÃO OBRIGATÓRIA: Não use a Fonte de forma literal e teórica. Junte o princípio bíblico com os dilemas reais do cotidiano moderno (ansiedade, trabalho, relacionamento, desafios da família). Use cenários de superação íntima, paz, serviço ao próximo, resiliência e fé vivida na prática para ilustrar a lição.
 
     DADOS DE PERFORMANCE E CONTEXTO ATUAL:
     {contexto_analytics}

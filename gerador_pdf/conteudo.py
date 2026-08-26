@@ -65,7 +65,7 @@ ESTRUTURA OBRIGATÓRIA EM JSON (TUDO 100% DINÂMICO):
     {{"titulo": "Crie um título curto e inédito para o card de diagnóstico", "texto": "Escreva aqui o diagnóstico da dor {dor_central} em até 30 palavras — direto e incisivo.", "pergunta_destaque": "Crie uma pergunta que cutuca a ferida do leitor em no máximo 10 palavras."}},
     {{"titulo": "Crie um título curto e inédito para o card do método", "texto": "Descreva o método ou benefício central do livro {livro_base} em até 20 palavras."}},
     {{"titulo": "Crie um título curto e inédito para o card do ritmo ou ganho", "texto": "Qual o ganho concreto que o leitor tem ao aplicar isso? Até 15 palavras."}},
-    {{"titulo": "Crie um título curto e inédito para o card da identidade ou princípio", "texto": "Escreva um princípio transformador em até 12 palavras.", "citacao_destaque": "Crie uma citação de até 10 palavras da essência do {livro_base}. Sempre termine com: Código da Sabedoria."}}
+    {{"titulo": "Crie um título curto e inédito para o card da identidade ou princípio", "texto": "Escreva um princípio transformador em até 12 palavras.", "citacao_destaque": "Crie uma citação de até 10 palavras da essência do {livro_base}. Deve ser uma afirmação de fé ou sabedoria bíblica."}}
   ],
   "capitulos": [
     {{
