@@ -442,11 +442,11 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         sinonimo_modulo = random.choice(SINONIMOS_MODULO)
 
         VARIACOES_CTA_TARDE = [
-            f"Se você ainda não pegou o seu devocional desta semana, comente 'ORACAO' que te envio no Direct. \\n Receba o seu {sinonimo_modulo} para blindar sua fé.",
-            f"Liberamos um {sinonimo_modulo} inédito para você. Comente 'ORACAO' para receber no Direct. \\n Fortaleça sua caminhada e seu propósito diário.",
-            f"Sabedoria bíblica para aplicar no seu dia a dia. Comente 'SABEDORIA' e receba o {sinonimo_modulo}. \\n Edifique a sua casa e a sua mente com a Palavra.",
-            f"Toda semana preparamos um {sinonimo_modulo} para enriquecer seu devocional. Comente 'ORACAO'. \\n Receba o material completo diretamente no seu Direct.",
-            f"Para aprofundar seu momento com Deus hoje, comente 'ORACAO'. \\n Receba o seu {sinonimo_modulo} em instantes no Direct.",
+            f"Salve este vídeo para revisitar quando precisar de paz. \\n Que a Palavra de Deus guie cada passo seu.",
+            f"Se esta mensagem tocou seu coração, compartilhe com quem precisa. \\n A Palavra de Deus edifica e transforma vidas.",
+            f"Siga o perfil para receber sabedoria bíblica toda semana. \\n Construa sua fé dia após dia com a Palavra.",
+            f"Salve este devocional para seu momento de oração. \\n Que Deus ilumine sua caminhada e fortaleça sua fé.",
+            f"Compartilhe com alguém que precisa dessa mensagem hoje. \\n A fé que edifica vidas começa com uma palavra certa.",
         ]
         cta_tarde = random.choice(VARIACOES_CTA_TARDE)
 
@@ -503,8 +503,9 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
 
         SLIDE FINAL — CTA DIRETO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
         OBJETIVO COMPORTAMENTAL: tornar a ação simples e imediata.
-        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'ORACAO' para receber no Direct."
-        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia devocional desta semana."
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Salve este vídeo para seu momento de oração."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Que a Palavra fortaleça sua fé hoje."
+        PROIBIDO: qualquer referência a comentar para receber no Direct ou automação de mensagem.
         REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras no total.
 
         ═══════════════════════════════════════════════════
@@ -521,7 +522,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
 
         LEGENDA (3 a 4 linhas):
         - Reflexão edificante e breve sobre o estudo da semana.
-        - Termine com variação natural do CTA. Exemplo: "Comente 'ORACAO' que te envio o devocional no Direct 👇"
+        - Termine com variação natural do CTA. Exemplo: "Salve este post e siga o perfil para mais conteúdo de fé 👇"
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido (o array 'slides' DEVE ter 5 ou 6 itens, o último com \\n):
@@ -532,13 +533,13 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             "Slide 2 — Traz clareza espiritual e descanso para a alma.",
             "Slide 3 — Revela a promessa e a direção de Deus para o momento.",
             "Slide 4 — Preparei um estudo completo sobre isso no {sinonimo_modulo} desta semana: {titulo_pdf_tarde}.",
-            "Slide 5 (CTA) — Comente 'ORACAO' para receber direto no Direct. \\n Edifique a sua fé e seu momento devocional."
+            "Slide 5 (CTA) — Salve este vídeo para seu momento de oração. \\n Que a Palavra fortaleça sua fé hoje."
           ],
           "pexels_queries": [
             "peaceful sunrise mountains golden hour cinematic",
             "ancient candle lighting open bible warm light"
           ],
-          "legenda": "Uma palavra de paz e direcionamento para sua semana. Comente 'ORACAO' que te envio o devocional no Direct 👇"
+          "legenda": "Uma palavra de paz e direcionamento para sua semana. Salve este post e siga o perfil para mais conteúdo de fé 👇"
         }}
         """
     elif tipo == "carousel":
@@ -993,8 +994,9 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
         Se ultrapassar 12 palavras no total: OBRIGATÓRIO dividir em 2 slides (Slide 5 = convite, Slide 6 = Título).
 
         SLIDE FINAL — CTA DE ORAÇÃO (MÁXIMO 10 a 12 PALAVRAS NO TOTAL, dividido por \\n):
-        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Comente 'ORACAO' para receber no Direct."
-        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Receba o guia devocional completo."
+        Parte 1 (ANTES de \\n): no máximo 5 a 6 palavras. Modelo: "Salve este vídeo para seu momento de oração."
+        Parte 2 (DEPOIS de \\n): no máximo 5 a 6 palavras. Modelo: "Siga o perfil para mais sabedoria bíblica."
+        PROIBIDO: qualquer referência a comentar para receber no Direct ou automação de mensagem.
         REGRA INEGOCIÁVEL: A soma de palavras da Parte 1 + Parte 2 NÃO PODE ultrapassar 12 palavras.
 
         ═══════════════════════════════════════════════════
@@ -1010,7 +1012,7 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
 
         LEGENDA (3 a 4 linhas):
         - Breve reflexão pastoral sobre o tema.
-        - Termine com variação do CTA. Exemplo: "Comente 'ORACAO' que te envio o devocional no Direct 👇"
+        - Termine com variação do CTA. Exemplo: "Salve este post e siga o perfil para mais conteúdo de fé 👇"
         - NÃO inclua hashtags.
 
         Responda APENAS em formato JSON válido (o array 'slides' DEVE conter 6 OU 7 frases, a última com \\n):
@@ -1023,14 +1025,14 @@ def gerar_conteudo_gemini(tipo, custom_tema=None, custom_mensagem=None):
             "Princípio da Palavra que traz luz e direção.",
             "Preparei um estudo completo sobre isso:",
             "{titulo_pdf_limpo}.",
-            "Comente 'ORACAO' para receber no Direct. \\n Fortaleça sua vida devocional e sua fé."
+            "Salve este vídeo para seu momento de oração. \\n Siga o perfil para mais sabedoria bíblica."
           ],
           "pexels_queries": [
             "{pilar_exemplo}",
             "praying hands morning light mountains biblical landscape cinematic",
             "ancient scriptures vintage book light dust particles 4k"
           ],
-          "legenda": "Uma palavra de sabedoria e fé para edificar sua caminhada. Comente 'ORACAO' que te envio o devocional no Direct 👇"
+          "legenda": "Uma palavra de sabedoria e fé para edificar sua caminhada. Salve este post e siga o perfil para mais conteúdo bíblico 👇"
         }}
         """
     else:
