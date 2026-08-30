@@ -1,16 +1,4 @@
 {
-    "historico_sentimentos": [
-        "desafio",
-        "plenitude",
-        "esperanca",
-        "curiosidade",
-        "amor",
-        "poder",
-        "escassez"
-    ],
-    "ultimo_dia_cta": "2026-08-12",
-    "sentimento_do_dia": "escassez",
-    "data_tema_do_dia": "2026-08-30",
     "historico_midia": [
         "37470449",
         "6866751",
@@ -513,27 +501,10 @@
         "unsplash_JJg-yYKd0Fo",
         "unsplash_4P6aBhBMqRQ"
     ],
-    "index_pilar_reels_leads": 0,
-    "indice_arquitetura": 0,
-    "indice_cta": 41,
-    "index_cta_dia": 2,
-    "index_animacao_conquistador": 3,
-    "index_mecanismo_reels_leads": 1,
-    "index_conquistador": 11,
-    "ultimo_hf_token_idx": 2,
-    "historico_angulos": [
-        "Os Evangelhos & A Graça de Cristo",
-        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
-        "Salmos de Davi (Oração & Blindagem Espiritual)",
-        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
-        "Provérbios de Salomão (Sabedoria & Decisões)",
-        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
-        "Família, Honra e Legado Bíblico (Josué & Neemias)",
-        "Eclesiastes & Propósito Eterno"
-    ],
+    "ultimo_carousel": 3,
+    "data_sentimento_do_dia": "2026-08-02",
     "historico_estilos": [
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
@@ -556,13 +527,12 @@
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
+        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')"
     ],
-    "index_plataforma_conquistador": 1,
-    "tema_do_dia": "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+    "indice_arquitetura": 1,
     "index_tema_diario": 6,
     "fila_musicas_musicas": [
-        "African gospel.mp3",
         "absolutesound-thrille.mp3",
         "nveravetyanmusic-lo-fi-emotional-beat-243696.mp3",
         "kelly6-kelly-souza-fiel-9828fd17.mp3",
@@ -584,10 +554,33 @@
         "stellalaura-preciso-confiar-b46becff (1).mp3",
         "stellalaura-preciso-confiar-b46becff.mp3",
         "EricaOliveira-sozinho-na-presenca-1122bac2.mp3",
-        "2ktrapbeat-tua-voz-me-chama-031972e3.mp3"
+        "2ktrapbeat-tua-voz-me-chama-031972e3.mp3",
+        "makleygabriel-oh-profundidade-acustico-814980ce.mp3"
     ],
+    "index_plataforma_conquistador": 1,
+    "index_cta_dia": 2,
+    "data_tema_do_dia": "2026-08-30",
+    "index_palette_conquistador": 1,
+    "ultimo_hf_token_idx": 4,
+    "ultimos_temas": [],
+    "index_animacao_conquistador": 3,
+    "index_mecanismo_reels_leads": 1,
+    "index_pilar_reels_leads": 0,
+    "indice_cta": 42,
+    "historico_sentimentos": [
+        "desafio",
+        "plenitude",
+        "esperanca",
+        "curiosidade",
+        "amor",
+        "poder",
+        "escassez",
+        "carinho"
+    ],
+    "indice_gancho_conquistador": 36,
+    "tema_do_dia": "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+    "ultimo_dia_cta": "2026-08-12",
     "fila_musicas_musicas-youtube": [
-        "Everything (feat. Rodina & Alfie Tito) - Rodina feat. Alfie Tito.mp3",
         "Lost Myself - Lalanne.mp3",
         "A Face in a Cloud - Nathan Moore.mp3",
         "Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming.mp3",
@@ -606,13 +599,14 @@
         "Never Coming Down - The Soundlings.mp3",
         "A Kiss For Amanda - DJ Williams.mp3",
         "I Got You - Anno Domini Beats.mp3",
-        "No One Here Gets In Alive - National Sweetheart.mp3"
+        "No One Here Gets In Alive - National Sweetheart.mp3",
+        "A Flute_s Mourning - Aakash Gandhi.mp3"
     ],
     "index_palette_leads": 0,
-    "ultimo_carousel": 3,
-    "index_palette_conquistador": 1,
-    "data_sentimento_do_dia": "2026-08-02",
-    "ultimos_temas": [],
-    "indice_gancho_conquistador": 36,
-    "indice_gancho": 17
+    "sentimento_do_dia": "carinho",
+    "historico_angulos": [
+        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)"
+    ],
+    "indice_gancho": 18,
+    "index_conquistador": 11
 }
