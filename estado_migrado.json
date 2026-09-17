@@ -1,4 +1,8 @@
 {
+    "index_animacao_conquistador": 3,
+    "index_palette_leads": 0,
+    "indice_gancho_conquistador": 36,
+    "index_mecanismo_reels_leads": 3,
     "fila_musicas_musicas-youtube": [
         "Everything (feat. Rodina & Alfie Tito) - Rodina feat. Alfie Tito.mp3",
         "Lost Myself - Lalanne.mp3",
@@ -21,13 +25,16 @@
         "I Got You - Anno Domini Beats.mp3",
         "No One Here Gets In Alive - National Sweetheart.mp3"
     ],
-    "ultimo_hf_token_idx": 2,
-    "data_tema_do_dia": "2026-09-16",
-    "indice_gancho": 53,
-    "index_palette_conquistador": 1,
-    "index_palette_leads": 0,
-    "indice_arquitetura": 2,
+    "data_tema_do_dia": "2026-09-17",
+    "ultimos_temas": [],
+    "index_conquistador": 11,
+    "ultimo_carousel": 3,
+    "sentimento_do_dia": "desafio",
+    "ultimo_hf_token_idx": 3,
+    "indice_gancho": 54,
+    "index_plataforma_conquistador": 1,
     "historico_midia": [
+        "unsplash_pKd0Q5Mgc90",
         "34354400",
         "37700771",
         "10559106",
@@ -526,24 +533,11 @@
         "6340529",
         "8039639",
         "34208092",
-        "38381818",
-        "10007848"
+        "38381818"
     ],
-    "index_mecanismo_reels_leads": 3,
-    "ultimo_carousel": 3,
-    "ultimos_temas": [],
-    "sentimento_do_dia": "carinho",
-    "tema_do_dia": "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
-    "indice_gancho_conquistador": 36,
-    "historico_angulos": [
-        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
-        "Os Evangelhos & A Graça de Cristo",
-        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
-        "Provérbios de Salomão (Sabedoria & Decisões)"
-    ],
-    "index_plataforma_conquistador": 1,
+    "tema_do_dia": "Família, Honra e Legado Bíblico (Josué & Neemias)",
+    "index_pilar_reels_leads": 2,
     "historico_estilos": [
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
@@ -567,7 +561,17 @@
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
+        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')"
+    ],
+    "index_palette_conquistador": 1,
+    "index_tema_diario": 0,
+    "historico_angulos": [
+        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
+        "Os Evangelhos & A Graça de Cristo",
+        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
+        "Provérbios de Salomão (Sabedoria & Decisões)",
+        "Eclesiastes & Propósito Eterno"
     ],
     "fila_musicas_musicas": [
         "makleygabriel-brasa-viva-acustico-9235b68a.mp3",
@@ -594,12 +598,8 @@
         "kelly6-tu-es-o-rei-7c8cdd05.mp3",
         "saavane-this-something-drill-beat-238473.mp3"
     ],
-    "index_pilar_reels_leads": 2,
-    "index_conquistador": 11,
+    "indice_cta": 41,
     "index_cta_dia": 2,
-    "index_animacao_conquistador": 3,
-    "data_sentimento_do_dia": "2026-08-02",
-    "ultimo_dia_cta": "2026-08-12",
     "historico_sentimentos": [
         "escassez",
         "esperanca",
@@ -608,8 +608,10 @@
         "curiosidade",
         "ousadia",
         "amor",
-        "carinho"
+        "carinho",
+        "desafio"
     ],
-    "index_tema_diario": 7,
-    "indice_cta": 41
+    "ultimo_dia_cta": "2026-08-12",
+    "data_sentimento_do_dia": "2026-08-02",
+    "indice_arquitetura": 2
 }
