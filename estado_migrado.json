@@ -1,19 +1,7 @@
 {
-    "ultimo_hf_token_idx": 2,
-    "ultimo_carousel": 3,
-    "index_plataforma_conquistador": 1,
-    "historico_angulos": [
-        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
-        "Provérbios de Salomão (Sabedoria & Decisões)",
-        "Os Evangelhos & A Graça de Cristo",
-        "Salmos de Davi (Oração & Blindagem Espiritual)",
-        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
-        "Eclesiastes & Propósito Eterno",
-        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)"
-    ],
-    "indice_gancho_conquistador": 36,
+    "ultimo_dia_cta": "2026-08-12",
+    "indice_cta": 3,
     "historico_estilos": [
-        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
@@ -37,11 +25,19 @@
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
+        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')"
     ],
-    "index_cta_dia": 2,
+    "data_tema_do_dia": "2026-10-15",
+    "index_pilar_reels_leads": 1,
+    "data_sentimento_do_dia": "2026-08-02",
+    "ultimos_temas": [],
+    "sentimento_do_dia": "ousadia",
+    "index_palette_leads": 0,
+    "index_animacao_conquistador": 3,
+    "tema_do_dia": "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
+    "indice_gancho": 65,
     "fila_musicas_musicas": [
-        "nveravetyanmusic-lo-fi-emotional-beat-243696.mp3",
         "kelly6-kelly-souza-fiel-9828fd17.mp3",
         "winiciusbrilhante-confissoes-de-natal-me-ajude-a-lembrar-6a145266.mp3",
         "white_records-history-of-perseus-background-orchestral-music-type-beat-for-video-161642 (1).mp3",
@@ -63,11 +59,17 @@
         "EricaOliveira-sozinho-na-presenca-1122bac2.mp3",
         "2ktrapbeat-tua-voz-me-chama-031972e3.mp3",
         "makleygabriel-oh-profundidade-acustico-814980ce.mp3",
-        "African gospel.mp3"
+        "African gospel.mp3",
+        "absolutesound-thrille.mp3"
     ],
-    "index_animacao_conquistador": 3,
-    "indice_cta": 3,
+    "historico_sentimentos": [
+        "escassez",
+        "amor",
+        "plenitude",
+        "ousadia"
+    ],
     "historico_midia": [
+        "39889198",
         "imgcarrocel_ChatGPT Image 25 de ago. de 2026, 17_27_23.png",
         "15253652",
         "unsplash_5IvIhQ-5vKY",
@@ -566,24 +568,24 @@
         "30728867",
         "36064039",
         "unsplash_paWvvopV4Ac",
-        "unsplash_1K03mJhY9NA",
-        "unsplash_yRkdVpqu1OU"
+        "unsplash_1K03mJhY9NA"
     ],
-    "indice_gancho": 64,
-    "data_sentimento_do_dia": "2026-08-02",
-    "index_palette_leads": 0,
-    "ultimos_temas": [],
-    "index_palette_conquistador": 1,
-    "index_tema_diario": 4,
-    "ultimo_dia_cta": "2026-08-12",
-    "sentimento_do_dia": "plenitude",
-    "historico_sentimentos": [
-        "escassez",
-        "amor",
-        "plenitude"
+    "ultimo_carousel": 3,
+    "index_mecanismo_reels_leads": 2,
+    "ultimo_hf_token_idx": 2,
+    "indice_arquitetura": 4,
+    "historico_angulos": [
+        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+        "Provérbios de Salomão (Sabedoria & Decisões)",
+        "Os Evangelhos & A Graça de Cristo",
+        "Salmos de Davi (Oração & Blindagem Espiritual)",
+        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
+        "Eclesiastes & Propósito Eterno",
+        "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
+        "Família, Honra e Legado Bíblico (Josué & Neemias)"
     ],
-    "index_pilar_reels_leads": 0,
-    "index_mecanismo_reels_leads": 1,
+    "indice_gancho_conquistador": 36,
+    "index_cta_dia": 2,
     "fila_musicas_musicas-youtube": [
         "In The Morning - Blue Beat Review.mp3",
         "Wildfire - Jessie Villa.mp3",
@@ -606,8 +608,8 @@
         "Fearless - The Soundlings (feat. Ruby Jay).mp3",
         "Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3"
     ],
-    "tema_do_dia": "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
-    "index_conquistador": 11,
-    "indice_arquitetura": 4,
-    "data_tema_do_dia": "2026-10-15"
+    "index_plataforma_conquistador": 1,
+    "index_palette_conquistador": 1,
+    "index_tema_diario": 4,
+    "index_conquistador": 11
 }
