@@ -1,4 +1,16 @@
 {
+    "index_plataforma_conquistador": 1,
+    "ultimo_carousel": 3,
+    "index_animacao_conquistador": 3,
+    "ultimos_temas": [],
+    "data_sentimento_do_dia": "2026-08-02",
+    "index_conquistador": 11,
+    "indice_gancho": 3,
+    "data_tema_do_dia": "2026-10-22",
+    "index_cta_dia": 2,
+    "indice_gancho_conquistador": 36,
+    "index_palette_conquistador": 1,
+    "index_pilar_reels_leads": 3,
     "historico_midia": [
         "39349674",
         "7188843",
@@ -501,22 +513,10 @@
         "unsplash_kEavT0-XTJQ",
         "3403583"
     ],
-    "sentimento_do_dia": "plenitude",
-    "index_conquistador": 11,
-    "tema_do_dia": "Eclesiastes & Propósito Eterno",
     "index_palette_leads": 0,
-    "indice_gancho": 2,
-    "index_mecanismo_reels_leads": 4,
-    "data_tema_do_dia": "2026-10-22",
-    "indice_gancho_conquistador": 36,
-    "index_plataforma_conquistador": 1,
-    "ultimo_dia_cta": "2026-08-12",
-    "historico_angulos": [
-        "Eclesiastes & Propósito Eterno"
-    ],
-    "index_cta_dia": 2,
+    "index_tema_diario": 3,
+    "sentimento_do_dia": "escassez",
     "historico_estilos": [
-        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
@@ -539,11 +539,23 @@
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
     ],
-    "ultimo_hf_token_idx": 1,
-    "data_sentimento_do_dia": "2026-08-02",
+    "historico_sentimentos": [
+        "carinho",
+        "poder",
+        "ousadia",
+        "desafio",
+        "plenitude",
+        "escassez"
+    ],
+    "historico_angulos": [
+        "Eclesiastes & Propósito Eterno",
+        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)"
+    ],
+    "ultimo_hf_token_idx": 3,
     "fila_musicas_musicas-youtube": [
         "Wildfire - Jessie Villa.mp3",
         "Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
@@ -566,10 +578,11 @@
         "Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
         "13 Cocktails - Dan Bodan.mp3"
     ],
-    "index_tema_diario": 3,
-    "index_palette_conquistador": 1,
+    "indice_cta": 48,
+    "index_mecanismo_reels_leads": 4,
+    "ultimo_dia_cta": "2026-08-12",
+    "indice_arquitetura": 1,
     "fila_musicas_musicas": [
-        "white_records-history-of-perseus-background-orchestral-music-type-beat-for-video-161642.mp3",
         "kelly6-tu-es-o-rei-7c8cdd05.mp3",
         "saavane-this-something-drill-beat-238473.mp3",
         "white_records-love-in-slow-motion-background-music-for-video-vlog-full-version-374911.mp3",
@@ -591,19 +604,8 @@
         "Suzi_martinez-minha-poesia-0a9dc622.mp3",
         "uma-graa-reveladora.mp3",
         "nickpanek-baroque-underground-hip-hop-beat-with-violin-336378.mp3",
-        "2ktrapbeat-tua-palavra-permanece-becf92fd.mp3"
+        "2ktrapbeat-tua-palavra-permanece-becf92fd.mp3",
+        "white_records-epic-orchestral-music-background-cinematic-hip-hop-beat-and-violin-140693.mp3"
     ],
-    "indice_arquitetura": 0,
-    "index_animacao_conquistador": 3,
-    "historico_sentimentos": [
-        "carinho",
-        "poder",
-        "ousadia",
-        "desafio",
-        "plenitude"
-    ],
-    "index_pilar_reels_leads": 3,
-    "ultimos_temas": [],
-    "indice_cta": 47,
-    "ultimo_carousel": 3
+    "tema_do_dia": "Eclesiastes & Propósito Eterno"
 }
