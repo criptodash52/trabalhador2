@@ -1,20 +1,18 @@
 {
-    "index_mecanismo_reels_leads": 0,
-    "indice_cta": 2,
+    "index_conquistador": 11,
+    "index_plataforma_conquistador": 1,
+    "index_animacao_conquistador": 3,
+    "index_cta_dia": 2,
+    "indice_arquitetura": 2,
+    "ultimo_hf_token_idx": 1,
+    "ultimos_temas": [],
     "index_tema_diario": 5,
-    "tema_do_dia": "Os Evangelhos & A Graça de Cristo",
-    "indice_gancho_conquistador": 36,
+    "index_pilar_reels_leads": 4,
+    "ultimo_carousel": 3,
+    "data_tema_do_dia": "2026-10-24",
+    "data_sentimento_do_dia": "2026-08-02",
     "ultimo_dia_cta": "2026-08-12",
-    "historico_sentimentos": [
-        "escassez",
-        "curiosidade",
-        "carinho",
-        "plenitude",
-        "esperanca",
-        "ousadia",
-        "poder",
-        "desafio"
-    ],
+    "indice_gancho_conquistador": 36,
     "historico_midia": [
         "unsplash_m-EdkFj_Tgk",
         "11933153",
@@ -517,12 +515,16 @@
         "unsplash_XFDlkiMR0oI",
         "unsplash_T8ihZMFI5VY"
     ],
-    "index_animacao_conquistador": 3,
-    "index_conquistador": 11,
-    "data_sentimento_do_dia": "2026-08-02",
+    "historico_angulos": [
+        "Provérbios de Salomão (Sabedoria & Decisões)",
+        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
+        "Eclesiastes & Propósito Eterno",
+        "Os Evangelhos & A Graça de Cristo",
+        "Família, Honra e Legado Bíblico (Josué & Neemias)",
+        "Salmos de Davi (Oração & Blindagem Espiritual)"
+    ],
     "historico_estilos": [
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
@@ -545,11 +547,9 @@
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
+        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
     ],
-    "indice_gancho": 14,
-    "index_palette_conquistador": 1,
-    "data_tema_do_dia": "2026-10-24",
     "fila_musicas_musicas-youtube": [
         "Wildfire - Jessie Villa.mp3",
         "Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
@@ -572,11 +572,9 @@
         "Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
         "13 Cocktails - Dan Bodan.mp3"
     ],
-    "index_plataforma_conquistador": 1,
-    "index_palette_leads": 0,
-    "indice_arquitetura": 1,
+    "tema_do_dia": "Os Evangelhos & A Graça de Cristo",
+    "index_palette_conquistador": 1,
     "fila_musicas_musicas": [
-        "makleygabriel-oh-profundidade-acustico-814980ce.mp3",
         "African gospel.mp3",
         "absolutesound-thrille.mp3",
         "nveravetyanmusic-lo-fi-emotional-beat-243696.mp3",
@@ -598,19 +596,23 @@
         "makleygabriel-brasa-viva-acustico-9235b68a.mp3",
         "stellalaura-preciso-confiar-b46becff (1).mp3",
         "stellalaura-preciso-confiar-b46becff.mp3",
-        "EricaOliveira-sozinho-na-presenca-1122bac2.mp3"
+        "EricaOliveira-sozinho-na-presenca-1122bac2.mp3",
+        "2ktrapbeat-tua-voz-me-chama-031972e3.mp3"
     ],
-    "index_cta_dia": 2,
-    "sentimento_do_dia": "desafio",
-    "historico_angulos": [
-        "Provérbios de Salomão (Sabedoria & Decisões)",
-        "Guerra Espiritual & A Armadura de Deus (Efésios 6)",
-        "Eclesiastes & Propósito Eterno",
-        "Os Evangelhos & A Graça de Cristo",
-        "Família, Honra e Legado Bíblico (Josué & Neemias)"
+    "index_mecanismo_reels_leads": 0,
+    "historico_sentimentos": [
+        "escassez",
+        "curiosidade",
+        "carinho",
+        "plenitude",
+        "esperanca",
+        "ousadia",
+        "poder",
+        "desafio",
+        "amor"
     ],
-    "ultimo_hf_token_idx": 4,
-    "index_pilar_reels_leads": 4,
-    "ultimo_carousel": 3,
-    "ultimos_temas": []
+    "indice_gancho": 15,
+    "sentimento_do_dia": "amor",
+    "indice_cta": 3,
+    "index_palette_leads": 0
 }
