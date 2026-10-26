@@ -1,6 +1,8 @@
 {
+    "ultimos_temas": [],
+    "index_palette_leads": 0,
+    "data_sentimento_do_dia": "2026-08-02",
     "fila_musicas_musicas": [
-        "white_records-love-in-slow-motion-background-music-for-video-vlog-full-version-374911.mp3",
         "makleygabriel-brasa-viva-acustico-9235b68a.mp3",
         "stellalaura-preciso-confiar-b46becff (1).mp3",
         "stellalaura-preciso-confiar-b46becff.mp3",
@@ -22,14 +24,18 @@
         "2ktrapbeat-tua-palavra-permanece-becf92fd.mp3",
         "white_records-epic-orchestral-music-background-cinematic-hip-hop-beat-and-violin-140693.mp3",
         "white_records-history-of-perseus-background-orchestral-music-type-beat-for-video-161642.mp3",
-        "kelly6-tu-es-o-rei-7c8cdd05.mp3"
+        "kelly6-tu-es-o-rei-7c8cdd05.mp3",
+        "saavane-this-something-drill-beat-238473.mp3"
     ],
-    "index_palette_conquistador": 1,
-    "sentimento_do_dia": "carinho",
-    "ultimo_hf_token_idx": 4,
+    "index_conquistador": 11,
+    "index_tema_diario": 7,
+    "sentimento_do_dia": "curiosidade",
+    "index_pilar_reels_leads": 1,
+    "indice_arquitetura": 3,
+    "indice_cta": 16,
+    "index_plataforma_conquistador": 1,
     "historico_estilos": [
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
-        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
@@ -52,24 +58,12 @@
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
         "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
-        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')"
+        "Prometer revelar algo: instigue o leitor com um segredo ou mecânica oculta (ex: 'Existe uma mentira silenciosa que está destruindo sua paz.')",
+        "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')"
     ],
-    "index_animacao_conquistador": 3,
-    "ultimo_carousel": 3,
-    "indice_arquitetura": 2,
-    "index_cta_dia": 2,
-    "data_sentimento_do_dia": "2026-08-02",
-    "indice_gancho": 36,
-    "ultimo_dia_cta": "2026-08-12",
-    "index_tema_diario": 7,
-    "tema_do_dia": "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
-    "ultimos_temas": [],
-    "indice_cta": 15,
-    "index_conquistador": 11,
-    "data_tema_do_dia": "2026-10-26",
-    "index_plataforma_conquistador": 1,
     "indice_gancho_conquistador": 36,
     "historico_midia": [
+        "372124",
         "unsplash_3GllPfBMg1U",
         "39928116",
         "38688896",
@@ -568,14 +562,10 @@
         "7722629",
         "10612146",
         "36840153",
-        "35323911",
-        "35323935"
+        "35323911"
     ],
-    "historico_sentimentos": [
-        "esperanca",
-        "escassez",
-        "carinho"
-    ],
+    "index_cta_dia": 2,
+    "index_animacao_conquistador": 3,
     "fila_musicas_musicas-youtube": [
         "Wildfire - Jessie Villa.mp3",
         "Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
@@ -598,12 +588,24 @@
         "Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
         "13 Cocktails - Dan Bodan.mp3"
     ],
+    "ultimo_carousel": 3,
+    "index_mecanismo_reels_leads": 2,
+    "data_tema_do_dia": "2026-10-26",
+    "tema_do_dia": "Paz na Tempestade & Vitória sobre a Ansiedade (Filipenses 4)",
+    "ultimo_hf_token_idx": 4,
+    "ultimo_dia_cta": "2026-08-12",
+    "indice_gancho": 37,
+    "index_palette_conquistador": 1,
     "historico_angulos": [
         "Família, Honra e Legado Bíblico (Josué & Neemias)",
         "Provérbios de Salomão (Sabedoria & Decisões)",
-        "Eclesiastes & Propósito Eterno"
+        "Eclesiastes & Propósito Eterno",
+        "Os Evangelhos & A Graça de Cristo"
     ],
-    "index_mecanismo_reels_leads": 2,
-    "index_pilar_reels_leads": 1,
-    "index_palette_leads": 0
+    "historico_sentimentos": [
+        "esperanca",
+        "escassez",
+        "carinho",
+        "curiosidade"
+    ]
 }
