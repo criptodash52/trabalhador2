@@ -1,16 +1,5 @@
 {
-    "indice_gancho": 56,
-    "ultimos_temas": [],
-    "index_pilar_reels_leads": 3,
-    "ultimo_carousel": 3,
-    "index_mecanismo_reels_leads": 4,
-    "indice_arquitetura": 4,
-    "historico_angulos": [
-        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
-        "Os Evangelhos & A Graça de Cristo",
-        "Eclesiastes & Propósito Eterno"
-    ],
-    "index_plataforma_conquistador": 1,
+    "sentimento_do_dia": "esperanca",
     "fila_musicas_musicas-youtube": [
         "Wildfire - Jessie Villa.mp3",
         "Always Yours (feat. The Parrisian & Parris Fleming) - The Parrisian feat. Parris Fleming (1).mp3",
@@ -33,8 +22,8 @@
         "Hold Yourself Tight (feat. Splitshine) - Splitshine feat. Sybil Rose.mp3",
         "13 Cocktails - Dan Bodan.mp3"
     ],
-    "ultimo_dia_cta": "2026-08-12",
     "historico_midia": [
+        "imgcarrocel_ChatGPT Image 25 de ago. de 2026, 18_04_34.png",
         "34354419",
         "pexels_13707877",
         "40365741",
@@ -533,22 +522,10 @@
         "37594553",
         "38026408",
         "imgcarrocel_ChatGPT Image 25 de ago. de 2026, 17_56_18.png",
-        "unsplash_HbHhIno2Bls",
-        "unsplash_nxE8wJZ7C_g"
+        "unsplash_HbHhIno2Bls"
     ],
-    "sentimento_do_dia": "poder",
-    "index_animacao_conquistador": 3,
-    "index_palette_conquistador": 1,
-    "data_tema_do_dia": "2026-11-18",
-    "historico_sentimentos": [
-        "desafio",
-        "poder"
-    ],
-    "ultimo_hf_token_idx": 1,
-    "indice_cta": 45,
-    "tema_do_dia": "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+    "data_sentimento_do_dia": "2026-08-02",
     "historico_estilos": [
-        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
@@ -572,9 +549,17 @@
         "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
         "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')",
         "Quebrar uma crença: vá contra o senso comum imediatamente (ex: 'O maior erro é achar que falta tempo.')",
-        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')"
+        "Fazer uma pergunta: crie curiosidade abrindo uma lacuna na mente do leitor (ex: 'Você acredita que controla sua própria mente?')",
+        "Criar um conflito interno: exponha uma contradição de comportamento cotidiana (ex: 'Você quer mudar de vida, mas repete os mesmos hábitos.')"
     ],
-    "index_cta_dia": 2,
+    "index_mecanismo_reels_leads": 4,
+    "indice_gancho": 57,
+    "index_tema_diario": 6,
+    "index_plataforma_conquistador": 1,
+    "indice_cta": 46,
+    "index_palette_leads": 0,
+    "indice_arquitetura": 5,
+    "ultimo_dia_cta": "2026-08-12",
     "fila_musicas_musicas": [
         "African gospel.mp3",
         "absolutesound-thrille.mp3",
@@ -600,9 +585,26 @@
         "EricaOliveira-sozinho-na-presenca-1122bac2.mp3",
         "2ktrapbeat-tua-voz-me-chama-031972e3.mp3"
     ],
-    "indice_gancho_conquistador": 36,
     "index_conquistador": 11,
-    "index_tema_diario": 6,
-    "data_sentimento_do_dia": "2026-08-02",
-    "index_palette_leads": 0
+    "index_palette_conquistador": 1,
+    "ultimo_carousel": 3,
+    "index_cta_dia": 2,
+    "historico_sentimentos": [
+        "desafio",
+        "poder",
+        "esperanca"
+    ],
+    "index_pilar_reels_leads": 3,
+    "indice_gancho_conquistador": 36,
+    "index_animacao_conquistador": 3,
+    "ultimos_temas": [],
+    "historico_angulos": [
+        "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)",
+        "Os Evangelhos & A Graça de Cristo",
+        "Eclesiastes & Propósito Eterno",
+        "Salmos de Davi (Oração & Blindagem Espiritual)"
+    ],
+    "data_tema_do_dia": "2026-11-18",
+    "ultimo_hf_token_idx": 1,
+    "tema_do_dia": "A Fé e Resiliência dos Patriarcas (Abraão, José e Moisés)"
 }
